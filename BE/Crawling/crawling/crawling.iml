@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/selenium-java-4.4.0/lib" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-api-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-chrome-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-chromium-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v85-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v102-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v103-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v104-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-edge-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-firefox-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-http-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-ie-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-java-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-json-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-opera-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-remote-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-safari-driver-4.4.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-support-4.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-api-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-chrome-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-chromium-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v85-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v102-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v103-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-devtools-v104-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-edge-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-firefox-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-http-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-ie-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-json-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-opera-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-remote-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-safari-driver-4.4.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/selenium-java-4.4.0/selenium-support-4.4.0-sources.jar!/" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Downloads/selenium-java-4.4.0/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-5.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-examples-5.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-excelant-5.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-ooxml-5.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-ooxml-full-5.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-ooxml-lite-5.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-scratchpad-5.2.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/poi-javadoc-5.2.2.jar!/" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/auxiliary" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/auxiliary" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/ooxml-lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/poi-bin-5.2.2-20220312/poi-bin-5.2.2/ooxml-lib" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>

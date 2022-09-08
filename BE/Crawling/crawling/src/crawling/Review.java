@@ -23,7 +23,7 @@ import util.CommonUtil;
 
 public class Review {
 	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-	public static final String WEB_DRIVER_PATH = "C:\\Users\\SSAFY\\Downloads\\chromedriver.exe";
+	public static final String WEB_DRIVER_PATH = "C:\\Users\\KMLEE\\Downloads\\chromedriver.exe";
 
 	public static void main(String[] args) {
 		StringBuilder sb = new StringBuilder();
