@@ -1,8 +1,7 @@
 package crawling;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -17,6 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,23 +29,40 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import graphql.language.Document;
 import object.Bridge;
 import object.Feed;
 import util.CommonUtil;
 
 public class NaverCrawling {
 	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-	public static final String WEB_DRIVER_PATH = "C:\\Users\\SSAFY\\Downloads\\chromedriver.exe";
+	public static final String WEB_DRIVER_PATH = "C:\\Users\\KMLEE\\Downloads\\chromedriver.exe";
 	public static Map<String, Integer>[] detailMap;
 	public static List<Bridge>[] bridgeList;
 	public static int cnt = 5;
 	public static Set<String> titleSet, fkeySet;
 	public static int[] arr = new int[62];
 	public static String fkey;
+	public static String skey;
 	public static List<Feed> listFeed;
 
-	public static void main(String[] args) {
+	public static String getUrl(int a, int b){
+		if(a==1){
+			return "https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EA%B0%95%EC%95%84%EC%A7%80%EC%82%AC%EB%A3%8C"
+					+ "&pagingIndex=" + b
+					+ "&pagingSize=40&productSet=total&query=%EA%B0%95%EC%95%84%EC%A7%80%EC%82%AC%EB%A3%8C&sort=rel&timestamp=&viewType=list";
+
+		} else if (a==2) {
+			return "https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EA%B0%95%EC%95%84%EC%A7%80%20%EA%B0%84%EC%8B%9D&pagingIndex=" +
+					b +
+					"&pagingSize=40&productSet=total&query=%EA%B0%95%EC%95%84%EC%A7%80%20%EA%B0%84%EC%8B%9D&sort=rel&timestamp=&viewType=list";
+
+		}
+		return "";
+
+
+	};
+
+	public static void main(String[] args) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		detailMap = new HashMap[cnt];
 		bridgeList = new ArrayList[cnt];
@@ -50,6 +70,32 @@ public class NaverCrawling {
 		fkeySet = new HashSet<>();
 		listFeed = new ArrayList<>();
 		fkey = "";
+
+		//파일저장
+//		String reviewFilePath = "C:/Users/KMLEE/Desktop/review.csv";
+//		File reviewFile = null;
+//		BufferedWriter bw = null;
+//		String NEWLINE = System.lineSeparator();
+//
+//		reviewFile = new File(reviewFilePath);
+//		bw = new BufferedWriter(new FileWriter(reviewFile));
+		int rowNo = 0;
+
+		XSSFWorkbook xssfWb = null;
+		XSSFSheet xssfSheet = null;
+		XSSFRow xssfRow = null;
+
+		xssfWb = new XSSFWorkbook(); //XSSFWorkbook 객체 생성
+		xssfSheet = xssfWb.createSheet("리뷰"); // 워크시트 이름 설정.
+
+		//새 행부터 시작.
+		xssfRow = xssfSheet.createRow(rowNo++); // 행 객체 추가
+		//타이틀 행 생성하기.
+		xssfRow.createCell(1).setCellValue("item_sno");
+		xssfRow.createCell(2).setCellValue("rate");
+		xssfRow.createCell(3).setCellValue("content");
+
+
 
 		for (int i = 0; i < 62; i++) {
 			if (i < 10) {
@@ -76,74 +122,81 @@ public class NaverCrawling {
 //		WebDriver driver = new ChromeDriver(options);
 		WebDriver driver = new ChromeDriver();
 		JavascriptExecutor js = (JavascriptExecutor) driver;
+		for(int x = 1; x<=2;x++) {
 
-		for (int page = 1; page <= 1; page++) {
-			// 해당 페이지의 html로 이동 후 스크롤
 
-			String url = "https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EC%9C%A0%EA%B8%B0%EB%86%8D%20%EC%82%AC%EB%A3%8C"
-					+ "&pagingIndex=" + page
-					+ "&pagingSize=40&productSet=total&query=%EC%9C%A0%EA%B8%B0%EB%86%8D%20%EC%82%AC%EB%A3%8C&sort=rel&timestamp=&viewType=list";
-//			String url = "https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EA%B0%95%EC%95%84%EC%A7%80%EC%82%AC%EB%A3%8C"
-//					+ "&pagingIndex=" + page
-//					+ "&pagingSize=40&productSet=total&query=%EA%B0%95%EC%95%84%EC%A7%80%EC%82%AC%EB%A3%8C&sort=rel&timestamp=&viewType=list";
-			driver.get(url);
+			sb.append("-----------------------------------------------");
+			sb.append("\n");
 
-			for (int i = 0; i < 18; i++) {
-				js.executeScript("window.scrollBy(0," + (600 + i * 20) + ")");
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+			for (int page = 1; page <= 1; page++) {
+				// 해당 페이지의 html로 이동 후 스크롤
+				String url=getUrl(x,page);
+
+				driver.get(url);
+
+				for (int i = 0; i < 18; i++) {
+					js.executeScript("window.scrollBy(0," + (600 + i * 20) + ")");
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
 				}
-			}
 
-			// 해당 페이지 가져옴
-			List<WebElement> el1 = driver.findElements(By.className("basicList_item__0T9JD"));
-			for (int i = 0; i < el1.size(); i++) {
-				// 큰 영역 가져오기
-				WebElement innerDiv = el1.get(i).findElement(By.className("basicList_inner__xCM3J"));
+				// 해당 페이지 가져옴
+				List<WebElement> el1 = driver.findElements(By.className("basicList_item__0T9JD"));
+				for (int i = 0; i < el1.size(); i++) {
+					// 큰 영역 가져오기
+					WebElement innerDiv = el1.get(i).findElement(By.className("basicList_inner__xCM3J"));
 
-				// 제목 가져오기
-				String title = innerDiv.findElement(By.className("basicList_title__VfX3c")).getText().replaceAll(
-						"[0-9]+(?i)g\\s|[0-9]*.[0-9]+(?i)kg|\\[.*\\]|\\(.*배송,*\\)|\\(.*무료.*\\)|[0-9]+종|택[0-9]+|^(강아지)$",
-						"").replaceAll("\\s{2,}", " ").trim();
-				if (titleSet.contains(title))
-					continue;
-				titleSet.add(title);
-				fkey = "f" + randomKey();
-				while (fkeySet.contains(fkey)) {
-					fkey = "f" + randomKey();
+					// 제목 가져오기
+					String title = innerDiv.findElement(By.className("basicList_title__VfX3c")).getText().replaceAll(
+							"[0-9]+(?i)g\\s|[0-9]*.[0-9]+(?i)kg|\\[.*\\]|\\(.*배송,*\\)|\\(.*무료.*\\)|[0-9]+종|택[0-9]+|^(강아지)$",
+							"").replaceAll("\\s{2,}", " ").trim();
+					if (titleSet.contains(title))
+						continue;
+					titleSet.add(title);
+					if (x == 1) {
+						fkey = "f" + randomKey();
+					} else
+						fkey = "s" + randomKey();
+					while (fkeySet.contains(fkey)) {
+						if (x == 1) {
+							fkey = "f" + randomKey();
+						} else
+							fkey = "s" + randomKey();
+					}
+					fkeySet.add(fkey);
+
+
+					// 이미지 영역 가져오기
+					WebElement imageA = innerDiv.findElement(By.className("thumbnail_thumb__Bxb6Z"));
+					WebElement img = imageA.findElement(By.tagName("img"));
+					String src = img.getAttribute("src");
+					String imageName = "";
+					String reviewUrl = imageA.getAttribute("href");
+
+					// 디테일가져오기
+					WebElement detail = innerDiv.findElement(By.className("basicList_detail_box__OoXKt"));
+					String detailText = detail.getText();
+
+					if(x==1)
+					if (!subDetail(detailText))
+						continue;
+
+					// 사료 객체 생성
+					Feed feed = new Feed();
+					feed.setSno(fkey);
+					feed.setTitle(title);
+					imageName = ImageTransfrom(src);
+					feed.setImage(imageName);
+					feed.setReviewUrl(reviewUrl);
+
+					sb.append(feed);
+					listFeed.add(feed);
 				}
-				fkeySet.add(fkey);
-
-				// 이미지 영역 가져오기
-				WebElement imageA = innerDiv.findElement(By.className("thumbnail_thumb__Bxb6Z"));
-				WebElement img = imageA.findElement(By.tagName("img"));
-				String src = img.getAttribute("src");
-				String imageName = "";
-				String reviewUrl = imageA.getAttribute("href");
-
-				// 디테일가져오기
-				WebElement detail = innerDiv.findElement(By.className("basicList_detail_box__OoXKt"));
-				String detailText = detail.getText();
-
-				if (!subDetail(detailText))
-					continue;
-
-				// 사료 객체 생성
-				Feed feed = new Feed();
-				feed.setSno(fkey);
-				feed.setTitle(title);
-				imageName = ImageTransfrom(src);
-				feed.setImage(imageName);
-				feed.setReviewUrl(reviewUrl);
-
-				sb.append(feed);
-				listFeed.add(feed);
 			}
 		}
-		
-		
 		// 리뷰
 		for (int i = 0; i < listFeed.size(); i++) {
 			Feed rfeed = listFeed.get(i);
@@ -169,7 +222,7 @@ public class NaverCrawling {
 					String kind = cntList.get(j).getText();
 					if (kind.contains("리뷰")) {
 						try {
-							String cntStr = kind.replaceAll("리뷰|,", "");
+							String cntStr = cntList.get(j).findElement(By.className("_3HJHJjSrNK")).getText().replaceAll(",","");
 							cnt = Integer.parseInt(cntStr);
 							System.out.println(cnt);
 						} catch (Exception e) {
@@ -179,7 +232,7 @@ public class NaverCrawling {
 				}
 
 				if(cnt==0) {
-					break;
+					continue;
 				}
 				
 				int pagingCnt = cnt / 20 + 1;
@@ -197,14 +250,38 @@ public class NaverCrawling {
 						System.out.println(score);
 						System.out.println(content);
 						System.out.println();
+
+
+//						System.out.println(String.format("%s,%s,%s",rfeed.getSno(),score,content));
+//						bw.write(String.format("%s,%s,%s",rfeed.getSno(),score,content));
+//						bw.write(NEWLINE)
+						System.out.println(rowNo+"번 행에 쓰는중");
+						xssfRow = xssfSheet.createRow(rowNo++); // 행 객체 추가
+						xssfRow.createCell(1).setCellValue(rfeed.getSno());
+						xssfRow.createCell(2).setCellValue(score);
+						xssfRow.createCell(3).setCellValue(content);
+
 					}
 
-					if (k == pagingCnt)
+					System.out.println(k);
+					System.out.println(pagingCnt);
+
+					if (k == pagingCnt){
+						//액셀파일 저장
+						String localFile = "C:/Users/KMLEE/Desktop/exceldata/" + rfeed.getSno()+ ".xlsx";
+						File file = new File(localFile);
+						FileOutputStream fos = null;
+						fos = new FileOutputStream(file);
+						xssfWb.write(fos);
+						if (fos != null) fos.close();
+						//
 						break;
+					}
+
 					
 					WebElement next = driver.findElement(By.className("_2Ar8-aEUTq"));
 					next.click();
-					next.click();
+
 					
 					
 					try {
@@ -244,14 +321,23 @@ public class NaverCrawling {
 				}
 
 				if(cnt==0) {
-					break;
+					continue;
 				}
 				
 				int pagingCnt = cnt / 20 + 1;
 
 				for (int k = 1; k <= pagingCnt; k++) {
-					if (k == 11)
+					if (k == 11){
+						//액셀파일 저장
+						String localFile = "C:/Users/KMLEE/Desktop/exceldata/" + rfeed.getSno()+ ".xlsx";
+						File file = new File(localFile);
+						FileOutputStream fos = null;
+						fos = new FileOutputStream(file);
+						xssfWb.write(fos);
+						if (fos != null) fos.close();
+						//
 						break;
+					}
 
 					List<WebElement> reviewList = driver.findElements(By.cssSelector("#section_review > ul > li"));
 //			System.out.println(k+"----------------------------------------------------------");
@@ -268,10 +354,30 @@ public class NaverCrawling {
 						System.out.println(score);
 						System.out.println(content);
 						System.out.println();
+//						bw.write(String.format("%s|%s|%s",rfeed.getSno(),score,content));
+//						bw.write(NEWLINE);
+						System.out.println(rowNo+"번 행에 쓰는중");
+						xssfRow = xssfSheet.createRow(rowNo++); // 행 객체 추가
+						xssfRow.createCell(1).setCellValue(rfeed.getSno());
+						xssfRow.createCell(2).setCellValue(score);
+						xssfRow.createCell(3).setCellValue(content);
+
 					}
 
-					if (k == pagingCnt)
+					if (k == pagingCnt){
+						//액셀파일 저장
+						String localFile = "C:/Users/KMLEE/Desktop/exceldata/" + rfeed.getSno()+ ".xlsx";
+						File file = new File(localFile);
+						FileOutputStream fos = null;
+						fos = new FileOutputStream(file);
+						xssfWb.write(fos);
+						if (fos != null) fos.close();
+						//
 						break;
+
+					}
+
+
 
 					WebElement paginDiv = driver.findElement(By.className("review_section_review__GDdvh"));
 					WebElement aDiv = paginDiv.findElement(By.cssSelector(".pagination_now__Ey_sR + a"));
@@ -289,6 +395,7 @@ public class NaverCrawling {
 			}
 
 		}
+
 
 		sb.append("-------------------\n");
 		sb.append(CommonUtil.FUNCTION);
