@@ -9,24 +9,25 @@ import PaymentList from "./pages/PaymentList";
 import RecommendList from "./pages/RecommendList";
 import SignupPet from "./pages/SignupPet";
 import SignupUser from "./pages/SignupUser";
-
+import { NavBar } from "./components/NavBar";
 
 function Router() {
   return (
-    <Routes>
-      <Route path="/" element={<Main/>}/>
-      <Route path="/subscribeList" element={<SubscribeList/>}/>
-      <Route path="/subscribeDetail" element={<SubscribeDetail/>}/>
-      <Route path="/payment" element={<Payment/>}/>
-      <Route path="/paymentCheck" element={<PaymentCheck/>}/>
-      <Route path="/paymentList" element={<PaymentList/>}/>
-      <Route path="/recommendList" element={<RecommendList/>}/>
-      <Route path="/signupPet" element={<SignupPet/>}/>
-      <Route path="/signupUser" element={<SignupUser/>}/>
-    </Routes>
-  
-    );
-  }
-  
+    <div>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/subscribeList" element={<SubscribeList />} />
+        <Route path="/subscribeDetail" element={<SubscribeDetail />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/paymentCheck" element={<PaymentCheck />} />
+        <Route path="/paymentList" element={<PaymentList />} />
+        <Route path="/recommendList" element={<RecommendList />} />
+        <Route path="/signupPet" element={<SignupPet />} />
+        <Route path="/signupUser" element={<SignupUser />} />
+      </Routes>
+    </div>
+  );
+}
+
 export default Router;
-  
