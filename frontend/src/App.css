@@ -1,5 +1,7 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 .App {
   text-align: center;
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
 }
 
 .App-logo {
@@ -26,6 +28,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+div {
+  margin: 0px;
+  padding: 0px;
 }
 
 @keyframes App-logo-spin {
