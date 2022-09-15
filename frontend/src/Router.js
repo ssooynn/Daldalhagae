@@ -27,7 +27,7 @@ function Router() {
         <Route path="/recommendList" element={<RecommendList />} />
         <Route path="/signupPet" element={<SignupPet />} />
         <Route path="/signupUser" element={<SignupUser />} />
-        <Route path="/mypage" element={<Mypage/>}/>
+        <Route path="/mypage/*" element={<Mypage/>}/>
       </Routes>
     </div>
   );

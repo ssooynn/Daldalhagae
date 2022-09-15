@@ -1,25 +1,30 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { NavLink, useParams } from 'react-router-dom'
 
 const MypageSideBar = () => {
+
+
   // style
   const sideBarBox = {
     boxSizing:'border-box',
     width: '20%',
-    minWidth: '200px',
-    padding: '2.2rem',
+    minWidth: '190px',
+    maxWidth: '200px',
+    padding: '2.1em',
     border:'0.5px solid #D3D3D3'
   }
 
   const menuTitle = {
     fontFamily: 'Spoqa Han Sans Neo, sans-serif',
-    fontSize:'20px',
+    fontSize:'1em',
     fontWeight: '500',
     color: '#564B43',
     textAlign:'left',
     margin: '0 0 0.8rem'
     // margin: [margin-top] [margin-right] [margin-bottom] [margin-left];
   }
+
+
 
   const subMenuList = {
     margin: '0 0 1rem',
@@ -30,19 +35,25 @@ const MypageSideBar = () => {
     marginLeft: 'auto'
   }
 
-  const subMenuTitle = {
-    fontFamily: 'Spoqa Han Sans Neo, sans-serif',
-    fontSize:'14px',
-    textDecoration: 'none',
-    color: '#1f1d1d',
-    margin: '0.7em 0'
-  }
+  const subMenuTitle =(isActive, id)=>{
+    return(
+      {
+        fontFamily: 'Spoqa Han Sans Neo, sans-serif',
+        fontSize:'13px',
+        fontWeight: (isActive&&(id!==0) ? '600' :'400'),
+        textDecoration: 'none',
+        color: '#1f1d1d',
+        margin: '0.5em 0'
+      }
+    )
+
+  } 
 
   const menus = [
     {
       title: '구독 내역',
       subMenus: [
-        {name: '진행 중인 구독', path: '/mypage'},
+        {name: '진행 중인 구독', path: '/mypage/subscriptionsNow'},
         {name: '전체 구독', path: '/mypage/subscriptions'}
       ]
     },
@@ -56,7 +67,7 @@ const MypageSideBar = () => {
     {
       title: '회원정보',
       subMenus: [
-        {name: '개인 정보 관리', path: '/mypage/unwrittenReviews'},
+        {name: '개인 정보 관리', path: '/mypage/user'},
         {name: '반려견 정보', path: '/mypage/pet'}
       ]
     },
@@ -72,7 +83,11 @@ const MypageSideBar = () => {
             <div style={subMenuList}>
               {menu.subMenus.map((subMenu, index)=>{
                 return(
-                    <NavLink to={subMenu.path} style={subMenuTitle} id={index}>{subMenu.name}</NavLink>
+                    <NavLink 
+                      to={subMenu.path} 
+                      style={({ isActive }) => subMenuTitle(isActive)}
+                      id={index}
+                    >{subMenu.name}</NavLink>
                 )
               })}
             </div>
