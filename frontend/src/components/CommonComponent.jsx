@@ -1,0 +1,130 @@
+import React from 'react'
+import styled, { css } from 'styled-components';
+
+
+const Button = styled.button`
+    height: 70px;
+    border-radius: 10px;
+    border: 0px;
+    font-size: 12px;
+    font-family:"Spoqa Han Sans Neo";
+    font-weight: 400;
+    margin: ${(props) => props.margin || "10px 5px"};
+    width: ${(props) => props.width || "300px"};
+    color: ${(props) => props.color || "#1f1d1d"};
+    background-color: ${(props) => props.bgColor || "white"};
+
+    ${(props) =>
+        props.FullDeepBrown &&
+        css`
+      color: white;
+      background: #776B62;
+      width: 100%;
+      font-size:20px;
+    `}
+
+    ${(props) =>
+        props.FullIvory &&
+        css`
+      color: #776B62;
+      background: #EDDCCF;
+      width: 100%;
+      font-size:20px;
+    `}
+
+    ${(props) =>
+        props.BigDeepBrown &&
+        css`
+      color: white;
+      background: #776B62;
+      width: 700px;
+      font-size:20px;
+      &:hover{
+        background-color: #EDDCCF;
+        color:#776B62;
+      }
+    `}
+
+    ${(props) =>
+        props.BigIvory &&
+        css`
+      color: #776B62;
+      background: #EDDCCF;
+      width: 700px;
+      font-size:20px;
+    `}
+
+    ${(props) =>
+        props.MediumIvory &&
+        css`
+      color: #776B62;
+      background: #EDDCCF;
+      width: 500px;
+      font-size:20px;
+      &:hover{
+        background-color: #776B62;
+        color:white;
+      }
+    `}
+
+    ${(props) =>
+        props.MediumBrown &&
+        css`
+      color: #1f1d1d;
+      background: #CCAA90;
+      width: 500px;
+      font-size:20px;
+    `}
+
+    ${(props) =>
+        props.SmallBrown &&
+        css`
+      color: #1f1d1d;
+      background: #CCAA90;
+      width: 250px;
+      height: 60px;
+      font-size:18px;
+    `}
+
+    ${(props) =>
+        props.SmallIvory &&
+        css`
+      color: #776B62;
+      background: #EDDCCF;
+      width: 250px;
+      height: 60px;
+      font-size:18px;
+      &:hover{
+        background-color: #776B62;
+        color:white;
+      }
+    `}
+
+    ${(props) =>
+        props.SmallWhite &&
+        css`
+      background: #f6f1ec;
+      color: #776B62;
+      width: 260px;
+      height: 65px;
+      font-size:22px;
+      &:hover{
+        background-color: #776B62;
+        color:white;
+      }
+    `}
+`
+export function StyledButton({ children, width, color, bgColor, margin, ...props }) {
+    return <Button width={width} color={color} bgColor={bgColor} margin={margin} {...props} >{children}</Button>
+}
+
+const Text = styled.div`
+    font-weight: ${(props) => props.weight || "400"};
+    color: ${(props) => props.color || "#1f1d1d"};
+    font-size: ${(props) => props.size || "20px"};
+    margin: ${(props) => props.margin || "10px"}
+`
+
+export function StyledText({ children, weight, color, size, margin, ...props }) {
+    return <Text weight={weight} color={color} size={size} margin={margin} {...props}>{children}</Text>
+}
