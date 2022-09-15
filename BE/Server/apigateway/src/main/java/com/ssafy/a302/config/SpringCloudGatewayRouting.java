@@ -11,8 +11,8 @@ public class SpringCloudGatewayRouting {
 	public RouteLocator configurationRoute(RouteLocatorBuilder rlb) {
 
         return rlb.routes()
-                .route("authId", r -> r.path("/auth-api/**").uri("lb://AUTH"))
-                .route("businessId", r -> r.path("/business-api/**").uri("lb://BUSINESS"))
+                .route("authId", r -> r.path("/api-gateway/auth-api/**").uri("lb://AUTH"))
+                .route("businessId", r -> r.path("/api-gateway/business-api/**").uri("lb://BUSINESS"))
                 .build();
     }
 }
