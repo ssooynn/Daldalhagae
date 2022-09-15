@@ -34,15 +34,20 @@ public class  UserController {
     }
 
     @ApiOperation(value="사용자의 현재 구독 내용 조회")
-    @GetMapping("/user/mypage/subscriptions/now")
-    public ResponseEntity<?> getUserSubNow(){
-        return ResponseEntity.status(HttpStatus.OK).build();
+    @GetMapping("/user/mypage/subscriptions/now/{subSno}")
+    public ResponseEntity<?> getUserSubNow(@PathVariable("subSno") String subSno){
+        SubscriptionDto subscriptionDto = new SubscriptionDto("뭉자뭉자", 20000, "뭉자", "2022-10-10", "2022-11-09", 1 );
+        return ResponseEntity.ok(subscriptionDto);
     }
 
     @ApiOperation(value="사용자의 모든 구독 내용 조회")
     @GetMapping("/mypage/subscriptions")
     public ResponseEntity<?> getUserSubAll(){
-        return ResponseEntity.status(HttpStatus.OK).build();
+        List<SubscriptionDto> list = new ArrayList<>();
+        SubscriptionDto subscriptionDto1 = new SubscriptionDto("뭉자뭉자", 20000, "뭉자", "2022-10-10", "2022-11-09", 1 );
+        SubscriptionDto subscriptionDto2 = new SubscriptionDto("부자몽자", 100000, "몽자", "2022-10-10", "2022-11-09", 1 );
+
+        return ResponseEntity.ok(list);
     }
 
     @ApiOperation(value="사용자 구독 취소")
@@ -54,7 +59,14 @@ public class  UserController {
     @ApiOperation(value="내가 쓴 리뷰 조회")
     @GetMapping("/mypage/review")
     public ResponseEntity<?> getMyReviews(){
-        return ResponseEntity.status(HttpStatus.OK).build();
+        List<ReviewDto> list = new ArrayList<>();
+        ReviewDto reviewDto1 = new ReviewDto("U1991991991", "P1001001001", "I2002002002", "1", "시러요", null);
+        ReviewDto reviewDto2= new ReviewDto("U1991991992", "P1001001002", "I2002002002", "5", "조아요", null);
+
+        list.add(reviewDto1);
+        list.add(reviewDto2);
+
+        return ResponseEntity.ok(list);
     }
 
     @ApiOperation(value="리뷰 작성하기")
@@ -66,7 +78,15 @@ public class  UserController {
     @ApiOperation(value="전체 펫 상세 조회")
     @GetMapping("/mypage/pet")
     public ResponseEntity<?> getMyPetInfoAll(){
-        return ResponseEntity.status(HttpStatus.OK).build();
+
+
+        List<PetDto> list = new ArrayList<>();
+        PetDto petDto1 = new PetDto("U1231231233", "댕댕이", "2021-09-18", "3", "어쩌구", "저쩌구", "유아견", null);
+        PetDto petDto2 = new PetDto("U1231231233", "댕댕이2", "2021-09=10-18", "2", "어쩌구", "저쩌구", "유아견", null);
+
+        list.add(petDto1);
+        list.add(petDto2);
+        return ResponseEntity.ok(list);
     }
 
     @ApiOperation(value="펫 정보 수정")
