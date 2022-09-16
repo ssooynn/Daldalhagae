@@ -21,7 +21,7 @@ public class  UserController {
     private final UserService userService;
 
     @ApiOperation(value="사용자 정보 조회")
-    @GetMapping("/user/mypage/info/{userSno}")
+    @GetMapping("/mypage/info/{userSno}")
     public ResponseEntity<?> getMyPageInfo(){
         UserDto userDto = new UserDto("example@naver.com", "김땡땡", "010-9999-8888", "수원시");
         return ResponseEntity.ok(userDto);
@@ -34,7 +34,7 @@ public class  UserController {
     }
 
     @ApiOperation(value="사용자의 현재 구독 내용 조회")
-    @GetMapping("/user/mypage/subscriptions/now/{subSno}")
+    @GetMapping("/mypage/subscriptions/now/{subSno}")
     public ResponseEntity<?> getUserSubNow(@PathVariable("subSno") String subSno){
         SubscriptionDto subscriptionDto = new SubscriptionDto("뭉자뭉자", 20000, "뭉자", "2022-10-10", "2022-11-09", 1 );
         return ResponseEntity.ok(subscriptionDto);
@@ -70,7 +70,7 @@ public class  UserController {
     }
 
     @ApiOperation(value="리뷰 작성하기")
-    @PostMapping("/user/mypage/review")
+    @PostMapping("/mypage/review")
     public ResponseEntity<?> postReview(@RequestBody ReviewDto reviewDto, @RequestPart(required = false) List<MultipartFile> images){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
