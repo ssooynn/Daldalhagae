@@ -3,6 +3,7 @@ import React from 'react'
 const MypageHeaderCard = (props) => {
   const user = {
     name:'김김김',
+    delivering:0,
     subscribingCnt: 1,
     unwrittenReviews: 2,
     repPets: [
@@ -52,7 +53,7 @@ const MypageHeaderCard = (props) => {
     borderRadius:'4px',
     boxShadow: '0px 1px 1.5px rgba(0, 0, 0, 0.15)',
     display:'flex',
-    justifyContent:'space-around',
+    justifyContent:'space-between',
     alignItems:'center',
     padding:'0 5%'
   }
@@ -61,19 +62,21 @@ const MypageHeaderCard = (props) => {
     fontSize: '22px',
     fontWeight: '600',
     color:'#776B62',
+    width:'15%'
   }
 
   const detailTitle = {
     fontSize:'15px',
     fontWeight:'500',
     color: '#323232',
-    marginBottom:'0.6em'
+    marginBottom:'0.7em'
   }
 
   const repDiv ={
     display:'flex',
     justifyContent:'space-around',
-    width: '100%'
+    width: '70%',
+    margin:'auto'
   }
 
   const miniProfile = {
@@ -85,7 +88,7 @@ const MypageHeaderCard = (props) => {
   const plusProfile = {
     width:'62px',
     aspectRatio: '1 / 1',
-    borderRadius:'3px',
+    borderRadius:'5px',
     margin:'0',
     backgroundColor: '#EDEDED',
     display:'flex',
@@ -99,13 +102,20 @@ const MypageHeaderCard = (props) => {
     height:'62px',
     display:'flex',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    paddingBottom:'2px'
   }
 
   return (
     <div style={cardContainer}>
       <div style={greeting}><span style={userNameText}>{user.name}</span>님 반갑습니다 :)</div>
       <div style={summaryContainer}>
+        {/* 배송중 */}
+        <div style={contentDetail}>
+          <div style={detailTitle}>배송중</div>
+          <div style={detailContent}>{user.delivering}</div>
+        </div>
+        
         {/* 구독중 */}
         <div style={contentDetail}>
           <div style={detailTitle}>구독중</div>
@@ -117,7 +127,7 @@ const MypageHeaderCard = (props) => {
           <div style={detailContent}>{user.unwrittenReviews}</div>
         </div>
         {/* 대표 반려견 */}
-        <div style={{width:'30%'}}>
+        <div style={{width:'40%', borderLeft:'0.1px solid #929292'}}>
           <div style={detailTitle}>대표 반려견</div>
           <div style={repDiv}>
             {user.repPets.map((pet, idx)=>{
