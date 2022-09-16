@@ -9,7 +9,7 @@ import { FlexBox } from './MainComponent';
 // 다시 올릴때는 투명도 80%
 const Navbar = styled.div`
     width : 100%;
-    height : 100px;
+    height : 80px;
     background-color: ${(props) => props.backgroundColor || "rgba(255,255,255,0)"};
     position: fixed;
     top: 0%;
@@ -19,12 +19,13 @@ const Navbar = styled.div`
     align-items: center;
     display: flex;
     font-weight: 500;
+    z-index: 999;
     `
 
 const Category = styled.div`
   font-weight: 500;
   color: #776B62;
-  font-size: 18px;
+  font-size: 14px;
   &:hover {
     color:#1f1d1d;
     font-weight: 600;
@@ -48,7 +49,7 @@ export function NavBar({ ...props }) {
         console.log(lastScrollTop)
         // 스크롤 내리는 모션일때
         if (nowScrollTop > lastScrollTop && nowScrollTop > fixBoxHeight) {
-          setBackgroundColor("rgba(255,254,254,0.8)");
+          setBackgroundColor("rgba(255,254,254,0.9)");
           setboxShadow("0px 4px 4px 0px rgba(197, 197, 197, 0.4)");
         } else {
           if (lastScrollTop > nowScrollTop) {
@@ -71,7 +72,7 @@ export function NavBar({ ...props }) {
     <Navbar backgroundColor={backgroundColor} boxShadow={boxShadow} {...props}>
       <FlexBox width="70%" justify="space-between">
         <div>로고</div>
-        <FlexBox width="450px" justify="space-between">
+        <FlexBox width="350px" justify="space-between">
           <Category>고객 후기</Category>
           <Category>상품 목록</Category>
           <Category>회원가입</Category>

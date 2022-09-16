@@ -1,8 +1,8 @@
 import React from 'react'
 import styled, { css } from 'styled-components';
+import { animated } from '@react-spring/web';
 
-
-const Button = styled.button`
+const Button = styled(animated.button)`
     height: 70px;
     border-radius: 10px;
     border: 0px;
@@ -101,13 +101,27 @@ const Button = styled.button`
     `}
 
     ${(props) =>
+        props.XSmallIvory &&
+        css`
+      color: #776B62;
+      background: #EDDCCF;
+      width: 120px;
+      height: 45px;
+      font-size:16px;
+      &:hover{
+        background-color: #776B62;
+        color:white;
+      }
+    `}
+
+    ${(props) =>
         props.SmallWhite &&
         css`
-      background: #f6f1ec;
-      color: #776B62;
-      width: 260px;
-      height: 65px;
-      font-size:22px;
+      background: #CCaa90;
+      color: #1f1d1d;
+      width: 220px;
+      height: 55px;
+      font-size:18px;
       &:hover{
         background-color: #776B62;
         color:white;
@@ -118,13 +132,13 @@ export function StyledButton({ children, width, color, bgColor, margin, ...props
     return <Button width={width} color={color} bgColor={bgColor} margin={margin} {...props} >{children}</Button>
 }
 
-const Text = styled.div`
+const Text = styled(animated.div)`
     font-weight: ${(props) => props.weight || "400"};
     color: ${(props) => props.color || "#1f1d1d"};
     font-size: ${(props) => props.size || "20px"};
-    margin: ${(props) => props.margin || "10px"}
+    margin: ${(props) => props.margin || "10px"};
 `
 
 export function StyledText({ children, weight, color, size, margin, ...props }) {
-    return <Text weight={weight} color={color} size={size} margin={margin} {...props}>{children}</Text>
-}
+    return <Text weight={weight} color={color} size={size} margin={margin} {...props} >{children}</Text>
+};
