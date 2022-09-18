@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const MypageHeaderCard = (props) => {
   const user = {
@@ -9,6 +10,7 @@ const MypageHeaderCard = (props) => {
     repPets: [
       {
         name:'해리',
+        petId:'A12455',
         profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       }
     ]
@@ -75,7 +77,7 @@ const MypageHeaderCard = (props) => {
   const repDiv ={
     display:'flex',
     justifyContent:'space-around',
-    width: '70%',
+    width: '75%',
     margin:'auto'
   }
 
@@ -127,7 +129,7 @@ const MypageHeaderCard = (props) => {
           <div style={detailContent}>{user.unwrittenReviews}</div>
         </div>
         {/* 대표 반려견 */}
-        <div style={{width:'40%', borderLeft:'0.1px solid #929292'}}>
+        <div style={{boxSizing:'border-box', width:'40%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
           <div style={detailTitle}>대표 반려견</div>
           <div style={repDiv}>
             {user.repPets.map((pet, idx)=>{
