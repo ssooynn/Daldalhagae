@@ -10,7 +10,6 @@ import RecommendList from "./pages/RecommendList";
 import SignupPet from "./pages/SignupPet";
 import SignupUser from "./pages/SignupUser";
 import { NavBar } from "./components/NavBar";
-import Footer from "./components/Footer";
 
 function Router() {
   return (
