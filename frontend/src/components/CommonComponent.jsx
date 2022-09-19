@@ -12,11 +12,11 @@ const Button = styled(animated.button)`
     margin: ${(props) => props.margin || "10px 5px"};
     width: ${(props) => props.width || "300px"};
     color: ${(props) => props.color || "#1f1d1d"};
-    background-color: ${(props) => props.bgColor || "white"};
+    background-color: ${(props) => props.bgcolor || "white"};
 
     ${(props) =>
-        props.FullDeepBrown &&
-        css`
+    props.FullDeepBrown &&
+    css`
       color: white;
       background: #776B62;
       width: 100%;
@@ -24,8 +24,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.FullIvory &&
-        css`
+    props.FullIvory &&
+    css`
       color: #776B62;
       background: #EDDCCF;
       width: 100%;
@@ -33,8 +33,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.BigDeepBrown &&
-        css`
+    props.BigDeepBrown &&
+    css`
       color: white;
       background: #776B62;
       width: 700px;
@@ -46,8 +46,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.BigIvory &&
-        css`
+    props.BigIvory &&
+    css`
       color: #776B62;
       background: #EDDCCF;
       width: 700px;
@@ -55,8 +55,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.MediumIvory &&
-        css`
+    props.MediumIvory &&
+    css`
       color: #776B62;
       background: #EDDCCF;
       width: 500px;
@@ -68,8 +68,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.MediumBrown &&
-        css`
+    props.MediumBrown &&
+    css`
       color: #1f1d1d;
       background: #CCAA90;
       width: 500px;
@@ -77,8 +77,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.SmallBrown &&
-        css`
+    props.SmallBrown &&
+    css`
       color: #1f1d1d;
       background: #CCAA90;
       width: 250px;
@@ -87,8 +87,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.SmallIvory &&
-        css`
+    props.SmallIvory &&
+    css`
       color: #776B62;
       background: #EDDCCF;
       width: 250px;
@@ -101,8 +101,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.XSmallIvory &&
-        css`
+    props.XSmallIvory &&
+    css`
       color: #776B62;
       background: #EDDCCF;
       width: 120px;
@@ -115,8 +115,8 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
-        props.SmallWhite &&
-        css`
+    props.SmallWhite &&
+    css`
       background: #CCaa90;
       color: #1f1d1d;
       width: 220px;
@@ -128,8 +128,8 @@ const Button = styled(animated.button)`
       }
     `}
 `
-export function StyledButton({ children, width, color, bgColor, margin, ...props }) {
-    return <Button width={width} color={color} bgColor={bgColor} margin={margin} {...props} >{children}</Button>
+export function StyledButton({ children, width, color, bgcolor, margin, ...props }) {
+  return <Button width={width} color={color} bgcolor={bgcolor} margin={margin} {...props} >{children}</Button>
 }
 
 const Text = styled(animated.div)`
@@ -140,5 +140,5 @@ const Text = styled(animated.div)`
 `
 
 export function StyledText({ children, weight, color, size, margin, ...props }) {
-    return <Text weight={weight} color={color} size={size} margin={margin} {...props} >{children}</Text>
+  return <Text weight={weight} color={color} size={size} margin={margin} {...props} >{children}</Text>
 };

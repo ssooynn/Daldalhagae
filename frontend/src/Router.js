@@ -11,8 +11,8 @@ import SignupPet from "./pages/SignupPet";
 import SignupUser from "./pages/SignupUser";
 import Mypage from "./pages/Mypage/Mypage";
 
+import ReviewList from "./pages/ReviewList";
 import { NavBar } from "./components/NavBar";
-import Footer from "./components/Footer";
 
 function Router() {
   return (
@@ -28,7 +28,8 @@ function Router() {
         <Route path="/recommendList" element={<RecommendList />} />
         <Route path="/signupPet" element={<SignupPet />} />
         <Route path="/signupUser" element={<SignupUser />} />
-        <Route path="/mypage/*" element={<Mypage/>}/>
+        <Route path="/mypage/*" element={<Mypage />} />
+        <Route path="/reviewList" element={<ReviewList />} />
       </Routes>
     </div>
   );

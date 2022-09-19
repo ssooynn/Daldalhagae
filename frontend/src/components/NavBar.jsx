@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 // 스타일 컴포넌트
 import styled from "styled-components";
 import { FlexBox } from './MainComponent';
+import { Link } from 'react-router-dom';
+import Login from './Login';
 
 
 // 처음엔 배경 투명도 100%
@@ -22,6 +24,7 @@ const Navbar = styled.div`
     z-index: 999;
     `
 
+
 const Category = styled.div`
   font-weight: 500;
   color: #776B62;
@@ -36,9 +39,13 @@ const Category = styled.div`
 let lastScrollTop = 0;
 let nowScrollTop = 0;
 export function NavBar({ ...props }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("rgba(255,255,255,0)");
   const [boxShadow, setboxShadow] = useState("none")
 
+  function showLoginModal() {
+    setIsModalOpen(true);
+  }
   useEffect(() => {
     let mounted = true;
     window.addEventListener("scroll", () => {
@@ -71,14 +78,19 @@ export function NavBar({ ...props }) {
   return (
     <Navbar backgroundColor={backgroundColor} boxShadow={boxShadow} {...props}>
       <FlexBox width="70%" justify="space-between">
-        <div>로고</div>
+        {/* 내브바 왼쪽 로고 */}
+        <Link to="/"><div>로고</div></Link>
+
+        {/* 내브바 오른쪽 카테고리 리스트 */}
         <FlexBox width="350px" justify="space-between">
-          <Category>고객 후기</Category>
-          <Category>상품 목록</Category>
-          <Category>회원가입</Category>
-          <Category>로그인</Category>
+          <Link to="/reviewList"><Category>고객 후기</Category></Link>
+          <Link to="/subscribeList"><Category>상품 목록</Category></Link>
+          <Link to="/signupUser"><Category>회원가입</Category></Link>
+          <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }}>로그인</Category>
         </FlexBox>
       </FlexBox>
+
+      {isModalOpen && <Login setIsModalOpen={setIsModalOpen} />}
     </Navbar>
   )
 }
