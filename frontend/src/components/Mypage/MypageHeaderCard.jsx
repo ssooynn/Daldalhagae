@@ -1,22 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { StyledLink } from './MypageCommon'
+
+
 
 const MypageHeaderCard = (props) => {
-  const user = {
-    name:'김김김',
-    delivering:0,
-    subscribingCnt: 1,
-    unwrittenReviews: 2,
-    repPets: [
-      {
-        name:'해리',
-        petId:'A12455',
-        profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      }
-    ]
-  }
-
-
+  const {user} = props
   
   const cardContainer = {
     boxSizing:'border-box',
@@ -64,32 +54,36 @@ const MypageHeaderCard = (props) => {
     fontSize: '22px',
     fontWeight: '600',
     color:'#776B62',
-    width:'15%'
+    width:'15%',
+    textDecoration: 'none',
   }
 
   const detailTitle = {
     fontSize:'15px',
     fontWeight:'500',
     color: '#323232',
-    marginBottom:'0.7em'
+    marginBottom:'0.5rem',
+    textAlign:'center',
+    whiteSpace : 'nowrap'
   }
 
   const repDiv ={
     display:'flex',
     justifyContent:'space-around',
     width: '75%',
-    margin:'auto'
+    margin:'auto',
   }
 
   const miniProfile = {
     width:'62px',
     aspectRatio: '1 / 1',
-    borderRadius:'3px'
+    borderRadius:'3px',
+    objectFit: 'cover'
   }
 
   const plusProfile = {
     width:'62px',
-    aspectRatio: '1 / 1',
+    height:'62px',
     borderRadius:'5px',
     margin:'0',
     backgroundColor: '#EDEDED',
@@ -108,6 +102,12 @@ const MypageHeaderCard = (props) => {
     paddingBottom:'2px'
   }
 
+//  data fetching
+useEffect(()=>{
+
+})
+
+
   return (
     <div style={cardContainer}>
       <div style={greeting}><span style={userNameText}>{user.name}</span>님 반갑습니다 :)</div>
@@ -118,26 +118,34 @@ const MypageHeaderCard = (props) => {
           <div style={detailContent}>{user.delivering}</div>
         </div>
         
-        {/* 구독중 */}
-        <div style={contentDetail}>
-          <div style={detailTitle}>구독중</div>
-          <div style={detailContent}>{user.subscribingCnt}</div>
-        </div>
-        {/* 미작성 후기 */}
-        <div style={contentDetail}>
+        {/* 구독중  - 필요 데이터: 유저 아이디(중앙관리)*/}
+        <Link style={contentDetail} to={'subscriptionsNow'}>
+            <div style={detailTitle}>구독중</div>
+            <div style={detailContent}>{user.subscribingCnt}</div>
+        </Link>
+        {/* 미작성 후기  - 필요 데이터: 유저 아이디(중앙관리)*/}
+        <StyledLink style={contentDetail} to={'unwrittenReviews'}>
           <div style={detailTitle}>미작성 후기</div>
           <div style={detailContent}>{user.unwrittenReviews}</div>
-        </div>
-        {/* 대표 반려견 */}
+        </StyledLink >
+        {/* 대표 반려견 - 필요 데이터: 펫 아이디 (prop 필요) */}
         <div style={{boxSizing:'border-box', width:'40%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
           <div style={detailTitle}>대표 반려견</div>
           <div style={repDiv}>
-            {user.repPets.map((pet, idx)=>{
+            {user.repPets?.map((pet, idx)=>{
               return(
-                <img style={miniProfile} src={pet.profileImg} alt="프로필 이미지" id={idx}/>
+                <StyledLink 
+                  to={'petList/petDetail'}
+                  state= {{petId:pet.petId}}
+                  id={idx}
+                >
+                  <img style={miniProfile}  src={pet.profileImg} alt="프로필 이미지"/>
+                </StyledLink >
               )
             })}
-            {(user.repPets.length === 1) ? <div style={plusProfile}>+</div>:<></>}
+            <StyledLink  to={{pathname:'petList/petAdd', state:{formState:'add'}}}>
+              {(user.repPets.length === 1) ? <div style={plusProfile}>+</div>:<></>}
+            </StyledLink >
           </div>
         </div>
       </div>

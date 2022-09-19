@@ -26,7 +26,7 @@ export function MainContent({ children, width, height, justify, align, ...props 
 
 const Flex = styled.div`
     display: flex;
-    width : ${(props) => props.width || "auto"};
+    width : ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "auto"};
     flex-direction:  ${(props) => props.direction || "row"};
     justify-content: ${(props) => props.justify || "center"};

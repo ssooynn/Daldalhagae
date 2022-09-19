@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Route, Routes, useParams } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
 import MypageSubscriptionsNow from './MypageSubscriptions'
@@ -9,12 +9,58 @@ import MypageUser from './MypageUser'
 import MypageUserUpdate from './MypageUserUpdate'
 import MypagePet from './MypagePet'
 import MypagePetUpdate from './MypagePetUpdate'
+import MypagePetDetail from './MypagePetDetail'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
 const Mypage = () => {
   const params = useParams()
   const param = Object.values(params)[0]
+  const [userInfo, setUserInfo] = useState({
+    name:'김김김',
+    delivering:0,
+    subscribingCnt: 1,
+    unwrittenReviews: 2,
+    repPets: [
+      {
+        name:'해리',
+        petId:'A12455',
+        profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      }
+    ]
+  }
+)
+  const [petList, setPetList] = useState([
+    {
+      name:'해리',
+      petId:'A12455',
+      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },    {
+      name:'해리',
+      petId:'A12455',
+      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },    {
+      name:'해리',
+      petId:'A12455',
+      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },    {
+      name:'해리',
+      petId:'A12455',
+      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    }
+  ])
+  const [currentSubsList, setCurrentSubsList] = useState([])
+  const [subsList, setSubsList] = useState([])
+  const [unwrittenReviewList, setUnwrittenReviewList] = useState([])
+  const [reviewList, setReviewList] = useState([])
+
+// userfetching
+      
+
+
+  useEffect(()=>{
+
+  }, [])
 
 
   const headerContainer = {
@@ -63,15 +109,17 @@ const Mypage = () => {
     'reviews':'내가 작성한 후기',
     'user':'개인 정보 관리',
     'userUpdate':'개인 정보 수정',
-    'pet':'반려견 관리',
-    'petUpdate':'반려견 정보 수정',
+    'petList':'반려견 정보',
+    'petList/petDetail': '반려견 관리',
+    'petList/petUpdate':'반려견 정보 수정',
+    'petList/petAdd':'반려견 등록'
   }
 
   return (
     <div>
       <div style={{height:'100px'}}></div>
       <div style={headerContainer}>
-        <MypageHeaderCard/>
+        <MypageHeaderCard user={userInfo}/>
       </div>
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
@@ -84,53 +132,65 @@ const Mypage = () => {
               exact="true"
               path=""
               element={
-                <MypageSubscriptionsNow/>
+                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
               }
             />
             <Route
               path="subscriptionsNow"
               element={
-                <MypageSubscriptionsNow/>
+                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
               }
             />
             <Route
               path="subscriptions"
               element={
-                <MypageSubscriptions/>
+                <MypageSubscriptions subsList={subsList}/>
               }            
             />
             <Route
               path="unwrittenReviews"
               element={
-                <MypageUnwrittenReviews/>
+                <MypageUnwrittenReviews unwrittenReviewList={unwrittenReviewList}/>
               }               
             />
             <Route
               path="reviews"
               element={
-                <MypageReviews/>
+                <MypageReviews reviewList={reviewList}/>
               }   
             />
             <Route
               path="user"
               element={
-                <MypageUser/>
+                <MypageUser user={userInfo}/>
               }               
             />
             <Route
               path="userUpdate"
               element={
-                <MypageUserUpdate/>
+                <MypageUserUpdate user={userInfo}/>
               }               
             />
             <Route
-              path="pet"
+              path="petList"
               element={
-                <MypagePet/>
+                <MypagePet petList={petList}/>
               }               
             />
             <Route
-              path="petUpdate"
+              path="petList/petDetail"
+              element={
+                <MypagePetDetail/>
+              }               
+            />
+            <Route
+              path="petList/petAdd"
+              element={
+                <MypagePetUpdate/>
+              }               
+            />
+            <Route
+              path="petList/petUpdate"
               element={
                 <MypagePetUpdate/>
               }               

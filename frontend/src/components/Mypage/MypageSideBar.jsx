@@ -68,7 +68,7 @@ const MypageSideBar = () => {
       title: '회원정보',
       subMenus: [
         {name: '개인 정보 관리', path: '/mypage/user'},
-        {name: '반려견 정보', path: '/mypage/pet'}
+        {name: '반려견 정보', path: '/mypage/petList'}
       ]
     },
 
