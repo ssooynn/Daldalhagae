@@ -12,6 +12,7 @@ import SignupUser from "./pages/SignupUser";
 import Mypage from "./pages/Mypage/Mypage";
 
 import { NavBar } from "./components/NavBar";
+import Footer from "./components/Footer";
 
 function Router() {
   return (
