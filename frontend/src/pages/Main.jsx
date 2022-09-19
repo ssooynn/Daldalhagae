@@ -22,6 +22,7 @@ import MainWay5 from "../assets/img/MainWay5.svg";
 import MainWay6 from "../assets/img/MainWay6.svg";
 import rightArrow from "../assets/img/rightArrow.svg";
 import Footer from '../components/Footer';
+import SideButton from '../components/SideButton';
 
 
 
@@ -79,7 +80,7 @@ export default function Main() {
 
   return (
     <div style={{ height: "100vh", scrollSnapType: "y mandatory", overflowY: "scroll" }}>
-
+      <SideButton />
       {/* 1st Content */}
       <MainContent direction="row" justify="space-around" style={{ backgroundImage: `url(${Main1})`, backgroundSize: "cover" }}>
         <FlexBox></FlexBox>
@@ -89,7 +90,7 @@ export default function Main() {
             <StyledText weight="300" size="28px" style={fadeInAnimation2}>바꾸고 싶다면</StyledText>
             <StyledText weight="600" size="30px" margin="10px 4px" style={fadeInAnimation2}>달달하개</StyledText>
           </FlexBox>
-          <StyledButton SmallWhite margin="50px 5px" style={buttonAnimation}>지금 시작하기</StyledButton>
+          <StyledButton SmallWhite margin="50px 5px" style={buttonAnimation} >지금 시작하기</StyledButton>
           <ArrowImg />
         </FlexBox>
       </MainContent>
@@ -227,7 +228,7 @@ export default function Main() {
 
 
       {/* 9th Content */}
-      <MainContent style={{ backgroundColor: "#ffffff" }} justify="center" height="70%">
+      <MainContent style={{ backgroundColor: "#ffffff" }} justify="center" height="80%">
         <FlexBox direction="column" justify="space-evenly" align="center" width="70%">
           <StyledText weight="500" size="32px" color="#776b62">지금 바로 '달달하개'를 시작해보세요</StyledText>
           <StyledButton MediumIvory margin="50px 5px" style={{ borderRadius: "5px" }}>지금 시작하기</StyledButton>
