@@ -42,3 +42,7 @@ div {
     transform: rotate(360deg);
   }
 }
+
+a {
+  text-decoration-line: none;
+}

@@ -8,9 +8,15 @@ const SideButtonStyled = styled.div`
 width:30px;
 height: 120px;
 position: fixed;
-top:20%;
-right:2%;
+bottom:5%;
+right:3%;
+background-color: rgba(255,255,255,0.5);
+padding:20px 10px;
+border-radius: 50px;
+border: 2px solid #776B62;
     `
+
+//스크롤 움직일때는 opacity?
 export default function SideButton({ ...props }) {
   return (
     <SideButtonStyled {...props}>

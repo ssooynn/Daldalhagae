@@ -9,6 +9,7 @@ import PaymentList from "./pages/PaymentList";
 import RecommendList from "./pages/RecommendList";
 import SignupPet from "./pages/SignupPet";
 import SignupUser from "./pages/SignupUser";
+import ReviewList from "./pages/ReviewList";
 import { NavBar } from "./components/NavBar";
 
 function Router() {
@@ -25,6 +26,7 @@ function Router() {
         <Route path="/recommendList" element={<RecommendList />} />
         <Route path="/signupPet" element={<SignupPet />} />
         <Route path="/signupUser" element={<SignupUser />} />
+        <Route path="/reviewList" element={<ReviewList />} />
       </Routes>
     </div>
   );

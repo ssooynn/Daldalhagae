@@ -90,7 +90,7 @@ export default function Main() {
             <StyledText weight="300" size="28px" style={fadeInAnimation2}>바꾸고 싶다면</StyledText>
             <StyledText weight="600" size="30px" margin="10px 4px" style={fadeInAnimation2}>달달하개</StyledText>
           </FlexBox>
-          <StyledButton SmallWhite margin="50px 5px" style={buttonAnimation}>지금 시작하기</StyledButton>
+          <StyledButton SmallWhite margin="50px 5px" style={buttonAnimation} >지금 시작하기</StyledButton>
           <ArrowImg />
         </FlexBox>
       </MainContent>

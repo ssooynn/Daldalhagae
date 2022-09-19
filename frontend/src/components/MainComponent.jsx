@@ -112,6 +112,22 @@ export function StyledReviewImg({ src, alt, ...props }) {
 export function MainReviewCard() {
     return (
         <FlexBox direction="row" justify="space-between" align="center" width="100%" height="100%">
+            {/* 카드 하나 */}
+            <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
+                <StyledReviewImg src={ServiceInfo5} alt="사료 사진"></StyledReviewImg>
+                <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
+                    <FlexBox direction="row" justify="start" align="end">
+                        <StyledText size="18px" weight="500" margin="10px 10px 2px 0px">Yeon</StyledText>
+                        <StyledText size="14px" weight="500" margin="10px 10px 2px 2px">[ 나만의 package ]</StyledText>
+                    </FlexBox>
+                    <StyledText size="14px" weight="300" margin="2px 10px">⭐⭐⭐⭐⭐</StyledText>
+                    <div style={{ marginTop: "20px", alignSelf: "flex-start" }}>
+                        <StyledText size="15px" weight="400" margin="2px 10px">아주 좋은걸요dddddddddddddd</StyledText>
+                        <StyledText size="15px" weight="400" margin="2px 10px">강추합니다dddddddddd</StyledText>
+                    </div>
+                </FlexBox>
+            </FlexBox>
+            {/* 카드 하나 */}
             <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
                 <StyledReviewImg src={ServiceInfo5} alt="사료 사진"></StyledReviewImg>
                 <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
@@ -127,21 +143,7 @@ export function MainReviewCard() {
 
                 </FlexBox>
             </FlexBox>
-            <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
-                <StyledReviewImg src={ServiceInfo5} alt="사료 사진"></StyledReviewImg>
-                <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
-                    <FlexBox direction="row" justify="start" align="end">
-                        <StyledText size="18px" weight="500" margin="10px 10px 2px 0px">Yeon</StyledText>
-                        <StyledText size="14px" weight="500" margin="10px 10px 2px 2px">[ 나만의 package ]</StyledText>
-                    </FlexBox>
-                    <StyledText size="14px" weight="300" margin="2px 10px">⭐⭐⭐⭐⭐</StyledText>
-                    <div style={{ marginTop: "20px", alignSelf: "flex-start" }}>
-                        <StyledText size="15px" weight="400" margin="2px 10px">아주 좋은걸요dddddddddddddd</StyledText>
-                        <StyledText size="15px" weight="400" margin="2px 10px">강추합니다dddddddddd</StyledText>
-                    </div>
-
-                </FlexBox>
-            </FlexBox>
+            {/* 카드 하나 */}
             <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
                 <StyledReviewImg src={ServiceInfo5} alt="사료 사진"></StyledReviewImg>
                 <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
