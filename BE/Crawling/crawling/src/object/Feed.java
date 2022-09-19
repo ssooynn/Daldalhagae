@@ -5,8 +5,27 @@ public class Feed {
 	String title;
 	String image;
 	String reviewUrl;
-	
-	
+
+
+	int grade;
+	int particleSize;
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
+	public int getParticleSize() {
+		return particleSize;
+	}
+
+	public void setParticleSize(int particleSize) {
+		this.particleSize = particleSize;
+	}
+
 	public void setSno(String sno) {
 		this.sno = sno;
 	}
@@ -58,7 +77,7 @@ public class Feed {
 		builder.append("\n");
 		return builder.toString();
 	}
-	
-	
-	
+
+
+
 }
