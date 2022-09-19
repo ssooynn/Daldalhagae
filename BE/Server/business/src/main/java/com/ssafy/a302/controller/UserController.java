@@ -1,7 +1,7 @@
 package com.ssafy.a302.controller;
 
 import com.ssafy.a302.dto.*;
-import com.ssafy.a302.service.UserService;
+import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +18,18 @@ import java.util.List;
 @RequestMapping("user")
 @RequiredArgsConstructor
 public class  UserController {
-    private final UserService userService;
+    
 
     @ApiOperation(value="사용자 정보 조회")
     @GetMapping("/mypage/info/{userSno}")
     public ResponseEntity<?> getMyPageInfo(){
-        UserDto userDto = new UserDto("example@naver.com", "김땡땡", "010-9999-8888", "수원시");
+        UsersDto userDto = new UsersDto("example@naver.com", "김땡땡", "010-9999-8888", "수원시");
         return ResponseEntity.ok(userDto);
     }
 
     @ApiOperation(value="사용자 정보 수정")
     @PatchMapping("/mypage/info")
-    public ResponseEntity<?> updateUserInfo(@RequestBody UserDto userDto){
+    public ResponseEntity<?> updateUserInfo(@RequestBody UsersDto userDto){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

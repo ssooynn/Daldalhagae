@@ -20,14 +20,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "material")
+@Table(name = "MATERIAL")
 public class Material {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="MATERIAL_NO")
 	private int materialNo;
 	
-	@Column
+	@Column(name="NAME")
 	private String name;
 	
 	@OneToMany(mappedBy = "material")

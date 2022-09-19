@@ -3,6 +3,7 @@ package com.ssafy.a302.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "grade")
+@Table(name = "GRADE")
 public class Grade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="GRADE_NO")
 	private int gradeNo;
+	@Column(name="NAME")
 	private String name;
 	
 	@OneToMany(mappedBy = "grade")
