@@ -1,5 +1,6 @@
 package com.ssafy.a302.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,26 +18,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "itemReview")
+@Table(name = "ITEM_REVIEW")
 public class ItemReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ITEM_REVIEW_NO")
 	private int itemReviewNo;
+	@Column(name = "ITEM_SNO")
 	private String itemSno;
+	@Column(name = "RATE")
 	private int rate;
+	@Column(name = "CONTENT")
 	private String content;
+	@Column(name = "IMAGE")
 	private String image;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_sno")
-	private User user;
+	@JoinColumn(name = "USERS_SNO")
+	private Users users;
 	
 	@ManyToOne
-	@JoinColumn(name = "purchase_no")
+	@JoinColumn(name = "PURCHASE_NO")
 	private Purchase purchase;
 	
 	@ManyToOne
-	@JoinColumn(name = "pet_sno")
+	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
 	
 }

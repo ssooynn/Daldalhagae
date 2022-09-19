@@ -1,5 +1,6 @@
 package com.ssafy.a302.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,17 +18,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "snackTarget")
+@Table(name = "SNACK_TARGET")
 public class SnackTarget {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "SNACK_TARGET_NO")
 	private int snackTargetNo;
 	
 	@ManyToOne
-	@JoinColumn(name="snack_sno")
+	@JoinColumn(name="SNACK_SNO")
 	private Snack snack;
 	
 	@ManyToOne
-	@JoinColumn(name="target_no")
+	@JoinColumn(name="TARGET_NO")
 	private Target target;
 }

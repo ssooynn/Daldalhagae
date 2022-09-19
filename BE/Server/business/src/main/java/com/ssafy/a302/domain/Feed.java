@@ -3,6 +3,7 @@ package com.ssafy.a302.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,19 +20,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "feed")
+@Table(name = "FEED")
 public class Feed {
 	@Id
+	@Column(name ="FEED_SNO")
 	private String feedSno;
+	@Column(name ="NAME")
 	private String name;
+	@Column(name ="IMAGE")
 	private String image;
 	
 	@ManyToOne
-	@JoinColumn(name = "grade_no")
+	@JoinColumn(name = "GRADE_NO")
 	private Grade grade;
 	
 	@ManyToOne
-	@JoinColumn(name = "particle_no")
+	@JoinColumn(name = "PARTICLE_NO")
 	private Particle particle;
 	
 	@OneToMany(mappedBy = "feed")

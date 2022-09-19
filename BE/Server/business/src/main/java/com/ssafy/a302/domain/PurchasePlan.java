@@ -2,6 +2,7 @@ package com.ssafy.a302.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,19 +20,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "purchasePlan")
+@Table(name = "PURCHASE_PLAN")
 public class PurchasePlan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "PURCHASE_PLAN_NO")
 	private int purchasePlanNo;
+	@Column(name = "ITEM_SNO")
 	private String itemSno;
 	
 	@ManyToOne
-	@JoinColumn(name="pet_sno")
+	@JoinColumn(name="PET_SNO")
 	private Pet pet;
 	
 	@ManyToOne
-	@JoinColumn(name="user_sno")
-	private User user;
+	@JoinColumn(name="USERS_SNO")
+	private Users users;
 	
 }

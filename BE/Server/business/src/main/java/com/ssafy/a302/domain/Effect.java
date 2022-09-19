@@ -21,13 +21,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "effect")
+@Table(name = "EFFECT")
 public class Effect {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "EFFECT_NO")
 	private int effectNo;
 	
-	@Column
+	@Column(name = "NAME")
 	private String name;
 	
 	@OneToMany(mappedBy = "effect")
