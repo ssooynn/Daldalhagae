@@ -1,9 +1,9 @@
 import React from 'react'
 
-const MypageUnwrittenReview = () => {
+const MypageUnwrittenReviews = () => {
   return (
     <div>MypageUnwrittenReview</div>
   )
 }
 
-export default MypageUnwrittenReview
+export default MypageUnwrittenReviews
