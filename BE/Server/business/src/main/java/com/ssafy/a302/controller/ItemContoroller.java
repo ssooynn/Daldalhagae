@@ -1,7 +1,7 @@
 package com.ssafy.a302.controller;
 
 import com.ssafy.a302.dto.RecommandedtemDto;
-import com.ssafy.a302.dto.UserDto;
+import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.service.ItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

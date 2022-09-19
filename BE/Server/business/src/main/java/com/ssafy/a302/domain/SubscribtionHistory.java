@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,21 +23,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "subscribtionHistory")
+@Table(name = "SUBSCRIBTION_HISTORY")
 public class SubscribtionHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="SUBSCRIBTION_HISTORY_NO")
 	private int subscribtionHistoryNo;
+	@Column(name="START_DATE")
 	private Date startDate;
+	@Column(name="END_DATE")
 	private Date endDate;
+	@Column(name="AUTO_PAYMENT_FLAG")
 	private int autoPaymentFlag;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_sno")
-	private User user;
+	@JoinColumn(name = "USERS_SNO")
+	private Users users;
 
 	@ManyToOne
-	@JoinColumn(name = "pet_sno")
+	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
 	
 	@OneToMany(mappedBy = "subscribtionHistory")

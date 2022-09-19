@@ -3,6 +3,7 @@ package com.ssafy.a302.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -17,11 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "snack")
+@Table(name = "SNACK")
 public class Snack {
 	@Id
+	@Column(name="SNACK_SNO")
 	private String snackSno;
+	@Column(name="NAME")
 	private String name;
+	@Column(name="IMAGE")
 	private String image;
 	
 	@OneToMany(mappedBy = "snack")
