@@ -1,5 +1,6 @@
 package com.ssafy.a302.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,17 +18,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "feedEffect")
+@Table(name = "FEED_EFFECT")
 public class FeedEffect {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "FEED_EFFECT_NO")
 	private int feedEffectNo;
 	
 	@ManyToOne
-	@JoinColumn(name="feed_sno")
+	@JoinColumn(name="FEED_SNO")
 	private Feed feed;
 	
 	@ManyToOne
-	@JoinColumn(name="effect_no")
+	@JoinColumn(name="EFFECT_NO")
 	private Effect effect;
 }

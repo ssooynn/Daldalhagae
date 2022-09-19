@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,14 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "subscribtion")
+@Table(name = "SUBSCRIBTION")
 public class Subscribtion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "SUBSCRIBTION_NO")
 	private int subscribtionNo;
+	@Column(name = "NAME")
 	private String name;
-	private String text;
+	@Column(name = "DESCRIBTION")
+	private String describtion;
+	@Column(name = "PRICE")
 	private int price;
+	@Column(name = "IMAGE")
 	private String image;
 	
 	@OneToMany(mappedBy = "subscribtion")

@@ -21,21 +21,26 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-@Table(name = "pet")
+@Table(name = "PET")
 public class Pet {
 	@Id
+	@Column(name = "PET_SNO")
     private String petSno;
+	@Column(name = "NAME")
 	private String name;
+	@Column(name = "BIRTH")
 	private Date birth;
+	@Column(name = "FAT")
 	private int fat;
+	@Column(name = "IMAGE")
 	private String image;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_sno")
-	private User user;
+	@JoinColumn(name = "USERS_SNO")
+	private Users users;
 
 	@ManyToOne
-	@JoinColumn(name = "tartget_no")
+	@JoinColumn(name = "TARGET_NO")
 	private Target target;
 	
 	@OneToMany(mappedBy = "pet")
