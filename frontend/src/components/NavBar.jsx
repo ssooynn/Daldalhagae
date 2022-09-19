@@ -11,7 +11,7 @@ import Login from './Login';
 // 다시 올릴때는 투명도 80%
 const Navbar = styled.div`
     width : 100%;
-    height : 80px;
+    height :60px;
     background-color: ${(props) => props.backgroundColor || "rgba(255,255,255,0)"};
     position: fixed;
     top: 0%;
