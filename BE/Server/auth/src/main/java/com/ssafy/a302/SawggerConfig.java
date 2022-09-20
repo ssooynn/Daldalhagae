@@ -14,8 +14,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 @EnableWebMvc
-public class SwaggerConfig {
-
+public class SawggerConfig {
 	@Bean
 	public InternalResourceViewResolver defaultViewResolver() {
 		return new InternalResourceViewResolver();
@@ -32,5 +31,4 @@ public class SwaggerConfig {
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("달달하개 Swagger").description("swaggggg").version("1.0").build();
 	}
-
 }

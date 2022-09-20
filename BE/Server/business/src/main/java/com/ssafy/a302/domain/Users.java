@@ -56,4 +56,16 @@ public class Users {
 
 	@OneToMany(mappedBy = "users")
 	private List<UserLog> userLogs = new ArrayList<>();
+
+	
+	public Users(String kakaoId, String email, String name, String phone, String address) {
+		super();
+		this.kakaoId = kakaoId;
+		this.email = email;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+	}
+	
+	
 }
