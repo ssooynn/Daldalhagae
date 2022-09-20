@@ -3,10 +3,16 @@ package object;
 public class Bridge {
 	String fsno;
 	int fk2;
-	
-	
-	
-	
+
+
+	public String getFsno() {
+		return fsno;
+	}
+
+	public int getFk2() {
+		return fk2;
+	}
+
 	public Bridge(String fsno, int fk2) {
 		super();
 		this.fsno = fsno;
