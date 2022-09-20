@@ -70,7 +70,7 @@ const MypageHeaderCard = (props) => {
   const repDiv ={
     display:'flex',
     justifyContent:'space-around',
-    width: '75%',
+    // width: '90%',
     margin:'auto',
   }
 
@@ -125,17 +125,17 @@ useEffect(()=>{
         </Link>
         {/* 미작성 후기  - 필요 데이터: 유저 아이디(중앙관리)*/}
         <StyledLink style={contentDetail} to={'unwrittenReviews'}>
-          <div style={detailTitle}>미작성 후기</div>
+          <div style={detailTitle}>후기 작성</div>
           <div style={detailContent}>{user.unwrittenReviews}</div>
         </StyledLink >
         {/* 대표 반려견 - 필요 데이터: 펫 아이디 (prop 필요) */}
-        <div style={{boxSizing:'border-box', width:'40%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
-          <div style={detailTitle}>대표 반려견</div>
+        <div style={{boxSizing:'border-box', width:'45%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
+          <div style={detailTitle}>반려견</div>
           <div style={repDiv}>
             {user.repPets?.map((pet, idx)=>{
               return(
                 <StyledLink 
-                  to={'petList/petDetail'}
+                  to={'petDetail'}
                   state= {{petId:pet.petId}}
                   id={idx}
                 >
@@ -143,9 +143,14 @@ useEffect(()=>{
                 </StyledLink >
               )
             })}
-            <StyledLink  to={{pathname:'petList/petAdd', state:{formState:'add'}}}>
-              {(user.repPets.length === 1) ? <div style={plusProfile}>+</div>:<></>}
-            </StyledLink >
+              {(user.repPets.length < 3 ) ? 
+                [...Array(3-user.repPets.length)].map((no, idx)=>{
+                  return <StyledLink 
+                            to={'petAdd'}
+                            state={{}}
+                            style={plusProfile} id={idx}>+</StyledLink>})
+                :
+                <></>}
           </div>
         </div>
       </div>

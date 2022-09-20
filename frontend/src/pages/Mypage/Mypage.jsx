@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Route, Routes, useParams } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
 import MypageSubscriptionsNow from './MypageSubscriptions'
 import MypageSubscriptions from './MypageSubscriptions'
@@ -7,17 +7,20 @@ import MypageUnwrittenReviews from './MypageUnwrittenReviews'
 import MypageReviews from './MypageReviews'
 import MypageUser from './MypageUser'
 import MypageUserUpdate from './MypageUserUpdate'
-import MypagePet from './MypagePet'
 import MypagePetUpdate from './MypagePetUpdate'
 import MypagePetDetail from './MypagePetDetail'
+import MypageRoutingTitle from '../../components/Mypage/MypageRoutingTitle'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
 const Mypage = () => {
-  const params = useParams()
-  const param = Object.values(params)[0]
   const [userInfo, setUserInfo] = useState({
     name:'김김김',
+    phoneNo:'010-1234-1234',
+    email:'email@gmail.com',
+    address: '서울특별시 강남구 역삼동 테헤란로 212',
+    addressDetail: '1102호',
+    zip: '06220',
     delivering:0,
     subscribingCnt: 1,
     unwrittenReviews: 2,
@@ -30,25 +33,6 @@ const Mypage = () => {
     ]
   }
 )
-  const [petList, setPetList] = useState([
-    {
-      name:'해리',
-      petId:'A12455',
-      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    },    {
-      name:'해리',
-      petId:'A12455',
-      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    },    {
-      name:'해리',
-      petId:'A12455',
-      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    },    {
-      name:'해리',
-      petId:'A12455',
-      profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    }
-  ])
   const [currentSubsList, setCurrentSubsList] = useState([])
   const [subsList, setSubsList] = useState([])
   const [unwrittenReviewList, setUnwrittenReviewList] = useState([])
@@ -88,32 +72,9 @@ const Mypage = () => {
     width: '76%',
     minHeight: '100%',
     marginLeft: '3%',
+    boxSizig: 'border-box'
   }
 
-  const titleDiv = {
-    width: '100%',
-    textAlign:'left',
-    padding: '0 0.1em 0.6em',
-    borderBottom:'0.5px solid ',
-    fontFamily: 'Spoqa Han Sans Neo, sans-serif',
-    color: '#1f1d1d',
-    fontSize: '1.1em',
-    fontWeight: '600'
-  }
-
-  const title = {
-    '':'진행 중인 구독',
-    'subscriptionsNow':'진행 중인 구독',
-    'subscriptions':'전체 구독',
-    'unwrittenReviews':'미작성 후기',
-    'reviews':'내가 작성한 후기',
-    'user':'개인 정보 관리',
-    'userUpdate':'개인 정보 수정',
-    'petList':'반려견 정보',
-    'petList/petDetail': '반려견 관리',
-    'petList/petUpdate':'반려견 정보 수정',
-    'petList/petAdd':'반려견 등록'
-  }
 
   return (
     <div>
@@ -124,9 +85,7 @@ const Mypage = () => {
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
         <div style={routingContainer}>
-          <div style={titleDiv}>
-            {title[param]}
-          </div>
+          <MypageRoutingTitle></MypageRoutingTitle>
           <Routes>
             <Route
               exact="true"
@@ -172,25 +131,19 @@ const Mypage = () => {
               }               
             />
             <Route
-              path="petList"
-              element={
-                <MypagePet petList={petList}/>
-              }               
-            />
-            <Route
-              path="petList/petDetail"
+              path="petDetail"
               element={
                 <MypagePetDetail/>
               }               
             />
             <Route
-              path="petList/petAdd"
+              path="petAdd"
               element={
                 <MypagePetUpdate/>
               }               
             />
             <Route
-              path="petList/petUpdate"
+              path="petUpdate"
               element={
                 <MypagePetUpdate/>
               }               
