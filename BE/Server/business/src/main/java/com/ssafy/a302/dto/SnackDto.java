@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +13,5 @@ public class SnackDto {
     private String image;
     private String particle;
     private String grade;
-    private ArrayList<String> effects = new ArrayList<>();
-    private ArrayList<String> targets = new ArrayList<>();
-    private ArrayList<String> materials = new ArrayList<>();
 
 }

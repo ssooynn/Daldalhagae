@@ -1,0 +1,42 @@
+package com.ssafy.a302.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.a302.common.Utils;
+import com.ssafy.a302.response.LoginReq;
+import com.ssafy.a302.service.UsersService;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/user")
+public class UsersController {
+	private final UsersService usersService;
+	
+	@ApiOperation(value = "로그인")
+	@PostMapping("/login")
+	public LoginReq login(@RequestBody Map<String,Object> map) throws Exception {
+		
+		Object object=map.get("kakaoId");
+		if(!(object instanceof String)) {
+			throw new Exception();
+		}
+		String kakaoId = (String)object;
+		return usersService.login(kakaoId);
+	}
+	
+	@ApiOperation(value = "로그아웃")
+	@PostMapping("/logout")
+	public String logout(@RequestBody String kakaoId) {
+		return Utils.SUCCESS;
+	}
+
+}

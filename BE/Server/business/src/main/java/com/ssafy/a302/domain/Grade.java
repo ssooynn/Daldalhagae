@@ -28,9 +28,7 @@ public class Grade {
 	private int gradeNo;
 	@Column(name="NAME")
 	private String name;
-	
 	@OneToMany(mappedBy = "grade")
 	List<Feed> feeds = new ArrayList<>();
-	
 	
 }
