@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SnackDto {
-    private String sno;
-    private String name;
-    private String image;
-    private String particle;
-    private String grade;
-
+public class FeedMaterialDto {
+	private int feedMaterialNo;
+	private FeedDto feed;
+	private MaterialDto material;
 }
