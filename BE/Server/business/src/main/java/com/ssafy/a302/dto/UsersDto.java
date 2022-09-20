@@ -8,8 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsersDto {
-    private String email;
-    private String name;
-    private String phone;
-    private String address;
+	private String userSno;
+	private String kakaoId;
+	private String email;
+	private String name;
+	private String phone;
+	private String address;
+	
 }
