@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.a302.common.Utils;
-import com.ssafy.a302.dto.UsersDto;
+import com.ssafy.a302.response.LoginReq;
 import com.ssafy.a302.service.UsersService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UsersController {
-	private final UsersService userService;
-
+	private final UsersService usersService;
+	
+	@ApiOperation(value = "로그인")
 	@PostMapping("/login")
-	public Map<String,String> login(@RequestBody Map<String,Object> map) {
-		Map<String, String> data = new HashMap<String, String>();
-		if (userService.existsByKakaoId((String)map.get("kakaoId"))) {
-			data.put("message",Utils.SUCCESS);
-			data.put("accessToken", "accessToken");
-			data.put("userSno ", "userSno ");
-			return data;
-		} else {
-			data.put("message",Utils.FAIL);
-			return data;
+	public LoginReq login(@RequestBody Map<String,Object> map) throws Exception {
+		
+		Object object=map.get("kakaoId");
+		if(!(object instanceof String)) {
+			throw new Exception();
 		}
+		String kakaoId = (String)object;
+		return usersService.login(kakaoId);
 	}
 	
+	@ApiOperation(value = "로그아웃")
 	@PostMapping("/logout")
 	public String logout(@RequestBody String kakaoId) {
 		return Utils.SUCCESS;
