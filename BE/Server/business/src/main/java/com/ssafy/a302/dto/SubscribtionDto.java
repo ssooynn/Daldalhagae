@@ -1,5 +1,7 @@
 package com.ssafy.a302.dto;
 
+import javax.persistence.Column;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsersDto {
-	private String userSno;
-	private String kakaoId;
-	private String email;
+public class SubscribtionDto {
+	private int subscribtionNo;
 	private String name;
-	private String phone;
-	private String address;
+	private String describtion;
+	private int price;
+	private String image;
 }

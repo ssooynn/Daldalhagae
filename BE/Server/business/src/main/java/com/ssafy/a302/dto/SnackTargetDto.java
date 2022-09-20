@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubscriptionIntroDto {
-    private String name;
+public class SnackTargetDto {
+	private int snackTargetNo;
+	private SnackDto snack;
+	private TargetDto target;
 }

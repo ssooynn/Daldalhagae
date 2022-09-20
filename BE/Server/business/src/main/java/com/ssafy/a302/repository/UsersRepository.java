@@ -10,5 +10,5 @@ import com.ssafy.a302.dto.UsersDto;
 public interface UsersRepository extends JpaRepository<Users, Integer>{
 	List<Users> findAll();
 	boolean existsByKakaoId(String kakaoId);
-	UsersDto.Info findByUsersSno(String usersSno);
+	UsersDto findByUsersSno(String usersSno);
 }

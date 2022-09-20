@@ -10,5 +10,4 @@ import com.ssafy.a302.dto.UsersDto;
 public interface UsersService {
 	public List<Users> findAll();
 	boolean existsByKakaoId(String kakaoId);
-	UsersDto.Info findByUsersSno(String usersSno);
 }
