@@ -15,15 +15,26 @@ import java.util.List;
 
 @Api(value="사용자 컨트롤러")
 @RestController
-@RequestMapping("user")
+@RequestMapping(value="user", produces = "application/json; charset=utf8")
 @RequiredArgsConstructor
 public class  UserController {
     
+	private final UsersService usersService;
+	
+	@ApiOperation(value = "회원가입")
+	@PostMapping("/signup")
+	public String signup(@RequestBody UsersDto.SignUp signUp) {
+		System.out.println(signUp.getKakaoId());
+		if (usersService.existsByKakaoId(signUp.getKakaoId()))
+			return "실패";
+		else
+			return "성공";
+	}
 
     @ApiOperation(value="사용자 정보 조회")
-    @GetMapping("/mypage/info/{userSno}")
-    public ResponseEntity<?> getMyPageInfo(){
-        UsersDto userDto = new UsersDto("example@naver.com", "김땡땡", "010-9999-8888", "수원시");
+    @GetMapping("/mypage/info/{usersSno}")
+    public ResponseEntity<?> getMyPageInfo(@PathVariable String usersSno){
+    	UsersDto.Info userDto = usersService.findByUsersSno(usersSno);
         return ResponseEntity.ok(userDto);
     }
 
@@ -80,9 +91,9 @@ public class  UserController {
     public ResponseEntity<?> getMyPetInfoAll(){
 
 
-        List<PetDto> list = new ArrayList<>();
-        PetDto petDto1 = new PetDto("U1231231233", "댕댕이", "2021-09-18", "3", "어쩌구", "저쩌구", "유아견", null);
-        PetDto petDto2 = new PetDto("U1231231233", "댕댕이2", "2021-09=10-18", "2", "어쩌구", "저쩌구", "유아견", null);
+        List<PetDto.Detail> list = new ArrayList<>();
+        PetDto.Detail petDto1 = new PetDto.Detail("U1231231233", "댕댕이", "2021-09-18", "3", "어쩌구", "저쩌구", "유아견", null);
+        PetDto.Detail petDto2 = new PetDto.Detail("U1231231233", "댕댕이2", "2021-09=10-18", "2", "어쩌구", "저쩌구", "유아견", null);
 
         list.add(petDto1);
         list.add(petDto2);

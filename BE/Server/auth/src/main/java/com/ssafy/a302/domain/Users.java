@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Users {
 	@Id
 	@Column(name="USERS_SNO")
-	private String usersSno;
+	private String userSno;
 	
 	@Column(name="KAKAO_ID")
 	private String kakaoId;
@@ -39,21 +39,6 @@ public class Users {
 	@Column(name="ADDRESS")
 	private String address;
 	
-	@OneToMany(mappedBy = "users")
-	private List<ItemReview> itemReviews = new ArrayList<>();
-
-	@OneToMany(mappedBy = "users")
-	private List<Pet> pets = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "users")
-	private List<PurchasePlan> purchasePlans = new ArrayList<>();
-
-	@OneToMany(mappedBy = "users")
-	private List<ServiceReview> serviceReviews = new ArrayList<>();
-
-	@OneToMany(mappedBy = "users")
-	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
-
-	@OneToMany(mappedBy = "users")
-	private List<UserLog> userLogs = new ArrayList<>();
 }
+
