@@ -17,21 +17,21 @@ import com.ssafy.a302.dto.UsersDto;
 @WebMvcTest(UsersController.class)
 @AutoConfigureRestDocs
 class AuthApplicationTests {
-	@Autowired
-	private MockMvc mockMvc;
-	@Autowired
-	private ObjectMapper objectMapper;
-	
-	@Test
-	public void loginUsersAPI() throws Exception{
-		String content = objectMapper.writeValueAsString(new UsersDto("s","kakao","email","name","phone","address"));
-
-		mockMvc.perform(MockMvcRequestBuilders
-				.post("/user/signup")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.characterEncoding("UTF-8")
-				.content(content)).andExpect(status().isOk());
-	}
+//	@Autowired
+//	private MockMvc mockMvc;
+//	@Autowired
+//	private ObjectMapper objectMapper;
+//	
+//	@Test
+//	public void loginUsersAPI() throws Exception{
+//		String content = objectMapper.writeValueAsString(new UsersDto("s","kakao","email","name","phone","address"));
+//
+//		mockMvc.perform(MockMvcRequestBuilders
+//				.post("/user/signup")
+//				.contentType(MediaType.APPLICATION_JSON)
+//				.accept(MediaType.APPLICATION_JSON)
+//				.characterEncoding("UTF-8")
+//				.content(content)).andExpect(status().isOk());
+//	}
 
 }
