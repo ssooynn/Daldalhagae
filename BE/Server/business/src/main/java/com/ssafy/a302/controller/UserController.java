@@ -1,6 +1,7 @@
 package com.ssafy.a302.controller;
 
 import com.ssafy.a302.dto.*;
+import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,31 +14,37 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api(value="사용자 컨트롤러")
+@Api(value = "사용자 컨트롤러")
 @RestController
-@RequestMapping(value="user", produces = "application/json; charset=utf8")
+@RequestMapping(value = "user", produces = "application/json; charset=utf8")
 @RequiredArgsConstructor
-public class  UserController {
-    
+public class UserController {
+
 	private final UsersService usersService;
-	
-//	@ApiOperation(value = "회원가입")
-//	@PostMapping("/signup")
-//	public String signup(@RequestBody UsersDto.SignUp signUp) {
-//		System.out.println(signUp.getKakaoId());
-//		if (usersService.existsByKakaoId(signUp.getKakaoId()))
-//			return "실패";
-//		else
-//			return "성공";
-//	}
-//
+
+	@ApiOperation(value = "회원가입")
+	@PostMapping("/signup")
+	public String signup(@RequestBody SignUpReq signUpReq) {
+		boolean result = false;
+		
+		try {
+			result = usersService.SignUp(signUpReq);
+
+		} catch (Exception e) {
+			return "회원 가입 실패";
+		}
+		
+		if (result)
+			return "회원 가입 성공";
+
+		return "회원 가입 실패";
+	}
+
 //    @ApiOperation(value="사용자 정보 조회")
 //    @GetMapping("/mypage/info/{usersSno}")
 //    public ResponseEntity<?> getMyPageInfo(@PathVariable String usersSno){
-//    	UsersDto.Info userDto = usersService.findByUsersSno(usersSno);
-//        return ResponseEntity.ok(userDto);
 //    }
-//
+
 //    @ApiOperation(value="사용자 정보 수정")
 //    @PatchMapping("/mypage/info")
 //    public ResponseEntity<?> updateUserInfo(@RequestBody UsersDto userDto){
