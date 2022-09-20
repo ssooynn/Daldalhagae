@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes, useParams } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import { Route, Routes } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
 import MypageSubscriptionsNow from './MypageSubscriptions'
 import MypageSubscriptions from './MypageSubscriptions'
@@ -7,14 +7,44 @@ import MypageUnwrittenReviews from './MypageUnwrittenReviews'
 import MypageReviews from './MypageReviews'
 import MypageUser from './MypageUser'
 import MypageUserUpdate from './MypageUserUpdate'
-import MypagePet from './MypagePet'
 import MypagePetUpdate from './MypagePetUpdate'
+import MypagePetDetail from './MypagePetDetail'
+import MypageRoutingTitle from '../../components/Mypage/MypageRoutingTitle'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
 const Mypage = () => {
-  const params = useParams()
-  const param = Object.values(params)[0]
+  const [userInfo, setUserInfo] = useState({
+    name:'김김김',
+    phoneNo:'010-1234-1234',
+    email:'email@gmail.com',
+    address: '서울특별시 강남구 역삼동 테헤란로 212',
+    addressDetail: '1102호',
+    zip: '06220',
+    delivering:0,
+    subscribingCnt: 1,
+    unwrittenReviews: 2,
+    repPets: [
+      {
+        name:'해리',
+        petId:'A12455',
+        profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      }
+    ]
+  }
+)
+  const [currentSubsList, setCurrentSubsList] = useState([])
+  const [subsList, setSubsList] = useState([])
+  const [unwrittenReviewList, setUnwrittenReviewList] = useState([])
+  const [reviewList, setReviewList] = useState([])
+
+// userfetching
+      
+
+
+  useEffect(()=>{
+
+  }, [])
 
 
   const headerContainer = {
@@ -42,91 +72,74 @@ const Mypage = () => {
     width: '76%',
     minHeight: '100%',
     marginLeft: '3%',
+    boxSizig: 'border-box'
   }
 
-  const titleDiv = {
-    width: '100%',
-    textAlign:'left',
-    padding: '0 0.1em 0.6em',
-    borderBottom:'0.5px solid ',
-    fontFamily: 'Spoqa Han Sans Neo, sans-serif',
-    color: '#1f1d1d',
-    fontSize: '1.1em',
-    fontWeight: '600'
-  }
-
-  const title = {
-    '':'진행 중인 구독',
-    'subscriptionsNow':'진행 중인 구독',
-    'subscriptions':'전체 구독',
-    'unwrittenReviews':'미작성 후기',
-    'reviews':'내가 작성한 후기',
-    'user':'개인 정보 관리',
-    'userUpdate':'개인 정보 수정',
-    'pet':'반려견 관리',
-    'petUpdate':'반려견 정보 수정',
-  }
 
   return (
     <div>
       <div style={{height:'100px'}}></div>
       <div style={headerContainer}>
-        <MypageHeaderCard/>
+        <MypageHeaderCard user={userInfo}/>
       </div>
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
         <div style={routingContainer}>
-          <div style={titleDiv}>
-            {title[param]}
-          </div>
+          <MypageRoutingTitle></MypageRoutingTitle>
           <Routes>
             <Route
               exact="true"
               path=""
               element={
-                <MypageSubscriptionsNow/>
+                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
               }
             />
             <Route
               path="subscriptionsNow"
               element={
-                <MypageSubscriptionsNow/>
+                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
               }
             />
             <Route
               path="subscriptions"
               element={
-                <MypageSubscriptions/>
+                <MypageSubscriptions subsList={subsList}/>
               }            
             />
             <Route
               path="unwrittenReviews"
               element={
-                <MypageUnwrittenReviews/>
+                <MypageUnwrittenReviews unwrittenReviewList={unwrittenReviewList}/>
               }               
             />
             <Route
               path="reviews"
               element={
-                <MypageReviews/>
+                <MypageReviews reviewList={reviewList}/>
               }   
             />
             <Route
               path="user"
               element={
-                <MypageUser/>
+                <MypageUser user={userInfo}/>
               }               
             />
             <Route
               path="userUpdate"
               element={
-                <MypageUserUpdate/>
+                <MypageUserUpdate user={userInfo}/>
               }               
             />
             <Route
-              path="pet"
+              path="petDetail"
               element={
-                <MypagePet/>
+                <MypagePetDetail/>
+              }               
+            />
+            <Route
+              path="petAdd"
+              element={
+                <MypagePetUpdate/>
               }               
             />
             <Route

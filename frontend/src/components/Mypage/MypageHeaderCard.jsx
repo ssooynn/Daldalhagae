@@ -1,19 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { StyledLink } from './MypageCommon'
+
+
 
 const MypageHeaderCard = (props) => {
-  const user = {
-    name:'김김김',
-    subscribingCnt: 1,
-    unwrittenReviews: 2,
-    repPets: [
-      {
-        name:'해리',
-        profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      }
-    ]
-  }
-
-
+  const {user} = props
   
   const cardContainer = {
     boxSizing:'border-box',
@@ -52,7 +45,7 @@ const MypageHeaderCard = (props) => {
     borderRadius:'4px',
     boxShadow: '0px 1px 1.5px rgba(0, 0, 0, 0.15)',
     display:'flex',
-    justifyContent:'space-around',
+    justifyContent:'space-between',
     alignItems:'center',
     padding:'0 5%'
   }
@@ -61,31 +54,37 @@ const MypageHeaderCard = (props) => {
     fontSize: '22px',
     fontWeight: '600',
     color:'#776B62',
+    width:'15%',
+    textDecoration: 'none',
   }
 
   const detailTitle = {
     fontSize:'15px',
     fontWeight:'500',
     color: '#323232',
-    marginBottom:'0.6em'
+    marginBottom:'0.5rem',
+    textAlign:'center',
+    whiteSpace : 'nowrap'
   }
 
   const repDiv ={
     display:'flex',
     justifyContent:'space-around',
-    width: '100%'
+    // width: '90%',
+    margin:'auto',
   }
 
   const miniProfile = {
     width:'62px',
     aspectRatio: '1 / 1',
-    borderRadius:'3px'
+    borderRadius:'3px',
+    objectFit: 'cover'
   }
 
   const plusProfile = {
     width:'62px',
-    aspectRatio: '1 / 1',
-    borderRadius:'3px',
+    height:'62px',
+    borderRadius:'5px',
     margin:'0',
     backgroundColor: '#EDEDED',
     display:'flex',
@@ -99,33 +98,59 @@ const MypageHeaderCard = (props) => {
     height:'62px',
     display:'flex',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    paddingBottom:'2px'
   }
+
+//  data fetching
+useEffect(()=>{
+
+})
+
 
   return (
     <div style={cardContainer}>
       <div style={greeting}><span style={userNameText}>{user.name}</span>님 반갑습니다 :)</div>
       <div style={summaryContainer}>
-        {/* 구독중 */}
+        {/* 배송중 */}
         <div style={contentDetail}>
-          <div style={detailTitle}>구독중</div>
-          <div style={detailContent}>{user.subscribingCnt}</div>
+          <div style={detailTitle}>배송중</div>
+          <div style={detailContent}>{user.delivering}</div>
         </div>
-        {/* 미작성 후기 */}
-        <div style={contentDetail}>
-          <div style={detailTitle}>미작성 후기</div>
+        
+        {/* 구독중  - 필요 데이터: 유저 아이디(중앙관리)*/}
+        <Link style={contentDetail} to={'subscriptionsNow'}>
+            <div style={detailTitle}>구독중</div>
+            <div style={detailContent}>{user.subscribingCnt}</div>
+        </Link>
+        {/* 미작성 후기  - 필요 데이터: 유저 아이디(중앙관리)*/}
+        <StyledLink style={contentDetail} to={'unwrittenReviews'}>
+          <div style={detailTitle}>후기 작성</div>
           <div style={detailContent}>{user.unwrittenReviews}</div>
-        </div>
-        {/* 대표 반려견 */}
-        <div style={{width:'30%'}}>
-          <div style={detailTitle}>대표 반려견</div>
+        </StyledLink >
+        {/* 대표 반려견 - 필요 데이터: 펫 아이디 (prop 필요) */}
+        <div style={{boxSizing:'border-box', width:'45%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
+          <div style={detailTitle}>반려견</div>
           <div style={repDiv}>
-            {user.repPets.map((pet, idx)=>{
+            {user.repPets?.map((pet, idx)=>{
               return(
-                <img style={miniProfile} src={pet.profileImg} alt="프로필 이미지" id={idx}/>
+                <StyledLink 
+                  to={'petDetail'}
+                  state= {{petId:pet.petId}}
+                  id={idx}
+                >
+                  <img style={miniProfile}  src={pet.profileImg} alt="프로필 이미지"/>
+                </StyledLink >
               )
             })}
-            {(user.repPets.length === 1) ? <div style={plusProfile}>+</div>:<></>}
+              {(user.repPets.length < 3 ) ? 
+                [...Array(3-user.repPets.length)].map((no, idx)=>{
+                  return <StyledLink 
+                            to={'petAdd'}
+                            state={{}}
+                            style={plusProfile} id={idx}>+</StyledLink>})
+                :
+                <></>}
           </div>
         </div>
       </div>
