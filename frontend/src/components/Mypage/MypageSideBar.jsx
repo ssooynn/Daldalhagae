@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const MypageSideBar = () => {
 
@@ -23,8 +23,6 @@ const MypageSideBar = () => {
     margin: '0 0 0.8rem'
     // margin: [margin-top] [margin-right] [margin-bottom] [margin-left];
   }
-
-
 
   const subMenuList = {
     margin: '0 0 1rem',
@@ -68,7 +66,6 @@ const MypageSideBar = () => {
       title: '회원정보',
       subMenus: [
         {name: '개인 정보 관리', path: '/mypage/user'},
-        {name: '반려견 정보', path: '/mypage/pet'}
       ]
     },
 
