@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ToyDto {
-	private String toySno;
-	private String name;
+public class ServiceReviewDto {
+	private int serviceReviewNo;
+	private int rate;
+	private String content;
 	private String image;
-	private String material;
-	private String effect;
+	private UsersDto users;
+	private SubscribtionHistoryDto subscribtionHistory;
 }

@@ -7,11 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsersDto {
-	private String userSno;
-	private String kakaoId;
-	private String email;
+public class ProductTypeDto {
+	private int productTypeNo;
 	private String name;
-	private String phone;
-	private String address;
 }

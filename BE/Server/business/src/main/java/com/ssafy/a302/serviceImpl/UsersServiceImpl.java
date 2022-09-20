@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.a302.domain.Users;
-import com.ssafy.a302.dto.UsersDto.Info;
 import com.ssafy.a302.repository.UsersRepository;
 import com.ssafy.a302.service.UsersService;
 
@@ -25,11 +24,6 @@ public class UsersServiceImpl implements UsersService{
 	public List<Users> findAll() {
 		List<Users> usersList= usersRep.findAll();  
 		return usersList;
-	}
-
-	@Override
-	public Info findByUsersSno(String usersSno) {
-		return usersRep.findByUsersSno(usersSno);
 	}
 
 	
