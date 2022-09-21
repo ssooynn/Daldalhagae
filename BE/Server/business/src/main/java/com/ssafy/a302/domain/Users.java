@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -39,22 +40,22 @@ public class Users {
 	@Column(name="ADDRESS")
 	private String address;
 	
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<ItemReview> itemReviews = new ArrayList<>();
 
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<Pet> pets = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<PurchasePlan> purchasePlans = new ArrayList<>();
 
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<ServiceReview> serviceReviews = new ArrayList<>();
 
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
 
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<UserLog> userLogs = new ArrayList<>();
 
 	
