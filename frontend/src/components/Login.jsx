@@ -28,7 +28,12 @@ export default function Login(props) {
   function closeModal() { // 모달 끄기
     props.setIsModalOpen(false);
   }
-
+  const CLIENT_ID = process.env.REACT_APP_KAKAO_API_KEY;
+  const REDIRECT_URI = "http://localhost:3000/kakaoSignin";
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  function Kakao() {
+    window.location.href = KAKAO_AUTH_URL;
+  }
 
   useEffect(() => {  // 배경화면 스크롤 움직임 막기
     document.body.style.cssText = `
@@ -72,8 +77,8 @@ export default function Login(props) {
           <StyledText size="24px" weight="600" margin="30px 0px">로그인</StyledText>
           <FlexBox direction="column" justify="space-around" height="220px">
 
-            <img src={KaKaoLoginBtn} alt="카카오로 로그인" width="100%" />
-            <img src={KaKaoLoginBtn} alt="카카오로 로그인" width="100%" />
+            <img src={KaKaoLoginBtn} alt="카카오로 로그인" width="100%" onClick={Kakao} />
+            <img src={KaKaoLoginBtn} alt="카카오로 로그인" width="100%" onClick={Kakao} />
 
             <StyledText onClick={(e) => { closeModal(); Navigate("/subscribeList") }} size="14px" style={{ cursor: 'pointer' }}>비회원으로 둘러보기</StyledText>
           </FlexBox>

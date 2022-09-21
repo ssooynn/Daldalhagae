@@ -7,9 +7,12 @@ import Payment from "./pages/Payment";
 import PaymentCheck from "./pages/PaymentCheck";
 import PaymentList from "./pages/PaymentList";
 import RecommendList from "./pages/RecommendList";
-import SignupPet from "./pages/SignupPet";
-import SignupUser from "./pages/SignupUser";
 import Mypage from "./pages/Mypage/Mypage";
+import KakaoSignin from "./pages/KakaoSignin";
+import Signup from "./pages/Signup";
+import SignupTerm from "./pages/SignupTerm";
+import SignupUser from "./pages/SignupUser";
+import SignupPet from "./pages/SignupPet";
 
 import ReviewList from "./pages/ReviewList";
 import { NavBar } from "./components/NavBar";
@@ -26,10 +29,10 @@ function Router() {
         <Route path="/paymentCheck" element={<PaymentCheck />} />
         <Route path="/paymentList" element={<PaymentList />} />
         <Route path="/recommendList" element={<RecommendList />} />
-        <Route path="/signupPet" element={<SignupPet />} />
-        <Route path="/signupUser" element={<SignupUser />} />
+        <Route path="/signup/*" element={<Signup />} />
         <Route path="/mypage/*" element={<Mypage />} />
         <Route path="/reviewList" element={<ReviewList />} />
+        <Route path="/kakaoSignin/*" element={<KakaoSignin />} />
       </Routes>
     </div>
   );

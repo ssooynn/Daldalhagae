@@ -115,6 +115,20 @@ const Button = styled(animated.button)`
     `}
 
     ${(props) =>
+    props.nextbutton &&
+    css`
+      background: #EDDCCF;
+      color: #776B62;
+      width: 90px;
+      height: 40px;
+      font-size:14px;
+      &:hover{
+        background-color: #776B62;
+        color:white;
+      }
+    `}
+
+    ${(props) =>
     props.SmallWhite &&
     css`
       background: #CCaa90;

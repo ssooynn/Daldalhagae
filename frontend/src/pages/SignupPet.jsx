@@ -1,9 +1,9 @@
 import React from 'react'
 
-const SignupPet = () => {
+
+
+export default function dkdkdkd() {
   return (
-    <div>SignupPet</div>
+    <div>dkdkdkd</div>
   )
 }
-
-export default SignupPet
