@@ -36,14 +36,15 @@ public class UserController {
 		
 		if (result)
 			return "회원 가입 성공";
-
+		
 		return "회원 가입 실패";
 	}
 
-//    @ApiOperation(value="사용자 정보 조회")
-//    @GetMapping("/mypage/info/{usersSno}")
-//    public ResponseEntity<?> getMyPageInfo(@PathVariable String usersSno){
-//    }
+    @ApiOperation(value="사용자 정보 조회")
+    @GetMapping("/mypage/info/{usersSno}")
+    public void getMyPageInfo(@PathVariable String usersSno){
+    	usersService.userInfo(usersSno);
+    }
 
 //    @ApiOperation(value="사용자 정보 수정")
 //    @PatchMapping("/mypage/info")

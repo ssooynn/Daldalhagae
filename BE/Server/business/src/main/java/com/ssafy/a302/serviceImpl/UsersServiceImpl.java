@@ -36,4 +36,9 @@ public class UsersServiceImpl implements UsersService {
 		return true;
 	}
 
+	@Override
+	public void userInfo(String usersSno) {
+		usersRep.findByUsersSno(usersSno);
+	}
+
 }
