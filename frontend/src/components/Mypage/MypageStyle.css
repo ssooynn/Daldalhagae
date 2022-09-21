@@ -17,3 +17,5 @@
 .hoverProfile:hover .hoverBox{
     opacity:1;
 }
+
+.scrollLock { overflow: hidden; }
