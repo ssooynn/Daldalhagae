@@ -6,14 +6,6 @@ import styled from 'styled-components'
 import { StyledButton, StyledText } from '../components/CommonComponent'
 import { FlexBox } from '../components/MainComponent'
 
-const SignupBox = styled.div`
-    width: 30%;
-    height: auto;
-    padding: 30px 30px 20px 30px;
-    border: 2px solid rgba(204,170,144,0.3);
-    border-radius: 10px;
-    margin:50px 0px;
-`
 
 const DetailText = styled.div`
     width:auto;
@@ -55,7 +47,7 @@ export default function SignupTerm(props) {
     function NextStep() {
         if (check1 && check2 && check3) {
             props.setStep(2);
-            Navigate("signupUser");
+            Navigate("/signup/signupUser");
         } else {
             alert("모두 동의해야만 다음단계로 갈 수 있습니다.");
         }
@@ -216,9 +208,9 @@ export default function SignupTerm(props) {
             </FlexBox>
 
             <br />
-            <FlexBox direction="column" align="center">
+            <FlexBox direction="column" align="center" width="auto">
                 <div style={{ justifySelf: "flex-end" }}><input type="checkbox" name="Term" value="전체동의" onChange={(e) => CheckAllChange()} checked={checkAll} /><label for="전체동의"><StyledText size="14px" weight="500" style={{ display: 'inline' }}>전체 동의합니다</StyledText> </label></div>
-                <StyledButton nextbutton style={{ alignSelf: "flex-end" }} onClick={(e) => NextStep()}>다음</StyledButton>
+                <StyledButton nextbutton onClick={(e) => NextStep()} style={{ alignSelf: "flex-end" }}>다음</StyledButton>
             </FlexBox>
         </div >
     )

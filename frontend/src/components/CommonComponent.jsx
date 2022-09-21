@@ -141,6 +141,16 @@ const Button = styled(animated.button)`
         color:white;
       }
     `}
+
+    ${(props) =>
+    props.searchaddress &&
+    css`
+      background: #EDDCCF;
+      color: #1f1d1d;
+      width: 100px;
+      height: 30px;
+      font-size:12px;
+    `}
 `
 export function StyledButton({ children, width, color, bgcolor, margin, ...props }) {
   return <Button width={width} color={color} bgcolor={bgcolor} margin={margin} {...props} >{children}</Button>
@@ -156,3 +166,28 @@ const Text = styled(animated.div)`
 export function StyledText({ children, weight, color, size, margin, ...props }) {
   return <Text weight={weight} color={color} size={size} margin={margin} {...props} >{children}</Text>
 };
+
+const InputStyled = styled.input`
+  height: ${(props) => props.height || "auto"};
+  width: ${(props) => props.width || "250px"};
+  border: ${(props) => props.border || "1px solid #969696"};
+  padding: ${(props) => props.padding || "12px 10px"};
+  margin: ${(props) => props.margin || "3px 5px"};
+  border-radius: 7px;
+  
+`
+export function StyledInput({ chidren, height, width, border, padding, margin, ...props }) {
+  return <InputStyled type="text" height={height} width={width} border={border} padding={padding} margin={margin} {...props}></InputStyled>
+}
+
+const ProfileStyled = styled.img`
+  height: ${(props) => props.height || "100px"};
+  width: ${(props) => props.width || "100px"};
+  border-radius: 10px;
+  margin: ${(props) => props.margin || "5px"};
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.2);
+`
+
+export function StyledProfile({ chidren, height, width, border, padding, margin, ...props }) {
+  return <ProfileStyled height={height} width={width} margin={margin} {...props}></ProfileStyled>
+}

@@ -19,12 +19,24 @@ const SignupBox = styled.div`
     border: 2px solid rgba(204,170,144,0.3);
     border-radius: 10px;
     margin:50px 0px 0px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width: 500px;
 `
 
 export default function Signup() {
     const [step, setStep] = useState(1);
+    const [user, setUser] = useState({
+        name: "",
+        phoneNum: "",
+        email: "",
+        fullAddress: "",
+        detailAddress: "",
+        postZip: "",
+    })
     useEffect(() => {
-
+        console.log(user);
     }, [step])
     return (
         <MainContent height="90%" style={{ marginTop: "100px" }}>
@@ -37,8 +49,8 @@ export default function Signup() {
                 </FlexBox>
                 <Routes>
                     <Route exact="true" path="" element={<SignupTerm setStep={setStep} />} />
+                    <Route path="signupUser" element={<SignupUser setStep={setStep} user={user} setUser={setUser} />} />
                     <Route path="signupPet" element={<SignupPet setStep={setStep} />} />
-                    <Route path="signupUser" element={<SignupUser setStep={setStep} />} />
                 </Routes>
             </SignupBox>
         </MainContent>
