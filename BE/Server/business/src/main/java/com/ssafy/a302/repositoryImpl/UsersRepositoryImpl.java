@@ -15,9 +15,10 @@ public class UsersRepositoryImpl implements UsersRepositoryCustom{
 	@Override
 	public Users findByUsersSno(String usersSno) {
 		return queryFactory.selectFrom(users)
-				.join(pet)
-				.on(users.usersSno.eq(pet.users.usersSno))
+				.leftJoin(users.pets,pet)
+				.fetchJoin()
 				.where(users.usersSno.eq(usersSno))
+				.distinct()
 				.fetchOne();
 	}
 	

@@ -2,6 +2,7 @@ package com.ssafy.a302.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,11 +32,11 @@ public class ServiceReview {
 	@Column(name = "IMAGE")
 	private String image;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERS_SNO")
 	private Users users;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
 }
