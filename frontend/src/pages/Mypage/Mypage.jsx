@@ -37,6 +37,7 @@ const Mypage = () => {
   const [subsList, setSubsList] = useState([])
   const [unwrittenReviewList, setUnwrittenReviewList] = useState([])
   const [reviewList, setReviewList] = useState([])
+  const [currentFocus, setCurrentFocus] = useState({})
 
 // userfetching
       
@@ -45,6 +46,10 @@ const Mypage = () => {
   useEffect(()=>{
 
   }, [])
+
+  useEffect(()=>{
+    console.log(currentFocus)
+  }, [currentFocus])
 
 
   const headerContainer = {
@@ -78,32 +83,32 @@ const Mypage = () => {
 
   return (
     <div>
-      <div style={{height:'100px'}}></div>
+      <div style={{height:'60px'}}></div>
       <div style={headerContainer}>
         <MypageHeaderCard user={userInfo}/>
       </div>
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
         <div style={routingContainer}>
-          <MypageRoutingTitle></MypageRoutingTitle>
+          <MypageRoutingTitle currentFocus={currentFocus}></MypageRoutingTitle>
           <Routes>
             <Route
               exact="true"
               path=""
               element={
-                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
+                <MypageSubscriptionsNow currentSubsList={currentSubsList} setCurrentFocus={setCurrentFocus}/>
               }
             />
             <Route
               path="subscriptionsNow"
               element={
-                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
+                <MypageSubscriptionsNow currentSubsList={currentSubsList} setCurrentFocus={setCurrentFocus}/>
               }
             />
             <Route
               path="subscriptions"
               element={
-                <MypageSubscriptions subsList={subsList}/>
+                <MypageSubscriptions subsList={subsList} setCurrentFocus={setCurrentFocus}/>
               }            
             />
             <Route
@@ -115,7 +120,7 @@ const Mypage = () => {
             <Route
               path="reviews"
               element={
-                <MypageReviews reviewList={reviewList}/>
+                <MypageReviews reviewList={reviewList} />
               }   
             />
             <Route
@@ -133,7 +138,7 @@ const Mypage = () => {
             <Route
               path="petDetail"
               element={
-                <MypagePetDetail/>
+                <MypagePetDetail setCurrentFocus={setCurrentFocus}/>
               }               
             />
             <Route
