@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlexBox, InputLayout, StyledInputBox, SmallText, MypageButton } from '../../components/Mypage/MypageCommon'
+import { FlexBox, InputLayout, StyledInputBox, SmallText, MypageButton, subTitleStyle } from '../../components/Mypage/MypageCommon'
 import Post from '../../components/Post'
 import '../../components/Mypage/MypageStyle.css'
 import { isEmail } from '../../util/EmailCheck'
@@ -57,13 +57,6 @@ const MypageUserUpdate = (props) => {
     gridTemplateColumns:'repeat(5, minmax(0, 1fr))',
     gap: '2%',
     marginBottom: '7px'
-  }
-
-  const subTitleStyle = {
-    margin:'15px 0px 10px', 
-    borderBottom:'0.1px solid #929292', 
-    paddingBottom:'10px',
-    fontWeight:'500',
   }
 
 

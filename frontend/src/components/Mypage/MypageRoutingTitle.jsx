@@ -3,10 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 
-const MypageRoutingTitle = () => {
+const MypageRoutingTitle = (props) => {
   const params = useParams()
   const param = Object.values(params)[0]
   const navigate = useNavigate()
+  const {currentFocus} = props
   console.log()
 
   const titleDiv = {
@@ -37,10 +38,10 @@ const MypageRoutingTitle = () => {
     'petUpdate':{name:'반려견 정보 수정',setting:false},
     'petAdd':{name:'반려견 등록', setting:false}
   }
-
+  console.log(currentFocus)
   const onClickSetting = () => {
     console.log(title[param].settingpath)
-    navigate(title[param].settingpath);
+    navigate(title[param].settingpath, currentFocus ? {state:{Id:currentFocus.val}}: '');
   }
 
   return (

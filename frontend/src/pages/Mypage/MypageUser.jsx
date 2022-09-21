@@ -1,5 +1,5 @@
 import React from 'react'
-import { InfoLayout } from '../../components/Mypage/MypageCommon'
+import { InfoLayout, subTitleStyle } from '../../components/Mypage/MypageCommon'
 
 const MypageUser = (props) => {
   const gridDiv = {
@@ -9,13 +9,7 @@ const MypageUser = (props) => {
     marginBottom: '7px'
   }
 
-  const subTitleStyle = {
-    margin:'15px 0px 10px', 
-    borderBottom:'0.1px solid #929292', 
-    paddingBottom:'10px',
-    fontWeight:'500',
-    color:''
-  }
+
 
   const {user} = props
   return (

@@ -34,9 +34,10 @@ justify-content: ${(props) => props.justify || "center"};
 align-items: ${(props) => props.align || "center"};
 margin: ${(props) => props.margin || "0px"};
 grid-column: ${(props) => props.span || "span 1"};
+background-color: ${(props) => props.bgColor ||''}
 `
-export const FlexBox= ({ children, width, height, justify, direction, align, margin, ...props }) => {
-    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} {...props}>{children}</Flex>
+export const FlexBox= ({ children, width, height, justify, direction, align, margin ,bgColor, ...props }) => {
+    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} bgColor={bgColor} {...props}>{children}</Flex>
 }
 
 const InfoBox = styled.div`
@@ -48,7 +49,6 @@ const InfoBox = styled.div`
     border: 0.1px solid #969696;
     border-radius: 5px;
     box-sizing: border-box;
-
 `
 
 const StyledInput = styled.input`
@@ -118,11 +118,35 @@ const ButtonStyle = styled(animated.button)`
     &:hover{
         background-color: ${(props)=> props.hoverColor || '#776B62'};
         color:white;
+        cursor: pointer;
       }
 `
 
 export const MypageButton = ({children, onClick, color,hoverColor, padding, height, fontSize, margin}) => {
     return (
         <ButtonStyle onClick={onClick} color={color} padding={padding} hoverColor={hoverColor} height={height} fontSize={fontSize} margin={margin}>{children}</ButtonStyle>
+    )
+}
+
+export const subTitleStyle = {
+    margin:'15px 0px 10px', 
+    borderBottom:'0.1px solid #929292', 
+    paddingBottom:'10px',
+    fontWeight:'500',
+    color:''
+  }
+
+const TagDiv = styled.div`
+  height: ${(props)=> props.height || 'auto'};
+  width: ${(props)=> props.width || '100%'};
+  background-color: ${(props)=> props.bgColor || '#FFE6A7'}; 
+  font-size: 12px;
+  font-weight: 400;
+`
+
+
+export const PetTag = ({children, height, width, bgColor}) => {
+    return (
+        <TagDiv height={height} width={width} bgColor={bgColor} >{children}</TagDiv>
     )
 }
