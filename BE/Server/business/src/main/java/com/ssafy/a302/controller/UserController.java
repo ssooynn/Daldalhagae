@@ -36,7 +36,7 @@ public class UserController {
 		
 		if (result)
 			return "회원 가입 성공";
-
+		
 		return "회원 가입 실패";
 	}
 
