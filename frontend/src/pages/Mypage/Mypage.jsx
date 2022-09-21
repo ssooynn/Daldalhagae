@@ -78,7 +78,7 @@ const Mypage = () => {
 
   return (
     <div>
-      <div style={{height:'100px'}}></div>
+      <div style={{height:'60px'}}></div>
       <div style={headerContainer}>
         <MypageHeaderCard user={userInfo}/>
       </div>
