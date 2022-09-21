@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,8 @@ public class Grade {
 	private int gradeNo;
 	@Column(name="NAME")
 	private String name;
-	@OneToMany(mappedBy = "grade")
+	
+	@OneToMany(mappedBy = "grade",fetch = FetchType.LAZY)
 	List<Feed> feeds = new ArrayList<>();
 	
 }

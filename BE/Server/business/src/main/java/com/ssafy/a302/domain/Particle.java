@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +30,6 @@ public class Particle {
 	@Column(name="NAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "particle")
+	@OneToMany(mappedBy = "particle", fetch = FetchType.LAZY)
 	List<Feed> feeds = new ArrayList<>();
 }

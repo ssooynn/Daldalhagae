@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,21 +31,21 @@ public class Feed {
 	@Column(name ="IMAGE")
 	private String image;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GRADE_NO")
 	private Grade grade;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PARTICLE_NO")
 	private Particle particle;
 	
-	@OneToMany(mappedBy = "feed")
+	@OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
 	private List<FeedEffect> feedEffects = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "feed")
+	@OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
 	private List<FeedMaterial> feedMaterials = new ArrayList<>();
 
-	@OneToMany(mappedBy = "feed")
+	@OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
 	private List<FeedTarget> feedTargets = new ArrayList<>();
 
 }

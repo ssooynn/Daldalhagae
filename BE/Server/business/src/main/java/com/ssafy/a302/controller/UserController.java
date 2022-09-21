@@ -41,7 +41,7 @@ public class UserController {
 	}
 
     @ApiOperation(value="사용자 정보 조회")
-    @GetMapping("/mypage/info/{usersSno}")
+    @GetMapping("/info/{usersSno}")
     public void getMyPageInfo(@PathVariable String usersSno){
     	usersService.userInfo(usersSno);
     }
