@@ -34,13 +34,14 @@ justify-content: ${(props) => props.justify || "center"};
 align-items: ${(props) => props.align || "center"};
 margin: ${(props) => props.margin || "0px"};
 grid-column: ${(props) => props.span || "span 1"};
+background-color: ${(props) => props.bgColor ||''}
 `
-export const FlexBox= ({ children, width, height, justify, direction, align, margin, ...props }) => {
-    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} {...props}>{children}</Flex>
+export const FlexBox= ({ children, width, height, justify, direction, align, margin ,bgColor, ...props }) => {
+    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} bgColor={bgColor} {...props}>{children}</Flex>
 }
 
 const InfoBox = styled.div`
-    padding: ${(props)=> props.padding || '5px'};
+    padding: ${(props)=> props.padding || '6px 8px'};
     width: ${(props) => props.width || '100%'};
     height: ${(props) => props.height || "auto"};
     font-size: ${(props)=> props.mainFontSize || '14px'};
@@ -48,28 +49,29 @@ const InfoBox = styled.div`
     border: 0.1px solid #969696;
     border-radius: 5px;
     box-sizing: border-box;
-
 `
 
 const StyledInput = styled.input`
-    padding: ${(props)=> props.padding || '5px'};
+    padding: ${(props)=> props.padding || '7.5px 8px'};
     width: ${(props) => props.width || '100%'};
     height: ${(props) => props.height || "auto"};
     font-size: ${(props)=> props.mainFontSize || '14px'};
-    margin: ${(props)=> props.margin || '1px'};
+    margin: ${(props)=> props.margin || '0px'};
     border: 0.1px solid #969696;
-    border-radius: 5px;
+    border-radius: 7px;
     box-sizing: border-box;
     grid-column: ${(props) => props.span || "span 1"};
-
+    &:focus{
+        outline: 1.2px solid #AC998A;
+    }
 `
 
 export const SmallText = styled.div`
     width: auto;
     text-align: start;
-    font-size: ${(props)=> props.fontSize ||'12px'};
+    font-size: ${(props)=> props.fontSize ||'12.5px'};
     font-weight: ${(props)=> props.fontWeight ||'300'};
-    margin: ${(props)=> props.textMargin || '1px'};
+    margin: ${(props)=> props.textMargin || '3px 1px'};
     `
 
 export const InfoLayout = ({padding, subpadding, width, height, mainFontSize, fontSize, fontWeight, textMargin, margin, label, span, sub, children}) => {
@@ -101,21 +103,50 @@ export const InputLayout = ({padding, width, height, mainFontSize, fontSize, fon
 }
 
 const ButtonStyle = styled(animated.button)`
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    padding: ${(props)=> props.padding || '0px'};
+    box-shadow: 0px 1.5px 2px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     border: none;
     width: 100%;
-    height: 100%;
+    height:  ${(props)=> props.height || '100%'};
     border-radius: 5px;
-    background-color: #F9F5EA;
+    background-color: ${(props)=> props.color || '#FFEEC3'};
+    font-size:  ${(props)=> props.fontSize || '14px'};
+    font-weight: 500;
+    white-space: nowrap;
+    margin: ${(props)=> props.margin || '0px'};
     &:hover{
-        background-color: #776B62;
+        background-color: ${(props)=> props.hoverColor || '#776B62'};
         color:white;
+        cursor: pointer;
       }
 `
 
-export const AddressButton = ({children, onClick}) => {
+export const MypageButton = ({children, onClick, color,hoverColor, padding, height, fontSize, margin}) => {
     return (
-        <ButtonStyle onClick={onClick}>{children}</ButtonStyle>
+        <ButtonStyle onClick={onClick} color={color} padding={padding} hoverColor={hoverColor} height={height} fontSize={fontSize} margin={margin}>{children}</ButtonStyle>
+    )
+}
+
+export const subTitleStyle = {
+    margin:'15px 0px 10px', 
+    borderBottom:'0.1px solid #929292', 
+    paddingBottom:'10px',
+    fontWeight:'500',
+    color:''
+  }
+
+const TagDiv = styled.div`
+  height: ${(props)=> props.height || 'auto'};
+  width: ${(props)=> props.width || '100%'};
+  background-color: ${(props)=> props.bgColor || '#FFE6A7'}; 
+  font-size: 12px;
+  font-weight: 400;
+`
+
+
+export const PetTag = ({children, height, width, bgColor}) => {
+    return (
+        <TagDiv height={height} width={width} bgColor={bgColor} >{children}</TagDiv>
     )
 }
