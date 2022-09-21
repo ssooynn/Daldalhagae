@@ -12,4 +12,5 @@ public interface UsersService {
 	public List<Users> findAll();
 	boolean existsByKakaoId(String kakaoId);
 	boolean SignUp(SignUpReq signUpReq);
+	public void userInfo(String usersSno);
 }
