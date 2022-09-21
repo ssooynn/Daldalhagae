@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,27 +36,27 @@ public class Pet {
 	@Column(name = "IMAGE")
 	private String image;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERS_SNO")
 	private Users users;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TARGET_NO")
 	private Target target;
 	
-	@OneToMany(mappedBy = "pet")
+	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<ItemReview> itemReviews = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "pet")
+	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<PetEffect> petEffects = new ArrayList<>();
 
-	@OneToMany(mappedBy = "pet")
+	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<PetMaterial> petMaterials = new ArrayList<>();
 
-	@OneToMany(mappedBy = "pet")
+	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<PurchasePlan> purchasePlans = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "pet")
+	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
 	
 }

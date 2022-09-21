@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,13 +32,13 @@ public class Material {
 	@Column(name="NAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "material")
+	@OneToMany(mappedBy = "material", fetch = FetchType.LAZY)
 	private List<FeedMaterial> feedMaterials = new ArrayList<>();
 
-	@OneToMany(mappedBy = "material")
+	@OneToMany(mappedBy = "material", fetch = FetchType.LAZY)
 	private List<PetMaterial> petMaterials = new ArrayList<>();
 
-	@OneToMany(mappedBy = "material")
+	@OneToMany(mappedBy = "material", fetch = FetchType.LAZY)
 	private List<SnackMaterial> snackMaterials = new ArrayList<>();
 	
 }

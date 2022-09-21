@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,11 +28,11 @@ public class SubscribtionHistorySubscribtion {
 	@Column(name = "SUBSCRIBTION_HISTORY_SUBSCRIBTION_NO")
 	private int subscribtionHistorySubscribtionNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_NO")
 	private Subscribtion subscribtion;
 }
