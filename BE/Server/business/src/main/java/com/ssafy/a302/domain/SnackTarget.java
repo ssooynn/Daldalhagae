@@ -2,6 +2,7 @@ package com.ssafy.a302.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,11 @@ public class SnackTarget {
 	@Column(name = "SNACK_TARGET_NO")
 	private int snackTargetNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SNACK_SNO")
 	private Snack snack;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="TARGET_NO")
 	private Target target;
 }
