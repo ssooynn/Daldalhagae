@@ -2,6 +2,7 @@ package com.ssafy.a302.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,11 @@ public class SubscribtionProductType {
 	@Column(name = "SUBSCRIBTION_PRODUCT_TYPE_NO")
 	private int subscribtionProductTypeNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="PRODUCT_TYPE_NO")
 	private ProductType productType;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_NO")
 	private Subscribtion subscribtion;
 	
