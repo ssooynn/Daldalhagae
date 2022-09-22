@@ -9,9 +9,13 @@ spring:
       - id : businessId
         uri : lb://BUSINESS
         predicates:
-        - Path=/api-gateway/business-api/**
+          - Path=/api-gateway/business-api/**
         filters:
-        - AuthorizationHeaderFilter
+          - AuthorizationHeaderFilter
+      - id : authId
+        uri : lb://AUTH-API
+        predicates:
+        - Path=/api-gateway/auth-api/**
     
 server:
   servlet:
