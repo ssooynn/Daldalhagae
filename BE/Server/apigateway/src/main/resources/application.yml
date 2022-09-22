@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active : env
+  application:
+    name : GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id : businessId
+        uri : lb://BUSINESS
+        predicates:
+          - Path=/api-gateway/business-api/**
+        filters:
+          - AuthorizationHeaderFilter
+      - id : authId
+        uri : lb://AUTH-API
+        predicates:
+        - Path=/api-gateway/auth-api/**
+    
+server:
+  servlet:
+    context-path: /api-gateway
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+      
+eureka:
+  client:
+    service-url:
+      defaultZone : http://${SERVER_IP}:${EUREKA_PORT}/eureka
+
+
+  
+
+
+

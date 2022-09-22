@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,12 +32,12 @@ public class Effect {
 	@Column(name = "NAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "effect")
+	@OneToMany(mappedBy = "effect", fetch = FetchType.LAZY)
 	private List<FeedEffect> feedEffects = new ArrayList<>();
 
-	@OneToMany(mappedBy = "effect")
+	@OneToMany(mappedBy = "effect", fetch = FetchType.LAZY)
 	private List<PetEffect> petEffects = new ArrayList<>();
 
-	@OneToMany(mappedBy = "effect")
+	@OneToMany(mappedBy = "effect", fetch = FetchType.LAZY)
 	private List<SnackEffect> snackEffects = new ArrayList<>();
 }

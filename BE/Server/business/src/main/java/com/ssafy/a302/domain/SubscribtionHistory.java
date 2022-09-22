@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,20 +37,20 @@ public class SubscribtionHistory {
 	@Column(name="AUTO_PAYMENT_FLAG")
 	private int autoPaymentFlag;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERS_SNO")
 	private Users users;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
 	
-	@OneToMany(mappedBy = "subscribtionHistory")
+	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
 	private List<Purchase> purchases = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "subscribtionHistory")
+	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
 	private List<ServiceReview> serviceReviews = new ArrayList<>();
 
-	@OneToMany(mappedBy = "subscribtionHistory")
+	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
 	private List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions = new ArrayList<>();
 }

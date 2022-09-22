@@ -1,16 +1,14 @@
 package com.ssafy.a302.serviceimpl;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.google.inject.spi.Message;
-import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.UsersDto;
+import com.ssafy.a302.jwt.CreateJWT;
 import com.ssafy.a302.repository.UsersRepository;
 import com.ssafy.a302.response.LoginReq;
+import com.ssafy.a302.service.RedisService;
 import com.ssafy.a302.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService{
 	private final UsersRepository usersRep;
-
+	private final CreateJWT createJWT;
+	private final RedisService redisService;
+	
 	@Override
 	public boolean existsByKakaoId(String kakaoId) {
 		return usersRep.existsByKakaoId(kakaoId);
@@ -27,7 +27,7 @@ public class UsersServiceImpl implements UsersService{
 
 	@Override
 	public UsersDto findByKakaoId(String kakaoId) {
-		return new UsersDto(usersRep.findTopByKakaoId(kakaoId));
+		return new UsersDto(usersRep.findByKakaoId(kakaoId));
 	}
 
 	@Override
@@ -35,10 +35,21 @@ public class UsersServiceImpl implements UsersService{
 		LoginReq loginReq = new LoginReq();
 		
 		if(usersRep.existsByKakaoId(kakaoId)) {
-			loginReq.setUsers(usersRep.findTopByKakaoId(kakaoId),"accessToken");
+			Users users = usersRep.findByKakaoId(kakaoId);
+			String accessToken = createJWT.createAccessToken(users.getUsersSno());
+			loginReq.setUsers(users,accessToken);
 		}
 		
 		return loginReq;
+	}
+
+	@Override
+	public boolean logout(String usersSno, String token) {
+		if(redisService.getValues(usersSno).equals(token)) {
+			redisService.deleteValues(usersSno);
+			return true;
+		}
+		return false;
 	}
 	
 	

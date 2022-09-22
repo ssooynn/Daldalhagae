@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +31,13 @@ public class Target {
 	@Column(name = "NAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "target")
+	@OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
 	private List<FeedTarget> feedTargets = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "target")
+	@OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
 	private List<Pet> pets = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "target")
+	@OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
 	private List<SnackTarget> snackTargets = new ArrayList<>();
 	
 }
