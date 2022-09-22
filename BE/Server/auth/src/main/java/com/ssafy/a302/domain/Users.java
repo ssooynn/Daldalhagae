@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Users {
 	@Id
 	@Column(name="USERS_SNO")
-	private String userSno;
+	private String usersSno;
 	
 	@Column(name="KAKAO_ID")
 	private String kakaoId;
