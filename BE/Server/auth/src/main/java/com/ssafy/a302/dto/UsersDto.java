@@ -19,7 +19,7 @@ public class UsersDto {
 	private String address;
 	
 	public UsersDto(Users users) {
-		this.userSno = users.getUserSno();
+		this.userSno = users.getUsersSno();
 		this.kakaoId = users.getKakaoId();
 		this.email = users.getEmail();
 		this.name = users.getName();

@@ -1,7 +1,9 @@
 package com.ssafy.a302.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,22 +43,22 @@ public class Users {
 	private String address;
 	
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<ItemReview> itemReviews = new ArrayList<>();
+	private Set<ItemReview> itemReviews = new HashSet<>();
 
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<Pet> pets = new ArrayList<>();
+	private Set<Pet> pets = new HashSet<>();
 	
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<PurchasePlan> purchasePlans = new ArrayList<>();
+	private Set<PurchasePlan> purchasePlans = new HashSet<>();
 
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<ServiceReview> serviceReviews = new ArrayList<>();
+	private Set<ServiceReview> serviceReviews = new HashSet<>();
 
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
+	private Set<SubscribtionHistory> subscribtionHistorys = new HashSet<>();
 
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<UserLog> userLogs = new ArrayList<>();
+	private Set<UserLog> userLogs = new HashSet<>();
 
 	
 	public Users(String kakaoId, String email, String name, String phone, String address) {

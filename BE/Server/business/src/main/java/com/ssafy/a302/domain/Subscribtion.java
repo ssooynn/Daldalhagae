@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,10 +37,10 @@ public class Subscribtion {
 	@Column(name = "IMAGE")
 	private String image;
 	
-	@OneToMany(mappedBy = "subscribtion")
+	@OneToMany(mappedBy = "subscribtion", fetch = FetchType.LAZY)
 	private List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "subscribtion")
+	@OneToMany(mappedBy = "subscribtion", fetch = FetchType.LAZY)
 	private List<SubscribtionProductType> subscribtionProductTypes = new ArrayList<>();
 	
 }

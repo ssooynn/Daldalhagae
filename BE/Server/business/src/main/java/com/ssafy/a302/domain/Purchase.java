@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,10 +35,10 @@ public class Purchase {
 	@Column(name = "REFUND_DATE")
 	private Date refundDate;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
 	
-	@OneToMany(mappedBy = "purchase")
+	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private List<ItemReview> itemReviews = new ArrayList<>();
 }
