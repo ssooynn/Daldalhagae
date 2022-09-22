@@ -9,6 +9,11 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.service.RedisService;
 
 import io.jsonwebtoken.Claims;
@@ -20,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class CreateJWT {
-	private RedisService redisService;
+	private final RedisService redisService;
 
 	@Value("${JWT_TOKEN}")
 	private String secretKey;
@@ -51,7 +56,7 @@ public class CreateJWT {
 	/* 로그인 시 accessToken 생성 및 redis 저장 */
 	public String createAccessToken(String usersSno) {
 		String token = createToken(usersSno);
-//		redisService.setValues(usersSno, token, Duration.ofHours(1));
+		redisService.setValues(usersSno, token, Duration.ofHours(1));
 		return token;
 	}
 
