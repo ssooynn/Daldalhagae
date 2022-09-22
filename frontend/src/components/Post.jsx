@@ -26,9 +26,9 @@ const Post = (props) => {
   };
 
   const backDiv = {
-    backgroundColor:'rgba(0,0,0,0.25)',
+    backgroundColor:'rgba(0,0,0,0.3)',
     display: "block",
-    position: "absolute",
+    position: "fixed",
     top: "0",
     left:'0',
     width: "100%",
@@ -38,9 +38,10 @@ const Post = (props) => {
 
   const postCodeStyle = {
     display: "block",
-    position: "absolute",
-    top: "20%",
-    left:'37%',
+    position: "fixed",
+    top: "50%",
+    left:'50%',
+    transform: 'translate(-50%,-50%)', 
     width: "400px",
     height: "500px",
     padding: "7px",

@@ -66,7 +66,7 @@ const MypageUserUpdate = (props) => {
       <div style={gridDiv}>
         <InputLayout label='이름' value={user.name} span='span 2' onChange={onInputChange} name='name'></InputLayout>
       </div>
-      <div style={{...gridDiv, marginBottom:'35px'}}>
+      <div style={{...gridDiv, marginBottom:'50px'}}>
         <InputLayout label='전화번호' onChange={onInputChange} value={user.phoneNo} span='span 2' name='phoneNo'></InputLayout>
         <InputLayout label='이메일' onChange={onInputChange} value={user.email} span='span 3' name='email'></InputLayout>
       </div>
