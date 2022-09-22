@@ -1,7 +1,9 @@
 package com.ssafy.a302.controller;
 
+import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.*;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.response.UsersInfoRes;
 import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,7 +45,6 @@ public class UserController {
     @ApiOperation(value="사용자 정보 조회")
     @GetMapping("/info/{usersSno}")
     public void getMyPageInfo(@PathVariable String usersSno){
-    	usersService.userInfo(usersSno);
     }
 
 //    @ApiOperation(value="사용자 정보 수정")

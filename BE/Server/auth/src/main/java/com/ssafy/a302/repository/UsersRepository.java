@@ -6,5 +6,5 @@ import com.ssafy.a302.domain.Users;
 
 public interface UsersRepository extends JpaRepository<Users, Integer>{
 	boolean existsByKakaoId(String kakaoId);
-	Users findTopByKakaoId(String kakaoId);
+	Users findByKakaoId(String kakaoId);
 }

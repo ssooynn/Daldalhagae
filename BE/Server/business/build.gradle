@@ -43,6 +43,8 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
    	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
   	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+  	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+  	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 }
 
 dependencyManagement {

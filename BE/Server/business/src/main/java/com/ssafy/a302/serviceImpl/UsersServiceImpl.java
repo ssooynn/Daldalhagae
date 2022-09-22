@@ -3,10 +3,13 @@ package com.ssafy.a302.serviceImpl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.a302.domain.Users;
+import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.repository.UsersRepository;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.response.UsersInfoRes;
 import com.ssafy.a302.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,9 +39,11 @@ public class UsersServiceImpl implements UsersService {
 		return true;
 	}
 
+	/* 회원 정보 */
 	@Override
-	public void userInfo(String usersSno) {
-		usersRep.findByUsersSno(usersSno);
+	public Users userInfo(String usersSno) {
+		Users users = usersRep.findByUsersSno(usersSno);
+		return users;
 	}
 
 }
