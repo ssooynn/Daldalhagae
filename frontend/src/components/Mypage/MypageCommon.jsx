@@ -2,6 +2,12 @@ import React from 'react'
 import styled from 'styled-components';
 import { animated } from '@react-spring/web';
 import { Link } from 'react-router-dom';
+import PlayPackage from '../../assets/img/PlayPackage.png'
+import AllInOnePackage from '../../assets/img/AllInOnePackage.png'
+import BasicPackage from '../../assets/img/BasicPackage.png'
+import DalDalPackage from '../../assets/img/DalDalPackage.png'
+import LightAllInOnePackage from '../../assets/img/LightAllInOnePackage.png'
+import ToyPackage from '../../assets/img/ToyPackage.png'
 
 export const StyledLink = styled(Link)`
 height: auto;
@@ -129,7 +135,7 @@ export const MypageButton = ({children, onClick, color,hoverColor, padding, heig
 }
 
 export const subTitleStyle = {
-    margin:'15px 0px 10px', 
+    margin:'20px 0px 25px', 
     borderBottom:'0.1px solid #929292', 
     paddingBottom:'10px',
     fontWeight:'500',
@@ -139,14 +145,67 @@ export const subTitleStyle = {
 const TagDiv = styled.div`
   height: ${(props)=> props.height || 'auto'};
   width: ${(props)=> props.width || '100%'};
+  padding: 2.5px 0px;
   background-color: ${(props)=> props.bgColor || '#FFE6A7'}; 
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
+  border-radius:5px;
+  white-space:nowrap;
+  text-align: center;
 `
 
 
 export const PetTag = ({children, height, width, bgColor}) => {
     return (
         <TagDiv height={height} width={width} bgColor={bgColor} >{children}</TagDiv>
+    )
+}
+
+const ImgDiv = styled(animated.div)`
+    width: ${(props)=> props.width || '100%'};
+    height: ${(props)=> props.height || '120px'};
+    position: relative;
+    box-sizing: border-box;
+`
+
+const imgStyle = {
+    zIndex:'5',
+    opacity: '.55',
+    position: 'absolute',
+    width:'100%',
+    height:'100%',
+    objectFit:'cover'
+
+}
+
+const textStyle = {
+    zIndex:'10',
+    position: 'absolute',
+    width:'100%',
+    height:'100%',
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    '&:hover': {
+        backgroundColor:'rgba(0,0,0,0.01)',
+    }
+}
+
+export const SubscriptionItem = ({width, height, bgImg, page, subsPK, title, titleSub, subStart, petName, subEnd, onClick, reviewConnect}) => {
+    const bgList = {
+        PlayPackage,
+        AllInOnePackage,
+        BasicPackage,
+        DalDalPackage,
+        LightAllInOnePackage,
+        ToyPackage ,
+    }
+    
+    
+    return(
+        <ImgDiv width={width} height={height} onClick={()=>{console.log(111)}}>
+            <img style={imgStyle} src={bgList[bgImg]||bgList.BasicPackage} alt="" />
+            <div style={textStyle}>
+                asdfasdf
+            </div>
+        </ImgDiv>
     )
 }
