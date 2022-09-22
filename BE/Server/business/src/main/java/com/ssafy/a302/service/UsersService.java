@@ -7,10 +7,11 @@ import org.apache.catalina.User;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.response.UsersInfoRes;
 
 public interface UsersService {
 	public List<Users> findAll();
 	boolean existsByKakaoId(String kakaoId);
 	boolean SignUp(SignUpReq signUpReq);
-	public void userInfo(String usersSno);
+	public Users userInfo(String usersSno);
 }
