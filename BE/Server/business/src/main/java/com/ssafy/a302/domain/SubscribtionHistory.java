@@ -15,14 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Table(name = "SUBSCRIBTION_HISTORY")
 public class SubscribtionHistory {
@@ -53,4 +49,16 @@ public class SubscribtionHistory {
 
 	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
 	private List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions = new ArrayList<>();
+	@Builder
+	public SubscribtionHistory(int subscribtionHistoryNo, Date startDate, Date endDate, int autoPaymentFlag, Users users, Pet pet, List<Purchase> purchases, List<ServiceReview> serviceReviews, List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions) {
+		this.subscribtionHistoryNo = subscribtionHistoryNo;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.autoPaymentFlag = autoPaymentFlag;
+		this.users = users;
+		this.pet = pet;
+		this.purchases = purchases;
+		this.serviceReviews = serviceReviews;
+		this.subscribtionHistorySubscribtions = subscribtionHistorySubscribtions;
+	}
 }
