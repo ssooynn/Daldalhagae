@@ -1,4 +1,5 @@
 import React,{ useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import imgA from '../assets/img/구독상세페이지1.png'
 import imgB from '../assets/img/구독상세페이지2.png'
 import imgC from '../assets/img/구독상세페이지3.png'
@@ -17,6 +18,10 @@ const SubscribeDetail = () => {
   const showBag = () => {
     setBagOpen(true)
   }
+
+  const location = useLocation()
+  const name = location.state.name
+
   return (
     <div
       style={{
@@ -35,7 +40,7 @@ const SubscribeDetail = () => {
         }}>
         <img src={imgA} width='400' height='400' alt='package'/>
         <div>
-          <h4>Package Name</h4>
+          {/* <h4>{name}</h4> */}
           <h5>구성목록</h5>
           <h5>가격(월 21,900원)</h5>
           <div
