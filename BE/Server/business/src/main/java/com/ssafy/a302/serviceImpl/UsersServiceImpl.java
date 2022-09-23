@@ -35,7 +35,11 @@ public class UsersServiceImpl implements UsersService {
 	public boolean SignUp(SignUpReq signUpReq) {
 		if (usersRep.existsByKakaoId(signUpReq.getKakaoId()))
 			return false;
-		usersRep.save(signUpReq.transforUsers());
+		Users users = signUpReq.transforUsers();
+		usersRep.save(users);
+		String usersSno = users.getUsersSno();
+		
+		
 		return true;
 	}
 
