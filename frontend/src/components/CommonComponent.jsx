@@ -3,16 +3,17 @@ import styled, { css } from "styled-components";
 import { animated } from "@react-spring/web";
 
 const Button = styled(animated.button)`
-  height: 70px;
-  border-radius: 10px;
-  border: 0px;
-  font-size: 12px;
-  font-family: "Spoqa Han Sans Neo";
-  font-weight: 400;
-  margin: ${(props) => props.margin || "10px 5px"};
-  width: ${(props) => props.width || "300px"};
-  color: ${(props) => props.color || "#1f1d1d"};
-  background-color: ${(props) => props.bgcolor || "white"};
+    height: 70px;
+    border-radius: 10px;
+    border: 0px;
+    font-size: 12px;
+    font-family:"Spoqa Han Sans Neo";
+    font-weight: 400;
+    cursor: pointer;
+    margin: ${(props) => props.margin || "10px 5px"};
+    width: ${(props) => props.width || "300px"};
+    color: ${(props) => props.color || "#1f1d1d"};
+    background-color: ${(props) => props.bgcolor || "white"};
 
   ${(props) =>
     props.FullDeepBrown &&
