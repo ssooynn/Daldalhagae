@@ -12,6 +12,7 @@ import com.ssafy.a302.response.PetRes;
 
 public interface PetService {
 	Map<String, List<PetRes>> getPetInfo(String userId);
+	Map<String, PetRes> getPetInfoByPetId(String petId);
 	void updatePetInfo(PetReq petReq, MultipartFile image);
 	void addPetInfo(PetReq petReq, MultipartFile image);
 }
