@@ -10,10 +10,10 @@ import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.response.UsersInfoRes;
 
 public interface UsersService {
-	public List<Users> findAll();
+	List<Users> findAll();
 	boolean existsByKakaoId(String kakaoId);
-	boolean SignUp(SignUpReq signUpReq);
-	public UsersDto userInfo(String usersSno);
-	public void usersUpdate(UsersDto usersDto);
-	public void usersWithdrow(String usersSno);
+	String SignUp(SignUpReq signUpReq) throws Exception;
+	UsersDto userInfo(String usersSno);
+	void usersUpdate(UsersDto usersDto);
+	void usersWithdrow(String usersSno);
 }

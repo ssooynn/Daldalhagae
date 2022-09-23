@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.a302.common.RandomKey;
+import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.domain.UsersLog;
 import com.ssafy.a302.dto.UsersDto;
@@ -39,9 +40,9 @@ public class UsersServiceImpl implements UsersService {
 
 	/* 회원가입 */
 	@Override
-	public boolean SignUp(SignUpReq signUpReq) {
+	public String SignUp(SignUpReq signUpReq) throws Exception {
 		if (usersRep.existsByKakaoId(signUpReq.getKakaoId()))
-			return false;
+			throw new Exception();
 		signUpReq.setUsersSno("u"+randomKey.createKey());
 		Users users = signUpReq.transforUsers();
 		usersRep.save(users);
@@ -49,7 +50,7 @@ public class UsersServiceImpl implements UsersService {
 		UsersLog usersLog = new UsersLog(users, new Date());
 		usersLogRep.save(usersLog);
 		
-		return true;
+		return users.getUsersSno();
 	}
 
 	/* 회원 정보 조회*/
