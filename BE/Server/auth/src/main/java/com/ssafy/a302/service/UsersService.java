@@ -7,4 +7,5 @@ public interface UsersService {
 	boolean existsByKakaoId(String kakaoId);
 	UsersDto findByKakaoId(String kakaoId);
 	LoginReq login(String kakaoId);
+	boolean logout(String usersSno, String token);
 }
