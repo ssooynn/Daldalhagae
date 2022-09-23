@@ -38,10 +38,13 @@ public class PetController {
 	@ApiOperation(value = "전체 펫정보가져오기", notes = "아직 로그인 토큰 안했어요 userId pathValue로 부탁")
 	@GetMapping("/{userId}") // 수정 예정
 	public Map<String,List<PetRes>> getPetInfo(@PathVariable("userId") String userId){
-		List<Map<String, PetRes>> list = new ArrayList<>();
-		System.out.println(petServiceImpl.getPetInfo(userId));
-
 		return petServiceImpl.getPetInfo(userId);
+	}
+
+	@ApiOperation(value = "펫아이디로 펫정보가져오기", notes = "아직 로그인 토큰 안했어요 userId pathValue로 부탁")
+	@GetMapping("petInfo/{petId}") // 수정 예정
+	public Map<String,PetRes> getPetInfoByPetId(@PathVariable("petId") String petId){
+		return petServiceImpl.getPetInfoByPetId(petId);
 	}
 
 	@ApiOperation(value = "펫정보 수정하기")
@@ -57,4 +60,7 @@ public class PetController {
 		petServiceImpl.addPetInfo(petReq, image);
 		return "add";
 	}
+
+
+
 }

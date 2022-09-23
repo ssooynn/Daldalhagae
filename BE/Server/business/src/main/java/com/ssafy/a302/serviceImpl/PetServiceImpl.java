@@ -18,24 +18,22 @@ import com.ssafy.a302.request.PetReq;
 import com.ssafy.a302.response.PetRes;
 import com.ssafy.a302.service.PetService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@Transactional()
+@Transactional
+@RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
 
 	private final PetRepository petRepository;
-
-	public PetServiceImpl(PetRepository petRepository) {
-		this.petRepository = petRepository;
-	}
 
 	@Override
 	@Transactional
 	public Map<String, List<PetRes>> getPetInfo(String userId) {
 
-		Map<String, List<PetRes>> pets = new HashMap<>();
+		Map<String, List<PetRes>> petsInfo = new HashMap<>();
 		List<PetRes> list = new ArrayList<>();
 		List<Pet> petList = petRepository.findPetById(userId);
 
@@ -51,10 +49,29 @@ public class PetServiceImpl implements PetService {
 			list.add(new PetRes(pet, material, effect));
 		}
 
-		pets.put("pets", list);
-		return pets;
+		petsInfo.put("pets", list);
+		return petsInfo;
 	}
 
+	@Override
+	@Transactional
+	public Map<String, PetRes> getPetInfoByPetId(String petId) {
+
+		Map<String, PetRes> petInfo = new HashMap<>();
+		Pet pet = petRepository.findPetByPetId(petId);
+
+		Map<Integer, String> material = new HashMap<>();
+		Map<Integer, String> effect = new HashMap<>();
+		for (PetMaterial petMaterial : pet.getPetMaterials()) {
+			material.put(petMaterial.getMaterial().getMaterialNo(), petMaterial.getMaterial().getName());
+		}
+		for (PetEffect petEffect : pet.getPetEffects()) {
+			effect.put(petEffect.getEffect().getEffectNo(), petEffect.getEffect().getName());
+		}
+
+		petInfo.put("pets", new PetRes(pet, material, effect));
+		return petInfo;
+	}
 
 	@Override
 	@Transactional
