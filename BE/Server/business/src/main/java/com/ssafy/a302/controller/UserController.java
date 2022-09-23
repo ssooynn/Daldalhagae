@@ -1,7 +1,10 @@
 package com.ssafy.a302.controller;
 
+import com.ssafy.a302.common.FileUpload;
+import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.*;
+import com.ssafy.a302.request.SignUpPetReq;
 import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.response.UsersInfoRes;
 import com.ssafy.a302.service.UsersService;
@@ -15,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "사용자 컨트롤러")
 @RestController
@@ -23,112 +27,58 @@ import java.util.List;
 public class UserController {
 
 	private final UsersService usersService;
+	private final FileUpload fileUpload;
 
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/signup")
-	public String signup(@RequestBody SignUpReq signUpReq) {
-		boolean result = false;
-		
-		try {
-			result = usersService.SignUp(signUpReq);
+	public String signup(@RequestPart List<MultipartFile> images, @RequestPart(value = "users") SignUpReq signUpReq,
+			@RequestPart(value = "pets") List<SignUpPetReq> pets) {
 
+		try {
+			String result = usersService.SignUp(signUpReq);
+			for (int i = 0; i < pets.size(); i++) {
+				SignUpPetReq pet = pets.get(i);
+				fileUpload.petImageUpload(images, pet);
+			}
 		} catch (Exception e) {
-			return "회원 가입 실패";
+			return Utils.FAIL;
 		}
-		
-		if (result)
-			return "회원 가입 성공";
-		
-		return "회원 가입 실패";
+
+		return Utils.FAIL;
 	}
 
-    @ApiOperation(value="사용자 정보 조회")
-    @GetMapping("/info/{usersSno}")
-    public void getMyPageInfo(@PathVariable String usersSno){
-    }
+	@ApiOperation(value = "사용자 정보 조회")
+	@GetMapping("/info/{usersSno}")
+	public UsersDto getInfo(@PathVariable String usersSno) {
+		return usersService.userInfo(usersSno);
+	}
+	
+	@ApiOperation(value = "마이 페이지 조회")
+	@GetMapping("/mypage/{usersSno}")
+	public UsersDto getMyPage(@PathVariable String usersSno) {
+		return usersService.userInfo(usersSno);
+	}
 
-//    @ApiOperation(value="사용자 정보 수정")
-//    @PatchMapping("/mypage/info")
-//    public ResponseEntity<?> updateUserInfo(@RequestBody UsersDto userDto){
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-//
-//    @ApiOperation(value="사용자의 현재 구독 내용 조회")
-//    @GetMapping("/mypage/subscriptions/now/{subSno}")
-//    public ResponseEntity<?> getUserSubNow(@PathVariable("subSno") String subSno){
-//        SubscriptionDto subscriptionDto = new SubscriptionDto("뭉자뭉자", 20000, "뭉자", "2022-10-10", "2022-11-09", 1 );
-//        return ResponseEntity.ok(subscriptionDto);
-//    }
-//
-//    @ApiOperation(value="사용자의 모든 구독 내용 조회")
-//    @GetMapping("/mypage/subscriptions")
-//    public ResponseEntity<?> getUserSubAll(){
-//        List<SubscriptionDto> list = new ArrayList<>();
-//        SubscriptionDto subscriptionDto1 = new SubscriptionDto("뭉자뭉자", 20000, "뭉자", "2022-10-10", "2022-11-09", 1 );
-//        SubscriptionDto subscriptionDto2 = new SubscriptionDto("부자몽자", 100000, "몽자", "2022-10-10", "2022-11-09", 1 );
-//
-//        return ResponseEntity.ok(list);
-//    }
-//
-//    @ApiOperation(value="사용자 구독 취소")
-//    @PatchMapping("/mypage/subscriptions/{subSno}")
-//    public ResponseEntity<?> cancleUserSub(@PathVariable("subSno") String subSno){
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-//
-//    @ApiOperation(value="내가 쓴 리뷰 조회")
-//    @GetMapping("/mypage/review")
-//    public ResponseEntity<?> getMyReviews(){
-//        List<ReviewDto> list = new ArrayList<>();
-//        ReviewDto reviewDto1 = new ReviewDto("U1991991991", "P1001001001", "I2002002002", "1", "시러요", null);
-//        ReviewDto reviewDto2= new ReviewDto("U1991991992", "P1001001002", "I2002002002", "5", "조아요", null);
-//
-//        list.add(reviewDto1);
-//        list.add(reviewDto2);
-//
-//        return ResponseEntity.ok(list);
-//    }
-//
-//    @ApiOperation(value="리뷰 작성하기")
-//    @PostMapping("/mypage/review")
-//    public ResponseEntity<?> postReview(@RequestBody ReviewDto reviewDto, @RequestPart(required = false) List<MultipartFile> images){
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-//
-//    @ApiOperation(value="전체 펫 상세 조회")
-//    @GetMapping("/mypage/pet")
-//    public ResponseEntity<?> getMyPetInfoAll(){
-//
-//
-//        List<PetDto.Detail> list = new ArrayList<>();
-//        PetDto.Detail petDto1 = new PetDto.Detail("U1231231233", "댕댕이", "2021-09-18", "3", "어쩌구", "저쩌구", "유아견", null);
-//        PetDto.Detail petDto2 = new PetDto.Detail("U1231231233", "댕댕이2", "2021-09=10-18", "2", "어쩌구", "저쩌구", "유아견", null);
-//
-//        list.add(petDto1);
-//        list.add(petDto2);
-//        return ResponseEntity.ok(list);
-//    }
-//
-//    @ApiOperation(value="펫 정보 수정")
-//    @PatchMapping("/mypage/pet")
-//    public ResponseEntity<?> updateMyPetInfo(@RequestBody PetDto petDto, @RequestPart(required = false) List<MultipartFile> images){
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-//
-//    @ApiOperation(value="펫 정보 추가")
-//    @PostMapping("/mypage/pet")
-//    public ResponseEntity<?> postMyPetInfo(@RequestBody PetDto petDto, @RequestPart(required = false) List<MultipartFile> images){
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
-//
-//    @ApiOperation(value = "사용자 구매 정보 조회")
-//    @GetMapping("/purchase")
-//    public ResponseEntity<?> getUserPurchaseInfo(){
-//        ArrayList<SubscriptionDto> list = new ArrayList<>();
-//        SubscriptionDto dto = new SubscriptionDto("name", 3000, "둥둥이", "2022-10-01", "2020-10-31",  3000);
-//        list.add(dto);
-//
-//        return ResponseEntity.ok(dto);
-//    }
+    @ApiOperation(value="사용자 정보 수정")
+    @PatchMapping("/info")
+    public String updateUserInfo(@RequestBody UsersDto userDto){
+        usersService.usersUpdate(userDto);
+    	
+    	return Utils.SUCCESS;
+    }
+    
+    @ApiOperation(value="사용자 탈퇴")
+    @PatchMapping("/withdrow")
+    public String deleteUserInfo(@RequestBody Map<String,Object> map){
+    	Object usersSno = map.get("usersSno");
+    	if(usersSno !=null && usersSno instanceof String) {
+    		usersService.usersWithdrow((String)usersSno);
+    		return Utils.SUCCESS;
+    	}
+    	return Utils.FAIL;
+    }
+    
+   
+
 
 }

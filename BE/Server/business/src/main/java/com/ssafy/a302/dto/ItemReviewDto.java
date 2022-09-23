@@ -5,6 +5,7 @@ import com.ssafy.a302.domain.ItemReview;
 import com.ssafy.a302.domain.Pet;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,5 +21,7 @@ public class ItemReviewDto {
 	private UsersDto users;
 	private PurchaseDto purchase;
 	private PetDto pet;
-	
+
+
+
 }

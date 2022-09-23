@@ -10,15 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpReq {
+	private String usersSno;
 	private String kakaoId;
 	private String email;
 	private String name;
 	private String phone;
 	private String address;
-	private List<SignUpPetReq> pets;
+	
 	
 	public Users transforUsers() {
-		Users users = new Users(kakaoId, email, name, phone, address);
+		Users users = new Users(usersSno, kakaoId, email, name, phone, address);
 		return users;
 	}
 }

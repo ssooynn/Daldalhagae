@@ -58,5 +58,5 @@ public class Pet {
 	
 	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
-	
+
 }

@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Table(name = "USERS_LOG")
-public class UserLog {
+public class UsersLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USERS_LOG_NO")
@@ -37,4 +37,19 @@ public class UserLog {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="USERS_SNO")
 	private Users users;
+
+	public UsersLog(Users users, Date userCreatedAt) {
+		super();
+		this.users = users;
+		this.userCreatedAt = userCreatedAt;
+	}
+	
+	public void updateuUerUpdatedAt(Date userUpdatedAt) {
+		this.userUpdatedAt = userUpdatedAt;
+	}
+	
+	public void updateuUserDeletedAt(Date userDeletedAt) {
+		this.userDeletedAt = userDeletedAt;
+	}
+	
 }
