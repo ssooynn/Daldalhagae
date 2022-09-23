@@ -5,6 +5,15 @@ spring:
     name : GATEWAY
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]' :
+            allowedOriginPatterns : "*"
+            allow-credentials: true   #추가
+            allowedHeaders: "*"
+            allowedMethods: "*"
       routes:
       - id : businessId
         uri : lb://BUSINESS
