@@ -8,8 +8,8 @@ import imgA from '../assets/img/우리의한달을꽉차게.png'
 import imgB from '../assets/img/구독리스트1.png'
 import imgC from '../assets/img/구독리스트2.png'
 import imgD from '../assets/img/구독리스트3.png'
-import daldalPackage from '../assets/img/daldalPackage.png'
-import toyPackage from '../assets/img/toyPackage.png'
+import daldalPackage from '../assets/img/DalDalPackage.png'
+import toyPackage from '../assets/img/ToyPackage.png'
 import lightPackage from '../assets/img/lightPackage.png'
 
 const MoveOtherOpions = styled.div`
@@ -33,6 +33,12 @@ const MoveDetailButton = styled.div`
 
 const SubscribeList = () => {
   const Navigate = useNavigate();
+  function GoBasic() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Basic Package'
+      }})
+  }
   function GoCustom() {
     Navigate("/setCustom")
   }
@@ -83,10 +89,8 @@ const SubscribeList = () => {
               width: '100%'
             }} alt="" />
           <MoveDetailButton
+            onClick={GoBasic}
             style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              flexDirection: 'column',
               marginLeft: '15px',
             }}>
             <div
@@ -104,7 +108,7 @@ const SubscribeList = () => {
               style={{
                 backgroundColor: 'rgba(172, 153, 138, 0.2)',
                 borderRadius: '5px',
-                padding: '0 30px 10px 30px',
+                padding: '1px 30px 10px 30px',
                 fontSize: '12px',
                 width: '450px',
               }}>
