@@ -29,6 +29,7 @@ const MypageRoutingTitle = (props) => {
   const title = {
     '':{name:'진행 중인 구독', subText:'현재 구독 중인 상품을 확인할 수 있습니다.'},
     'subscriptionsNow':{name:'진행 중인 구독',  subText:'현재 구독 중인 상품을 확인할 수 있습니다.'},
+    'subscriptionDetail':{name:'구독 상세 정보',  subText:'구독 상세 내역을 확인할 수 있습니다.'},
     'subscriptions':{name:'전체 구독', subText:'현재까지의 모든 구독 내역입니다.'},
     'unwrittenReviews':{name:'미작성 후기', subText:'후기 미작성 구독 내역입니다. 후기를 작성해주세요.'},
     'reviews':{name:'내가 작성한 후기', setting:false},

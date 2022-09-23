@@ -2,12 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { animated } from '@react-spring/web';
 import { Link } from 'react-router-dom';
-import PlayPackage from '../../assets/img/PlayPackage.png'
-import AllInOnePackage from '../../assets/img/AllInOnePackage.png'
-import BasicPackage from '../../assets/img/BasicPackage.png'
-import DalDalPackage from '../../assets/img/DalDalPackage.png'
-import LightAllInOnePackage from '../../assets/img/LightAllInOnePackage.png'
-import ToyPackage from '../../assets/img/ToyPackage.png'
+
 
 export const StyledLink = styled(Link)`
 height: auto;
@@ -161,51 +156,12 @@ export const PetTag = ({children, height, width, bgColor}) => {
     )
 }
 
-const ImgDiv = styled(animated.div)`
+export const ImgDiv = styled(animated.div)`
     width: ${(props)=> props.width || '100%'};
-    height: ${(props)=> props.height || '120px'};
+    height: ${(props)=> props.height || '130px'};
+    margin: 12px 0px;
     position: relative;
     box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.48);
 `
-
-const imgStyle = {
-    zIndex:'5',
-    opacity: '.55',
-    position: 'absolute',
-    width:'100%',
-    height:'100%',
-    objectFit:'cover'
-
-}
-
-const textStyle = {
-    zIndex:'10',
-    position: 'absolute',
-    width:'100%',
-    height:'100%',
-    backgroundColor: 'rgba(0,0,0,0.15)',
-    '&:hover': {
-        backgroundColor:'rgba(0,0,0,0.01)',
-    }
-}
-
-export const SubscriptionItem = ({width, height, bgImg, page, subsPK, title, titleSub, subStart, petName, subEnd, onClick, reviewConnect}) => {
-    const bgList = {
-        PlayPackage,
-        AllInOnePackage,
-        BasicPackage,
-        DalDalPackage,
-        LightAllInOnePackage,
-        ToyPackage ,
-    }
-    
-    
-    return(
-        <ImgDiv width={width} height={height} onClick={()=>{console.log(111)}}>
-            <img style={imgStyle} src={bgList[bgImg]||bgList.BasicPackage} alt="" />
-            <div style={textStyle}>
-                asdfasdf
-            </div>
-        </ImgDiv>
-    )
-}
