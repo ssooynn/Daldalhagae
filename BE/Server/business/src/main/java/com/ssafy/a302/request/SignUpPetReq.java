@@ -2,6 +2,7 @@ package com.ssafy.a302.request;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpPetReq {
-	String targetNo;
+	int targetNo;
 	String name;
 	String birth;
-	String fat;
+	int fat;
+	String image;
 	List<Integer> materials;
 	List<Integer> effects;
 }
