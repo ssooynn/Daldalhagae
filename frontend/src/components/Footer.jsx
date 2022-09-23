@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line
 import { FlexBox } from './MainComponent'
 import styled from "styled-components";
 import { StyledText } from './CommonComponent';
