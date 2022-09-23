@@ -3,35 +3,24 @@ package crawling;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 
+import object.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import object.Bridge;
-import object.Feed;
 import util.CommonUtil;
+
 
 public class NaverCrawling {
 	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
@@ -44,7 +33,7 @@ public class NaverCrawling {
 	public static String fkey;
 	public static String skey;
 	public static List<Feed> listFeed;
-
+	public static final Random random = new Random();
 	public static String getUrl(int a, int b){
 		if(a==1){
 			return "https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EA%B0%95%EC%95%84%EC%A7%80%EC%82%AC%EB%A3%8C"
@@ -63,6 +52,7 @@ public class NaverCrawling {
 	};
 
 	public static void main(String[] args) throws IOException {
+//		System.out.println(NaverCrawling.class.getResource(".").getPath());
 		StringBuilder sb = new StringBuilder();
 		detailMap = new HashMap[cnt];
 		bridgeList = new ArrayList[cnt];
@@ -71,32 +61,53 @@ public class NaverCrawling {
 		listFeed = new ArrayList<>();
 		fkey = "";
 
-		//파일저장
-//		String reviewFilePath = "C:/Users/KMLEE/Desktop/review.csv";
-//		File reviewFile = null;
-//		BufferedWriter bw = null;
-//		String NEWLINE = System.lineSeparator();
-//
-//		reviewFile = new File(reviewFilePath);
-//		bw = new BufferedWriter(new FileWriter(reviewFile));
-		int rowNo = 0;
+		//엑셀파일
+		////리뷰, 사료, 간식 , 효능 , 원료, 등급, 급여대상 , 중계테이블
+		////1.사료,간식
+		final String EXCELFILE_PATH ="C:/Users/KMLEE/Desktop/daldalhagae/S07P22A302/BE/Crawling/crawling/exceldata";
 
-		XSSFWorkbook xssfWb = null;
-		XSSFSheet xssfSheet = null;
-		XSSFRow xssfRow = null;
+		String[] feedCol = {"item_sno","name","image","particle_no","grade_no"};
+		ExcelFile feedExcel= new ExcelFile("사료&간식",feedCol);
+		////2.리뷰
+		String[]  reviewCol= {"user_sno","purchase_no","pet_sno","item_sno","rate","content","image"};
+		ExcelFile reviewExcel= new ExcelFile("리뷰",reviewCol);
 
-		xssfWb = new XSSFWorkbook(); //XSSFWorkbook 객체 생성
-		xssfSheet = xssfWb.createSheet("리뷰"); // 워크시트 이름 설정.
+		////3.효능 , 원료, 등급, 급여대상,입자크기
+		String[]  effectCol= {"effect_no","name"};
+		ExcelFile effectExcel= new ExcelFile("효능",effectCol);
+		System.out.println(effectExcel.getWB().hashCode());
+		String[]  materialCol= {"material_no","name"};
+		ExcelFile materialExcel= new ExcelFile("원료",materialCol);
+		String[]  gradeCol= {"grade_no","name"};
+		ExcelFile gradeExcel= new ExcelFile("등급",gradeCol);
+		String[]  targetCol= {"target_no","name"};
+		ExcelFile targetExcel= new ExcelFile("급여대상",targetCol);
+		String[]  particleCol= {"particle_no","name"};
+		ExcelFile particleExcel= new ExcelFile("입자크기",particleCol);
 
-		//새 행부터 시작.
-		xssfRow = xssfSheet.createRow(rowNo++); // 행 객체 추가
-		//타이틀 행 생성하기.
-		xssfRow.createCell(1).setCellValue("item_sno");
-		xssfRow.createCell(2).setCellValue("rate");
-		xssfRow.createCell(3).setCellValue("content");
+		////4.중계테이블 (효능 , 원료, 등급, 급여대상)
+		String[]  effectBridgeCol= {"item_sno","effect_no"};
+		ExcelFile effectBridgeExcel= new ExcelFile("간식&사료_효능",effectBridgeCol);
+		String[]  materialBridgeCol= {"item_sno","material_no"};
+		ExcelFile materialBridgeExcel= new ExcelFile("간식&사료_원료",materialBridgeCol);
+		String[]  gradeBridgeCol= {"item_sno","grade_no"};
+		ExcelFile gradeBridgeExcel= new ExcelFile("사료_등급",gradeBridgeCol);
+		String[]  targetBridgeCol= {"item_sno","target_no"};
+		ExcelFile targetBridgeExcel= new ExcelFile("사료_급여대상",targetBridgeCol);
 
-
-
+		//반려견 엑셀 불러오기
+		FileInputStream fis = new FileInputStream("C:\\Users\\KMLEE\\Desktop\\daldalhagae\\S07P22A302\\BE\\Crawling\\crawling\\exceldata\\pet--739076658.xlsx");
+		XSSFWorkbook petExcel = new XSSFWorkbook(fis);
+		XSSFSheet petSheet = petExcel.getSheetAt(0);
+		XSSFRow petCurrentRow = null;
+		XSSFCell petCurrentCell = null;
+		int petRows = petSheet.getPhysicalNumberOfRows();
+		List<UserPetSno> userPetSnoList= new ArrayList<>();
+		for(int idx = 1; idx <petRows; idx++){
+			petCurrentRow = petSheet.getRow(idx);
+			userPetSnoList.add(new UserPetSno(petCurrentRow.getCell(0).getStringCellValue()//pet
+							,petCurrentRow.getCell(1).getStringCellValue()));//user
+		}
 		for (int i = 0; i < 62; i++) {
 			if (i < 10) {
 				arr[i] = 48 + i;
@@ -123,19 +134,17 @@ public class NaverCrawling {
 		WebDriver driver = new ChromeDriver();
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		for(int x = 1; x<=2;x++) {
-
-
 			sb.append("-----------------------------------------------");
 			sb.append("\n");
 
-			for (int page = 1; page <= 1; page++) {
+			for (int page = 1; page <= 15; page++) { //긁을 페이지 수 설정
 				// 해당 페이지의 html로 이동 후 스크롤
 				String url=getUrl(x,page);
-
 				driver.get(url);
 
-				for (int i = 0; i < 18; i++) {
-					js.executeScript("window.scrollBy(0," + (600 + i * 20) + ")");
+
+				for (int i = 0; i <50 ; i++) {
+					js.executeScript("window.scrollBy(0," + (300 + i * 20) + ")");
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e1) {
@@ -150,9 +159,9 @@ public class NaverCrawling {
 					WebElement innerDiv = el1.get(i).findElement(By.className("basicList_inner__xCM3J"));
 
 					// 제목 가져오기
-					String title = innerDiv.findElement(By.className("basicList_title__VfX3c")).getText().replaceAll(
-							"[0-9]+(?i)g\\s|[0-9]*.[0-9]+(?i)kg|\\[.*\\]|\\(.*배송,*\\)|\\(.*무료.*\\)|[0-9]+종|택[0-9]+|^(강아지)$",
-							"").replaceAll("\\s{2,}", " ").trim();
+					String title = innerDiv.findElement(By.className("basicList_title__VfX3c")).getText().replaceAll("\\s+\\+\\s", "+").replaceAll(
+							"[0-9]+(?i)g\\s*|[0-9]*.[0-9]+(?i)kg|\\[.*\\]|\\([^\\)]*\\)|[0-9]+종|택[0-9]+",
+							"").replaceAll("[0-9]+\\+[0-9]*", "").replaceAll("\\s\\+\\s*", "").replaceAll("\\s{2,}", " ").trim();
 					if (titleSet.contains(title))
 						continue;
 					titleSet.add(title);
@@ -179,13 +188,13 @@ public class NaverCrawling {
 					// 디테일가져오기
 					WebElement detail = innerDiv.findElement(By.className("basicList_detail_box__OoXKt"));
 					String detailText = detail.getText();
-
-					if(x==1)
-					if (!subDetail(detailText))
-						continue;
-
-					// 사료 객체 생성
 					Feed feed = new Feed();
+
+
+					if (!subDetail(detailText,x,feed))//사료
+						continue;
+					// 사료 객체 생성
+
 					feed.setSno(fkey);
 					feed.setTitle(title);
 					imageName = ImageTransfrom(src);
@@ -197,6 +206,85 @@ public class NaverCrawling {
 				}
 			}
 		}
+		// 사료,간식 저장
+		String feedPath = EXCELFILE_PATH + "/"+ feedExcel.getFileName()+ ".xlsx";
+		for(Feed item :listFeed){
+			//엑셀파일에 쓰기.{"item_sno","name","image","particle_no","grade_no"}
+			feedExcel.makeNewRow(item);
+		}
+		File file = new File(feedPath);
+		FileOutputStream fos = null;
+		fos = new FileOutputStream(file);
+		feedExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+		// 효능저장
+		effectExcel.makeNewRow(detailMap[0]);
+		String effectPath = EXCELFILE_PATH + "/"+ effectExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		effectExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		gradeExcel.makeNewRow(detailMap[1]);//등급
+		effectPath = EXCELFILE_PATH + "/"+ gradeExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		gradeExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		materialExcel.makeNewRow(detailMap[2]);//원료
+		effectPath = EXCELFILE_PATH + "/"+ materialExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		materialExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		particleExcel.makeNewRow(detailMap[3]);//particle
+		effectPath = EXCELFILE_PATH + "/"+ particleExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		particleExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		targetExcel.makeNewRow(detailMap[4]);//target
+		effectPath = EXCELFILE_PATH + "/"+ targetExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		targetExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		//중계테이블
+		effectBridgeExcel.makeNewRow(bridgeList[0]);
+		effectPath = EXCELFILE_PATH + "/"+ effectBridgeExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		effectBridgeExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		gradeBridgeExcel.makeNewRow(bridgeList[1]);
+		effectPath = EXCELFILE_PATH + "/"+ gradeBridgeExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		gradeBridgeExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		targetBridgeExcel.makeNewRow(bridgeList[4]);
+		effectPath = EXCELFILE_PATH + "/"+ targetBridgeExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		targetBridgeExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+		materialBridgeExcel.makeNewRow(bridgeList[2]);
+		effectPath = EXCELFILE_PATH + "/"+ materialBridgeExcel.getFileName()+ ".xlsx";
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		materialBridgeExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+
+
+
 		// 리뷰
 		for (int i = 0; i < listFeed.size(); i++) {
 			Feed rfeed = listFeed.get(i);
@@ -204,6 +292,14 @@ public class NaverCrawling {
 			
 			String url = driver.getCurrentUrl();
 			System.out.println(url);
+
+			//리뷰 저장
+			effectPath = EXCELFILE_PATH + "/"+ reviewExcel.getFileName()+ ".xlsx";
+			file = new File(effectPath);
+			fos = new FileOutputStream(file);
+			reviewExcel.getWB().write(fos);
+			if (fos != null) fos.close();
+
 			// 네이버스토어인 경우
 			if (url.contains("smartstore.naver.com")) {
 				int cnt =0;
@@ -214,9 +310,14 @@ public class NaverCrawling {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				List<WebElement> cntList = driver.findElements(
-						By.cssSelector(".z7cS6-TO7X > ._27jmWaPaKy > ul > li > a"));
+
+				List<WebElement> cntList = null;
+				try {
+					cntList = driver.findElements(
+							By.cssSelector(".z7cS6-TO7X > ._27jmWaPaKy > ul > li > a"));
+				} catch (Exception e) {
+					continue;
+				}
 
 				for (int j = 0; j < cntList.size(); j++) {
 					String kind = cntList.get(j).getText();
@@ -234,61 +335,68 @@ public class NaverCrawling {
 				if(cnt==0) {
 					continue;
 				}
-				
-				int pagingCnt = cnt / 20 + 1;
+				int pagingCnt = cnt / 20 + ((cnt % 20 == 0)?0 : 1);
 
 				for (int k = 1; k <= pagingCnt; k++) {
-					List<WebElement> reviewList = driver.findElements(By.className("_2389dRohZq"));
+					if (k == 50){//긁을 페이지 갯수설정(1/2)
+						break;
+					}
+
+					List<WebElement> reviewList = null;
+					WebElement next = null;
+					try {
+						reviewList = driver.findElements(By.className("_2389dRohZq"));
+						next = driver.findElement(By.className("_2Ar8-aEUTq"));
+					} catch (Exception e) {
+						break;
+					}
 
 					for (int j = 0; j < reviewList.size(); j++) {
+						String score = null;
+						String content = null;
+						try {
+							score = reviewList.get(j).findElement(By.className("_15NU42F3kT")).getText();
+							WebElement contentDiv = reviewList.get(j).findElement(By.className("YEtwtZFLDz"));
+							content = contentDiv.findElement(By.className("_3QDEeS6NLn")).getText();
+						} catch (Exception e) {
+							continue;
+						}
+//						System.out.println("스토어");
+//						System.out.println(rfeed.getSno());
+//						System.out.println(score);
+//						System.out.println(content);
+//						System.out.println();
+						//리뷰 저장.
+						//리뷰객체생성
 
-						String score = reviewList.get(j).findElement(By.className("_15NU42F3kT")).getText();
-						WebElement contentDiv = reviewList.get(j).findElement(By.className("YEtwtZFLDz"));
-						String content = contentDiv.findElement(By.className("_3QDEeS6NLn")).getText();
-						System.out.println("스토어");
-						System.out.println(rfeed.getSno());
-						System.out.println(score);
-						System.out.println(content);
-						System.out.println();
-
-
-//						System.out.println(String.format("%s,%s,%s",rfeed.getSno(),score,content));
-//						bw.write(String.format("%s,%s,%s",rfeed.getSno(),score,content));
-//						bw.write(NEWLINE)
-						System.out.println(rowNo+"번 행에 쓰는중");
-						xssfRow = xssfSheet.createRow(rowNo++); // 행 객체 추가
-						xssfRow.createCell(1).setCellValue(rfeed.getSno());
-						xssfRow.createCell(2).setCellValue(score);
-						xssfRow.createCell(3).setCellValue(content);
+						Review review = new Review();
+						int curr = getRandomPetNum();
+						review.setPetSno(userPetSnoList.get(curr).getPetSno()); //
+						review.setUserSno(userPetSnoList.get(curr).getUserSno()); //
+						review.setRate(Integer.parseInt(score));
+						review.setContent(content);
+						review.setItemSno(rfeed.getSno());
+						review.setImage(".");
+//						review.setPurchaseNo("");// null
+						reviewExcel.makeNewRow(review);
 
 					}
 
 					System.out.println(k);
 					System.out.println(pagingCnt);
 
-					if (k == pagingCnt){
-						//액셀파일 저장
-						String localFile = "C:/Users/KMLEE/Desktop/exceldata/" + rfeed.getSno()+ ".xlsx";
-						File file = new File(localFile);
-						FileOutputStream fos = null;
-						fos = new FileOutputStream(file);
-						xssfWb.write(fos);
-						if (fos != null) fos.close();
-						//
+					if (k == pagingCnt){ //리뷰 마지막 페이지
 						break;
 					}
 
-					
-					WebElement next = driver.findElement(By.className("_2Ar8-aEUTq"));
-					next.click();
 
-					
-					
 					try {
+						next.click();
 						Thread.sleep(500);
-					} catch (InterruptedException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						break;
 					}
 
 				}
@@ -304,8 +412,13 @@ public class NaverCrawling {
 					e.printStackTrace();
 				}
 
-				List<WebElement> cntList = driver.findElements(
-						By.cssSelector(".style_detail__nvTm_ > .floatingTab_detail_tab__akl87 > ul > li > a"));
+				List<WebElement> cntList = null;
+				try {
+					cntList = driver.findElements(
+							By.cssSelector(".style_detail__nvTm_ > .floatingTab_detail_tab__akl87 > ul > li > a"));
+				} catch (Exception e) {
+					continue;
+				}
 
 				for (int j = 0; j < cntList.size(); j++) {
 					String kind = cntList.get(j).findElement(By.tagName("strong")).getText();
@@ -323,71 +436,79 @@ public class NaverCrawling {
 				if(cnt==0) {
 					continue;
 				}
-				
-				int pagingCnt = cnt / 20 + 1;
+
+				int pagingCnt = cnt / 20 + ((cnt % 20 == 0)?0 : 1);
 
 				for (int k = 1; k <= pagingCnt; k++) {
-					if (k == 11){
-						//액셀파일 저장
-						String localFile = "C:/Users/KMLEE/Desktop/exceldata/" + rfeed.getSno()+ ".xlsx";
-						File file = new File(localFile);
-						FileOutputStream fos = null;
-						fos = new FileOutputStream(file);
-						xssfWb.write(fos);
-						if (fos != null) fos.close();
-						//
+					if (k == 50){//긁을 페이지 갯수설정(2/2)
 						break;
 					}
 
-					List<WebElement> reviewList = driver.findElements(By.cssSelector("#section_review > ul > li"));
-//			System.out.println(k+"----------------------------------------------------------");
-//			System.out.println(reviewList.size());
-
+					List<WebElement> reviewList = null;
+					try {
+						reviewList = driver.findElements(By.cssSelector("#section_review > ul > li"));
+					} catch (Exception e) {
+						break;
+					}
 					for (int j = 0; j < reviewList.size(); j++) {
 
-						String score = reviewList.get(j).findElement(By.className("reviewItems_average__0kLWX"))
-								.getText().replaceAll("평점", "");
-						WebElement contentDiv = reviewList.get(j)
-								.findElement(By.className("reviewItems_review__DqLYb"));
-						String content = contentDiv.findElement(By.className("reviewItems_text__XrSSf")).getText();
-						System.out.println(rfeed.getSno());
-						System.out.println(score);
-						System.out.println(content);
-						System.out.println();
+
+						String score = null;
+						String content = null;
+						try {
+							score = reviewList.get(j).findElement(By.className("reviewItems_average__0kLWX"))
+									.getText().replaceAll("평점", "");
+							WebElement contentDiv = reviewList.get(j)
+									.findElement(By.className("reviewItems_review__DqLYb"));
+							content = contentDiv.findElement(By.className("reviewItems_text__XrSSf")).getText();
+						} catch (Exception e) {
+							continue;
+						}
+//						System.out.println(rfeed.getSno());
+//						System.out.println(score);
+//						System.out.println(content);
+//						System.out.println();
 //						bw.write(String.format("%s|%s|%s",rfeed.getSno(),score,content));
 //						bw.write(NEWLINE);
-						System.out.println(rowNo+"번 행에 쓰는중");
-						xssfRow = xssfSheet.createRow(rowNo++); // 행 객체 추가
-						xssfRow.createCell(1).setCellValue(rfeed.getSno());
-						xssfRow.createCell(2).setCellValue(score);
-						xssfRow.createCell(3).setCellValue(content);
+
+						//리뷰 저장.
+						//리뷰객체생성
+						Review review = new Review();
+						int curr = getRandomPetNum();
+						review.setPetSno(userPetSnoList.get(curr).getPetSno()); //
+						review.setUserSno(userPetSnoList.get(curr).getUserSno()); //
+						review.setRate(Integer.parseInt(score));
+						review.setContent(content);
+						review.setItemSno(rfeed.getSno());
+						review.setImage(".");
+//						review.setPurchaseNo("");// null
+
+						reviewExcel.makeNewRow(review);
+
 
 					}
 
-					if (k == pagingCnt){
-						//액셀파일 저장
-						String localFile = "C:/Users/KMLEE/Desktop/exceldata/" + rfeed.getSno()+ ".xlsx";
-						File file = new File(localFile);
-						FileOutputStream fos = null;
-						fos = new FileOutputStream(file);
-						xssfWb.write(fos);
-						if (fos != null) fos.close();
-						//
+					if (k == pagingCnt){ //리뷰 마지막 페이지
 						break;
-
 					}
 
 
+					WebElement aDiv = null;
+					try {
+						WebElement paginDiv = driver.findElement(By.className("review_section_review__GDdvh"));
+						aDiv = paginDiv.findElement(By.cssSelector(".pagination_now__Ey_sR + a"));
+					} catch (Exception e) {
+						continue;
+					}
 
-					WebElement paginDiv = driver.findElement(By.className("review_section_review__GDdvh"));
-					WebElement aDiv = paginDiv.findElement(By.cssSelector(".pagination_now__Ey_sR + a"));
-					aDiv.click();
 
 					try {
+						aDiv.click();
 						Thread.sleep(500);
-					} catch (InterruptedException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						break;
 					}
 
 				}
@@ -395,7 +516,6 @@ public class NaverCrawling {
 			}
 
 		}
-
 
 		sb.append("-------------------\n");
 		sb.append(CommonUtil.FUNCTION);
@@ -444,6 +564,14 @@ public class NaverCrawling {
 		sb.append("-------------------\n");
 
 		System.out.println(sb);
+		//리뷰 저장
+		file = new File(effectPath);
+		fos = new FileOutputStream(file);
+		reviewExcel.getWB().write(fos);
+		if (fos != null) fos.close();
+
+
+
 		// 자원 반납
 		try {
 			// 드라이버가 null이 아니라면
@@ -500,7 +628,7 @@ public class NaverCrawling {
 	}
 
 	// 디테일 분할
-	public static boolean subDetail(String detailText) {
+	public static boolean subDetail(String detailText,int x,Feed feed) {
 		String subDetail[] = detailText.split("\\|");
 		List<String[]> detailNames = new ArrayList<>();
 		boolean gradeCheck = false;
@@ -518,19 +646,17 @@ public class NaverCrawling {
 			}
 
 		}
-
-		if (!gradeCheck)
-			return false;
+		if(x==1 && !gradeCheck) return false;
 
 		for (String[] s : detailNames) {
-			setDetail(s);
+			setDetail(s,feed);
 		}
 
 		return true;
 	}
 
 	// 디테일 종류 찾아 넣기
-	public static void setDetail(String[] sdd) {
+	public static void setDetail(String[] sdd,Feed feed) {
 
 		String[] el;
 		switch (sdd[0]) {
@@ -550,6 +676,7 @@ public class NaverCrawling {
 				}
 				int no = detailMap[0].get(s);
 				bridgeList[0].add(new Bridge(fkey, no));
+
 			}
 
 			break;
@@ -569,6 +696,7 @@ public class NaverCrawling {
 				}
 				int no = detailMap[1].get(s);
 				bridgeList[1].add(new Bridge(fkey, no));
+				feed.setGrade(no);
 			}
 
 			break;
@@ -590,6 +718,7 @@ public class NaverCrawling {
 				bridgeList[2].add(new Bridge(fkey, no));
 			}
 
+
 			break;
 		case CommonUtil.PARTICLE:
 			el = sdd[1].split(",");
@@ -607,6 +736,7 @@ public class NaverCrawling {
 				}
 				int no = detailMap[3].get(s);
 				bridgeList[3].add(new Bridge(fkey, no));
+				feed.setParticleSize(no);
 			}
 
 			break;
@@ -661,6 +791,9 @@ public class NaverCrawling {
 		}
 
 		return sb.toString();
+	}
+	public static int getRandomPetNum(){
+		return random.nextInt(3000); //0~2999
 	}
 
 }
