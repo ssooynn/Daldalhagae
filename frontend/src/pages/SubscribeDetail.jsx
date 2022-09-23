@@ -1,4 +1,5 @@
 import React,{ useState } from 'react'
+import styled from 'styled-components'
 import { useLocation } from 'react-router-dom';
 import imgA from '../assets/img/구독상세페이지1.png'
 import imgB from '../assets/img/구독상세페이지2.png'
@@ -8,6 +9,69 @@ import imgD from '../assets/img/구독상세페이지4.png'
 import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
 
+const ClickPet = styled.div`
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
+  border-radius: 5px;
+  &:hover{
+    background-color : rgba(0, 0, 0, 0.2);
+  }
+`
+function PurchaseList(props) {
+  console.log(props)
+  const purchaseList = []
+  return <div
+    style={{
+      backgroundColor: '#F6F1EC',
+      padding: '0.1px 20px 10px 20px',
+      borderRadius: '5px',
+      width: '280px'
+    }}>
+    <h4>구독목록</h4>
+    <p>{purchaseList}</p>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <h4>총 2개</h4>
+      <h4>34,800</h4>
+    </div>
+  </div>
+}
+function Pets() {
+  const pets = [{
+    petId: 1,
+    name: '해리',
+    profile: '893fojrforjfa04jaof0asd'
+  }, {
+    petId: 2,
+    name: '포터',
+    profile: 'diaufoijfafe092r2jflefx'
+  }]
+  const showPets = []
+  for (let i = 0; i < pets.length; i++) {
+    showPets.push(<ClickPet>
+      <div>
+        <img
+          src={imgA}
+          style={{
+            width: '100px',
+            height: '100px',
+            borderRadius: '5px',
+          }} alt='pet'/>
+        <p style={{margin: 'auto'}}>{pets[i].name}</p>
+      </div>
+    </ClickPet>)
+    
+  }
+
+  return <div  // 펫 목록
+    style={{
+      display: 'flex',
+      justifyContent: 'flex-end',
+      textAlign: 'center',
+    }}>
+    {showPets}
+  </div>
+}
 
 const SubscribeDetail = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -21,6 +85,8 @@ const SubscribeDetail = () => {
 
   const location = useLocation()
   const name = location.state.name
+  const components = location.state.components
+  const price = location.state.price
 
   return (
     <div
@@ -40,39 +106,13 @@ const SubscribeDetail = () => {
         }}>
         <img src={imgA} width='400' height='400' alt='package'/>
         <div>
-          {/* <h4>{name}</h4> */}
-          <h5>구성목록</h5>
-          <h5>가격(월 21,900원)</h5>
-          <div
-            style={{
-              display: 'flex',
-            }}>
-            <div
-              style={{
-                margin: '3px'
-              }}>
-              <img src={imgA} width='100' height='100' alt='pet'/>
-              <p>이름</p>
-            </div>
-            <div
-              style={{
-                margin: '3px'
-              }}>
-              <img src={imgA} width='100' height='100' alt='pet'/>
-              <p>이름</p>
-            </div>
-          </div>
-          <div
-            style={{
-              backgroundColor: '#F6F1EC',
-              padding: '0 0 0 10px',
-              borderRadius: '5px',
-            }}>
-            <h4>구독목록</h4>
-            <h4>package - 이름</h4>
-            <h4>210,000</h4>
-          </div>
-          <div
+          <h2 style={{margin: 'auto'}}>{name}</h2>
+          <p style={{margin: '0.5rem auto', fontSize: '12px'}}>{components}</p>
+          <h4 style={{margin: 'auto'}}>월 {price}원</h4>
+          <p   style={{margin: '1.5rem 0 0.5rem 0'}}>누구를 위한 사료인가요?</p>
+          <Pets />
+          <PurchaseList name={name}/>
+          <div  // 장바구니
             style={{
               width: '100%',
               height: '2rem',
@@ -81,31 +121,33 @@ const SubscribeDetail = () => {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: '5px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              margin: '5px 0 5px 0',
             }}
             onClick={event=>{
               event.preventDefault()
               showBag()
-            }}>장바구니</div>
-            {bagOpen && <ShoppingBag setBagOpen={setBagOpen} />}
-            <div
-              style={{
-                width: '100%',
-                height: '2rem',
-                backgroundColor: '#CCAA90',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                margin: '3px 0 0 0',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-              onClick={event=>{
-                event.preventDefault();
-                showModal()
-              }}
-              >구독하기</div>
-              {modalOpen && <Modal setModalOpen={setModalOpen} />}
+            }}>장바구니
+          </div>
+          {bagOpen && <ShoppingBag setBagOpen={setBagOpen} />}
+          <div  // 구독하기
+            style={{
+              width: '100%',
+              height: '2rem',
+              backgroundColor: '#CCAA90',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+            onClick={event=>{
+              event.preventDefault();
+              showModal()
+            }}
+            >구독하기
+          </div>
+          {modalOpen && <Modal setModalOpen={setModalOpen} />}
         </div>
       </div>
       <div

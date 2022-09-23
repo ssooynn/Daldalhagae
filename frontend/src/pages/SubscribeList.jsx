@@ -8,9 +8,9 @@ import imgA from '../assets/img/우리의한달을꽉차게.png'
 import imgB from '../assets/img/구독리스트1.png'
 import imgC from '../assets/img/구독리스트2.png'
 import imgD from '../assets/img/구독리스트3.png'
-import daldalPackage from '../assets/img/DalDalPackage.png'
-import toyPackage from '../assets/img/ToyPackage.png'
-import lightPackage from '../assets/img/lightPackage.png'
+import daldalPackage from '../assets/img/otherPackage1.png'
+import toyPackage from '../assets/img/otherPackage2.png'
+import lightPackage from '../assets/img/otherPackage3.png'
 
 const MoveOtherOpions = styled.div`
   cursor: pointer;
@@ -36,7 +36,9 @@ const SubscribeList = () => {
   function GoBasic() {
     Navigate("/subscribeDetail", {
       state: {
-        name: 'Basic Package'
+        name: 'Basic Package',
+        components: '사료 1개월',
+        price: '21,900'
       }})
   }
   function GoCustom() {
@@ -131,7 +133,7 @@ const SubscribeList = () => {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              margin: '0 0 10rem 15px',
+              margin: '0 15px 10rem 15px',
             }}>
             <div
               style={{
@@ -156,7 +158,6 @@ const SubscribeList = () => {
                 padding: '1px 30px 1px 30px',
                 fontSize: '12px',
                 width: '450px',
-                marginRight: '15px',
               }}>
               <p style={{fontWeight: 'bold', fontSize: '14px'}}>[간식 3종 + 장난감 2종 구성]</p>
               <p>항상 힘이 넘치는 우리 반려견, 어떻게 놀아줄까 고민이신가요?</p>
