@@ -9,6 +9,7 @@ const Button = styled(animated.button)`
     font-size: 12px;
     font-family:"Spoqa Han Sans Neo";
     font-weight: 400;
+    cursor: pointer;
     margin: ${(props) => props.margin || "10px 5px"};
     width: ${(props) => props.width || "300px"};
     color: ${(props) => props.color || "#1f1d1d"};
