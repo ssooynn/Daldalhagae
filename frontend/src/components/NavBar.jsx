@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { FlexBox } from './MainComponent';
 import { Link } from 'react-router-dom';
 import Login from './Login';
+import Logo from '../assets/img/Logo2.png';
+import { useSelector } from 'react-redux';
 
 
 // 처음엔 배경 투명도 100%
@@ -11,6 +13,7 @@ import Login from './Login';
 // 다시 올릴때는 투명도 80%
 const Navbar = styled.div`
     width : 100%;
+    padding-top: 10px;
     height :60px;
     background-color: ${(props) => props.backgroundColor || "rgba(255,255,255,0)"};
     position: fixed;
@@ -42,6 +45,7 @@ export function NavBar({ ...props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("rgba(255,255,255,0)");
   const [boxShadow, setboxShadow] = useState("none")
+  const user = useSelector(state => state.user.user.user);
 
   function showLoginModal() {
     setIsModalOpen(true);
@@ -77,14 +81,15 @@ export function NavBar({ ...props }) {
     <Navbar backgroundColor={backgroundColor} boxShadow={boxShadow} {...props}>
       <FlexBox width="70%" justify="space-between">
         {/* 내브바 왼쪽 로고 */}
-        <Link to="/"><div>로고</div></Link>
+        <Link to="/"><img src={Logo} width="80px"></img></Link>
 
         {/* 내브바 오른쪽 카테고리 리스트 */}
-        <FlexBox width="350px" justify="space-between">
+        <FlexBox width="300px" justify="space-between">
           <Link to="/reviewList"><Category>고객 후기</Category></Link>
           <Link to="/subscribeList"><Category>상품 목록</Category></Link>
-          <Link to="/signup"><Category>회원가입</Category></Link>
-          <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }}>로그인</Category>
+          {!user ? <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }}>로그인</Category> :
+            <Link to="/mypage"><Category>My page</Category></Link>
+          }
         </FlexBox>
       </FlexBox>
 
