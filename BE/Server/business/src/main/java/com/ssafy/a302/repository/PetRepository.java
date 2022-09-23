@@ -12,4 +12,7 @@ public interface PetRepository extends JpaRepository<Pet, String> {
 	@Query(value = "select p from Pet p where p.users.usersSno = :userId")
 	List<Pet> findPetById(String userId);
 
+	@Query(value = "select p from Pet p where p.petSno = :petId")
+	Pet findPetByPetId(String petId);
+
 }
