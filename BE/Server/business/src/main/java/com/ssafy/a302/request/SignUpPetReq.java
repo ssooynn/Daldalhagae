@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpPetReq {
-	String userSno;
 	String targetNo;
 	String name;
 	String birth;
