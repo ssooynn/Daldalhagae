@@ -110,7 +110,7 @@ useEffect(()=>{
 
   return (
     <div style={cardContainer}>
-      <div style={greeting}><span style={userNameText}>{user.name}</span>님 반갑습니다 :)</div>
+      <div style={greeting}><span style={userNameText}>{user.user.name}</span>님 반갑습니다 :)</div>
       <div style={summaryContainer}>
         {/* 배송중 */}
         <div style={contentDetail}>
@@ -132,7 +132,7 @@ useEffect(()=>{
         <div style={{boxSizing:'border-box', width:'45%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
           <div style={detailTitle}>반려견</div>
           <div style={repDiv}>
-            {user.repPets?.map((pet, idx)=>{
+            {user.pet?.map((pet, idx)=>{
               return(
                 <StyledLink 
                   to={'petDetail'}
@@ -143,8 +143,8 @@ useEffect(()=>{
                 </StyledLink >
               )
             })}
-              {(user.repPets.length < 3 ) ? 
-                [...Array(3-user.repPets.length)].map((no, idx)=>{
+              {(user.pet.length < 3 ) ? 
+                [...Array(3-user.pet.length)].map((no, idx)=>{
                   return <StyledLink 
                             to={'petAdd'}
                             state={{}}

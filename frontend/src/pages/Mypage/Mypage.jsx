@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
-import MypageSubscriptionsNow from './MypageSubscriptions'
+import MypageSubscriptionsNow from './MypageSubscriptionsNow'
 import MypageSubscriptions from './MypageSubscriptions'
 import MypageUnwrittenReviews from './MypageUnwrittenReviews'
 import MypageReviews from './MypageReviews'
@@ -15,16 +15,14 @@ import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
 const Mypage = () => {
   const [userInfo, setUserInfo] = useState({
-    name:'김김김',
-    phoneNo:'010-1234-1234',
-    email:'email@gmail.com',
-    address: '서울특별시 강남구 역삼동 테헤란로 212',
-    addressDetail: '1102호',
-    zip: '06220',
+    user:{
+      name:'김김김',
+      profile:'',
+    },
     delivering:0,
     subscribingCnt: 1,
     unwrittenReviews: 2,
-    repPets: [
+    pet: [
       {
         name:'해리',
         petId:'A12455',
@@ -33,18 +31,16 @@ const Mypage = () => {
     ]
   }
 )
-  const [currentSubsList, setCurrentSubsList] = useState([])
-  const [subsList, setSubsList] = useState([])
-  const [unwrittenReviewList, setUnwrittenReviewList] = useState([])
-  const [reviewList, setReviewList] = useState([])
+  const [currentFocus, setCurrentFocus] = useState({})
 
-// userfetching
-      
-
-
+// userfetching api: 마이페이지 메인
   useEffect(()=>{
 
   }, [])
+
+  useEffect(()=>{
+    console.log(currentFocus)
+  }, [currentFocus])
 
 
   const headerContainer = {
@@ -78,62 +74,62 @@ const Mypage = () => {
 
   return (
     <div>
-      <div style={{height:'100px'}}></div>
+      <div style={{height:'60px'}}></div>
       <div style={headerContainer}>
         <MypageHeaderCard user={userInfo}/>
       </div>
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
         <div style={routingContainer}>
-          <MypageRoutingTitle></MypageRoutingTitle>
+          <MypageRoutingTitle currentFocus={currentFocus}></MypageRoutingTitle>
           <Routes>
             <Route
               exact="true"
               path=""
               element={
-                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
+                <MypageSubscriptionsNow setCurrentFocus={setCurrentFocus}/>
               }
             />
             <Route
               path="subscriptionsNow"
               element={
-                <MypageSubscriptionsNow currentSubsList={currentSubsList}/>
+                <MypageSubscriptionsNow setCurrentFocus={setCurrentFocus}/>
               }
             />
             <Route
               path="subscriptions"
               element={
-                <MypageSubscriptions subsList={subsList}/>
+                <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
               }            
             />
             <Route
               path="unwrittenReviews"
               element={
-                <MypageUnwrittenReviews unwrittenReviewList={unwrittenReviewList}/>
+                <MypageUnwrittenReviews/>
               }               
             />
             <Route
               path="reviews"
               element={
-                <MypageReviews reviewList={reviewList}/>
+                <MypageReviews />
               }   
             />
             <Route
               path="user"
               element={
-                <MypageUser user={userInfo}/>
+                <MypageUser/>
               }               
             />
             <Route
               path="userUpdate"
               element={
-                <MypageUserUpdate user={userInfo}/>
+                <MypageUserUpdate/>
               }               
             />
             <Route
               path="petDetail"
               element={
-                <MypagePetDetail/>
+                <MypagePetDetail setCurrentFocus={setCurrentFocus}/>
               }               
             />
             <Route

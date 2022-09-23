@@ -2,6 +2,12 @@ import React from 'react'
 import styled from 'styled-components';
 import { animated } from '@react-spring/web';
 import { Link } from 'react-router-dom';
+import PlayPackage from '../../assets/img/PlayPackage.png'
+import AllInOnePackage from '../../assets/img/AllInOnePackage.png'
+import BasicPackage from '../../assets/img/BasicPackage.png'
+import DalDalPackage from '../../assets/img/DalDalPackage.png'
+import LightAllInOnePackage from '../../assets/img/LightAllInOnePackage.png'
+import ToyPackage from '../../assets/img/ToyPackage.png'
 
 export const StyledLink = styled(Link)`
 height: auto;
@@ -34,13 +40,14 @@ justify-content: ${(props) => props.justify || "center"};
 align-items: ${(props) => props.align || "center"};
 margin: ${(props) => props.margin || "0px"};
 grid-column: ${(props) => props.span || "span 1"};
+background-color: ${(props) => props.bgColor ||''}
 `
-export const FlexBox= ({ children, width, height, justify, direction, align, margin, ...props }) => {
-    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} {...props}>{children}</Flex>
+export const FlexBox= ({ children, width, height, justify, direction, align, margin ,bgColor, ...props }) => {
+    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} bgColor={bgColor} {...props}>{children}</Flex>
 }
 
 const InfoBox = styled.div`
-    padding: ${(props)=> props.padding || '5px'};
+    padding: ${(props)=> props.padding || '6px 8px'};
     width: ${(props) => props.width || '100%'};
     height: ${(props) => props.height || "auto"};
     font-size: ${(props)=> props.mainFontSize || '14px'};
@@ -48,28 +55,29 @@ const InfoBox = styled.div`
     border: 0.1px solid #969696;
     border-radius: 5px;
     box-sizing: border-box;
-
 `
 
 const StyledInput = styled.input`
-    padding: ${(props)=> props.padding || '5px'};
+    padding: ${(props)=> props.padding || '7.5px 8px'};
     width: ${(props) => props.width || '100%'};
     height: ${(props) => props.height || "auto"};
     font-size: ${(props)=> props.mainFontSize || '14px'};
-    margin: ${(props)=> props.margin || '1px'};
+    margin: ${(props)=> props.margin || '0px'};
     border: 0.1px solid #969696;
-    border-radius: 5px;
+    border-radius: 7px;
     box-sizing: border-box;
     grid-column: ${(props) => props.span || "span 1"};
-
+    &:focus{
+        outline: 1.2px solid #AC998A;
+    }
 `
 
 export const SmallText = styled.div`
     width: auto;
     text-align: start;
-    font-size: ${(props)=> props.fontSize ||'12px'};
+    font-size: ${(props)=> props.fontSize ||'12.5px'};
     font-weight: ${(props)=> props.fontWeight ||'300'};
-    margin: ${(props)=> props.textMargin || '1px'};
+    margin: ${(props)=> props.textMargin || '3px 1px'};
     `
 
 export const InfoLayout = ({padding, subpadding, width, height, mainFontSize, fontSize, fontWeight, textMargin, margin, label, span, sub, children}) => {
@@ -101,21 +109,103 @@ export const InputLayout = ({padding, width, height, mainFontSize, fontSize, fon
 }
 
 const ButtonStyle = styled(animated.button)`
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    padding: ${(props)=> props.padding || '0px'};
+    box-shadow: 0px 1.5px 2px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     border: none;
     width: 100%;
-    height: 100%;
+    height:  ${(props)=> props.height || '100%'};
     border-radius: 5px;
-    background-color: #F9F5EA;
+    background-color: ${(props)=> props.color || '#FFEEC3'};
+    font-size:  ${(props)=> props.fontSize || '14px'};
+    font-weight: 500;
+    white-space: nowrap;
+    margin: ${(props)=> props.margin || '0px'};
     &:hover{
-        background-color: #776B62;
+        background-color: ${(props)=> props.hoverColor || '#776B62'};
         color:white;
+        cursor: pointer;
       }
 `
 
-export const AddressButton = ({children, onClick}) => {
+export const MypageButton = ({children, onClick, color,hoverColor, padding, height, fontSize, margin}) => {
     return (
-        <ButtonStyle onClick={onClick}>{children}</ButtonStyle>
+        <ButtonStyle onClick={onClick} color={color} padding={padding} hoverColor={hoverColor} height={height} fontSize={fontSize} margin={margin}>{children}</ButtonStyle>
+    )
+}
+
+export const subTitleStyle = {
+    margin:'20px 0px 25px', 
+    borderBottom:'0.1px solid #929292', 
+    paddingBottom:'10px',
+    fontWeight:'500',
+    color:''
+  }
+
+const TagDiv = styled.div`
+  height: ${(props)=> props.height || 'auto'};
+  width: ${(props)=> props.width || '100%'};
+  padding: 2.5px 0px;
+  background-color: ${(props)=> props.bgColor || '#FFE6A7'}; 
+  font-size: 13px;
+  font-weight: 400;
+  border-radius:5px;
+  white-space:nowrap;
+  text-align: center;
+`
+
+
+export const PetTag = ({children, height, width, bgColor}) => {
+    return (
+        <TagDiv height={height} width={width} bgColor={bgColor} >{children}</TagDiv>
+    )
+}
+
+const ImgDiv = styled(animated.div)`
+    width: ${(props)=> props.width || '100%'};
+    height: ${(props)=> props.height || '120px'};
+    position: relative;
+    box-sizing: border-box;
+`
+
+const imgStyle = {
+    zIndex:'5',
+    opacity: '.55',
+    position: 'absolute',
+    width:'100%',
+    height:'100%',
+    objectFit:'cover'
+
+}
+
+const textStyle = {
+    zIndex:'10',
+    position: 'absolute',
+    width:'100%',
+    height:'100%',
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    '&:hover': {
+        backgroundColor:'rgba(0,0,0,0.01)',
+    }
+}
+
+export const SubscriptionItem = ({width, height, bgImg, page, subsPK, title, titleSub, subStart, petName, subEnd, onClick, reviewConnect}) => {
+    const bgList = {
+        PlayPackage,
+        AllInOnePackage,
+        BasicPackage,
+        DalDalPackage,
+        LightAllInOnePackage,
+        ToyPackage ,
+    }
+    
+    
+    return(
+        <ImgDiv width={width} height={height} onClick={()=>{console.log(111)}}>
+            <img style={imgStyle} src={bgList[bgImg]||bgList.BasicPackage} alt="" />
+            <div style={textStyle}>
+                asdfasdf
+            </div>
+        </ImgDiv>
     )
 }
