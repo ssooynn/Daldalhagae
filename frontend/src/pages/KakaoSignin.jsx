@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { LoginApi } from '../api/user';
 // import { useDispatch } from "react-redux";
 
 // 카카오 로그인 후 리다이렉트 페이지
@@ -11,7 +12,12 @@ const KakaoSignin = () => {
   let code = new URL(window.location.href).searchParams.get("code");
   function fetchData() {
     console.log(code);
-    window.location.href = "/signup";
+    LoginApi("kakao1", (res)=>{
+      console.log(res)}
+      , (err)=>{
+      console.log(err);
+    })
+    // window.location.href = "/signup";
     // loginDevApi(
     //   code,
     //   (res) => {
