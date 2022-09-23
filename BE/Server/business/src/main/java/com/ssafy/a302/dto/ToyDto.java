@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ToyDto {
-	private String toySno;
-	private String name;
-	private String image;
-	private String material;
-	private String effect;
+    private String sno;
+    private String name;
+    private String image;
+    private ArrayList<String> effects = new ArrayList<>();
+    private ArrayList<String> materials = new ArrayList<>();
+
 }
