@@ -79,7 +79,7 @@ export default function Main() {
   useChain([fadeInRef, fadeInRef2, startButtonRef], [0, 0.5, 1])
 
   // 1페이지씩 스크롤 기능
-  const DIVIDER_HEIGHT = 0.5;
+  const DIVIDER_HEIGHT = 1;
   const outerDivRef = useRef();
   const [scrollIndex, setScrollIndex] = useState(1);
   const [page, setPage] = useState(1);
