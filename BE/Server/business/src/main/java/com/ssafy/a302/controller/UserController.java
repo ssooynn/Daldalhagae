@@ -1,6 +1,7 @@
 package com.ssafy.a302.controller;
 
 import com.ssafy.a302.common.FileUpload;
+import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.*;
 import com.ssafy.a302.request.SignUpPetReq;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "사용자 컨트롤러")
 @RestController
@@ -42,24 +44,40 @@ public class UserController {
 				System.out.println(pet.getImage());
 			}
 		} catch (Exception e) {
-			return "회원 가입 실패";
+			return Utils.FAIL;
 		}
 		if (result)
-			return "회원 가입 성공";
+			return Utils.SUCCESS;
 
-		return "회원 가입 실패";
+		return Utils.FAIL;
 	}
 
 	@ApiOperation(value = "사용자 정보 조회")
 	@GetMapping("/info/{usersSno}")
-	public void getMyPageInfo(@PathVariable String usersSno) {
+	public UsersDto getMyPageInfo(@PathVariable String usersSno) {
+		return usersService.userInfo(usersSno);
 	}
 
-//    @ApiOperation(value="사용자 정보 수정")
-//    @PatchMapping("/mypage/info")
-//    public ResponseEntity<?> updateUserInfo(@RequestBody UsersDto userDto){
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
+    @ApiOperation(value="사용자 정보 수정")
+    @PatchMapping("/info")
+    public String updateUserInfo(@RequestBody UsersDto userDto){
+        usersService.usersUpdate(userDto);
+    	
+    	return Utils.SUCCESS;
+    }
+    
+    @ApiOperation(value="사용자 탈퇴")
+    @PatchMapping("/withdrow")
+    public String deleteUserInfo(@RequestBody Map<String,Object> map){
+    	Object usersSno = map.get("usersSno");
+    	if(usersSno !=null && usersSno instanceof String) {
+    		usersService.usersWithdrow((String)usersSno);
+    		return Utils.SUCCESS;
+    	}
+    	return Utils.FAIL;
+    }
+    
+   
 //
 //    @ApiOperation(value="사용자의 현재 구독 내용 조회")
 //    @GetMapping("/mypage/subscriptions/now/{subSno}")

@@ -56,7 +56,7 @@ public class Users {
 	private Set<SubscribtionHistory> subscribtionHistorys = new HashSet<>();
 
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private Set<UserLog> userLogs = new HashSet<>();
+	private Set<UsersLog> userLogs = new HashSet<>();
 
 	
 	public Users(String usersSno,String kakaoId, String email, String name, String phone, String address) {
