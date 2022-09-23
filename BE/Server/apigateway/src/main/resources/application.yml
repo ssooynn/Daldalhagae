@@ -10,7 +10,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]' :
-            allowedOrigins: "*"
+            allowedOrigins: "http://localhost:3000"
             allow-credentials: true   #추가
             allowedHeaders:
               - x-requested-with
