@@ -1,7 +1,6 @@
 package com.ssafy.a302.controller;
 
-import com.ssafy.a302.dto.RecommandedtemDto;
-import com.ssafy.a302.dto.UserDto;
+import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.service.ItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemContoroller {
     private final ItemService itemService;
 
-    @ApiOperation(value="추천 제품 조회", notes = "cnt1_사료, cnt2_간식, cnt3_장난감")
-    @GetMapping("/{subSno}")
-    public ResponseEntity<?> getMyRecommendedProduct(@PathVariable("subSno") String subSno){
-        RecommandedtemDto recommandedtemDto = new RecommandedtemDto();
-        return ResponseEntity.ok(recommandedtemDto);
-    }
+//	파이썬에서 구현할 예정
+//    @ApiOperation(value="추천 제품 조회", notes = "cnt1_사료, cnt2_간식, cnt3_장난감")
+//    @GetMapping("/{subSno}")
+//    public ResponseEntity<?> getMyRecommendedProduct(@PathVariable("subSno") String subSno){
+//        RecommandedtemDto recommandedtemDto = new RecommandedtemDto();
+//        return ResponseEntity.ok(recommandedtemDto);
+//    }
 
 }
