@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function Dots({ scrollIndex, setScrollIndex, setPage }) {
     function scrollTo(num) {
-        console.log(num);
         setScrollIndex(num);
         setPage(num);
     }

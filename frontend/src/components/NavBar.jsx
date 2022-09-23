@@ -52,8 +52,6 @@ export function NavBar({ ...props }) {
       if (mounted) {
         nowScrollTop = window.scrollY;
         let fixBoxHeight = "50";
-        console.log("nowScrollTop" + nowScrollTop);
-        console.log(lastScrollTop)
         // 스크롤 내리는 모션일때
         if (nowScrollTop > lastScrollTop && nowScrollTop > fixBoxHeight) {
           setBackgroundColor("rgba(255,254,254,0.9)");
@@ -85,7 +83,7 @@ export function NavBar({ ...props }) {
         <FlexBox width="350px" justify="space-between">
           <Link to="/reviewList"><Category>고객 후기</Category></Link>
           <Link to="/subscribeList"><Category>상품 목록</Category></Link>
-          <Link to="/signupUser"><Category>회원가입</Category></Link>
+          <Link to="/signup"><Category>회원가입</Category></Link>
           <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }}>로그인</Category>
         </FlexBox>
       </FlexBox>

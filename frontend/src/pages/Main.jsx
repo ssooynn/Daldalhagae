@@ -79,10 +79,12 @@ export default function Main() {
   useChain([fadeInRef, fadeInRef2, startButtonRef], [0, 0.5, 1])
 
   // 1페이지씩 스크롤 기능
-  const DIVIDER_HEIGHT = 1;
+  const DIVIDER_HEIGHT = 0.5;
   const outerDivRef = useRef();
   const [scrollIndex, setScrollIndex] = useState(1);
   const [page, setPage] = useState(1);
+
+  //setPage가 바뀌면 페이지 이동
   function GoPage(page) {
     const pageHeight = window.innerHeight;
     outerDivRef.current.scrollTo({
@@ -103,33 +105,22 @@ export default function Main() {
         //스크롤 내릴때
         for (let i = 1; i < 9; i++) {
           if (scrollTop >= pageHeight * (i - 1) && scrollTop < pageHeight * i) {
-            outerDivRef.current.scrollTo({
-              top: pageHeight * i + DIVIDER_HEIGHT * i,
-              left: 0,
-              behavior: "smooth",
-            })
             setScrollIndex(i + 1);
+            setPage(i + 1);
           }
         }
       } else {
         // 스크롤 올릴 때
         for (let i = 2; i < 9; i++) {
           if (scrollTop >= pageHeight * (i - 1) && scrollTop < pageHeight * i) {
-            outerDivRef.current.scrollTo({
-              top: pageHeight * (i - 2) + DIVIDER_HEIGHT * (i - 2),
-              left: 0,
-              behavior: "smooth",
-            })
             setScrollIndex(i - 1);
+            setPage(i - 1);
           }
         }
         if (scrollTop >= pageHeight * 8 && scrollTop < pageHeight * 9) {
-          outerDivRef.current.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          })
           setScrollIndex(1);
+          setPage(1);
+
         }
 
       }
