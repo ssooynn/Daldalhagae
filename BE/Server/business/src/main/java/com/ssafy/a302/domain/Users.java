@@ -1,8 +1,6 @@
 package com.ssafy.a302.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -61,8 +59,9 @@ public class Users {
 	private Set<UserLog> userLogs = new HashSet<>();
 
 	
-	public Users(String kakaoId, String email, String name, String phone, String address) {
+	public Users(String usersSno,String kakaoId, String email, String name, String phone, String address) {
 		super();
+		this.usersSno = usersSno;
 		this.kakaoId = kakaoId;
 		this.email = email;
 		this.name = name;

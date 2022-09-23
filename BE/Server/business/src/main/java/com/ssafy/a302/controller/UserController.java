@@ -1,7 +1,9 @@
 package com.ssafy.a302.controller;
 
+import com.ssafy.a302.common.FileUpload;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.*;
+import com.ssafy.a302.request.SignUpPetReq;
 import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.response.UsersInfoRes;
 import com.ssafy.a302.service.UsersService;
@@ -23,29 +25,35 @@ import java.util.List;
 public class UserController {
 
 	private final UsersService usersService;
+	private final FileUpload fileUpload;
 
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/signup")
-	public String signup(@RequestBody SignUpReq signUpReq) {
+	public String signup(@RequestPart List<MultipartFile> images, @RequestPart(value = "users") SignUpReq signUpReq,
+			@RequestPart(value = "pets") List<SignUpPetReq> pets) {
 		boolean result = false;
-		
+
 		try {
 			result = usersService.SignUp(signUpReq);
-
+			for (int i = 0; i < pets.size(); i++) {
+				SignUpPetReq pet = pets.get(i);
+				System.out.println(pet.getImage());
+				fileUpload.petImageUpload(images, pet);
+				System.out.println(pet.getImage());
+			}
 		} catch (Exception e) {
 			return "회원 가입 실패";
 		}
-		
 		if (result)
 			return "회원 가입 성공";
-		
+
 		return "회원 가입 실패";
 	}
 
-    @ApiOperation(value="사용자 정보 조회")
-    @GetMapping("/info/{usersSno}")
-    public void getMyPageInfo(@PathVariable String usersSno){
-    }
+	@ApiOperation(value = "사용자 정보 조회")
+	@GetMapping("/info/{usersSno}")
+	public void getMyPageInfo(@PathVariable String usersSno) {
+	}
 
 //    @ApiOperation(value="사용자 정보 수정")
 //    @PatchMapping("/mypage/info")

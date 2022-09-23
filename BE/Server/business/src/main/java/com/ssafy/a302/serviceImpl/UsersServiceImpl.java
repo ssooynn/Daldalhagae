@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.a302.common.RandomKey;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.repository.UsersRepository;
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 	private final UsersRepository usersRep;
-
+	private final RandomKey randomKey;
 	@Override
 	public boolean existsByKakaoId(String kakaoId) {
 		return usersRep.existsByKakaoId(kakaoId);
@@ -35,10 +36,11 @@ public class UsersServiceImpl implements UsersService {
 	public boolean SignUp(SignUpReq signUpReq) {
 		if (usersRep.existsByKakaoId(signUpReq.getKakaoId()))
 			return false;
+		signUpReq.setUsersSno("u"+randomKey.createKey());
 		Users users = signUpReq.transforUsers();
 		usersRep.save(users);
 		String usersSno = users.getUsersSno();
-		
+		System.out.println(usersSno);
 		
 		return true;
 	}
