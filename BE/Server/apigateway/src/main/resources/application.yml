@@ -10,7 +10,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]' :
-            allowedOrigins: "*"
+            allowedOriginPatterns : "*"
             allow-credentials: true   #추가
             allowedHeaders: "*"
             allowedMethods: "*"
