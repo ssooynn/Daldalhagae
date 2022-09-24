@@ -33,4 +33,12 @@ public class PetMaterial {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="MATERIAL_NO")
 	private Material material;
+
+	public PetMaterial(Pet pet, Material material) {
+		super();
+		this.pet = pet;
+		this.material = material;
+	}
+	
+	
 }
