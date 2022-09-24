@@ -59,4 +59,14 @@ public class Pet {
 	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
 
+	public Pet(String petSno, String name, Date birth, int fat, String image, Users users, Target target) {
+		super();
+		this.petSno = petSno;
+		this.name = name;
+		this.birth = birth;
+		this.fat = fat;
+		this.image = image;
+		this.users = users;
+		this.target = target;
+	}
 }

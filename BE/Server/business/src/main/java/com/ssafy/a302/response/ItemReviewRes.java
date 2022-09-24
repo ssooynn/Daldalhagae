@@ -10,7 +10,7 @@ import com.ssafy.a302.dto.UsersDto;
 public class ItemReviewRes {
     private int itemReviewNo;
     //mappedsuperclass
-    private Item item;
+    private String item;
     private int rate;
     private String content;
     private String image;
