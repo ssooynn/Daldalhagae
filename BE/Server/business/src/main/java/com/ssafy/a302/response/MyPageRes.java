@@ -1,6 +1,10 @@
 package com.ssafy.a302.response;
 
+import java.util.List;
+
 public class MyPageRes {
 	String name;
-	String subscriptionCnt;
+	int subscriptionCnt;
+	int unReviewCnt;
+	List<MyPagePetRes> pets;
 }

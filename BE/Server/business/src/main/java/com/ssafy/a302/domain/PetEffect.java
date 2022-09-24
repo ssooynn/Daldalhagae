@@ -33,4 +33,12 @@ public class PetEffect {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "EFFECT_NO")
 	private Effect effect;
+
+	public PetEffect(Pet pet, Effect effect) {
+		super();
+		this.pet = pet;
+		this.effect = effect;
+	}
+	
+	
 }
