@@ -14,14 +14,15 @@ import com.ssafy.a302.request.SignUpPetReq;
 @Repository
 public class FileUpload {
 
-	public boolean petImageUpload(List<MultipartFile> images, SignUpPetReq pet)
+	/* 펫들 이미지 추가 */
+	public boolean petsImageUpload(List<MultipartFile> images, SignUpPetReq pet)
 			throws IllegalStateException, IOException {
 		File folder = new File(Utils.IMAGE_PATH);
-		
+
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-		
+
 		for (MultipartFile image : images) {
 			if (image.getOriginalFilename().equals(pet.getImage())) {
 				String getImageName = image.getOriginalFilename();
@@ -31,6 +32,40 @@ public class FileUpload {
 				return true;
 			}
 		}
+
+		return false;
+
+	}
+
+	/* 펫 이미지 추가 */
+	public boolean petImageUpload(MultipartFile image, SignUpPetReq pet) throws IllegalStateException, IOException {
+		File folder = new File(Utils.IMAGE_PATH);
+
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+
+		if (image.getOriginalFilename().equals(pet.getImage())) {
+			String getImageName = image.getOriginalFilename();
+			String uniqueName = getUniqueFileName(getImageName);
+			image.transferTo(new File(Utils.IMAGE_PATH + "/" + uniqueName));
+			pet.setImage(uniqueName);
+			return true;
+		}
+
+		return false;
+
+	}
+	
+	/* 펫 이미지 수정 */
+	public boolean petImageUpdate(String preImage, MultipartFile image, SignUpPetReq pet)
+			throws IllegalStateException, IOException {
+		File preFile = new File(Utils.IMAGE_PATH + "/" + preImage);
+		if (preFile.exists())
+			preFile.delete();
+		if(image ==null)
+			return true;
+		petImageUpload(image, pet);
 
 		return false;
 
