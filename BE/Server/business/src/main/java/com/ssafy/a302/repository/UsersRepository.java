@@ -12,5 +12,6 @@ import com.ssafy.a302.response.UsersInfoRes;
 public interface UsersRepository extends JpaRepository<Users, String>,UsersRepositoryCustom{
 	List<Users> findAll();
 	boolean existsByKakaoId(String kakaoId);
+	boolean existsByUsersSno(String usersSno);
 	Users findByUsersSno(String usersSno);
 }
