@@ -2,6 +2,7 @@ package com.ssafy.a302.domain;
 
 import javax.persistence.*;
 
+import com.ssafy.a302.repository.FeedRepository;
 import lombok.*;
 
 @Entity
@@ -33,6 +34,8 @@ public class ItemReview {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
+
+
 	@Builder
 	public ItemReview(int itemReviewNo, String itemSno, int rate, String content, String image, Users users, Purchase purchase, Pet pet) {
 		this.itemReviewNo = itemReviewNo;

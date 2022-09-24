@@ -15,14 +15,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Table(name = "TOY")
-public class Toy {
+public class Toy extends Item{
 	@Id
 	@Column(name="TOY_SNO")
 	private String toySno;
-	@Column(name="NAME")
-	private String name;
-	@Column(name="IMAGE")
-	private String image;
+	//Item에서상속
+//	@Column(name="NAME")
+//	private String name;
+//	@Column(name="IMAGE")
+//	private String image;
 	@Column(name="MATERIAL")
 	private String material;
 	@Column(name="EFFECT")
