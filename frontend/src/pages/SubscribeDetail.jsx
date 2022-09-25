@@ -11,7 +11,7 @@ import ShoppingBag from '../components/ShoppingBag'
 
 const ClickPet = styled.div`
   cursor: pointer;
-  margin: 0;
+  margin-bottom: 1rem;
   padding: 10px;
   border-radius: 5px;
   &:hover{
@@ -19,24 +19,6 @@ const ClickPet = styled.div`
   }
 `
 function PurchaseList(props) {
-  console.log(props)
-  const purchaseList = []
-  return <div
-    style={{
-      backgroundColor: '#F6F1EC',
-      padding: '0.1px 20px 10px 20px',
-      borderRadius: '5px',
-      width: '280px'
-    }}>
-    <h4>구독목록</h4>
-    <p>{purchaseList}</p>
-    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-      <h4>총 2개</h4>
-      <h4>34,800</h4>
-    </div>
-  </div>
-}
-function Pets() {
   const pets = [{
     petId: 1,
     name: '해리',
@@ -47,29 +29,55 @@ function Pets() {
     profile: 'diaufoijfafe092r2jflefx'
   }]
   const showPets = []
-  for (let i = 0; i < pets.length; i++) {
-    showPets.push(<ClickPet>
-      <div>
-        <img
-          src={imgA}
-          style={{
-            width: '100px',
-            height: '100px',
-            borderRadius: '5px',
-          }} alt='pet'/>
-        <p style={{margin: 'auto'}}>{pets[i].name}</p>
-      </div>
-    </ClickPet>)
-    
+  const [showPurchase, setShowPurchase] = useState([])
+  const [checkPurchase, setCheckPurchase] = useState([])
+  function addPet(params, e) {
+    e.preventDefault()
+    if (checkPurchase.includes(params.name)) {
+      alert("이미 구독 상태인 강아지입니다.")
+    } else {
+      setShowPurchase([...showPurchase, <div>
+        <p>{props.name} - {params.name}</p>
+      </div>])
+      setCheckPurchase([...checkPurchase, params.name])
+    }
   }
-
-  return <div  // 펫 목록
-    style={{
-      display: 'flex',
-      justifyContent: 'flex-end',
-      textAlign: 'center',
-    }}>
-    {showPets}
+  let totalPrice = Number(props.price) * showPurchase.length
+  for (let i = 0; i < pets.length; i++) {
+    showPets.push(<ClickPet onClick={(e)=>{addPet(pets[i], e)}}>
+      <img
+        src={imgA}
+        style={{
+          width: '100px',
+          height: '100px',
+          borderRadius: '5px',
+        }} alt='pet'/>
+      <p style={{margin: 'auto'}}>{pets[i].name}</p>
+    </ClickPet>)
+  }
+  return <div>
+    <div  // 펫 목록
+      style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        textAlign: 'center',
+      }}>
+      {showPets}
+    </div>
+    <div
+      style={{
+        backgroundColor: '#F6F1EC',
+        padding: '0.1px 20px 10px 20px',
+        borderRadius: '5px',
+        width: '280px'
+      }}>
+      <h3>구독목록</h3>
+      {showPurchase}
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <h4>총 {showPurchase.length}개</h4>
+        <h4>{totalPrice} 원</h4>
+      </div>
+    </div>
   </div>
 }
 
@@ -110,8 +118,7 @@ const SubscribeDetail = () => {
           <p style={{margin: '0.5rem auto', fontSize: '12px'}}>{components}</p>
           <h4 style={{margin: 'auto'}}>월 {price}원</h4>
           <p   style={{margin: '1.5rem 0 0.5rem 0'}}>누구를 위한 사료인가요?</p>
-          <Pets />
-          <PurchaseList name={name}/>
+          <PurchaseList name={name} price={price}/>
           <div  // 장바구니
             style={{
               width: '100%',
@@ -155,9 +162,10 @@ const SubscribeDetail = () => {
           margin: '10rem 0 0 0',
           color: '#AC998A',
           width: '70%',
+          textAlign: 'center'
         }}>
         <h2>우리 강아지만을 위한 맞춤 구독 서비스</h2>
-        <h2>ALL In One Package</h2>
+        <h2>{name}</h2>
         <img src={imgB} width='100%' alt='package'/>
         <h5>반려견을 위한 모든 것을 한번에 구독하세요</h5>
         <h2 style={{

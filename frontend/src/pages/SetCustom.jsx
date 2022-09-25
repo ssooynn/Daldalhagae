@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import imgA from '../assets/img/자유구독1.png'
 import imgB from '../assets/img/구독상세페이지2.png'
@@ -8,6 +8,79 @@ import imgD from '../assets/img/구독상세페이지4.png'
 import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
 import Footer from '../components/Footer';
+import './SetCustom.css'
+
+const ClickPet = styled.div`
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  &:hover{
+    background-color : rgba(0, 0, 0, 0.2);
+  }
+`
+function PurchaseList(props) {
+  const pets = [{
+    petId: 1,
+    name: '해리',
+    profile: '893fojrforjfa04jaof0asd'
+  }, {
+    petId: 2,
+    name: '포터',
+    profile: 'diaufoijfafe092r2jflefx'
+  }]
+  const showPets = []
+  const [showPurchase, setShowPurchase] = useState([])
+  const [checkPurchase, setCheckPurchase] = useState([])
+  function addPet(params, e) {
+    e.preventDefault()
+    if (checkPurchase.includes(params.name)) {
+      alert("이미 구독 상태인 강아지입니다.")
+    } else {
+      setShowPurchase([...showPurchase, <div>
+        <p>{props.name} - {params.name}</p>
+      </div>])
+      setCheckPurchase([...checkPurchase, params.name])
+    }
+  }
+  let totalPrice = Number(props.price) * showPurchase.length
+  for (let i = 0; i < pets.length; i++) {
+    showPets.push(<ClickPet onClick={(e)=>{addPet(pets[i], e)}}>
+      <img
+        src={imgA}
+        style={{
+          width: '100px',
+          height: '100px',
+          borderRadius: '5px',
+        }} alt='pet'/>
+      <p style={{margin: 'auto'}}>{pets[i].name}</p>
+    </ClickPet>)
+  }
+  return <div>
+    <div  // 펫 목록
+      style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        textAlign: 'center',
+      }}>
+      {showPets}
+    </div>
+    <div
+      style={{
+        backgroundColor: '#F6F1EC',
+        padding: '0.1px 20px 10px 20px',
+        borderRadius: '5px',
+        width: '280px'
+      }}>
+      <h3>구독목록</h3>
+      {showPurchase}
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <h4>총 {showPurchase.length}개</h4>
+        <h4>{totalPrice} 원</h4>
+      </div>
+    </div>
+  </div>
+}
 
 const Slide = styled.div`
 margin: 5rem auto;
@@ -17,8 +90,8 @@ padding: 1px 3rem 2rem 3rem;
 border-radius: 10px;
 width: 80%;
 `
-
 const Elements = styled.div`
+position: relative;
 display: flex;
 overflow hidden;
 `
@@ -34,6 +107,38 @@ text-align: center;
 `
 
 const SetCustom = () => {
+  const [feedNum, setFeedNum] = useState(0)
+  const [snackNum, setSnackNum] = useState(0)
+  const [toyNum, setToyNum] = useState(0)
+  function plusFeed(e) {
+    e.preventDefault()
+    setFeedNum(feedNum+1)
+  } function minusFeed(e) {
+    e.preventDefault()
+    if (feedNum>0) {
+      setFeedNum(feedNum-1)
+    }
+  }
+  function plusSnack(e) {
+    e.preventDefault()
+    setSnackNum(snackNum+1)
+  } function minusSnack(e) {
+    e.preventDefault()
+    if (snackNum>0) {
+      setSnackNum(snackNum-1)
+    }
+  }
+  function plusToy(e) {
+    e.preventDefault()
+    setToyNum(toyNum+1)
+  } function minusToy(e) {
+    e.preventDefault()
+    if (toyNum>0) {
+      setToyNum(toyNum-1)
+    }
+  }
+  const name = '나만의 구독 서비스'
+  const price = '50000'
   const [bagOpen, setBagOpen] = useState(false)  // 장바구니
   const showBag = () => {
     setBagOpen(true)
@@ -43,6 +148,64 @@ const SetCustom = () => {
     setModalOpen(true)
   }
 
+  let slides = document.querySelector('.slides'),  // 슬라이드
+      slide = document.querySelectorAll('.slides li'),
+      currentIdx = 0,
+      slideWidth = 200,
+      slideMargin = 30,
+      prevBtn = document.querySelector('.prev'),
+      nextBtn = document.querySelector('.next');
+  const slideCount = 5
+
+      // makeClone()
+      console.log(slideCount)
+
+      function makeClone() {
+        for (let i = 0; i < 5; i++) {
+          // a.cloneNode() -> a 복사, a.cloneNode(true) -> a의 자식 요소까지 복사
+          const cloneSlide = slide[i].cloneNode(true)
+          cloneSlide.classList.add('clone')
+          // a.appendChild(b)
+          slides.appendChild(cloneSlide)
+        }
+        for (let i = 4; i >= 0; i--) {
+          const cloneSlide = slide[i].cloneNode(true)
+          cloneSlide.classList.add('clone')
+          // a.prepend(b)
+          slides.prepend(cloneSlide)
+        }
+        updateWidth();
+        setInitialPos();
+        setTimeout(function() {
+          slides.classList.add('animated')
+        }, 100)
+      }
+      function updateWidth() {
+        var currentSlides = document.querySelectorAll('.slides li');
+        var newSlideCount = currentSlides.length;
+
+        var newWidth = (slideWidth + slideMargin) * newSlideCount - slideMargin + 'px'
+        slides.style.width = newWidth;
+      }
+      function setInitialPos() {
+        var initialTranslateValue = -(slideWidth + slideMargin) * slideCount
+        // slides.style.transform = `translateX(${initialTranslateValue}px)`
+        slides.style.transform = 'translateX(' + initialTranslateValue + 'px)'
+      }
+      // nextBtn.addEventListener('click', function() {
+      //   moveSlide(currentIdx + 1)
+      // })
+      // prevBtn.addEventListener('click', function() {
+      //   moveSlide(currentIdx - 1)
+      // })
+      function moveSlide(num) {
+        slides.style.left = -num * (slideWidth + slideMargin) + 'px'
+        currentIdx = num
+        console.log(currentIdx, slideCount)
+        if (currentIdx === slideCount) {
+          
+        }
+      }
   return (
     <div
       style={{
@@ -82,6 +245,7 @@ const SetCustom = () => {
               <p>사료(+12,900)</p>
               <p style={{fontSize: '10px', color: '#949494', marginRight: '1rem'}}>(10~15kg)</p>
               <div  // - 버튼
+                onClick={(e)=>minusFeed(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -95,8 +259,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>1</p>
+              <p style={{margin: '0 1rem 0 1rem'}}>{feedNum}</p>
               <div  // + 버튼
+                onClick={(e)=>plusFeed(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -121,6 +286,7 @@ const SetCustom = () => {
               }}>
               <p style={{marginRight: '1rem'}}>사료(+2,900)</p>
               <div  // - 버튼
+                onClick={(e)=>minusSnack(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -134,8 +300,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>1</p>
+              <p style={{margin: '0 1rem 0 1rem'}}>{snackNum}</p>
               <div  // + 버튼
+                onClick={(e)=>plusSnack(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -160,6 +327,7 @@ const SetCustom = () => {
               }}>
               <p style={{marginRight: '1rem'}}>장난감(+2,900)</p>
               <div  // - 버튼
+               onClick={(e)=>minusToy(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -173,8 +341,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>1</p>
+              <p style={{margin: '0 1rem 0 1rem'}}>{toyNum}</p>
               <div  // + 버튼
+                onClick={(e)=>plusToy(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -190,54 +359,7 @@ const SetCustom = () => {
               </div>
             </div>
           </div>
-          <div  // 펫 목록
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              textAlign: 'center'
-            }}>
-            <div>
-              <img
-                src={imgA}
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '5px'
-                }} alt='pet'/>
-              <p style={{margin: 'auto'}}>이름</p>
-            </div>
-            <div style={{marginLeft: '6px'}}>
-              <img
-                src={imgA}
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '5px'
-                }} alt='pet'/>
-              <p style={{margin: 'auto'}}>이름</p>
-            </div>
-          </div>
-          <div  // 구매 목록
-            style={{
-              backgroundColor: '#F6F1EC',
-              padding: '0.1px 20px 10px 20px',
-              borderRadius: '5px',
-              width: '280px'
-            }}>
-            <h4>구독목록</h4>
-            <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '10px'}}>
-              <p>(사료1 + 간식1+ 장난감2) - 해리</p>
-              <p>21,900</p>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '10px'}}>
-              <p>(간식4+ 장난감2) - 포터</p>
-              <p>12,900</p>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <h4>총 2개</h4>
-              <h4>34,800</h4>
-            </div>
-          </div>
+          <PurchaseList name={name} price={price}/>
           <div  // 장바구니
             style={{
               width: '100%',
@@ -334,6 +456,19 @@ const SetCustom = () => {
               </Element>
             </Elements>
           </Slide>
+          <div className='slide_wrapper'>
+            <ul className='slides'>
+              <li>slide 01</li>
+              <li>slide 02</li>
+              <li>slide 03</li>
+              <li>slide 04</li>
+              <li>slide 05</li>
+            </ul>
+          </div>
+          <p className='controls'>
+            <span className='prev'>prev</span>
+            <span className='next'>next</span>
+          </p>
         </div>
         <div  // 간식 소개 시작
           style={{
