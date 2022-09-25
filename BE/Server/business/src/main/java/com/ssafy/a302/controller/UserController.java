@@ -1,9 +1,11 @@
 package com.ssafy.a302.controller;
 
+import com.ssafy.a302.common.FilePath;
 import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.dto.*;
 import com.ssafy.a302.request.SignUpPetReq;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.response.MyPageRes;
 import com.ssafy.a302.service.PetService;
 import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
@@ -23,11 +25,11 @@ import java.util.Map;
 public class UserController {
 
 	private final UsersService usersService;
-	private final PetService petService;
-
+	private final FilePath filePath;
+	
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/signup")
-	public String signup(@RequestPart(required = false) List<MultipartFile> images,
+	public String signup(@RequestPart(value = "images", required = false) List<MultipartFile> images,
 			@RequestPart(value = "users") SignUpReq signUpReq,
 			@RequestPart(value = "pets", required = false) List<SignUpPetReq> signUpPetReqs) {
 		boolean result = false;
@@ -51,8 +53,8 @@ public class UserController {
 
 	@ApiOperation(value = "마이 페이지 조회")
 	@GetMapping("/mypage/{usersSno}")
-	public UsersDto getMyPage(@PathVariable String usersSno) {
-		return usersService.userInfo(usersSno);
+	public MyPageRes getMyPage(@PathVariable String usersSno) {
+		return usersService.myPageInfo(usersSno);
 	}
 
 	@ApiOperation(value = "사용자 정보 수정")
@@ -72,6 +74,11 @@ public class UserController {
 			return Utils.SUCCESS;
 		}
 		return Utils.FAIL;
+	}
+	
+	@GetMapping("/test")
+	public void test() {
+		System.out.println(filePath);
 	}
 
 }
