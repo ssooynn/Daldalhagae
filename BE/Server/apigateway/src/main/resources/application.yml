@@ -16,13 +16,13 @@ spring:
             allowedMethods: "*"
       routes:
       - id : businessId
-        uri : lb://BUSINESS
+        uri : lb://${BUSINESS_NAME}
         predicates:
           - Path=/api-gateway/business-api/**
         filters:
           - AuthorizationHeaderFilter
       - id : authId
-        uri : lb://AUTH-API
+        uri : lb://${AUTH_NAME}
         predicates:
         - Path=/api-gateway/auth-api/**
     

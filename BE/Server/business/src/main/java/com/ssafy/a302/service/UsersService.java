@@ -9,6 +9,7 @@ import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.request.SignUpPetReq;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.response.MyPageRes;
 import com.ssafy.a302.response.UsersInfoRes;
 
 public interface UsersService {
@@ -18,4 +19,5 @@ public interface UsersService {
 	UsersDto userInfo(String usersSno);
 	void usersUpdate(UsersDto usersDto);
 	void usersWithdrow(String usersSno);
+	MyPageRes myPageInfo(String usersSno);
 }
