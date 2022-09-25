@@ -1,0 +1,28 @@
+.slide_wrapper {
+  position: relative;
+  width: 660px;
+  margin: 0 auto;
+  height: 200px;
+  overflow: hidden;
+}
+
+.slides {
+  position: absolute;
+  left: 0; top: 0;
+}
+
+.slides.animated{
+  transition: 0.5s ease-out; /* 끝이 살짝 느리게 움직임 */
+}
+
+.slides li{
+  width: 200px;
+  height: 200px;
+  background: #ccc;
+  float: left;
+  list-style: none;
+}
+
+.slides li:not(:last-child){
+  margin-left: 50px;
+}
