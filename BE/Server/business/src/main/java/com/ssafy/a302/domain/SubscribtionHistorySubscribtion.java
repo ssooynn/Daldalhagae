@@ -27,4 +27,6 @@ public class SubscribtionHistorySubscribtion {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_NO")
 	private Subscribtion subscribtion;
+
+
 }
