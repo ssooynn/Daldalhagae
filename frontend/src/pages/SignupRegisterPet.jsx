@@ -9,6 +9,7 @@ import BCS2 from "../assets/img/BCS2.png";
 import BCS3 from "../assets/img/BCS3.png";
 import BCS4 from "../assets/img/BCS4.png";
 import BCS5 from "../assets/img/BCS5.png";
+import { useNavigate } from "react-router-dom";
 
 const SignupBox = styled.div`
   width: 50%;
@@ -30,11 +31,12 @@ const StyledBCS = styled.img`
 `;
 
 export default function SignupRegisterPet(props) {
+  const Navigate = useNavigate();
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [effectsOpen, setEffectsOpen] = useState(false);
   const [alergyList, setAlergyList] = useState(["오리", "연어", "양", "쌀", "곡물", "고구마", "칠면조", "기타", "과일/야채", "소", "닭", "생선/해조류", "사슴", "밀", "돼지", "참치", "치즈/유제품", "북어"]);
-  const [profile, setProfile] = useState(""); 
+  const [profile, setProfile] = useState("");
   const [effectsList, setEffectsList] = useState([
     "피모관리",
     "저알러지",
@@ -74,7 +76,7 @@ export default function SignupRegisterPet(props) {
   const [bcs, setBcs] = useState(0);
 
   // 모두 동의 완료시 다음 단계로 이동
-  function PreviousStep() {}
+  function PreviousStep() { }
 
   function RegisterPet() {
     //     {image:"",
@@ -85,11 +87,11 @@ export default function SignupRegisterPet(props) {
     // effects:[],
     // fat:""}
     var id = 0;
-    console.log(props.pet);
-    if (props.pet === undefined) {
+    console.log(props.pets);
+    if (props.pets === undefined) {
       id = 1;
     } else {
-      id = props.pet.length + 1;
+      id = props.pets.length + 1;
     }
     console.log({
       id: id,
@@ -114,15 +116,16 @@ export default function SignupRegisterPet(props) {
         fat: bcs,
       },
     ]);
+    Navigate("/signup/signupPet");
   }
 
   const WantUpdateProfile = (e) => {
-    let file=e.target.files[0];
+    let file = e.target.files[0];
     let fileURL;
     let reader = new FileReader();
-    reader.onload = () =>{
-        fileURL = reader.result;
-        setProfile(fileURL);
+    reader.onload = () => {
+      fileURL = reader.result;
+      setProfile(fileURL);
     }
     reader.readAsDataURL(file);
 
@@ -157,13 +160,13 @@ export default function SignupRegisterPet(props) {
     <SignupBox>
       <FlexBox direction="row">
         <StyledText size="24px" weight="500">
-          회원가입 - 반려견 정보 등록
+          반려견 정보 등록
         </StyledText>
       </FlexBox>
       <FlexBox direction="column" justify="space-between" align="center" width="80%">
         {/* 프로필 + 이름 / 생년월일 */}
         <FlexBox direction="row" justify="space-between">
-          <StyledProfile src={profile==="" ? Dog1 : profile} height="120px" width="120px"></StyledProfile>
+          <StyledProfile src={profile === "" ? Dog1 : profile} height="120px" width="120px"></StyledProfile>
           <div
             style={{
               position: "absolute",

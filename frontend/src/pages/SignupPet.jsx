@@ -8,6 +8,7 @@ import { FlexBox } from "../components/MainComponent";
 import petProfile from "../assets/img/pet.png";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const SignupBox = styled.div`
   width: 30%;
@@ -24,9 +25,14 @@ const SignupBox = styled.div`
 
 export default function SignupPet(props) {
   const Navigate = useNavigate();
+  const pets = props.pets;
   function GoRegisterPetPage() {
     Navigate("/signup/signupRegisterPet");
   }
+
+  useEffect(() => {
+    console.log(pets);
+  }, [])
   return (
     <SignupBox>
       <FlexBox direction="row">
@@ -64,74 +70,57 @@ export default function SignupPet(props) {
             </StyledText>
           </FlexBox>
         </FlexBox>
-        <FlexBox
-        direction="row"
-        justify="space-between"
-          width="100%"
-          align="center"
-          margin="20px 0px"
-        >
-          <StyledProfile
-            src={petProfile}
-            height="100px"
-            width="100px"
-            ></StyledProfile>
-          <FlexBox direction="row" justify="flex-end" align="start" width="60%">
-            <FlexBox
-              direction="column"
-              justify="space-around"
-              margin="0px"
-              align="flex-start"
-            >
-              <StyledText size="16px" weight="500" margin="5px 0px">
-                이름
-              </StyledText>
-              <StyledText size="16px" weight="500" margin="5px 0px">
-                생년월일
-              </StyledText>
-            </FlexBox>
-            <FlexBox
-              direction="column"
-              justify="space-around"
-              margin="0px"
-              align="flex-start"
-            >
-              <StyledText size="16px" weight="500" margin="5px 0px">
-                해리
-              </StyledText>
-              <StyledText size="16px" weight="500" margin="5px 0px">
-                2022.04.05
-              </StyledText>
+        {pets && pets.map((pet, idx) =>
+          <FlexBox key={idx} direction="row" justify="space-between" width="100%" align="center" margin="20px 0px">
+            <StyledProfile src={pet.image ? pet.image : petProfile} height="100px" width="100px"></StyledProfile>
+            <FlexBox direction="row" justify="flex-end" align="start" width="60%">
+              <FlexBox direction="column" justify="space-around" margin="0px" align="flex-start">
+                <StyledText size="16px" weight="500" margin="5px 0px">
+                  이름
+                </StyledText>
+                <StyledText size="16px" weight="500" margin="5px 0px">
+                  생년월일
+                </StyledText>
+              </FlexBox>
+              <FlexBox direction="column" justify="space-around" margin="0px" align="flex-start">
+                <StyledText size="16px" weight="500" margin="5px 0px">
+                  {pet.name}
+                </StyledText>
+                <StyledText size="16px" weight="500" margin="5px 0px">
+                  {pet.birth}
+                </StyledText>
+              </FlexBox>
             </FlexBox>
           </FlexBox>
-        </FlexBox>
-        <FlexBox
-          direction="row"
-          justify="center"
-          align="center"
-          width="100px"
-          height="100px"
-          margin="20px 7px"
-          style={{
-            backgroundColor: "#ededed",
-            borderRadius: "10px",
-            alignSelf: "flex-start",
-          }}
-        >
-          {/* 등록한 펫이 3마리보다 적으면 + 버튼 보여줌 */}
-          {props.pets.length < 3 && (
+        )}
+        {/* 등록한 펫이 3마리보다 적으면 + 버튼 보여줌 */}
+        {props.pets.length < 3 && (
+          <FlexBox
+            direction="row"
+            justify="center"
+            align="center"
+            width="100px"
+            height="100px"
+            margin="20px 7px"
+            style={{
+              backgroundColor: "#ededed",
+              borderRadius: "10px",
+              alignSelf: "flex-start",
+            }}
+            onClick={GoRegisterPetPage}
+          >
             <StyledText
               size="32px"
               weight="400"
               margin="5px 0px"
               color="#525252"
-              onClick={GoRegisterPetPage}
+
               style={{ cursor: "pointer" }}
             >
               +
             </StyledText>
-          )}
-        </FlexBox>
+          </FlexBox>
+        )}
         <FlexBox direction="row" justify="space-around">
           <StyledText size="12px" weight="400">
             뒤로 돌아가기
