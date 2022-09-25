@@ -1,20 +1,22 @@
 package com.ssafy.a302.response;
 
-import com.ssafy.a302.domain.Pet;
-import com.ssafy.a302.domain.Purchase;
-import com.ssafy.a302.domain.Users;
-import com.ssafy.a302.dto.PetDto;
-import com.ssafy.a302.dto.PurchaseDto;
-import com.ssafy.a302.dto.UsersDto;
+import lombok.Data;
 
+@Data
 public class ItemReviewRes {
     private int itemReviewNo;
-    //mappedsuperclass
-    private String item;
+    private String itemSno;
+    private String itemName;
     private int rate;
     private String content;
     private String image;
-    private UsersDto users;
-    private PurchaseDto purchase;
-    private PetDto pet;
+
+    //누가 남긴 리뷰인지 추적 가능 하도록.(타인 리뷰 조회시 사용)
+    private String usersSno;
+    private String usersName;
+    private String petSno;
+    private String petName;
+//    private UsersDto users;
+//    private PurchaseDto purchase;
+//    private PetDto pet;
 }
