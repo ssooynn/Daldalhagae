@@ -7,12 +7,14 @@ import com.ssafy.a302.repository.*;
 import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.ServiceReviewReq;
 import com.ssafy.a302.response.ItemReviewRes;
+import com.ssafy.a302.response.MyReviewRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,14 +37,13 @@ public class ReviewService {
     @Autowired
     SubscribtionHistoryRepository subscribtionHistoryRepository;
 
-
     /*pk조회. */
     public ItemReview findByItemReviewNo(int itemReviewNo) {
         return itemReviewRepository.findByItemReviewNo(itemReviewNo);
     }
 
-    /*유저sno로 리뷰조회 :item 따로조회해서 dto에넣어주기.*/
-    public List<ItemReviewRes> findByUsers_UsersSno(String usersSno) {
+    /*상품리뷰 조회 :item 따로조회해서 dto에넣어주기.*/
+    public List<ItemReviewRes> findByUsersSno(String usersSno) {
         List<ItemReview> itemReviews= itemReviewRepository.findByUsers_UsersSno(usersSno);
         List<ItemReviewRes> itemReviewResList = new ArrayList<>();
         //dto build
@@ -55,6 +56,47 @@ public class ReviewService {
         }
         return itemReviewResList;
     }
+    /*내 리뷰 전체 조회*/
+    public List<MyReviewRes> getMyReviews(String usersSno){
+        //MyReviewRes 생성.
+        List<MyReviewRes> myReviewList = new ArrayList<>();
+        List<SubscribtionHistory> subscribtionHistoryList=subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
+        for(SubscribtionHistory subscribtionHistory: subscribtionHistoryList){
+            MyReviewRes myReviewRes = new MyReviewRes();
+            myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
+            myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
+            myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
+            myReviewRes.setSubscriptionStartDate(subscribtionHistory.getEndDate());
+            myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
+            myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
+            myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
+            myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
+            myReviewRes.setServiceReviewRegDate(new Date());//todo:필드추가필요.
+            //아이템리뷰dto
+            List<ItemReviewRes> itemReviewResList= new ArrayList<>();
+            for(Purchase purchase:subscribtionHistory.getPurchases()){
+                ItemReview itemReview =purchase.getItemReview();
+                ItemReviewRes itemReviewRes = new ItemReviewRes();
+                itemReviewRes.setItemReviewNo(itemReview.getItemReviewNo());
+                itemReviewRes.setItemSno(itemReview.getItemSno());
+                //엔티티 내에 getItem 구현.
+                itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
+                itemReviewRes.setRate(itemReview.getRate());
+                itemReviewRes.setContent(itemReview.getContent());
+                itemReviewRes.setImage(itemReview.getImage());
+                itemReviewRes.setUsersSno(subscribtionHistory.getUsers().getUsersSno());
+                itemReviewRes.setUsersName(subscribtionHistory.getUsers().getName());
+                itemReviewRes.setPetSno(subscribtionHistory.getPet().getPetSno());
+                itemReviewRes.setPetName(subscribtionHistory.getPet().getName());
+
+                itemReviewResList.add(itemReviewRes);
+            }
+            myReviewRes.setItemReviewResList(itemReviewResList);
+            myReviewList.add(myReviewRes);
+        }
+        return myReviewList;
+
+    }
 
     //
     public Integer saveReview(ServiceReviewReq serviceReviewReq) {
@@ -66,7 +108,7 @@ public class ReviewService {
 
         SubscribtionHistory subscribtionHistory= subscribtionHistoryRepository.findById(serviceReviewReq.getSubscriptionNo()).get();
         //serviceReview 저장
-        subscribtionHistory.getServiceReviews();
+        subscribtionHistory.getServiceReview();
 
         //itemReview 저장
         for(ItemReviewReq itemReviewReq:serviceReviewReq.getItemReviewReqList()){
@@ -80,6 +122,16 @@ public class ReviewService {
                     .image(".")//s3 저장후 링크url
                     .build();
             itemReviewRepository.save(itemReview);
+        }
+        return null;
+    }
+    public Item getItem(String itemSno){
+        if(itemSno.startsWith("f")){
+            return feedRepository.findById(itemSno).get();
+        }else if (itemSno.startsWith("s")){
+            return snackRepository.findById(itemSno).get();
+        }else if (itemSno.startsWith("t")){
+            return toyRepository.findById(itemSno).get();
         }
         return null;
     }

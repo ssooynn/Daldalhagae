@@ -5,6 +5,7 @@ import com.ssafy.a302.dto.ItemReviewDto;
 import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.response.ItemReviewRes;
+import com.ssafy.a302.response.MyReviewRes;
 import com.ssafy.a302.service.ReviewService;
 import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
@@ -36,10 +37,18 @@ public class reviewController {
 
        return new ResponseEntity("성공",HttpStatus.OK);
     }
-    @ApiOperation(value = "해당 유저의 리뷰 조회",notes = "")
-    @GetMapping("/{usersSno}")
+    @ApiOperation(value = "유저 아이템리뷰 조회",notes = "")
+    @GetMapping("/itemreview/{usersSno}")
     public ResponseEntity<List<ItemReviewRes>> getByUserSno(@PathVariable("usersSno") String usersSno) {
-        List<ItemReviewRes> reviewList = reviewService.findByUsers_UsersSno(usersSno);
+        List<ItemReviewRes> reviewList = reviewService.findByUsersSno(usersSno);
         return new ResponseEntity(reviewList, HttpStatus.OK);
     }
+    @ApiOperation(value = "유저 후기 내역 조회",notes = "")
+    @GetMapping("/myreview/{usersSno}")
+    public ResponseEntity<List<MyReviewRes>> getMyReviews(@PathVariable("usersSno") String usersSno) {
+        List<MyReviewRes> myReviewList = reviewService.getMyReviews(usersSno);
+        return new ResponseEntity(myReviewList, HttpStatus.OK);
+    }
+
+
 }
