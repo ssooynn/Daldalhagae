@@ -52,4 +52,5 @@ public class SubscribtionHistory {
 		this.serviceReview = serviceReview;
 		this.subscribtionHistorySubscribtion = subscribtionHistorySubscribtion;
 	}
+
 }

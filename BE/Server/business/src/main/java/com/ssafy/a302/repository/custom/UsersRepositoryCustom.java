@@ -6,4 +6,5 @@ import com.ssafy.a302.response.UsersInfoRes;
 
 public interface UsersRepositoryCustom {
 	Users findByUsersSno(String usersSno);
+	Users findAndPetsByUsersSno(String usersSno);
 }
