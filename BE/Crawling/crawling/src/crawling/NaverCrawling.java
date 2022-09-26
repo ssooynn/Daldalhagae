@@ -8,18 +8,14 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 import object.*;
+import org.openqa.selenium.*;
+import util.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import util.CommonUtil;
 
 
 public class NaverCrawling {
@@ -52,7 +48,7 @@ public class NaverCrawling {
 	};
 
 	public static void main(String[] args) throws IOException {
-//		System.out.println(NaverCrawling.class.getResource(".").getPath());
+//	System.out.println(NaverCrawling.class.getResource(".").getPath());
 		StringBuilder sb = new StringBuilder();
 		detailMap = new HashMap[cnt];
 		bridgeList = new ArrayList[cnt];
@@ -289,7 +285,7 @@ public class NaverCrawling {
 		for (int i = 0; i < listFeed.size(); i++) {
 			Feed rfeed = listFeed.get(i);
 			driver.get(rfeed.getReviewUrl());
-			
+
 			String url = driver.getCurrentUrl();
 			System.out.println(url);
 
@@ -303,7 +299,7 @@ public class NaverCrawling {
 			// 네이버스토어인 경우
 			if (url.contains("smartstore.naver.com")) {
 				int cnt =0;
-				
+
 				try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
@@ -607,17 +603,17 @@ public class NaverCrawling {
 			e.printStackTrace();
 		}
 
-		// 만약 이미지 있으면 폴더에 저장
-//		if (saveImage != null) {
-//			try {
-//				int lastIndex = src.lastIndexOf("/");
-//				int lastIndex2 = src.lastIndexOf("?");
-//				fileName = src.substring(lastIndex + 1, lastIndex2);
-//				ImageIO.write(saveImage, "jpg", new File(folderName + "/" + fileName));
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
+//		 만약 이미지 있으면 폴더에 저장
+		if (saveImage != null) {
+			try {
+				int lastIndex = src.lastIndexOf("/");
+				int lastIndex2 = src.lastIndexOf("?");
+				fileName = src.substring(lastIndex + 1, lastIndex2);
+				ImageIO.write(saveImage, "jpg", new File(folderName + "/" + fileName));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		if (saveImage != null) {
 			int lastIndex = src.lastIndexOf("/");
 			int lastIndex2 = src.lastIndexOf("?");
@@ -796,4 +792,72 @@ public class NaverCrawling {
 		return random.nextInt(3000); //0~2999
 	}
 
+
+	///////////////////////////img 수정코드
+
+//	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
+//	public static final String WEB_DRIVER_PATH = "C:\\Users\\KMLEE\\Downloads\\chromedriver.exe";
+//	public static void main(String[] args) throws IOException, InterruptedException {
+//		//엑셀파일 불러오기
+//		FileInputStream fis = new FileInputStream("C:\\Users\\KMLEE\\Desktop\\daldalhagae\\S07P22A302\\BE\\Crawling\\crawling\\exceldata\\사료&간식.xlsx");
+//		XSSFWorkbook feedExcel = new XSSFWorkbook(fis);
+//		XSSFSheet feedSheet = feedExcel.getSheetAt(0);
+//		XSSFRow feedCurrentRow = null;
+//		XSSFCell feedCurrentCell = null;
+//		int feedRows = feedSheet.getPhysicalNumberOfRows();
+//		List<String> imgurlList  = new ArrayList<>();
+//		List<String> nameList = new ArrayList<>();
+//
+//		for(int idx = 1; idx <feedRows; idx++){
+//			feedCurrentRow = feedSheet.getRow(idx);
+//			String name = feedCurrentRow.getCell(1).getStringCellValue();//이름
+//			nameList.add(name);
+//		}
+//		//selenium시작
+//		// 검색, 수정
+//		try {
+//			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		WebDriver driver = new ChromeDriver();
+//		driver.get("https://search.shopping.naver.com/search/all?query=%EA%B0%95%EC%95%84%EC%A7%80%20%EC%82%AC%EB%A3%8C&cat_id=&frm=NVSHATC");
+//		for(String name : nameList){
+//			int errcnt =0;
+//			while (true) {
+//				try {
+//				WebElement input = driver.findElement(By.cssSelector("#__next > div > div.header_header__22qGI > div > div.gnb_header_shop__EccVa > div > div.gnbSearch_search_area__CkjUR > form > fieldset > div.gnbSearch_inner__MIZmJ > input"));
+//				input.clear();
+//				input.sendKeys(name);
+//				input.sendKeys(Keys.ENTER);
+//				Thread.sleep(1000);
+//				WebElement firstDiv = driver.findElement(By.cssSelector("#__next > div > div.style_container__UxP6u > div > div.style_content_wrap__Cdqnl > div.style_content__xWg5l > ul > div > div:nth-child(1)"));
+//				String url = firstDiv.findElement(By.tagName("img")).getAttribute("src");
+//				imgurlList.add(url);
+//				break;
+//				} catch (Exception e) {
+//					errcnt++;
+//					System.out.println("오류발생,재실행");;
+//					driver.get("https://search.shopping.naver.com/search/all?query=%EA%B0%95%EC%95%84%EC%A7%80%20%EC%82%AC%EB%A3%8C&cat_id=&frm=NVSHATC");
+//					Thread.sleep(5000);
+//					if(errcnt==2){ //2번더시도
+//						imgurlList.add("fail");
+//						System.out.println("fail,pass");
+//						break;
+//					}
+//				}
+//			}
+//
+//		}
+//		int idx = 1;
+//		for(String url : imgurlList) {
+//			feedSheet.getRow(idx++).getCell(2).setCellValue(url);
+//		}
+//		//엑셀파일 저장하기
+//		String Path = "C:\\Users\\KMLEE\\Desktop\\data\\feed_fixed.xlsx";
+//		File file = new File(Path);
+//		FileOutputStream fos = new FileOutputStream(file);
+//		feedExcel.write(fos);
+//		if (fos != null) fos.close();
+//	}
 }
