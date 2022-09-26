@@ -5,6 +5,7 @@ import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.dto.*;
 import com.ssafy.a302.request.SignUpPetReq;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.request.TestReq;
 import com.ssafy.a302.response.MyPageRes;
 import com.ssafy.a302.service.PetService;
 import com.ssafy.a302.service.UsersService;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.annotation.MultipartConfig;
 
 
 @Api(value = "사용자 컨트롤러")
@@ -76,9 +79,9 @@ public class UserController {
 		return Utils.FAIL;
 	}
 	
-	@GetMapping("/test")
-	public void test() {
-		System.out.println(filePath);
+	@PostMapping("/test")
+	public void test(@RequestPart(value = "req") List<TestReq> req) {
+		System.out.println(req.get(0).getMf().getOriginalFilename());
 	}
 
 }

@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -27,6 +29,9 @@ public class ServiceReview {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
+
+	@Column(name="REG_DATE")
+	private Date regDate;
 
 	@Builder
 	public ServiceReview(int serviceReviewNo, int rate, String content, String image, Users users, SubscribtionHistory subscribtionHistory) {

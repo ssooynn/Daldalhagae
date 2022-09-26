@@ -19,4 +19,6 @@ public class ItemReviewRes {
 //    private UsersDto users;
 //    private PurchaseDto purchase;
 //    private PetDto pet;
+
+
 }
