@@ -1,0 +1,33 @@
+.slide {
+  margin: 5rem auto;
+  background-color: #F6F1EC;
+  text-align: start;
+  padding: 1px 3rem 2rem 3rem;
+  border-radius: 10px;
+  width: 80%;
+}
+
+.elements {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+.element {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 10px;
+  height: 170px;
+  margin: 0 10px 0 10px;
+  text-align: center;
+
+  -webkit-animation: moveSlideshow 6s linear infinite;
+  -moz-animation: moveSlideshow 6s linear infinite;
+  -o-animation: moveSlideshow 6s linear infinite;
+}
+
+@keyframes moveSlideshow {
+  100% {
+    transform: translateX(-180px);
+  }
+}
