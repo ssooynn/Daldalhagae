@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.*;
 
->>>>>>> 807e431fb733ce9e4b326dec636dfb8b5b860190
 
 import com.ssafy.a302.response.PetRes;
 import com.ssafy.a302.response.SubDetailRes;
@@ -45,24 +42,20 @@ public class SubscribeController {
 		return subscriptionServiceImpl.getSubInfo(userId, 1);
 	}
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 807e431fb733ce9e4b326dec636dfb8b5b860190
+
+
 	@GetMapping("/detail/{usersSno}")
 	public SubDetailRes detail(@PathVariable("usersSno") String userId) {
 		
 		return subscribtionService.subDetail(userId);
-<<<<<<< HEAD
-=======
+	}
 
 	@ApiOperation(value = "구독 취소하기")
 	@PatchMapping("/{subId}") // 수정 예정
 	public String updateSubInfoAsCanceled(@PathVariable("subId") int subId){
 		subscriptionServiceImpl.updateSubInfoAsCanceled(subId);
 		return "updated";
-
->>>>>>> 807e431fb733ce9e4b326dec636dfb8b5b860190
 	}
 
 }
