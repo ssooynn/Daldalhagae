@@ -31,8 +31,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 		// 구독 히스토리 가져오기
 		if(n == 0){
+			// 0 이면 현재 구독 중인 히스토리만 가져오고
 			history = subscriptionsHistoryRepository.findSubNowByUserId(userId);
 		}else{
+			// 1 이면 전체 구독 히스토리
 			history = subscriptionsHistoryRepository.findSubAllByUserId(userId);
 		}
 
@@ -40,6 +42,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			Map<String, Object> map = new HashMap<>();
 			// 1. subscriptionName
 			map.put("subscriptionName", sub.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
+
+			// 2. subscriptionNum
+			map.put("subscriptionNum", sub.getSubscribtionHistoryNo());
 
 			// 2. price
 			map.put("price", sub.getSubscribtionHistorySubscribtion().getSubscribtion().getPrice());
@@ -79,7 +84,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public void updateSubInfoAsCanceled(String historyId) {
+	public void updateSubInfoAsCanceled(int historyId) {
 		subscriptionsHistoryRepository.updateSubInfoAsCanceled(historyId);
 	}
 
