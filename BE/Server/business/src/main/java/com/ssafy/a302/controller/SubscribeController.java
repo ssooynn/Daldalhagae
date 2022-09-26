@@ -14,9 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.a302.response.PetRes;
+import com.ssafy.a302.response.SubDetailRes;
+import com.ssafy.a302.service.SubscribtionService;
 
 @Api(value="구독 컨트롤러")
 @RestController
@@ -24,6 +27,7 @@ import com.ssafy.a302.response.PetRes;
 @RequiredArgsConstructor
 public class SubscribeController {
 	private final SubscriptionServiceImpl subscriptionServiceImpl;
+	private final SubscribtionService subscribtionService;
 	@ApiOperation(value = "현재 구독정보가져오기")
 	@GetMapping("/now/{userId}") // 수정 예정
 	public List<Map<String, Object>> getSubInfoNow(@PathVariable("userId") String userId){
@@ -36,5 +40,10 @@ public class SubscribeController {
 		return subscriptionServiceImpl.getSubInfo(userId, 1);
 	}
 
+	@GetMapping("/detail/{usersSno}")
+	public SubDetailRes detail(@PathVariable("usersSno") String userId) {
+		
+		return subscribtionService.subDetail(userId);
+	}
 
 }
