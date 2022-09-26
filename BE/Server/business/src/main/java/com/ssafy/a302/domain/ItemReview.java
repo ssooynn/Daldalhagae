@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Table(name = "ITEM_REVIEW")
 public class ItemReview {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ITEM_REVIEW_NO")
 	private int itemReviewNo;
 	@Column(name = "ITEM_SNO")
