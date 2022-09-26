@@ -11,26 +11,64 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.a302.request.SignUpPetReq;
 
-@Repository
-public class FileUpload {
+import lombok.RequiredArgsConstructor;
 
-	public boolean petImageUpload(List<MultipartFile> images, SignUpPetReq pet)
+@Repository
+@RequiredArgsConstructor
+public class FileUpload {
+	private final FilePath filePath;
+	/* 펫들 이미지 추가 */
+	public boolean petsImageUpload(List<MultipartFile> images, SignUpPetReq pet)
 			throws IllegalStateException, IOException {
-		File folder = new File(Utils.IMAGE_PATH);
-		
+		File folder = new File(filePath.getPetImageUploadPath());
+		System.out.println(filePath);
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-		
+
 		for (MultipartFile image : images) {
 			if (image.getOriginalFilename().equals(pet.getImage())) {
 				String getImageName = image.getOriginalFilename();
 				String uniqueName = getUniqueFileName(getImageName);
-				image.transferTo(new File(Utils.IMAGE_PATH + "/" + uniqueName));
+				image.transferTo(new File(filePath.getPetImageUploadPath() + "/" + uniqueName));
 				pet.setImage(uniqueName);
 				return true;
 			}
 		}
+
+		return false;
+
+	}
+
+	/* 펫 이미지 추가 */
+	public boolean petImageUpload(MultipartFile image, SignUpPetReq pet) throws IllegalStateException, IOException {
+		File folder = new File(filePath.getPetImageUploadPath());
+
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+
+		if (image.getOriginalFilename().equals(pet.getImage())) {
+			String getImageName = image.getOriginalFilename();
+			String uniqueName = getUniqueFileName(getImageName);
+			image.transferTo(new File(filePath.getPetImageUploadPath() + "/" + uniqueName));
+			pet.setImage(uniqueName);
+			return true;
+		}
+
+		return false;
+
+	}
+	
+	/* 펫 이미지 수정 */
+	public boolean petImageUpdate(String preImage, MultipartFile image, SignUpPetReq pet)
+			throws IllegalStateException, IOException {
+		File preFile = new File(filePath.getPetImageUploadPath() + "/" + preImage);
+		if (preFile.exists())
+			preFile.delete();
+		if(image ==null)
+			return true;
+		petImageUpload(image, pet);
 
 		return false;
 

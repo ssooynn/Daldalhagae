@@ -22,15 +22,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Table(name = "FEED")
-public class Feed {
+public class Feed extends Item{
 	@Id
 	@Column(name ="FEED_SNO")
 	private String feedSno;
-	@Column(name ="NAME")
-	private String name;
-	@Column(name ="IMAGE")
-	private String image;
-	
+	//Item에서 상속
+//	@Column(name ="NAME")
+//	private String name;
+//	@Column(name ="IMAGE")
+//	private String image;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GRADE_NO")
 	private Grade grade;

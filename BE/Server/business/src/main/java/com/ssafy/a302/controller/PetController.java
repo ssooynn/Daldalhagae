@@ -1,5 +1,6 @@
 package com.ssafy.a302.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.a302.common.Utils;
 import com.ssafy.a302.dto.PetDto;
 import com.ssafy.a302.request.PetReq;
+import com.ssafy.a302.request.SignUpPetReq;
+import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.response.PetRes;
 import com.ssafy.a302.service.PetService;
 import com.ssafy.a302.serviceImpl.PetServiceImpl;
@@ -48,17 +52,30 @@ public class PetController {
 	}
 
 	@ApiOperation(value = "펫정보 수정하기")
-	@PatchMapping("")
-	public String updatePetInfo(@RequestPart PetReq petReq, @RequestPart(required = false) MultipartFile image){
-		petServiceImpl.updatePetInfo(petReq, image);
-		return "update";
+	@PatchMapping("/info")
+	public String updatePetInfo(@RequestPart(required = false) MultipartFile image,
+			@RequestPart(value = "pet") SignUpPetReq signUpPetReq){
+		try {
+			petServiceImpl.updatePetInfo(signUpPetReq.getUsersSno(), signUpPetReq, image);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			return Utils.FAIL;
+		}
+		return Utils.SUCCESS;
 	}
 
 	@ApiOperation(value = "펫정보추가하기")
 	@PostMapping("")
-	public String addPetInfo(@RequestPart PetReq petReq, @RequestPart(required = false) MultipartFile image){
-		petServiceImpl.addPetInfo(petReq, image);
-		return "add";
+	public String addPetInfo(@RequestPart(required = false) MultipartFile image,
+			@RequestPart(value = "pet") SignUpPetReq signUpPetReq){
+		try {
+			petServiceImpl.addPetInfo(signUpPetReq.getUsersSno(), signUpPetReq, image);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Utils.FAIL;
+		}
+		return Utils.SUCCESS;
 	}
 
 
