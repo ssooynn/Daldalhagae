@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "PURCHASE")
 public class Purchase {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PURCHASE_NO")
 	private int purchaseNo;
 	@Column(name = "ITEM_SNO")
