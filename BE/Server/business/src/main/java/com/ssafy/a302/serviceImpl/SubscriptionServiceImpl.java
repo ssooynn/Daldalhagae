@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.a302.domain.*;
+import com.ssafy.a302.repository.*;
+import com.ssafy.a302.request.SubscriptionReq;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.a302.repository.SubscriptionsHistoryRepository;
 import com.ssafy.a302.service.SubscriptionService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class SubscriptionServiceImpl implements SubscriptionService {
 
 	private final SubscriptionsHistoryRepository subscriptionsHistoryRepository;
+	private final UsersRepository usersRepository;
+	private final PetRepository petRepository;
+	private final SubscriptionRepository subscriptionRepository;
+	private final SubscriptionProductTypeRepository subscriptionProductTypeRepository;
+	private final SubscriptionHistorySubscriptionRepository subscriptionHistorySubscriptionRepository;
+	private final PurchaseRepository purchaseRepository;
 
 	@Override
 	// 이미지 처리 안함
@@ -88,4 +96,44 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		subscriptionsHistoryRepository.updateSubInfoAsCanceled(historyId);
 	}
 
+	@Override
+	public void addSubInfo(SubscriptionReq subscriptionReq) {
+		Users users = usersRepository.findByUsersSno(subscriptionReq.getUserSno());
+		Pet pet = petRepository.findPetByPetId(subscriptionReq.getPetSno());
+		Subscribtion subscription;
+		// 1. 구독종류 저장
+		if(subscriptionReq.getSubNo() > 6){
+			System.out.println("######################" + subscriptionReq.getName());
+			subscription = new Subscribtion(subscriptionReq);
+			subscriptionRepository.saveAndFlush(subscription);
+		}else{
+			System.out.println("###################" + subscriptionReq.getSubNo());
+			System.out.println( subscriptionRepository.findById(subscriptionReq.getSubNo()));
+			// subscription = subscriptionRepository.findById(subscriptionReq.getSubNo());
+		}
+
+//		// 2. 구독 상품 타입 저장
+//		for (int i = 0; i < 3; i++) {
+//			ProductType productType = new ProductType(subscriptionReq.getTypeNums()[i]);
+//			for (int j = 0; j < subscriptionReq.getTypeNums()[i]; j++) {
+//				SubscribtionProductType subscriptionProductType = new SubscribtionProductType(productType, subscription);
+//				subscriptionProductTypeRepository.saveAndFlush(subscriptionProductType);
+//			}
+//		}
+//
+//		// 3. 구독 내용 저장
+//		SubscribtionHistory subscriptionHistory = new SubscribtionHistory(subscriptionReq, users, pet);
+//		subscriptionsHistoryRepository.saveAndFlush(subscriptionHistory);
+//
+//		// 4. 구독 내용 구독종류 저장
+//		SubscribtionHistorySubscribtion subscriptionHistorySubscription = new SubscribtionHistorySubscribtion(subscriptionHistory, subscription);
+//		subscriptionHistorySubscriptionRepository.saveAndFlush(subscriptionHistorySubscription);
+//
+//		// 5. 구매 상품 내역 저장
+//		for (String itemSno: subscriptionReq.getItemsSno()) {
+//			Purchase purchase = new Purchase(subscriptionHistory, itemSno);
+//			purchaseRepository.saveAndFlush(purchase);
+//		}
+
+	}
 }
