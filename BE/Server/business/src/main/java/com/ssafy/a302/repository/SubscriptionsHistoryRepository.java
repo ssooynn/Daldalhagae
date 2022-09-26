@@ -36,6 +36,6 @@ public interface SubscriptionsHistoryRepository extends JpaRepository<Subscribti
 
 	@Modifying
 	@Query("update SubscribtionHistory s set s.autoPaymentFlag = 0 where s.subscribtionHistoryNo = :historyId")
-	void updateSubInfoAsCanceled(String historyId);
+	void updateSubInfoAsCanceled(int historyId);
 
 	}
