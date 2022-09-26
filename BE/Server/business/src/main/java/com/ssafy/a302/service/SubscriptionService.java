@@ -7,5 +7,5 @@ import com.ssafy.a302.domain.SubscribtionHistory;
 
 public interface SubscriptionService {
 	List<Map<String, Object>> getSubInfo(String userId, int n);
-	void updateSubInfoAsCanceled(String historyId);
+	void updateSubInfoAsCanceled(int historyId);
 }
