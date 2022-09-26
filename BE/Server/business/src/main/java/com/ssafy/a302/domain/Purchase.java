@@ -34,6 +34,11 @@ public class Purchase {
 	@OneToOne(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private ItemReview itemReview;
 
+	public Purchase(SubscribtionHistory subscriptionHistory, String itemSno) {
+		this.itemSno = itemSno;
+		this.subscribtionHistory = subscriptionHistory;
+	}
+
 	public PurchaseRes toPurchaseRes(){
 		PurchaseRes purchaseRes=new PurchaseRes();
 		purchaseRes.setPurchaseNo(this.purchaseNo);

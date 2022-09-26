@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.ssafy.a302.request.SubscriptionReq;
 import lombok.*;
 
 @Entity
@@ -53,4 +54,12 @@ public class SubscribtionHistory {
 		this.subscribtionHistorySubscribtion = subscribtionHistorySubscribtion;
 	}
 
+    @Builder
+	public SubscribtionHistory(SubscriptionReq subscriptionReq, Users user, Pet pet) {
+		this.startDate = subscriptionReq.getStartDate();
+		this.endDate = subscriptionReq.getEndDate();
+		this.autoPaymentFlag = subscriptionReq.getAutoPaymentFlag();
+		this.users = user;
+		this.pet = pet;
+    }
 }
