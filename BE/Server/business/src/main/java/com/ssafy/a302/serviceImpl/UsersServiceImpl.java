@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.a302.common.FilePath;
 import com.ssafy.a302.common.FileUpload;
 import com.ssafy.a302.common.RandomKey;
 import com.ssafy.a302.domain.Effect;
@@ -33,6 +34,7 @@ import com.ssafy.a302.repository.UsersLogRepository;
 import com.ssafy.a302.repository.UsersRepository;
 import com.ssafy.a302.request.SignUpPetReq;
 import com.ssafy.a302.request.SignUpReq;
+import com.ssafy.a302.response.MyPageRes;
 import com.ssafy.a302.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
@@ -51,7 +53,7 @@ public class UsersServiceImpl implements UsersService {
 	private final EffectRepository effectRep;
 	private final PetMaterialRepository petMaterialRep;
 	private final PetEffectRepository petEffectRep;
-	
+	private final FilePath filePath;
 	@Override
 	public boolean existsByKakaoId(String kakaoId) {
 		return usersRep.existsByKakaoId(kakaoId);
@@ -96,8 +98,11 @@ public class UsersServiceImpl implements UsersService {
 			signUpPetReq.setPetSno(petSno);
 			
 			Target target = targetRep.findByTargetNo(signUpPetReq.getTargetNo());
-			if (!(images == null))
+			logger.info("---펫 저장 시작---");
+			if (!(images.isEmpty())) {
+				logger.info("----이미지 넣기 ----");
 				fileUpload.petsImageUpload(images, signUpPetReq);
+			}
 			Pet pet = signUpPetReq.transforPet(users, target);
 			petRepository.saveAndFlush(pet);
 			logger.info("---펫 저장 끝---");
@@ -152,6 +157,14 @@ public class UsersServiceImpl implements UsersService {
 		usersLog.updateuUserDeletedAt(new Date());
 		usersLogRep.save(usersLog);
 		
+	}
+
+	/* 마이페이지 */
+	@Override
+	public MyPageRes myPageInfo(String usersSno) {
+		Users users = usersRep.findAndPetsByUsersSno(usersSno);
+		MyPageRes myPageRes = new MyPageRes(users, filePath.getPetImageLoadPath());
+		return myPageRes;
 	}
 	
 	
