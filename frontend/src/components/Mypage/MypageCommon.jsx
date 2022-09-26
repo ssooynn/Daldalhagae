@@ -165,3 +165,21 @@ export const ImgDiv = styled(animated.div)`
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.48);
 `
+
+export const RatingBox = styled.div`
+margin: 0 auto;
+
+& svg {
+  color: #C4C4C4;
+  cursor: pointer;
+}
+:hover svg {
+  color: black;
+}
+& svg:hover ~ svg {
+  color: #C4C4C4;
+}
+.black {
+  color: black;
+}
+`
