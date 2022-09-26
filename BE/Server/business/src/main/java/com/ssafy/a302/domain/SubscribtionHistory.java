@@ -4,16 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.*;
 
@@ -44,13 +35,13 @@ public class SubscribtionHistory {
 	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
 	private List<Purchase> purchases = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
-	private List<ServiceReview> serviceReviews = new ArrayList<>();
+	@OneToOne(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
+	private ServiceReview serviceReview;
 
-	@OneToMany(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
-	private List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions = new ArrayList<>();
+	@OneToOne(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
+	private SubscribtionHistorySubscribtion subscribtionHistorySubscribtion;
 	@Builder
-	public SubscribtionHistory(int subscribtionHistoryNo, Date startDate, Date endDate, int autoPaymentFlag, Users users, Pet pet, List<Purchase> purchases, List<ServiceReview> serviceReviews, List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions) {
+	public SubscribtionHistory(int subscribtionHistoryNo, Date startDate, Date endDate, int autoPaymentFlag, Users users, Pet pet, List<Purchase> purchases, ServiceReview serviceReview, SubscribtionHistorySubscribtion subscribtionHistorySubscribtion) {
 		this.subscribtionHistoryNo = subscribtionHistoryNo;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -58,7 +49,8 @@ public class SubscribtionHistory {
 		this.users = users;
 		this.pet = pet;
 		this.purchases = purchases;
-		this.serviceReviews = serviceReviews;
-		this.subscribtionHistorySubscribtions = subscribtionHistorySubscribtions;
+		this.serviceReview = serviceReview;
+		this.subscribtionHistorySubscribtion = subscribtionHistorySubscribtion;
 	}
+
 }

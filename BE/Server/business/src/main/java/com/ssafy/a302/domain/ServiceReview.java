@@ -1,23 +1,11 @@
 package com.ssafy.a302.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Table(name = "SERVICE_REVIEW")
 public class ServiceReview {
@@ -36,7 +24,17 @@ public class ServiceReview {
 	@JoinColumn(name = "USERS_SNO")
 	private Users users;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
+
+	@Builder
+	public ServiceReview(int serviceReviewNo, int rate, String content, String image, Users users, SubscribtionHistory subscribtionHistory) {
+		this.serviceReviewNo = serviceReviewNo;
+		this.rate = rate;
+		this.content = content;
+		this.image = image;
+		this.users = users;
+		this.subscribtionHistory = subscribtionHistory;
+	}
 }

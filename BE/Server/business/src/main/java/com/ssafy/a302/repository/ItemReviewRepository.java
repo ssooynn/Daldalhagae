@@ -14,4 +14,5 @@ public interface ItemReviewRepository extends JpaRepository<ItemReview,Integer>,
     ItemReview findByItemReviewNo(@Param("itemReviewNo") int itemReviewNo);
 
     List<ItemReview> findByUsers_UsersSno(@Param("usersSno")String usersSno);
+    List<ItemReview> findByItemSno(@Param("itemSno")String itemSno);
 }

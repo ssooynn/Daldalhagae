@@ -20,14 +20,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Table(name = "SNACK")
-public class Snack {
+public class Snack extends Item{
 	@Id
 	@Column(name="SNACK_SNO")
 	private String snackSno;
-	@Column(name="NAME")
-	private String name;
-	@Column(name="IMAGE")
-	private String image;
+	//Item에서상속
+//	@Column(name="NAME")
+//	private String name;
+//	@Column(name="IMAGE")
+//	private String image;
 	
 	@OneToMany(mappedBy = "snack", fetch = FetchType.LAZY)
 	private List<SnackEffect> snackEffects = new ArrayList<>();
