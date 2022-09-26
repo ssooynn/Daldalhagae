@@ -43,17 +43,19 @@ public class SubscribeController {
 	}
 
 
+
+
 	@GetMapping("/detail/{usersSno}")
 	public SubDetailRes detail(@PathVariable("usersSno") String userId) {
 		
 		return subscribtionService.subDetail(userId);
+	}
 
 	@ApiOperation(value = "구독 취소하기")
 	@PatchMapping("/{subId}") // 수정 예정
 	public String updateSubInfoAsCanceled(@PathVariable("subId") int subId){
 		subscriptionServiceImpl.updateSubInfoAsCanceled(subId);
 		return "updated";
-
 	}
 
 }
