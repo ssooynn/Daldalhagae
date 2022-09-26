@@ -50,7 +50,53 @@ const SubscribeList = () => {
     Navigate("/subscribeDetail", {
       state: {
         name: 'Basic Package',
-        components: '사료 1개월',
+        component: '사료 1개월',
+        components: ['사료 1개월 분 (10~15kg)', '', '',],
+        price: '21900'
+      }})
+  }
+  function GoPlay() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Play Package',
+        component: '간식 3종 + 장난감 2종',
+        components: ['', '간식 3종', '장난감 2종'],
+        price: '40000'
+      }})
+  }
+  function GoAllInOne() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'All In One Package',
+        component: '사료 1개월 + 간식 3종 + 장난감 2종',
+        components: ['사료 1개월 분 (10~15kg)', '간식 3종', '장난감 2종',],
+        price: '21900'
+      }})
+  }
+  function GoDalDal() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'DalDal Package',
+        component: '사료 1개월 + 간식 3종',
+        components: ['사료 1개월 분 (10~15kg)', '간식 3종', '',],
+        price: '21900'
+      }})
+  }
+  function GoToy() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Toy Package',
+        component: '사료 1개월 + 장난감 2종',
+        components: ['사료 1개월 분 (10~15kg)', '', '장난감 2종',],
+        price: '21900'
+      }})
+  }
+  function GoLightAll() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Light All Package',
+        component: '사료 1개월 + 간식 1종 + 장난감 1종',
+        components: ['사료 1개월 분 (10~15kg)', '간식 1종', '장난감 1종',],
         price: '21900'
       }})
   }
@@ -71,6 +117,7 @@ const SubscribeList = () => {
         backgroundImage: `url(${imgA})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
         // filter: 'brightness(40%)',
         display: 'flex',
         flexDirection: 'column',
@@ -134,7 +181,7 @@ const SubscribeList = () => {
             marginBottom: '15rem',
             height: '400px'
           }}>
-          <MoveDetailButton2>
+          <MoveDetailButton2 onClick={GoPlay}>
             <div
               style={{
                 display: 'flex',
@@ -184,7 +231,7 @@ const SubscribeList = () => {
             style={{
               width: '100%',
             }} alt="" />
-          <MoveDetailButton1>
+          <MoveDetailButton1 onClick={GoAllInOne}>
             <div
               style={{
                 display: 'flex',
@@ -224,21 +271,21 @@ const SubscribeList = () => {
             display: 'flex',
             justifyContent: 'space-between',
           }}>
-          <MoveOtherOpions>
+          <MoveOtherOpions onClick={GoDalDal}>
             <img
               src={daldalPackage}
               style={{width: '95%', opacity: '0.9'}}alt="" />
             <h4>DalDal Package</h4>
             <p>[사료 1개월 + 간식 3종]</p>
           </MoveOtherOpions>
-          <MoveOtherOpions>
+          <MoveOtherOpions onClick={GoToy}>
             <img
               src={toyPackage}
               style={{width: '95%', opacity: '0.9'}}alt="" />
             <h4>Toy Package</h4>
             <p>[사료 1개월 + 장난감 2종]</p>
           </MoveOtherOpions>
-          <MoveOtherOpions>
+          <MoveOtherOpions onClick={GoLightAll}>
             <img
               src={lightPackage}
               style={{width: '95%', opacity: '0.9'}}alt="" />
