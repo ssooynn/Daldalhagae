@@ -11,7 +11,7 @@ import { FlexBox } from "../components/MainComponent";
 import SignupPost from "../components/SignupPost";
 
 
-  const SignupBox = styled.div`
+const SignupBox = styled.div`
     width: 30%;
     height: auto;
     padding: 30px 30px 20px 30px;
