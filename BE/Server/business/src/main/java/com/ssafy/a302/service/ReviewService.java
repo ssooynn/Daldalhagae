@@ -1,6 +1,8 @@
 package com.ssafy.a302.service;
 
 import com.netflix.discovery.converters.Auto;
+import com.ssafy.a302.common.FilePath;
+import com.ssafy.a302.common.FileUpload;
 import com.ssafy.a302.domain.*;
 import com.ssafy.a302.dto.ItemReviewDto;
 import com.ssafy.a302.repository.*;
@@ -10,16 +12,20 @@ import com.ssafy.a302.response.ItemReviewRes;
 import com.ssafy.a302.response.MyReviewRes;
 import com.ssafy.a302.response.PurchaseRes;
 import com.ssafy.a302.response.UnratedSubscriptionRes;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewService {
     @Autowired
     ItemReviewRepository itemReviewRepository;
@@ -39,6 +45,8 @@ public class ReviewService {
     SnackRepository snackRepository;
     @Autowired
     SubscribtionHistoryRepository subscribtionHistoryRepository;
+
+    private final FileUpload fileUpload;
 
     /*상품 리뷰 조회: 리뷰pk */
     public ItemReview findByItemReviewNo(int itemReviewNo) {
@@ -85,7 +93,7 @@ public class ReviewService {
             myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
             myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
             myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
-            myReviewRes.setServiceReviewRegDate(new Date());//todo:필드추가필요.
+            myReviewRes.setServiceReviewRegDate(subscribtionHistory.getServiceReview().getRegDate());
             //아이템리뷰dto
             List<ItemReviewRes> itemReviewResList= new ArrayList<>();
             for(Purchase purchase:subscribtionHistory.getPurchases()){
@@ -103,25 +111,11 @@ public class ReviewService {
 
 
     //
-    public Integer saveReview(ServiceReviewReq serviceReviewReq) {
+    @Transactional
+    public boolean saveReview(ServiceReviewReq serviceReviewReq ,MultipartFile file) throws IOException {
         //getOne vs findById
-
-//        Purchase purchase = purchaseRepository.findById(itemReviewReq.getPurchaseNo()).orElse(null);;
-//        Users users = usersRepository.findById(itemReviewReq.getUserSno()).get();
-//        Pet pet = petRepository.findById(itemReviewReq.getPetSno()).get();
-
         SubscribtionHistory subscribtionHistory= subscribtionHistoryRepository.findById(serviceReviewReq.getSubscriptionNo()).get();
-        //serviceReview 저장
-        ServiceReview serviceReview = ServiceReview.builder()
-                .serviceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo())
-                .users(subscribtionHistory.getUsers())
-                .rate(serviceReviewReq.getServiceReviewRate())
-                .image(serviceReviewReq.getServiceReviewImage())
-                .content(serviceReviewReq.getServiceReviewContent())
-                .subscribtionHistory(subscribtionHistory)
-                .build();
-        serviceReviewRepository.save(serviceReview);
-
+        List<ItemReview> itemReviewList=new ArrayList<>();
         //itemReview 저장
         for(ItemReviewReq itemReviewReq:serviceReviewReq.getItemReviewReqList()){
             ItemReview itemReview = ItemReview.builder()
@@ -131,11 +125,29 @@ public class ReviewService {
                     .purchase(purchaseRepository.findById(itemReviewReq.getPurchaseNo()).get())
                     .users(subscribtionHistory.getUsers())
                     .pet(subscribtionHistory.getPet())
-                    .image(".")//s3 저장후 링크url
+                    .image(".")//아이템리뷰 사진 사용하지 않음.
                     .build();
             itemReviewRepository.save(itemReview);
         }
-        return null;
+        //리뷰이미지저장.
+        fileUpload.reviewImageUpload(file,serviceReviewReq);
+        //serviceReview 저장
+        ServiceReview serviceReview = ServiceReview.builder()
+                .serviceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo())
+                .users(subscribtionHistory.getUsers())
+                .rate(serviceReviewReq.getServiceReviewRate())
+                .image(serviceReviewReq.getServiceReviewImage())
+                .content(serviceReviewReq.getServiceReviewContent())
+                .subscribtionHistory(subscribtionHistory)
+                .image(serviceReviewReq.getServiceReviewImage())
+                .build();
+
+
+        serviceReviewRepository.save(serviceReview);
+
+
+
+        return true;
     }
     public List<UnratedSubscriptionRes> getUnratedSubscription(String usersSno){
         List<SubscribtionHistory> subscribtionHistories = subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);

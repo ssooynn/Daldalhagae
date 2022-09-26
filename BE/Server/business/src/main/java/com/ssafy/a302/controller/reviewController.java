@@ -35,8 +35,9 @@ public class reviewController {
     /*리뷰 등록 API*/
     @ApiOperation(value = "리뷰작성",notes = "리뷰를 등록합니다. ")
     @PostMapping("/")
-    public ResponseEntity<?> post(@RequestPart(name = "이미지파일배열",required = false) List<MultipartFile> files,
+    public ResponseEntity<?> post(@RequestPart(name = "리뷰이미지파일",required = false) MultipartFile file ,
                                   @RequestBody ServiceReviewReq serviceReviewReq) {
+
        return new ResponseEntity("성공",HttpStatus.OK);
     }
 
