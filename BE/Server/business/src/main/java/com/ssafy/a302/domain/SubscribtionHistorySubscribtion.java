@@ -24,9 +24,13 @@ public class SubscribtionHistorySubscribtion {
 	@JoinColumn(name="SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_NO")
 	private Subscribtion subscribtion;
 
 
+    public SubscribtionHistorySubscribtion(SubscribtionHistory subscriptionHistory, Subscribtion subscription) {
+		this.subscribtionHistory = subscriptionHistory;
+		this.subscribtion = subscription;
+    }
 }

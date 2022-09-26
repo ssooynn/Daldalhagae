@@ -33,5 +33,10 @@ public class SubscribtionProductType {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_NO")
 	private Subscribtion subscribtion;
-	
+
+    public SubscribtionProductType(ProductType productType, Subscribtion subscribtion) {
+		this.productType = productType;
+		this.subscribtion = subscribtion;
+    }
+
 }
