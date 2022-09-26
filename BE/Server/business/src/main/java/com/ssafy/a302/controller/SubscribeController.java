@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import com.ssafy.a302.response.PetRes;
 import com.ssafy.a302.response.SubDetailRes;
@@ -40,10 +42,18 @@ public class SubscribeController {
 		return subscriptionServiceImpl.getSubInfo(userId, 1);
 	}
 
+
 	@GetMapping("/detail/{usersSno}")
 	public SubDetailRes detail(@PathVariable("usersSno") String userId) {
 		
 		return subscribtionService.subDetail(userId);
+
+	@ApiOperation(value = "구독 취소하기")
+	@PatchMapping("/{subId}") // 수정 예정
+	public String updateSubInfoAsCanceled(@PathVariable("subId") int subId){
+		subscriptionServiceImpl.updateSubInfoAsCanceled(subId);
+		return "updated";
+
 	}
 
 }
