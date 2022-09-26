@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.ssafy.a302.domain.ServiceReview;
+import com.ssafy.a302.request.ServiceReviewReq;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,10 +57,9 @@ public class FileUpload {
 			pet.setImage(uniqueName);
 			return true;
 		}
-
 		return false;
-
 	}
+
 	
 	/* 펫 이미지 수정 */
 	public boolean petImageUpdate(String preImage, MultipartFile image, SignUpPetReq pet)
@@ -95,5 +96,22 @@ public class FileUpload {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String str = sdf.format(d);
 		return str;
+	}
+	/*리뷰 이미지 저장*/
+	public boolean reviewImageUpload(MultipartFile image, ServiceReviewReq review) throws IllegalStateException, IOException {
+		File folder = new File(filePath.getReviewImageUploadPath());
+
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+
+		if (image.getOriginalFilename().equals(review.getServiceReviewImage())) {
+			String getImageName = image.getOriginalFilename();
+			String uniqueName = getUniqueFileName(getImageName);
+			image.transferTo(new File(filePath.getPetImageUploadPath() + "/" + uniqueName));
+			review.setServiceReviewImage(uniqueName);
+			return true;
+		}
+		return false;
 	}
 }
