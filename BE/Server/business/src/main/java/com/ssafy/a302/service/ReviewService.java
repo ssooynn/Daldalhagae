@@ -22,12 +22,13 @@ public class ReviewService {
     @Autowired
     ItemReviewRepository itemReviewRepository;
     @Autowired
+    ServiceReviewRepository serviceReviewRepository;
+    @Autowired
     UsersRepository usersRepository;
     @Autowired
     PurchaseRepository purchaseRepository;
     @Autowired
     PetRepository petRepository;
-
     @Autowired
     FeedRepository feedRepository;
     @Autowired
@@ -37,22 +38,33 @@ public class ReviewService {
     @Autowired
     SubscribtionHistoryRepository subscribtionHistoryRepository;
 
-    /*pk조회. */
+    /*상품 리뷰 조회: 리뷰pk */
     public ItemReview findByItemReviewNo(int itemReviewNo) {
         return itemReviewRepository.findByItemReviewNo(itemReviewNo);
     }
+    /*상품리뷰목록 조회: 상품번호*/
+    public  List<ItemReviewRes> findByItemSno(String itemSno){
+        List<ItemReview> itemReviews = itemReviewRepository.findByItemSno(itemSno);
+        List<ItemReviewRes> itemReviewResList = new ArrayList<>();
+        for(ItemReview itemreview :itemReviews){
+            ItemReviewRes itemReviewRes = itemreview.toItemReviewRes();
+            Item item = getItem(itemreview.getItemSno());
+            itemReviewRes.setItemName(item.getName());
+            itemReviewResList.add(itemReviewRes);
+        }
+        return itemReviewResList;
+    }
 
-    /*상품리뷰 조회 :item 따로조회해서 dto에넣어주기.*/
+    /*상품리뷰목록 조회: 유저번호*/
     public List<ItemReviewRes> findByUsersSno(String usersSno) {
         List<ItemReview> itemReviews= itemReviewRepository.findByUsers_UsersSno(usersSno);
         List<ItemReviewRes> itemReviewResList = new ArrayList<>();
         //dto build
-        for(ItemReview review :itemReviews){
-            ItemReviewRes itemReviewRes = new ItemReviewRes();
-            if(review.getItemSno().startsWith("f")){
-
-            }
-
+        for(ItemReview itemreview :itemReviews){
+            ItemReviewRes itemReviewRes = itemreview.toItemReviewRes();
+            Item item = getItem(itemreview.getItemSno());
+            itemReviewRes.setItemName(item.getName());
+            itemReviewResList.add(itemReviewRes);
         }
         return itemReviewResList;
     }
@@ -76,26 +88,15 @@ public class ReviewService {
             List<ItemReviewRes> itemReviewResList= new ArrayList<>();
             for(Purchase purchase:subscribtionHistory.getPurchases()){
                 ItemReview itemReview =purchase.getItemReview();
-                ItemReviewRes itemReviewRes = new ItemReviewRes();
-                itemReviewRes.setItemReviewNo(itemReview.getItemReviewNo());
-                itemReviewRes.setItemSno(itemReview.getItemSno());
+                ItemReviewRes itemReviewRes = itemReview.toItemReviewRes();
                 //엔티티 내에 getItem 구현.
                 itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
-                itemReviewRes.setRate(itemReview.getRate());
-                itemReviewRes.setContent(itemReview.getContent());
-                itemReviewRes.setImage(itemReview.getImage());
-                itemReviewRes.setUsersSno(subscribtionHistory.getUsers().getUsersSno());
-                itemReviewRes.setUsersName(subscribtionHistory.getUsers().getName());
-                itemReviewRes.setPetSno(subscribtionHistory.getPet().getPetSno());
-                itemReviewRes.setPetName(subscribtionHistory.getPet().getName());
-
                 itemReviewResList.add(itemReviewRes);
             }
             myReviewRes.setItemReviewResList(itemReviewResList);
             myReviewList.add(myReviewRes);
         }
         return myReviewList;
-
     }
 
     //
@@ -108,7 +109,15 @@ public class ReviewService {
 
         SubscribtionHistory subscribtionHistory= subscribtionHistoryRepository.findById(serviceReviewReq.getSubscriptionNo()).get();
         //serviceReview 저장
-        subscribtionHistory.getServiceReview();
+        ServiceReview serviceReview = ServiceReview.builder()
+                .serviceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo())
+                .users(subscribtionHistory.getUsers())
+                .rate(serviceReviewReq.getServiceReviewRate())
+                .image(serviceReviewReq.getServiceReviewImage())
+                .content(serviceReviewReq.getServiceReviewContent())
+                .subscribtionHistory(subscribtionHistory)
+                .build();
+        serviceReviewRepository.save(serviceReview);
 
         //itemReview 저장
         for(ItemReviewReq itemReviewReq:serviceReviewReq.getItemReviewReqList()){
@@ -130,7 +139,7 @@ public class ReviewService {
             return feedRepository.findById(itemSno).get();
         }else if (itemSno.startsWith("s")){
             return snackRepository.findById(itemSno).get();
-        }else if (itemSno.startsWith("t")){
+        }else if (itemSno.startsWith("T")){
             return toyRepository.findById(itemSno).get();
         }
         return null;
