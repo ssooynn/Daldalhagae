@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SUBSCRIBTION")
 public class Subscribtion {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SUBSCRIBTION_NO")
 	private int subscribtionNo;
 	@Column(name = "NAME")

@@ -14,7 +14,7 @@ import lombok.*;
 @Table(name = "SUBSCRIBTION_HISTORY")
 public class SubscribtionHistory {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="SUBSCRIBTION_HISTORY_NO")
 	private int subscribtionHistoryNo;
 	@Column(name="START_DATE")

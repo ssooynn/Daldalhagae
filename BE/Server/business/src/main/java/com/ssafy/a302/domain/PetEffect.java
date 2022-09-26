@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "PET_EFFECT")
 public class PetEffect {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PET_EFFECT_NO")
 	private int petEffectNo;
 	
