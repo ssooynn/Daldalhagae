@@ -3,7 +3,9 @@ package com.ssafy.a302.domain;
 import javax.persistence.*;
 
 import com.ssafy.a302.repository.FeedRepository;
+import com.ssafy.a302.response.ItemReviewRes;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -46,5 +48,20 @@ public class ItemReview {
 		this.users = users;
 		this.purchase = purchase;
 		this.pet = pet;
+	}
+
+	public ItemReviewRes toItemReviewRes(){
+		ItemReviewRes itemReviewRes = new ItemReviewRes();
+		itemReviewRes.setItemReviewNo(this.itemReviewNo);
+		itemReviewRes.setItemSno(this.itemSno);
+//		itemReviewRes.setItemName(); 여긴 서비스에서 넣어줘야함.
+		itemReviewRes.setRate(this.rate);
+		itemReviewRes.setContent(this.content);
+		itemReviewRes.setImage(this.image);
+		itemReviewRes.setUsersSno(this.users.getUsersSno());
+		itemReviewRes.setUsersName(this.users.getName());
+		itemReviewRes.setPetSno(this.pet.getPetSno());
+		itemReviewRes.setPetName(this.pet.getName());
+		return itemReviewRes;
 	}
 }
