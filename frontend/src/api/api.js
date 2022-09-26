@@ -11,4 +11,5 @@ export const apiAuth = axios.create({
   headers: { Authorization: `accessToken` },
 });
 
+
 export {axios};

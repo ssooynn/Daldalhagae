@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { FlexBox, MainContent } from "../components/MainComponent";
 import Signup1 from "../assets/img/Signup1.png";
 import Signup2 from "../assets/img/Signup2.png";
@@ -11,10 +11,10 @@ import SignupPet from "./SignupPet";
 import SignupRegisterPet from "./SignupRegisterPet";
 
 import { useEffect } from "react";
-import styled from "styled-components";
-import { StyledText } from "../components/CommonComponent";
 
 export default function Signup() {
+  const location=useLocation();
+  const [code, ] = useState(location.state)
   const [step, setStep] = useState(1);
   const [user, setUser] = useState({
     name: "",
@@ -33,9 +33,8 @@ export default function Signup() {
     // effects:[],
     // fat:""}
   ]);
-  useEffect(() => {
-    console.log(user);
-  }, [step]);
+  
+
   return (
     <MainContent height="90%" style={{ marginTop: "100px" }}>
       {step === 1 && <img src={Signup1} alt="약관동의 단계" />}
@@ -57,7 +56,7 @@ export default function Signup() {
         <Route
           path="signupPet"
           element={
-            <SignupPet setStep={setStep} pets={pets} setPets={setPets} />
+            <SignupPet setStep={setStep} pets={pets} setPets={setPets} user={user} code={code}/>
           }
         />
 

@@ -11,7 +11,7 @@ import { FlexBox } from "../components/MainComponent";
 import SignupPost from "../components/SignupPost";
 
 
-  const SignupBox = styled.div`
+const SignupBox = styled.div`
     width: 30%;
     height: auto;
     padding: 30px 30px 20px 30px;
@@ -117,7 +117,7 @@ const SignupUser = (props) => {
           <StyledText size="16px" weight="400">
             이메일
           </StyledText>
-          <StyledInput
+          <StyledInput type="email"
             onChange={(e) => {
               setEmail(e.target.value);
               console.log(email);

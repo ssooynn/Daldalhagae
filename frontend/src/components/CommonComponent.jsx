@@ -214,7 +214,7 @@ export function StyledText({ children, weight, color, size, margin, ...props }) 
 
 const InputStyled = styled.input`
   height: ${(props) => props.height || "auto"};
-  width: ${(props) => props.width || "250px"};
+  width: ${(props) => props.width || "220px"};
   border: ${(props) => props.border || "1px solid #969696"};
   padding: ${(props) => props.padding || "12px 10px"};
   margin: ${(props) => props.margin || "3px 5px"};
