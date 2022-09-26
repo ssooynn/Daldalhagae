@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface SubscribtionHistoryRepository extends JpaRepository<SubscribtionHistory,Integer> {
     List<SubscribtionHistory> findByUsers_UsersSno(@Param("usersSno")String usersSno);
-
 }

@@ -8,6 +8,8 @@ import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.ServiceReviewReq;
 import com.ssafy.a302.response.ItemReviewRes;
 import com.ssafy.a302.response.MyReviewRes;
+import com.ssafy.a302.response.PurchaseRes;
+import com.ssafy.a302.response.UnratedSubscriptionRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,6 +101,7 @@ public class ReviewService {
         return myReviewList;
     }
 
+
     //
     public Integer saveReview(ServiceReviewReq serviceReviewReq) {
         //getOne vs findById
@@ -134,6 +137,28 @@ public class ReviewService {
         }
         return null;
     }
+    public List<UnratedSubscriptionRes> getUnratedSubscription(String usersSno){
+        List<SubscribtionHistory> subscribtionHistories = subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
+        List<UnratedSubscriptionRes> unratedSubscriptionResList= new ArrayList<>();
+        for(SubscribtionHistory subscribtionHistory:subscribtionHistories){
+            if(subscribtionHistory.getServiceReview()==null){
+                //topurchase
+                List<PurchaseRes> purchaseResList = new ArrayList<>();
+                for(Purchase purchase: subscribtionHistory.getPurchases()){
+                    PurchaseRes purchaseRes = purchase.toPurchaseRes();
+                    purchaseRes.setItemName(getItem(purchase.getItemSno()).getName());
+                    purchaseRes.setItemImg(getItem(purchase.getItemSno()).getImage());
+                    purchaseResList.add(purchaseRes);
+                }
+                UnratedSubscriptionRes unratedSubscriptionRes = new UnratedSubscriptionRes();
+                unratedSubscriptionRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
+                unratedSubscriptionRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
+                unratedSubscriptionRes.setPurchaseResList(purchaseResList);
+                unratedSubscriptionResList.add(unratedSubscriptionRes);
+            }
+        }
+        return unratedSubscriptionResList;
+    }
     public Item getItem(String itemSno){
         if(itemSno.startsWith("f")){
             return feedRepository.findById(itemSno).get();
@@ -144,8 +169,4 @@ public class ReviewService {
         }
         return null;
     }
-
-
-
-
 }

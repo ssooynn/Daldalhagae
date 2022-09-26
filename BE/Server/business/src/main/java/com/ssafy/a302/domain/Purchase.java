@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.ssafy.a302.response.PurchaseRes;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,13 @@ public class Purchase {
 	
 	@OneToOne(mappedBy = "purchase", fetch = FetchType.LAZY)
 	private ItemReview itemReview;
+
+	public PurchaseRes toPurchaseRes(){
+		PurchaseRes purchaseRes=new PurchaseRes();
+		purchaseRes.setPurchaseNo(this.purchaseNo);
+		purchaseRes.setItemSno(this.itemSno);
+		purchaseRes.setRefundDate(this.refundDate);
+		return purchaseRes;
+	}
+
 }

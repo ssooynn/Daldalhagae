@@ -7,6 +7,7 @@ import com.ssafy.a302.request.ServiceReviewReq;
 import com.ssafy.a302.request.SignUpReq;
 import com.ssafy.a302.response.ItemReviewRes;
 import com.ssafy.a302.response.MyReviewRes;
+import com.ssafy.a302.response.UnratedSubscriptionRes;
 import com.ssafy.a302.service.ReviewService;
 import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
@@ -58,6 +59,12 @@ public class reviewController {
     public ResponseEntity<List<MyReviewRes>> getMyReviews(@PathVariable("usersSno") String usersSno) {
         List<MyReviewRes> myReviewList = reviewService.getMyReviews(usersSno);
         return new ResponseEntity(myReviewList, HttpStatus.OK);
+    }
+    @ApiOperation(value = "리뷰 미작성 구독 조회",notes = "리뷰 .")
+    @GetMapping("/unrated/{usersSno}")
+    public ResponseEntity<?> getUnrated(@PathVariable("usersSno") String usersSno) {
+        List<UnratedSubscriptionRes> unratedSubscriptionResList = reviewService.getUnratedSubscription(usersSno);
+        return new ResponseEntity(unratedSubscriptionResList, HttpStatus.OK);
     }
 
 
