@@ -117,7 +117,7 @@ const SignupUser = (props) => {
           <StyledText size="16px" weight="400">
             이메일
           </StyledText>
-          <StyledInput
+          <StyledInput type="email"
             onChange={(e) => {
               setEmail(e.target.value);
               console.log(email);
