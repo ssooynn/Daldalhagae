@@ -8,21 +8,19 @@ import com.ssafy.a302.dto.ItemReviewDto;
 import com.ssafy.a302.repository.*;
 import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.ServiceReviewReq;
-import com.ssafy.a302.response.ItemReviewRes;
-import com.ssafy.a302.response.MyReviewRes;
-import com.ssafy.a302.response.PurchaseRes;
-import com.ssafy.a302.response.UnratedSubscriptionRes;
+import com.ssafy.a302.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.beans.Transient;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -53,16 +51,20 @@ public class ReviewService {
         return itemReviewRepository.findByItemReviewNo(itemReviewNo);
     }
     /*상품리뷰목록 조회: 상품번호*/
-    public  List<ItemReviewRes> findByItemSno(String itemSno){
-        List<ItemReview> itemReviews = itemReviewRepository.findByItemSno(itemSno);
+    public  ItemReviewPageRes findByItemSno(String itemSno, PageRequest pageRequest){
+        Page<ItemReview> pages = itemReviewRepository.findPageByItemSno(itemSno,pageRequest);
         List<ItemReviewRes> itemReviewResList = new ArrayList<>();
-        for(ItemReview itemreview :itemReviews){
+        ItemReviewPageRes res= new ItemReviewPageRes(pages);
+
+        for(ItemReview itemreview :pages.getContent()){
             ItemReviewRes itemReviewRes = itemreview.toItemReviewRes();
             Item item = getItem(itemreview.getItemSno());
             itemReviewRes.setItemName(item.getName());
             itemReviewResList.add(itemReviewRes);
         }
-        return itemReviewResList;
+        res.setReviewList(itemReviewResList);
+
+        return res;
     }
 
     /*상품리뷰목록 조회: 유저번호*/

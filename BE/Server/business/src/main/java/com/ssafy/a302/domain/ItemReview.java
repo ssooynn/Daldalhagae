@@ -7,6 +7,8 @@ import com.ssafy.a302.response.ItemReviewRes;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -24,6 +26,9 @@ public class ItemReview {
 	private String content;
 	@Column(name = "IMAGE")
 	private String image;
+	@Column(name = "CREATED_AT")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Date date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERS_SNO")
@@ -36,6 +41,7 @@ public class ItemReview {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
+
 
 
 	@Builder
@@ -62,6 +68,7 @@ public class ItemReview {
 		itemReviewRes.setUsersName(this.users.getName());
 		itemReviewRes.setPetSno(this.pet.getPetSno());
 		itemReviewRes.setPetName(this.pet.getName());
+		itemReviewRes.setDate(this.date);
 		return itemReviewRes;
 	}
 }

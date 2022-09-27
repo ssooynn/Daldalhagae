@@ -31,6 +31,7 @@ public class ServiceReview {
 	private SubscribtionHistory subscribtionHistory;
 
 	@Column(name="REG_DATE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Date regDate;
 
 	@Builder
