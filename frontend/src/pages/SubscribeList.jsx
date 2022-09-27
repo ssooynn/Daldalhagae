@@ -50,17 +50,19 @@ const SubscribeList = () => {
     Navigate("/subscribeDetail", {
       state: {
         name: 'Basic Package',
-        component: '사료 1개월',
-        components: ['사료 1개월 분 (10~15kg)', '', '',],
-        price: '21900'
+        intro: '사료 1개월',
+        components1: ['사료 1개월 분 (10~15kg)', '', '',],
+        components2: [1, 0, 0],
+        price: '21900',
       }})
   }
   function GoPlay() {
     Navigate("/subscribeDetail", {
       state: {
         name: 'Play Package',
-        component: '간식 3종 + 장난감 2종',
-        components: ['', '간식 3종', '장난감 2종'],
+        intro: '간식 3종 + 장난감 2종',
+        components1: ['', '간식 3종', '장난감 2종'],
+        components2: [0, 3, 2],
         price: '40000'
       }})
   }
@@ -68,36 +70,40 @@ const SubscribeList = () => {
     Navigate("/subscribeDetail", {
       state: {
         name: 'All In One Package',
-        component: '사료 1개월 + 간식 3종 + 장난감 2종',
-        components: ['사료 1개월 분 (10~15kg)', '간식 3종', '장난감 2종',],
-        price: '21900'
+        intro: '사료 1개월 + 간식 3종 + 장난감 2종',
+        components1: ['사료 1개월 분 (10~15kg)', '간식 3종', '장난감 2종',],
+        components2: [1, 3, 2],
+        price: '22900'
       }})
   }
   function GoDalDal() {
     Navigate("/subscribeDetail", {
       state: {
         name: 'DalDal Package',
-        component: '사료 1개월 + 간식 3종',
-        components: ['사료 1개월 분 (10~15kg)', '간식 3종', '',],
-        price: '21900'
+        intro: '사료 1개월 + 간식 3종',
+        components1: ['사료 1개월 분 (10~15kg)', '간식 3종', '',],
+        components2: [1, 3, 0],
+        price: '23900'
       }})
   }
   function GoToy() {
     Navigate("/subscribeDetail", {
       state: {
         name: 'Toy Package',
-        component: '사료 1개월 + 장난감 2종',
-        components: ['사료 1개월 분 (10~15kg)', '', '장난감 2종',],
-        price: '21900'
+        intro: '사료 1개월 + 장난감 2종',
+        components1: ['사료 1개월 분 (10~15kg)', '', '장난감 2종',],
+        components2: [1, 0, 2],
+        price: '24900'
       }})
   }
   function GoLightAll() {
     Navigate("/subscribeDetail", {
       state: {
         name: 'Light All Package',
-        component: '사료 1개월 + 간식 1종 + 장난감 1종',
-        components: ['사료 1개월 분 (10~15kg)', '간식 1종', '장난감 1종',],
-        price: '21900'
+        intro: '사료 1개월 + 간식 1종 + 장난감 1종',
+        components1: ['사료 1개월 분 (10~15kg)', '간식 1종', '장난감 1종',],
+        components2: [1, 1, 1],
+        price: '25900'
       }})
   }
   function GoCustom() {
