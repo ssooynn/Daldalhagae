@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "FEED_EFFECT")
 public class FeedEffect {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FEED_EFFECT_NO")
 	private int feedEffectNo;
 	

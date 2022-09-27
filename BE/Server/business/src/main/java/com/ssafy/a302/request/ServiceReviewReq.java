@@ -1,5 +1,6 @@
 package com.ssafy.a302.request;
 
+import com.ssafy.a302.domain.ServiceReview;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
