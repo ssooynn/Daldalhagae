@@ -54,3 +54,69 @@
   border-radius: 5px;
 
 }
+
+/* 임의의 영역 생성 */
+.scrollBar{
+  height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding:5%;
+}
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.scrollBar::-webkit-scrollbar {
+    width: 7px;  /* 스크롤바의 너비 */
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #AC998A; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
+input[type=text]{
+	width:98%;
+	border:2px solid #aaa;
+	border-radius:4px;
+	margin: 4px 2px;
+	outline: none;
+	padding:8px;
+	box-sizing: border-box;
+	transition:.3s;
+}
+
+input[type=text]:focus{
+	border-color: #AC998A;
+	box-shadow:0 0 8px 0 dodgetBlue;
+}
+
+textarea {
+  width:100%;
+  height: 80px;
+	border:2px solid #aaa;
+	border-radius:4px;
+	margin: 8px auto;
+	outline: none;
+	padding:8px;
+	box-sizing: border-box;
+	transition:.3s;
+  resize: none;
+}
+
+textarea:focus{
+	border-color: #AC998A;
+	box-shadow:0 0 8px 0 dodgetBlue;
+}
+
+.input-file-button{
+  padding: 6px 25px;
+  background-color:#FF6600;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}

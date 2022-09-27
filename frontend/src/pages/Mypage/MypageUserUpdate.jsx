@@ -5,23 +5,38 @@ import '../../components/Mypage/MypageStyle.css'
 import { isEmail } from '../../util/EmailCheck'
 import { nameCheck } from '../../util/NameCheck'
 import { telCheck } from '../../util/PhoneNoCheck'
+import { userInfo, userEdit } from '../../api/mypageUser' 
+import Swal from 'sweetalert2'
+
 
 const MypageUserUpdate = () => {
   // redux에서 아이디 꺼내서 
-  const [user, setUser] = useState({
-    usersSno : 'adsfasdf',
-    kakaoId : 'adsfdsf',
-    email: 'email@gmail.com',
-    name: '김김김',
-    phone: '010-9123-2423',
-    address: '광교호수공원로 277;1110-1299048;01678' 
-    })
-  console.log(user)
-  const parseAddress = user.address.split(';')
+  const [user, setUser] = useState({})
+  const [parseAddress, setParseAddress] = useState([])
   const [fullAddress, setFullAddress] = useState(parseAddress[0])
   const [detailAddress, setDetailAddress] = useState(parseAddress[1])
   const [postZip, setPostZip] = useState(parseAddress[2])
   const [popup, setPopup] = useState(false);
+  const [phoneUpdate, setPhoneUpdate] = useState(0)
+
+  useEffect(()=>{
+    const userSno = 'uXJFRDEC7DuyYasedNxU1'
+    userInfo(userSno)
+    .then((res)=>{
+      setUser(res.data)
+      console.log(res.data)
+      setParseAddress(res.data.address.split(';'))
+    }) .catch((err)=>{
+      console.log(err)
+    })
+  } ,[])
+
+  useEffect(()=>{
+    setFullAddress(parseAddress[0])
+    setDetailAddress(parseAddress[1]?parseAddress[1]:'')
+    setPostZip(parseAddress[2]?parseAddress[2]:'')
+  },[parseAddress])
+
 
   useEffect(()=>{
     const body = document.getElementsByTagName('body')[0];
@@ -35,12 +50,14 @@ const MypageUserUpdate = () => {
 
 
   useEffect(()=>{
-    let autoHyphen = user?.phone.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ; 
+    let autoHyphen = user?.phone?.replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ; 
+    console.log(autoHyphen)
     setUser({
       ...user,
-      phoneNo: autoHyphen
+      phone: autoHyphen?.substr(0,13)
     })
-  }, [user?.phone])
+   
+  }, [phoneUpdate])
 
   useEffect(()=>{
     setUser({
@@ -50,18 +67,16 @@ const MypageUserUpdate = () => {
   }, [fullAddress,detailAddress,postZip])
 
 
-  const handleInput = (e) => {
-
-  }
-
   const handleComplete = (data) => {
     setPopup(!popup);
   }
 
 
   const onInputChange = (e) => {
-    console.log(e)
     const { name, value } = e.target;
+    if (name==='phone'){
+      setPhoneUpdate(phoneUpdate+1)
+    }
     setUser({
       ...user,
       [name]: value,
@@ -71,6 +86,34 @@ const MypageUserUpdate = () => {
   const onDetailAddressChange =  (e) => {
     const {value} = e.target
     setDetailAddress(value)
+  }
+
+  const onSubmit = () => {
+    console.log(user)
+    Swal.fire({
+      padding:'15px',
+      text: "수정 내용을 저장하시겠습니까?",
+      width:'30%',
+      showCancelButton: true,
+      confirmButtonColor: '#E1C4AE',
+      cancelButtonColor: '#BEC3C6',
+      confirmButtonText: '저장하기',
+      cancelButtonText: '취소하기',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        userEdit(user)
+          .then((res)=>{
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "저장성공!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            
+          }).catch((err)=>{console.log(err)})
+      }
+    })
   }
 
   const gridDiv = {
@@ -101,7 +144,7 @@ const MypageUserUpdate = () => {
         </FlexBox>
       </div>
       <StyledInputBox value={user.addressDetail} name='addressDetail' onChange={onDetailAddressChange}></StyledInputBox>
-      <MypageButton padding='12px' fontSize='16px' color='#E6D9D3' margin='35px 0px'>수정 완료</MypageButton>
+      <MypageButton padding='12px' fontSize='16px' color='#E6D9D3' margin='35px 0px' onClick={onSubmit}>수정 완료</MypageButton>
       {popup && <Post setPopup={setPopup} setPostZip={setPostZip} setFullAddress={setFullAddress} setDetailAddress={setDetailAddress}></Post>}
       
     </div>

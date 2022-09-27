@@ -13,7 +13,10 @@ import MypageSubscriptionDetail from './MypageSubscriptionDetail'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
+import { mypageMain } from '../../api/mypageUser'
+
 const Mypage = () => {
+  const userSno = 'uXJFRDEC7DuyYasedNxU1'
   const [userInfo, setUserInfo] = useState({
     user:{
       name:'김김김',
@@ -35,8 +38,12 @@ const Mypage = () => {
 
 // userfetching api: 마이페이지 메인
   useEffect(()=>{
-
-  }, [])
+    mypageMain(userSno).then((res)=>{
+      setUserInfo(res.data)
+      console.log(res.data)  
+    }
+    )
+  },[])
 
   useEffect(()=>{
   }, [currentFocus])

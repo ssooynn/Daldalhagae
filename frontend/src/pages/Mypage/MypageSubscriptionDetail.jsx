@@ -1,13 +1,125 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import SubscriptionItem from '../../components/Mypage/SubscriptionItem'
+import SubscriptionCarousel from './SubscriptionCarousel'
+import { userInfo } from '../../api/mypageUser'
 
 const MypageSubscriptionDetail = () => {
+
+  const [user, setUser] = useState({})
   const location = useLocation()
-  const subscription = location
+  const subscription = location.state
+  // autoPaymentFlag: 1
+  // endDate: 1666137600000
+  // feed: [null]
+  // petName: "초코"
+  // price: 30000
+  // snack: []
+  // startDate: 1663632000000
+  // subscriptionEndDate: 1666137600000
+  // subscriptionName: "Basic Package"
+  // subscriptionNum: 15
+  // subscriptionStartDate: 1663632000000
+  // toy: []
   console.log(subscription)
 
+  useEffect(()=>{
+    const userSno = 'uXJFRDEC7DuyYasedNxU1'
+    userInfo(userSno)
+    .then((res)=>{
+      setUser(res.data)
+      console.log(res.data)
+    }) .catch((err)=>{
+      console.log(err)
+    })
+  } ,[])
+
+  const detailDiv = {
+    backgroundColor:'#FFFDFB',
+    boxSizing: 'border-box',
+    // height:'400px',
+    width:'100%',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    padding:'5%'
+  }
+  
+  const hrStyle = {
+    width : '100%',
+    height : '2.5px',
+    backgroundColor : '#CCAA90',
+    border : '0'
+  }
+  
+  const title ={
+    fontSize:'18px',
+    fontWeight:'500'
+  }
+
+
+  const gridDiv = {
+    display:'grid',
+    gridTemplateColumns:'repeat(4, minmax(0, 1fr))',
+    gap: '2%',
+    marginBottom: '15px',
+    fontSize: '14px'
+  }
+
   return (
-    <div>MypageSubscriptionDetail</div>
+    <div>
+      <SubscriptionItem page='subsDetail' bgImg={subscription.subscriptionName.replaceAll(' ','')} subscription={subscription} reviewConnect={false} isDetail={true}></SubscriptionItem>
+      <div style={detailDiv}>
+        <div style={title}>배송 상품</div>
+          {/* carousel */}
+        <SubscriptionCarousel></SubscriptionCarousel>
+        <div style={title}>구독 정보</div>
+        <hr style={hrStyle}/>
+        {/* grid로 */}
+        <div style={{padding:'10px 15px', marginBottom:'25px'}}>
+          <div style={gridDiv}>
+            <div >대상 반려견</div>
+            <div>{subscription.petName}</div>
+          </div>
+          <div style={gridDiv}>
+            <div >결제금</div>
+            <div>{subscription.price} 원</div>
+          </div>
+          <div style={gridDiv}>
+            <div >시작일</div>
+            <div>{subscription.subscriptionStartDate}</div>
+          </div>
+          <div style={gridDiv}>
+            <div >종료일</div>
+            <div>{subscription.subscriptionEndDate}</div>
+          </div>
+          <div style={gridDiv}>
+            <div >재결제일</div>
+            <div></div>
+          </div>
+        </div>
+       
+
+        <div style={title}>배송 정보</div>
+        <hr style={hrStyle}/>
+        <div style={{padding:'10px 15px', marginBottom:'25px'}}>
+          <div style={gridDiv}>
+            <div >배송지</div>
+            <div>{user?.address?.replaceAll(';', ' ')}</div>
+          </div>
+          <div style={gridDiv}>
+            <div >수령인</div>
+            <div>{user.name}</div>
+          </div>          
+          <div style={gridDiv}>
+            <div >전화번호</div>
+            <div>{user.phone}</div>
+          </div>
+
+
+        </div>
+      </div>  
+    </div>
   )
 }
 
