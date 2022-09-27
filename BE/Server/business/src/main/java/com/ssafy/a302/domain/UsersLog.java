@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "USERS_LOG")
 public class UsersLog {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USERS_LOG_NO")
 	private int userLogNo;
 	@Column(name = "USERS_CREATED_AT")

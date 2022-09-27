@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SUBSCRIBTION_PRODUCT_TYPE")
 public class SubscribtionProductType {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SUBSCRIBTION_PRODUCT_TYPE_NO")
 	private int subscribtionProductTypeNo;
 	
@@ -33,5 +33,10 @@ public class SubscribtionProductType {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SUBSCRIBTION_NO")
 	private Subscribtion subscribtion;
-	
+
+    public SubscribtionProductType(ProductType productType, Subscribtion subscribtion) {
+		this.productType = productType;
+		this.subscribtion = subscribtion;
+    }
+
 }

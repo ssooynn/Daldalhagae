@@ -11,10 +11,10 @@ public class Item {
     private String image;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getImage() {
-        return image;
+        return this.image;
     }
 }

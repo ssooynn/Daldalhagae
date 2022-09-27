@@ -4,13 +4,15 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "SERVICE_REVIEW")
 public class ServiceReview {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SERVICE_REVIEW_NO")
 	private int serviceReviewNo;
 	@Column(name = "RATE")
@@ -27,6 +29,10 @@ public class ServiceReview {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SUBSCRIBTION_HISTORY_NO")
 	private SubscribtionHistory subscribtionHistory;
+
+	@Column(name="REG_DATE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Date regDate;
 
 	@Builder
 	public ServiceReview(int serviceReviewNo, int rate, String content, String image, Users users, SubscribtionHistory subscribtionHistory) {

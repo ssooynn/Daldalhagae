@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SNACK_EFFECT")
 public class SnackEffect {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SNACK_EFFECT_NO")
 	private int snackEffectNo;
 	
