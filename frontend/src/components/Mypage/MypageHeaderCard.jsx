@@ -7,6 +7,7 @@ import { StyledLink } from './MypageCommon'
 
 const MypageHeaderCard = (props) => {
   const {user} = props
+  console.log(user,'d')
   
   const cardContainer = {
     boxSizing:'border-box',
@@ -110,41 +111,41 @@ useEffect(()=>{
 
   return (
     <div style={cardContainer}>
-      <div style={greeting}><span style={userNameText}>{user.user.name}</span>님 반갑습니다 :)</div>
+      <div style={greeting}><span style={userNameText}>{user.name}</span>님 반갑습니다 :)</div>
       <div style={summaryContainer}>
         {/* 배송중 */}
         <div style={contentDetail}>
           <div style={detailTitle}>배송중</div>
-          <div style={detailContent}>{user.delivering}</div>
+          <div style={detailContent}>0</div>
         </div>
         
         {/* 구독중  - 필요 데이터: 유저 아이디(중앙관리)*/}
         <Link style={contentDetail} to={'subscriptionsNow'}>
             <div style={detailTitle}>구독중</div>
-            <div style={detailContent}>{user.subscribingCnt}</div>
+            <div style={detailContent}>{user.subscriptionCnt}</div>
         </Link>
         {/* 미작성 후기  - 필요 데이터: 유저 아이디(중앙관리)*/}
         <StyledLink style={contentDetail} to={'unwrittenReviews'}>
           <div style={detailTitle}>후기 작성</div>
-          <div style={detailContent}>{user.unwrittenReviews}</div>
+          <div style={detailContent}>{user.unReviewCnt}</div>
         </StyledLink >
         {/* 대표 반려견 - 필요 데이터: 펫 아이디 (prop 필요) */}
         <div style={{boxSizing:'border-box', width:'45%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
           <div style={detailTitle}>반려견</div>
           <div style={repDiv}>
-            {user.pet?.map((pet, idx)=>{
+            {user?.pets?.map((pet, idx)=>{
               return(
                 <StyledLink 
                   to={'petDetail'}
-                  state= {{petId:pet.petId}}
+                  state= {{petId:pet.petSno}}
                   id={idx}
                 >
-                  <img style={miniProfile}  src={pet.profileImg} alt="프로필 이미지"/>
+                  <img style={miniProfile}  src={pet.image} alt="프로필 이미지"/>
                 </StyledLink >
               )
             })}
-              {(user.pet.length < 3 ) ? 
-                [...Array(3-user.pet.length)].map((no, idx)=>{
+              {(user?.pets?.length < 3 ) ? 
+                [...Array(3-user?.pets?.length)].map((no, idx)=>{
                   return <StyledLink 
                             to={'petAdd'}
                             state={{}}

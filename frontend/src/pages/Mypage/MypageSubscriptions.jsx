@@ -3,59 +3,51 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SubscriptionItem from '../../components/Mypage/SubscriptionItem'
 
+import { currentSubscription, subscriptionAll } from '../../api/mypageSubscription'
+
 const MypageSubscriptions = () => {
  const location = useLocation()
  const path = location.pathname
+ console.log(path)
+ const userSno = 'uXJFRDEC7DuyYasedNxU1'
  
- const [subscriptionList, setSubscriptionList] = useState([{
-  subscriptionNo:'A1235312',
-  subscriptionName: 'Light All In One Package',
-  purchaseList : [{
-              itemSno:'T11215',
-              itemName: '미니스타터',
-              itemImg:'https://img.danawa.com/prod_img/500000/000/236/img/3236000_1.jpg?shrink=330:330&_v=20220725154103',
-              purchaseNo:'P13251'
-              },
-              {
-                itemSno:'T11215',
-                itemName: '미니스타터',
-                itemImg:'https://img.danawa.com/prod_img/500000/000/236/img/3236000_1.jpg?shrink=330:330&_v=20220725154103',
-                purchaseNo:'P13252'
-                }],
-  petSno:'asdfdasf',
-  petName: '해리',
-  subscriptionStartDate: '2022-09-20',
-  subscriptionEndDate: '2022-10-19',
-  autoPaymentFlag: 1,
-  },
-  {
-    subscriptionNo:'A1235312',
-    subscriptionName: 'Toy Package',
-    purchaseList : [{
-      itemSno:'T11215',
-      itemName: '미니스타터',
-      itemImg:'',
-      purchaseNo:'P13251'
-      },{
-        itemSno:'T11215',
-        itemName: '미니스타터',
-        itemImg:'',
-        purchaseNo:'P13252'
-        }],
-    petSno:'asdfdasf',
-    petName: '해리',
-    subscriptionStartDate: '2022-09-20',
-    subscriptionEndDate: '2022-10-19',
-    autoPaymentFlag: 1,
-    },
- ])
+ const [subscriptionList, setSubscriptionList] = useState([])
 
   useEffect(()=>{
     // fetching 
     // path에 따라 /mypage || /mypage/subscriptionsNow => 현재 구독 리스트 
     //  /mypage/subscriptions => 전체 구독 리스트
-
-  },[])
+    const path = location.pathname
+    if (['/mypage','/mypage/subscriptionsNow'].includes(path)) {
+      currentSubscription(userSno)
+      .then((res)=>{
+        console.log(res.data)
+        const data = res.data
+        const newData = data.map((subs, idx)=>{
+          let newSubs = subs
+          newSubs.subscriptionEndDate = subs.endDate
+          newSubs.subscriptionStartDate = subs.startDate
+          return (newSubs)
+        })
+        setSubscriptionList(newData)
+      }) 
+      .catch((err)=>{console.log(err)})
+    } else{
+      subscriptionAll(userSno)
+      .then((res)=>{
+        console.log(res.data, 'all')
+        const data = res.data
+        const newData = data.map((subs, idx)=>{
+          let newSubs = subs
+          newSubs.subscriptionEndDate = subs.endDate
+          newSubs.subscriptionStartDate = subs.startDate
+          return (newSubs)
+        })
+        setSubscriptionList(newData)
+      }) 
+      .catch((err)=>{console.log(err)})
+    }
+  },[location])
 
   return (
     <div style={{padding:'10px 5px'}}>
@@ -66,7 +58,6 @@ const MypageSubscriptions = () => {
           <div id={idx}>
             <SubscriptionItem page='subsNow' bgImg={subscription.subscriptionName.replaceAll(' ','')} subscription={subscription} reviewConnect={false} isDetail={false}></SubscriptionItem>
           </div>
-
         )
       })
     :
