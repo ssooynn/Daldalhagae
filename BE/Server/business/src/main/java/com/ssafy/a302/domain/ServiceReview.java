@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "SERVICE_REVIEW")
 public class ServiceReview {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SERVICE_REVIEW_NO")
 	private int serviceReviewNo;
 	@Column(name = "RATE")
@@ -31,6 +31,7 @@ public class ServiceReview {
 	private SubscribtionHistory subscribtionHistory;
 
 	@Column(name="REG_DATE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Date regDate;
 
 	@Builder
