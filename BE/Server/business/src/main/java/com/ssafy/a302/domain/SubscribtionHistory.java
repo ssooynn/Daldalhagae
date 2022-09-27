@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.ssafy.a302.response.PurchaseRes;
+import com.ssafy.a302.response.UnratedSubscriptionRes;
 import lombok.*;
 
 @Entity
@@ -51,6 +53,19 @@ public class SubscribtionHistory {
 		this.purchases = purchases;
 		this.serviceReview = serviceReview;
 		this.subscribtionHistorySubscribtion = subscribtionHistorySubscribtion;
+	}
+	public UnratedSubscriptionRes toUnratedSubscriptionRes(List<PurchaseRes> purchaseResList){
+		UnratedSubscriptionRes unratedSubscriptionRes = new UnratedSubscriptionRes();
+		unratedSubscriptionRes.setSubscriptionNo(this.subscribtionHistoryNo);
+		unratedSubscriptionRes.setSubscriptionName(this.subscribtionHistorySubscribtion.getSubscribtion().getName());
+		unratedSubscriptionRes.setSubscriptionStartDate(this.startDate);
+		unratedSubscriptionRes.setSubscriptionEndDate(this.endDate);
+		unratedSubscriptionRes.setPetSno(this.pet.getPetSno());
+		unratedSubscriptionRes.setPetName(this.pet.getName());
+		unratedSubscriptionRes.setPurchaseResList(purchaseResList);
+
+		return unratedSubscriptionRes;
+
 	}
 
 }

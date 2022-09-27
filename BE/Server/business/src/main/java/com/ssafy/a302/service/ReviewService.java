@@ -86,27 +86,30 @@ public class ReviewService {
         List<MyReviewRes> myReviewList = new ArrayList<>();
         List<SubscribtionHistory> subscribtionHistoryList=subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
         for(SubscribtionHistory subscribtionHistory: subscribtionHistoryList){
-            MyReviewRes myReviewRes = new MyReviewRes();
-            myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
-            myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
-            myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
-            myReviewRes.setSubscriptionStartDate(subscribtionHistory.getEndDate());
-            myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
-            myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
-            myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
-            myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
-            myReviewRes.setServiceReviewRegDate(subscribtionHistory.getServiceReview().getRegDate());
-            //아이템리뷰dto
-            List<ItemReviewRes> itemReviewResList= new ArrayList<>();
-            for(Purchase purchase:subscribtionHistory.getPurchases()){
-                ItemReview itemReview =purchase.getItemReview();
-                ItemReviewRes itemReviewRes = itemReview.toItemReviewRes();
-                //엔티티 내에 getItem 구현.
-                itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
-                itemReviewResList.add(itemReviewRes);
-            }
-            myReviewRes.setItemReviewResList(itemReviewResList);
-            myReviewList.add(myReviewRes);
+            if(subscribtionHistory.getServiceReview()!=null) continue;
+                System.out.println();
+                MyReviewRes myReviewRes = new MyReviewRes();
+                myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
+                myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
+                myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
+                myReviewRes.setSubscriptionEndDate(subscribtionHistory.getEndDate());
+                myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
+                myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
+                myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
+                myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
+                myReviewRes.setServiceReviewRegDate(subscribtionHistory.getServiceReview().getRegDate());
+                //아이템리뷰dto
+                List<ItemReviewRes> itemReviewResList = new ArrayList<>();
+                for (Purchase purchase : subscribtionHistory.getPurchases()) {
+                    ItemReview itemReview = purchase.getItemReview();
+                    ItemReviewRes itemReviewRes = itemReview.toItemReviewRes();
+                    //엔티티 내에 getItem 구현.
+                    itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
+                    itemReviewResList.add(itemReviewRes);
+                }
+                myReviewRes.setItemReviewResList(itemReviewResList);
+                myReviewList.add(myReviewRes);
+
         }
         return myReviewList;
     }
@@ -164,10 +167,7 @@ public class ReviewService {
                     purchaseRes.setItemImg(getItem(purchase.getItemSno()).getImage());
                     purchaseResList.add(purchaseRes);
                 }
-                UnratedSubscriptionRes unratedSubscriptionRes = new UnratedSubscriptionRes();
-                unratedSubscriptionRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
-                unratedSubscriptionRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
-                unratedSubscriptionRes.setPurchaseResList(purchaseResList);
+                UnratedSubscriptionRes unratedSubscriptionRes = subscribtionHistory.toUnratedSubscriptionRes(purchaseResList);
                 unratedSubscriptionResList.add(unratedSubscriptionRes);
             }
         }
@@ -178,7 +178,7 @@ public class ReviewService {
             return feedRepository.findById(itemSno).get();
         }else if (itemSno.startsWith("s")){
             return snackRepository.findById(itemSno).get();
-        }else if (itemSno.startsWith("T")){
+        }else if (itemSno.startsWith("T")||itemSno.startsWith("t")){
             return toyRepository.findById(itemSno).get();
         }
         return null;
