@@ -9,14 +9,12 @@ import BasicPackage from '../../assets/img/BasicPackage.png'
 import DalDalPackage from '../../assets/img/DalDalPackage.png'
 import LightAllInOnePackage from '../../assets/img/LightAllInOnePackage.png'
 import ToyPackage from '../../assets/img/ToyPackage.png'
-import { useEffect } from 'react'
 
 const SubscriptionItem = (props) => {
   const navigate = useNavigate()
   const {width, height, bgImg, page, subscription, reviewConnect, isDetail, popup, setPopup} = props
   const [isHover, setIsHover] = useState(false)
-
-
+  
 
   const imgStyle = {
     zIndex:'-1',
@@ -25,7 +23,7 @@ const SubscriptionItem = (props) => {
     width:'100%',
     height:'100%',
     objectFit:'cover',
-    borderRadius: '10px'
+    borderRadius: isDetail?'10px 10px 0px 0px':'10px'
 
 }
 
@@ -35,8 +33,8 @@ const textStyle = ({isHover}) => ({
     position: 'absolute',
     width:'100%',
     height:'100%',
-    backgroundColor: isHover? 'rgba(0,0,0,0.01)':'rgba(255,255,255,0.3)',
-    borderRadius: '10px',
+    backgroundColor: isHover||isDetail ? 'rgba(0,0,0,0.035)':'rgba(255,255,255,0.25)',
+    borderRadius: isDetail?'10px 10px 0px 0px':'10px',
     display:'flex',
     flexDirection:'column',
     justifyContent:'space-around',
@@ -113,10 +111,10 @@ if (endDate >= today) {
 
 return(
   <>
-    <ImgDiv width={width} height={height} onClick={onClick}>
+    <ImgDiv width={width} height={height} onClick={onClick} radius={isDetail?'10px 10px 0px 0px':'10px'} margin={isDetail?'25px 0px 0px 0px':''}>
         <img style={imgStyle} src={bgList[bgImg]||bgList.BasicPackage} alt="" />
         <div style={textStyle({isHover})}     
-            onPointerOver={()=> setIsHover(true)}
+            onPointerOver={()=> setIsHover(!isDetail&&true)}
             onPointerOut={() => setIsHover(false)}>
 
           <div>
@@ -124,8 +122,8 @@ return(
           </div>
           <FlexBox justify='space-between' align='end'>
             <FlexBox direction='column' align='start'>
-              <div style={detailStyle}>구독 ID: {subscription.subscriptionNo}</div>
-              <div style={detailStyle}>구독 기간 {subscription.subscriptionStartDate.replaceAll('-','.')} ~ {subscription.subscriptionEndDate.replaceAll('-','.')}</div>
+              <div style={detailStyle}>구독 ID: {subscription.subscriptionNo||subscription.subscriptionNum}</div>
+              <div style={detailStyle}>구독 기간 {subscription?.subscriptionStartDate.toString().replaceAll('-','.')} ~ {subscription?.subscriptionEndDate.toString().replaceAll('-','.')}</div>
             </FlexBox>
             {reviewConnect? 
               <div onClick={onReviewOpen} 
