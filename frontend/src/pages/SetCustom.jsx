@@ -6,8 +6,6 @@ import imgE from '../assets/img/구독상세페이지6.png'
 import imgF from '../assets/img/구독상세페이지7.jpg'
 
 import PurchaseList from '../components/PurchaseList'
-import Modal from '../components/RecommendConfirmModal'
-import ShoppingBag from '../components/ShoppingBag'
 import AutoSlides from '../components/AutoSlides'
 import Footer from '../components/Footer';
 
@@ -43,15 +41,11 @@ const SetCustom = () => {
     }
   }
   const name = '나만의 구독 서비스'
+  const intro = `사료: ${feedNum}, 간식: ${snackNum}, 장난감: ${toyNum}`
+  const components1 = ['', '', '',]
+  const components2 = [feedNum, snackNum, toyNum]
   const price = '50000'
-  const [bagOpen, setBagOpen] = useState(false)  // 장바구니
-  const showBag = () => {
-    setBagOpen(true)
-  }
-  const [modalOpen, setModalOpen] = useState(false) // 구독하기
-  const showModal = () => {
-    setModalOpen(true)
-  }
+  const info = [name, intro, components1, price, components2]
   
   return (
     <div
@@ -206,43 +200,7 @@ const SetCustom = () => {
               </div>
             </div>
           </div>
-          <PurchaseList name={name} price={price}/>
-          <div  // 장바구니
-            style={{
-              width: '100%',
-              height: '2rem',
-              backgroundColor: '#EDDCCF',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              margin: '5px 0 5px 0',
-            }}
-            onClick={event=>{
-              event.preventDefault()
-              showBag()
-            }}>장바구니
-          </div>
-          {bagOpen && <ShoppingBag setBagOpen={setBagOpen} />}
-          <div  // 구독하기
-            style={{
-              width: '100%',
-              height: '2rem',
-              backgroundColor: '#CCAA90',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-            onClick={event=>{
-              event.preventDefault();
-              showModal()
-            }}
-            >구독하기
-          </div>
-          {modalOpen && <Modal setModalOpen={setModalOpen} />}
+          <PurchaseList info={info}/>
         </div>
       </div>
       <div  // 구독 서비스 설명

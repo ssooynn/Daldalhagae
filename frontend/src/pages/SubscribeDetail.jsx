@@ -44,10 +44,12 @@ function Component(props) {
 const SubscribeDetail = () => {
   const location = useLocation()
   const name = location.state.name
-  const component = location.state.component
-  const components = location.state.components
+  const intro = location.state.intro
+  const components1 = location.state.components1
+  const components2 = location.state.components2
   const price = location.state.price
-  const info = [name, component, components, price]
+  const info = [name, intro, components1, price, components2]
+  console.log(info)
   let image = undefined
   if (name === 'Basic Package') {
     image = img1
@@ -81,7 +83,7 @@ const SubscribeDetail = () => {
         <img src={image} width='540px' height='400' alt='package'/>
         <div>
           <h2 style={{margin: 'auto'}}>{name}</h2>
-          <p style={{margin: '0.5rem auto', fontSize: '12px'}}>{component}</p>
+          <p style={{margin: '0.5rem auto', fontSize: '12px'}}>{intro}</p>
           <h4 style={{margin: 'auto'}}>월 {price}원</h4>
           <p   style={{margin: '1.5rem 0 0.5rem 0'}}>누구를 위한 사료인가요?</p>
           <PurchaseList info={info}/>
@@ -104,7 +106,7 @@ const SubscribeDetail = () => {
           <h2 style={{
             marginTop: '10rem'
           }}>상품구성</h2>
-          <Component components={components} />
+          <Component components={components1} />
         </div>
         <div  // 사료 소개 시작
           style={{

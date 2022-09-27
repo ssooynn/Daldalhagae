@@ -19,5 +19,7 @@ const AutoSlides = () => {
     </div>
   </div>
 }
+// const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+// Authorization: `Bearer` + `a.a.a`
 
 export default AutoSlides
