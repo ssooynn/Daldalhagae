@@ -1,5 +1,5 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Icon from '../assets/img/modalIcon.png'
 
 function RecommendConfirmModal(props) {
@@ -18,6 +18,17 @@ function RecommendConfirmModal(props) {
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
   }, [])
+  const Navigate = useNavigate();
+  function GoRecomProducts() {
+    Navigate("/recommendList",  {
+      state: {
+        info: props.info
+      }})
+  }
+  function GoPaymentList() {
+    alert('결제 목록 창으로 넘어갑니다.')
+    Navigate("/paymentList")
+  }
   return (
     <div
       onClick={closeModal}
@@ -64,21 +75,25 @@ function RecommendConfirmModal(props) {
           <p style={{marginTop: '0'}}>(보지 않을 시 저희가 가장 추천하는 상품을 자동으로 배송해드립니다.)</p>
         </div>
         <div
+          onClick={GoRecomProducts}
           style={{
             backgroundColor: '#EDDCCF',
             height: '50px',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            cursor: 'pointer'
           }}><p>예, 보겠습니다.</p></div>
         <div
+          onClick={GoPaymentList}
           style={{
             backgroundColor: '#F6F1EC',
             color: '#6E6E6E',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: '3px'
+            marginTop: '3px',
+            cursor: 'pointer'
           }}><p>아니요, 괜찮습니다.</p></div>
       </div>
     </div>

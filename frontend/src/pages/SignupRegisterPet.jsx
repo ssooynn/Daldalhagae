@@ -9,6 +9,14 @@ import BCS2 from "../assets/img/BCS2.png";
 import BCS3 from "../assets/img/BCS3.png";
 import BCS4 from "../assets/img/BCS4.png";
 import BCS5 from "../assets/img/BCS5.png";
+import calendarButton from "../assets/img/calendar.png";
+
+import { useNavigate } from "react-router-dom";
+import { Calendar } from "react-date-range";
+import * as locales from "react-date-range/dist/locale";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+
 
 const SignupBox = styled.div`
   width: 50%;
@@ -23,18 +31,42 @@ const SignupBox = styled.div`
   min-width: 850px;
 `;
 
+const LoginModalStyled = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+`;
+
 const StyledBCS = styled.img`
-  width: 120px;
-  height: 120px;
-  border-radius: 5px;
+width: 120px;
+height: 120px;
+border-radius: 5px;
 `;
 
 export default function SignupRegisterPet(props) {
+  const Navigate = useNavigate();
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("");
   const [effectsOpen, setEffectsOpen] = useState(false);
+  const [locale, setLocale] = React.useState("ko");
+  const [date, setDate] = useState(new Date());
+  const [showCalender, setShowCalender] = useState(false);
+
+// eslint-disable-next-line
   const [alergyList, setAlergyList] = useState(["오리", "연어", "양", "쌀", "곡물", "고구마", "칠면조", "기타", "과일/야채", "소", "닭", "생선/해조류", "사슴", "밀", "돼지", "참치", "치즈/유제품", "북어"]);
-  const [profile, setProfile] = useState(""); 
+  const [profile, setProfile] = useState("");
+  const [image,setImage] = useState("");
+  // eslint-disable-next-line
   const [effectsList, setEffectsList] = useState([
     "피모관리",
     "저알러지",
@@ -70,12 +102,12 @@ export default function SignupRegisterPet(props) {
   ]);
   const [selectedTag, setSeletedTag] = useState([]);
   const [selectedEffect, setSelectedEffect] = useState([]);
-
+  
   const [bcs, setBcs] = useState(0);
-
+  
   // 모두 동의 완료시 다음 단계로 이동
-  function PreviousStep() {}
-
+  function PreviousStep() { }
+  
   function RegisterPet() {
     //     {image:"",
     // name:"",
@@ -84,64 +116,6 @@ export default function SignupRegisterPet(props) {
     // materials:[],
     // effects:[],
     // fat:""}
-    var id = 0;
-    console.log(props.pet);
-    if (props.pet === undefined) {
-      id = 1;
-    } else {
-      id = props.pet.length + 1;
-    }
-    console.log({
-      id: id,
-      image: profile,
-      name: name,
-      birth: birth,
-      target: "",
-      materials: selectedTag,
-      effects: selectedEffect,
-      fat: bcs,
-    });
-    props.setPets([
-      ...props.pets,
-      {
-        id: id,
-        image: profile,
-        name: name,
-        birth: birth,
-        target: "",
-        materials: selectedTag,
-        effects: selectedEffect,
-        fat: bcs,
-      },
-    ]);
-  }
-
-  const WantUpdateProfile = (e) => {
-    let file=e.target.files[0];
-    let fileURL;
-    let reader = new FileReader();
-    reader.onload = () =>{
-        fileURL = reader.result;
-        setProfile(fileURL);
-    }
-    reader.readAsDataURL(file);
-
-    const formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    //    UpdateProfileImgApi(
-    //      formData,
-    //      (res) => {
-    //        console.log(res);
-    //        getInfo();
-    //      },
-    //      (err) => {
-    //        console.log(err);
-    //      }
-    //    );
-  };
-
-
-  const selectTag = () => {
     setSeletedTag(
       selectedTag.sort(function (a, b) {
         return a - b;
@@ -149,21 +123,88 @@ export default function SignupRegisterPet(props) {
     );
     for (let index = 0; index < selectedTag.length; index++) {
       selectedTag[index]++;
+    };
+    setSelectedEffect(
+      selectedEffect.sort(function (a, b) {
+        return a - b;
+      })
+    );
+    for (let index = 0; index < selectedEffect.length; index++) {
+      selectedEffect[index]++;
     }
-    const data = selectedTag;
+    
+    var id = 0;
+    console.log(props.pets);
+    if (props.pets === undefined) {
+      id = 1;
+    } else {
+      id = props.pets.length + 1;
+    }
+    console.log({
+      id: id,
+      image: image,
+      name: name,
+      birth: birth,
+      targetNo: "",
+      materials: selectedTag,
+      effects: selectedEffect,
+      fat: bcs,
+      profile:profile,
+      file:image,
+    });
+    props.setPets([
+      ...props.pets,
+      {
+        id: id,
+        image: image,
+        name: name,
+        birth: birth,
+        targetNo: "",
+        materials: selectedTag,
+        effects: selectedEffect,
+        fat: bcs,
+        profile:profile,
+        file:image,
+      },
+    ]);
+    Navigate("/signup/signupPet");
+  }
+
+  const WantUpdateProfile = (e) => {
+    let file = e.target.files[0];
+    let fileURL;
+    let reader = new FileReader();
+    reader.onload = () => {
+      fileURL = reader.result;
+      setProfile(fileURL);
+    }
+    reader.readAsDataURL(file);
+    setImage(file);
   };
 
+    const birthday = (item) => {
+    setDate(item);
+    setShowCalender(!showCalender);
+    const year = item.getFullYear(item);
+    const month =
+      item.getMonth(item) + 1 < 10
+        ? "0" + (item.getMonth(item) + 1)
+        : item.getMonth(item) + 1;
+    const date =
+      item.getDate(item) < 10 ? "0" + item.getDate(item) : item.getDate(item);
+    setBirth(`${year}-${month}-${date}`);
+  };
   return (
     <SignupBox>
       <FlexBox direction="row">
         <StyledText size="24px" weight="500">
-          회원가입 - 반려견 정보 등록
+          반려견 정보 등록
         </StyledText>
       </FlexBox>
       <FlexBox direction="column" justify="space-between" align="center" width="80%">
         {/* 프로필 + 이름 / 생년월일 */}
         <FlexBox direction="row" justify="space-between">
-          <StyledProfile src={profile==="" ? Dog1 : profile} height="120px" width="120px"></StyledProfile>
+          <StyledProfile src={profile === "" ? Dog1 : profile} height="120px" width="120px"></StyledProfile>
           <div
             style={{
               position: "absolute",
@@ -199,15 +240,39 @@ export default function SignupRegisterPet(props) {
                 value={name}
               />
               <StyledInput
-                onChange={(e) => {
-                  setBirth(e.target.value);
-                }}
                 value={birth}
               />
+              <div style={{position: "absolute",
+              paddingTop: "50px",
+              paddingRight:"15px"}}>
+                
+                <img src={calendarButton} alt="날짜 선택" onClick={() => {
+                    setShowCalender(!showCalender);
+                    setDate(date);
+                  }}
+                  width="25px"
+
+                  />
+              </div>
+             
             </FlexBox>
           </FlexBox>
         </FlexBox>
-
+{showCalender && ( // 클릭 등으로 토글상태 값이 true 이 되면 달력이 보여진다
+        <LoginModalStyled>
+          <div style={{ display: "flex", flexFlow: "column nowrap", position:"absolute" }}>
+            <Calendar
+              onChange={(item) => {
+                birthday(item);
+              }}
+              locale={locales[locale]}
+              date={date}
+              style={{ width: "300px" }}
+color="#ccaa90"
+              />
+          </div>
+        </LoginModalStyled>
+        )}
         {/* 알러지 태그 리스트 부분 */}
         <StyledText size="16px" weight="500" style={{ alignSelf: "flex-start" }}>
           알러지{" "}

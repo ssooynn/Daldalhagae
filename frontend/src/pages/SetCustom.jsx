@@ -1,39 +1,49 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
 import imgA from '../assets/img/자유구독1.png'
-import imgB from '../assets/img/구독상세페이지2.png'
-import imgC from '../assets/img/구독상세페이지3.png'
-import imgD from '../assets/img/구독상세페이지4.png'
+import imgB from '../assets/img/자유구독2.png'
+import imgD from '../assets/img/구독상세페이지5.png'
+import imgE from '../assets/img/구독상세페이지6.png'
+import imgF from '../assets/img/구독상세페이지7.jpg'
 
+import PurchaseList from '../components/PurchaseList'
 import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
+import AutoSlides from '../components/AutoSlides'
 import Footer from '../components/Footer';
 
-const Slide = styled.div`
-margin: 5rem auto;
-background-color: #F6F1EC;
-text-align: start;
-padding: 1px 3rem 2rem 3rem;
-border-radius: 10px;
-width: 80%;
-`
-
-const Elements = styled.div`
-display: flex;
-overflow hidden;
-`
-const Element = styled.div`
-background-color: #FFFFFF;
-border-radius: 10px;
-padding: 10px;
-width: 160px;
-height: 170px;
-margin: 0 10px 0 10px;
-text-align: center;
-// box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25); -> 넣으면 깨짐
-`
-
 const SetCustom = () => {
+  const [feedNum, setFeedNum] = useState(0)
+  const [snackNum, setSnackNum] = useState(0)
+  const [toyNum, setToyNum] = useState(0)
+  function plusFeed(e) {
+    e.preventDefault()
+    setFeedNum(feedNum+1)
+  } function minusFeed(e) {
+    e.preventDefault()
+    if (feedNum>0) {
+      setFeedNum(feedNum-1)
+    }
+  }
+  function plusSnack(e) {
+    e.preventDefault()
+    setSnackNum(snackNum+1)
+  } function minusSnack(e) {
+    e.preventDefault()
+    if (snackNum>0) {
+      setSnackNum(snackNum-1)
+    }
+  }
+  function plusToy(e) {
+    e.preventDefault()
+    setToyNum(toyNum+1)
+  } function minusToy(e) {
+    e.preventDefault()
+    if (toyNum>0) {
+      setToyNum(toyNum-1)
+    }
+  }
+  const name = '나만의 구독 서비스'
+  const price = '50000'
   const [bagOpen, setBagOpen] = useState(false)  // 장바구니
   const showBag = () => {
     setBagOpen(true)
@@ -42,7 +52,7 @@ const SetCustom = () => {
   const showModal = () => {
     setModalOpen(true)
   }
-
+  
   return (
     <div
       style={{
@@ -82,6 +92,7 @@ const SetCustom = () => {
               <p>사료(+12,900)</p>
               <p style={{fontSize: '10px', color: '#949494', marginRight: '1rem'}}>(10~15kg)</p>
               <div  // - 버튼
+                onClick={(e)=>minusFeed(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -95,8 +106,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>1</p>
+              <p style={{margin: '0 1rem 0 1rem'}}>{feedNum}</p>
               <div  // + 버튼
+                onClick={(e)=>plusFeed(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -119,8 +131,9 @@ const SetCustom = () => {
                 margin: 'auto',
                 justifyContent: 'flex-end'
               }}>
-              <p style={{marginRight: '1rem'}}>사료(+2,900)</p>
+              <p style={{marginRight: '1rem'}}>간식(+2,900)</p>
               <div  // - 버튼
+                onClick={(e)=>minusSnack(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -134,8 +147,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>1</p>
+              <p style={{margin: '0 1rem 0 1rem'}}>{snackNum}</p>
               <div  // + 버튼
+                onClick={(e)=>plusSnack(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -160,6 +174,7 @@ const SetCustom = () => {
               }}>
               <p style={{marginRight: '1rem'}}>장난감(+2,900)</p>
               <div  // - 버튼
+               onClick={(e)=>minusToy(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -173,8 +188,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>1</p>
+              <p style={{margin: '0 1rem 0 1rem'}}>{toyNum}</p>
               <div  // + 버튼
+                onClick={(e)=>plusToy(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -190,54 +206,7 @@ const SetCustom = () => {
               </div>
             </div>
           </div>
-          <div  // 펫 목록
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              textAlign: 'center'
-            }}>
-            <div>
-              <img
-                src={imgA}
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '5px'
-                }} alt='pet'/>
-              <p style={{margin: 'auto'}}>이름</p>
-            </div>
-            <div style={{marginLeft: '6px'}}>
-              <img
-                src={imgA}
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '5px'
-                }} alt='pet'/>
-              <p style={{margin: 'auto'}}>이름</p>
-            </div>
-          </div>
-          <div  // 구매 목록
-            style={{
-              backgroundColor: '#F6F1EC',
-              padding: '0.1px 20px 10px 20px',
-              borderRadius: '5px',
-              width: '280px'
-            }}>
-            <h4>구독목록</h4>
-            <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '10px'}}>
-              <p>(사료1 + 간식1+ 장난감2) - 해리</p>
-              <p>21,900</p>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '10px'}}>
-              <p>(간식4+ 장난감2) - 포터</p>
-              <p>12,900</p>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <h4>총 2개</h4>
-              <h4>34,800</h4>
-            </div>
-          </div>
+          <PurchaseList name={name} price={price}/>
           <div  // 장바구니
             style={{
               width: '100%',
@@ -289,52 +258,24 @@ const SetCustom = () => {
             <img src={imgB} width='100%' alt='package'/>
             <p style={{fontSize: '12px'}}>반려견의 취향에 맞는 선물을 조합해보세요.</p>
           </div>
-          <div  // 사료 소개 시작
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              marginTop: '15rem'
-            }}>
-            <img src={imgC} style={{borderRadius: '5px'}} width='400px' alt='img'/>
-            <div
-              style={{
-
-            }}>
-              <p>안전한 홀리스틱 등급 이상의</p>
-              <h3>사료 맞춤 추천</h3>
-            </div>
-          </div>
-          <Slide>
-            <p>이런 제품들을 추천 받을 수 있습니다.</p>
-            <Elements>
-              <Element>
-                <img src={imgD} width='140px' height='130px' alt='feed'/>
-                <p style={{color: 'black', marginTop: '10px'}}>미니스타터 3kg</p>
-              </Element>
-              <Element>
-                <img src={imgD} width='140px' height='130px' alt='feed'/>
-                <p style={{color: 'black', marginTop: '10px'}}>미니스타터 3kg</p>
-              </Element>
-              <Element>
-                <img src={imgD} width='140px' height='130px' alt='feed'/>
-                <p style={{color: 'black', marginTop: '10px'}}>미니스타터 3kg</p>
-              </Element>
-              <Element>
-                <img src={imgD} width='140px' height='130px' alt='feed'/>
-                <p style={{color: 'black', marginTop: '10px'}}>미니스타터 3kg</p>
-              </Element>
-              <Element>
-                <img src={imgD} width='140px' height='130px' alt='feed'/>
-                <p style={{color: 'black', marginTop: '10px'}}>미니스타터 3kg</p>
-              </Element>
-              <Element>
-                <img src={imgD} width='140px' height='130px' alt='feed'/>
-                <p style={{color: 'black', marginTop: '10px'}}>미니스타터 3kg</p>
-              </Element>
-            </Elements>
-          </Slide>
         </div>
+        <div  // 사료 소개 시작
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            marginTop: '15rem'
+          }}>
+          <img src={imgF} style={{borderRadius: '5px'}} width='400px' alt='img'/>
+          <div
+            style={{
+
+          }}>
+            <p>안전한 홀리스틱 등급 이상의</p>
+            <h3>사료 맞춤 추천</h3>
+          </div>
+        </div>
+        <AutoSlides />
         <div  // 간식 소개 시작
           style={{
             display: 'flex',
@@ -349,34 +290,9 @@ const SetCustom = () => {
             <p>반려견에게 생기를 불어 넣어주는</p>
             <h3>간식 맞춤 추천</h3>
           </div>
-          <img src={imgC} width='400px' alt='img'/>
+          <img src={imgD} width='400px' alt='img'/>
         </div>
-        <div  // 간식 슬라이드
-          style={{
-            marginTop: '5rem',
-            backgroundColor: '#F6F1EC',
-            textAlign: 'start',
-            padding: '1px 1rem 3rem 3rem',
-          }}>
-          <h4>이런 제품들을 추천 받을 수 있습니다.</h4>
-          <div
-            style={{
-              display: 'flex',
-            }}>
-            <div
-              style={{
-                backgroundColor: '#FFFDFB',
-                borderRadius: '10px',
-                padding: '10px',
-                boxShadow: '5px 5px 5px 5px gray',
-                width: '150px',
-                height: '150px',
-              }}>
-              <img src={imgD} width='100%' height='100%' alt='snack'/>
-              {/* <p style={{color: 'black', textAlign: 'center'}}>미니스타터 3kg</p> */}
-            </div>
-          </div>
-        </div>
+        <AutoSlides />
         <div  // 장난감 소개 시작
           style={{
             display: 'flex',
@@ -384,7 +300,7 @@ const SetCustom = () => {
             alignItems: 'center',
             marginTop: '15rem'
           }}>
-          <img src={imgC} width='400px' alt='img'/>
+          <img src={imgE} width='400px' alt='img'/>
           <div
             style={{
 
@@ -393,32 +309,7 @@ const SetCustom = () => {
             <h3>장난감 맞춤 추천</h3>
           </div>
         </div>
-        <div  // 장난감 슬라이드
-          style={{
-            marginTop: '5rem',
-            backgroundColor: '#F6F1EC',
-            textAlign: 'start',
-            padding: '1px 1rem 3rem 3rem'
-          }}>
-          <h4>이런 제품들을 추천 받을 수 있습니다.</h4>
-          <div
-            style={{
-              display: 'flex',
-            }}>
-            <div
-              style={{
-                backgroundColor: '#FFFDFB',
-                borderRadius: '10px',
-                padding: '10px',
-                boxShadow: '5px 5px 5px 5px gray',
-                width: '150px',
-                height: '150px',
-              }}>
-              <img src={imgD} width='100%' height='100%' alt='feed'/>
-              {/* <p style={{color: 'black', textAlign: 'center'}}>미니스타터 3kg</p> */}
-            </div>
-          </div>
-        </div>
+        <AutoSlides />
         <div  // 마무리 글
           style={{
             margin: '15rem 0 15rem 0'
