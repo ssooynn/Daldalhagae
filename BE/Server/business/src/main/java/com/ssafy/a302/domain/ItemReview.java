@@ -7,6 +7,7 @@ import com.ssafy.a302.response.ItemReviewRes;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -28,7 +29,7 @@ public class ItemReview {
 	private String image;
 	@Column(name = "CREATED_AT")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Date date;
+	private LocalDate date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USERS_SNO")
