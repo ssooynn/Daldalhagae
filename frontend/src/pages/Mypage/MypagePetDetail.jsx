@@ -67,7 +67,7 @@ const MypagePetDetail = (props) => {
   }
 
   const detailText ={
-    fontSize:'13px',
+    fontSize:'14px',
     fontWeight:'400'
   }
 
@@ -80,9 +80,9 @@ const MypagePetDetail = (props) => {
   }
 
   const litTitle = {
-    fontSize:'14px',
+    fontSize:'15px',
     fontWeight: '500',
-    marginBottom: '5px'
+    marginBottom: '4px'
   }
   
 
@@ -118,7 +118,7 @@ const MypagePetDetail = (props) => {
           {materials &&
           <>
             <div style={litTitle}>알러지</div> 
-            <div style={{...detailText, fontWeight:'300', marginBottom:'7px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
+            <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
             <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))', marginBottom:'20px'}}>
               {materials.map((alergy,idx)=>{
                 const colorList=['#D2E0BF', '#DCC7B7','#A5AAAD','#E0D3ED','#E1AAAA','#FFC6AE']
@@ -132,7 +132,7 @@ const MypagePetDetail = (props) => {
           {effects &&
           <>
             <div style={litTitle}>특별관리</div> 
-            <div style={{...detailText, fontWeight:'300', marginBottom:'7px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
+            <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
             <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))'}}>
               {effects.map((effect,idx)=>{
                 const colorList = ['#EAD0D0', '#F3BD94', '#EDDCCF', '#FFDF8E', '#DB9090', '#AC998A']
