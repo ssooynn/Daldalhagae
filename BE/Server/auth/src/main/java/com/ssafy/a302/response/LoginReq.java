@@ -17,6 +17,10 @@ public class LoginReq {
 	private String accessToken;
 	private String message = Utils.FAIL;
 	
+	public LoginReq(String kakaoId) {
+		this.kakaoId=kakaoId;
+	}
+	
 	public LoginReq(Users users, String accessToken) {
 		this.usersSno = users.getUsersSno();
 		this.kakaoId = users.getKakaoId();

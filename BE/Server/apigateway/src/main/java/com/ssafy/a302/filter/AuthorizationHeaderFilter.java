@@ -38,6 +38,8 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         	ServerHttpRequest request = exchange.getRequest();
         	System.out.println(32423);
 
+        	
+        	
             // Request Header 에 token 이 존재하지 않을 때
             if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
             	return handleUnAuthorized(exchange);
@@ -56,7 +58,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         };
     }
 
-        // 성공적으로 검증이 되었기 때문에 인증된 헤더로 요청을 변경해준다. 서비스는 해당 헤더에서 아이디를 가져와 사용한다.
+        // 인증 실패시 401 반환
     private Mono<Void> handleUnAuthorized(ServerWebExchange exchange) {
         ServerHttpResponse response = exchange.getResponse();
 
