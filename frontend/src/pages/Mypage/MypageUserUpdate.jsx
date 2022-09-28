@@ -139,9 +139,7 @@ const MypageUserUpdate = () => {
       <SmallText>주소</SmallText>
       <div style={{...gridDiv}}>
         <StyledInputBox value={fullAddress? fullAddress+',  '+postZip : ''} name='address' span='span 4' disabled={true}></StyledInputBox>
-        <FlexBox span='span 1' align='end'>
-          <MypageButton onClick={handleComplete} >주소 검색</MypageButton>
-        </FlexBox>
+        <MypageButton onClick={handleComplete} height='100%'>주소 검색</MypageButton>
       </div>
       <StyledInputBox value={user.addressDetail} name='addressDetail' onChange={onDetailAddressChange}></StyledInputBox>
       <MypageButton padding='12px' fontSize='16px' color='#E6D9D3' margin='35px 0px' onClick={onSubmit}>수정 완료</MypageButton>

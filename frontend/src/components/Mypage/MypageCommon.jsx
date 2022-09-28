@@ -27,6 +27,7 @@ export const StyledProfile = ({ width, radius, src, ...props }) => {
     };
 
 const Flex = styled.div`
+box-sizing:border-box;
 display: flex;
 width : ${(props) => props.width || "100%"};
 height: ${(props) => props.height || "auto"};
@@ -35,10 +36,11 @@ justify-content: ${(props) => props.justify || "center"};
 align-items: ${(props) => props.align || "center"};
 margin: ${(props) => props.margin || "0px"};
 grid-column: ${(props) => props.span || "span 1"};
-background-color: ${(props) => props.bgColor ||''}
+background-color: ${(props) => props.bgColor ||''};
+padding: ${(props)=> props.padding || '6px 8px'};
 `
-export const FlexBox= ({ children, width, height, justify, direction, align, margin ,bgColor, ...props }) => {
-    return <Flex width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} bgColor={bgColor} {...props}>{children}</Flex>
+export const FlexBox= ({ children, width, height, justify, direction, align, margin ,bgColor,padding, ...props }) => {
+    return <Flex padding={padding} width={width} height={height} direction={direction} justify={justify} align={align} margin={margin} bgColor={bgColor} {...props}>{children}</Flex>
 }
 
 const InfoBox = styled.div`
@@ -105,7 +107,7 @@ export const InputLayout = ({padding, width, height, mainFontSize, fontSize, fon
 
 const ButtonStyle = styled(animated.button)`
     padding: ${(props)=> props.padding || '0px'};
-    box-shadow: 0px 1.5px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: -1px -1px 2px rgba(0,0,0,0.1), 1px 1px 2px rgba(0,0,0,0.1);
     box-sizing: border-box;
     border: none;
     width: 100%;
@@ -116,6 +118,7 @@ const ButtonStyle = styled(animated.button)`
     font-weight: 500;
     white-space: nowrap;
     margin: ${(props)=> props.margin || '0px'};
+    transition-duration:300ms;
     &:hover{
         background-color: ${(props)=> props.hoverColor || '#776B62'};
         color:white;
