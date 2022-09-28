@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.ssafy.a302.request.SubscriptionReq;
 import com.ssafy.a302.response.PurchaseRes;
 import com.ssafy.a302.response.UnratedSubscriptionRes;
 import lombok.*;
