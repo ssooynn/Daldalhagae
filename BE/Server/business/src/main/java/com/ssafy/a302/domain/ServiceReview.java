@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -32,7 +33,7 @@ public class ServiceReview {
 
 	@Column(name="REG_DATE")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Date regDate;
+	private LocalDate regDate;
 
 	@Builder
 	public ServiceReview(int serviceReviewNo, int rate, String content, String image, Users users, SubscribtionHistory subscribtionHistory) {
