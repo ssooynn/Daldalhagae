@@ -63,36 +63,37 @@ public class SocialController {
 		JsonNode jsonNode = objectMapper.readTree(kakaoInfoResponseBody);
 		
 		String kakaoId = jsonNode.get("id").asText();
+		
 		return usersService.login(kakaoId);
 	}
 	
-	@ApiOperation(value = "회원 체크")
-	@PostMapping("/check")
-	public Map<String,String> check(@RequestBody Map<String, Object> map) throws Exception {
-		Map<String,String> data = new HashMap<String, String>();
-		
-		Object object = map.get("code");
-		if (!(object instanceof String) || object==null) {
-			throw new Exception();
-		}
-		String code = (String) object;
-		
-		String accessToken = getAccessToken(code);
-		ResponseEntity<String> kakaoInfoResponse = getKakaoInfo(accessToken);
-		
-		String kakaoInfoResponseBody = kakaoInfoResponse.getBody();
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode jsonNode = objectMapper.readTree(kakaoInfoResponseBody);
-		
-		String kakaoId = jsonNode.get("id").asText();
-		if(usersService.existsByKakaoId(kakaoId)) {
-			data.put("message", Utils.FAIL);
-			return data;
-		}
-		data.put("message", Utils.SUCCESS);
-		data.put("kakaoId",kakaoId);
-		return data;
-	}
+//	@ApiOperation(value = "회원 체크")
+//	@PostMapping("/check")
+//	public Map<String,String> check(@RequestBody Map<String, Object> map) throws Exception {
+//		Map<String,String> data = new HashMap<String, String>();
+//		
+//		Object object = map.get("code");
+//		if (!(object instanceof String) || object==null) {
+//			throw new Exception();
+//		}
+//		String code = (String) object;
+//		
+//		String accessToken = getAccessToken(code);
+//		ResponseEntity<String> kakaoInfoResponse = getKakaoInfo(accessToken);
+//		
+//		String kakaoInfoResponseBody = kakaoInfoResponse.getBody();
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		JsonNode jsonNode = objectMapper.readTree(kakaoInfoResponseBody);
+//		
+//		String kakaoId = jsonNode.get("id").asText();
+//		if(usersService.existsByKakaoId(kakaoId)) {
+//			data.put("message", Utils.FAIL);
+//			return data;
+//		}
+//		data.put("message", Utils.SUCCESS);
+//		data.put("kakaoId",kakaoId);
+//		return data;
+//	}
 
 	@ApiOperation(value = "로그아웃")
 	@PostMapping("/logout")
