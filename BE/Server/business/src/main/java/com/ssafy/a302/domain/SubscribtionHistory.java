@@ -17,7 +17,7 @@ import lombok.*;
 @Table(name = "SUBSCRIBTION_HISTORY")
 public class SubscribtionHistory {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="SUBSCRIBTION_HISTORY_NO")
 	private int subscribtionHistoryNo;
 	@Column(name="START_DATE")
@@ -69,4 +69,12 @@ public class SubscribtionHistory {
 
 	}
 
+    @Builder
+	public SubscribtionHistory(SubscriptionReq subscriptionReq, Users user, Pet pet) {
+		this.startDate = subscriptionReq.getStartDate();
+		this.endDate = subscriptionReq.getEndDate();
+		this.autoPaymentFlag = subscriptionReq.getAutoPaymentFlag();
+		this.users = user;
+		this.pet = pet;
+    }
 }

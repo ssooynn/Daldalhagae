@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SNACK_TARGET")
 public class SnackTarget {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SNACK_TARGET_NO")
 	private int snackTargetNo;
 	
