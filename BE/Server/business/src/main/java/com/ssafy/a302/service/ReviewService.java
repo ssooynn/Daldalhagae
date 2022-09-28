@@ -86,7 +86,7 @@ public class ReviewService {
         List<MyReviewRes> myReviewList = new ArrayList<>();
         List<SubscribtionHistory> subscribtionHistoryList=subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
         for(SubscribtionHistory subscribtionHistory: subscribtionHistoryList){
-            if(subscribtionHistory.getServiceReview()!=null) continue;
+            if(subscribtionHistory.getServiceReview()==null) continue;
                 System.out.println();
                 MyReviewRes myReviewRes = new MyReviewRes();
                 myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
@@ -109,7 +109,6 @@ public class ReviewService {
                 }
                 myReviewRes.setItemReviewResList(itemReviewResList);
                 myReviewList.add(myReviewRes);
-
         }
         return myReviewList;
     }
@@ -146,8 +145,6 @@ public class ReviewService {
                 .subscribtionHistory(subscribtionHistory)
                 .image(serviceReviewReq.getServiceReviewImage())
                 .build();
-
-
         serviceReviewRepository.save(serviceReview);
 
 
