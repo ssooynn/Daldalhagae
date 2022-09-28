@@ -11,10 +11,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.a302.controller.UsersController;
 import com.ssafy.a302.dto.UsersDto;
 
-@WebMvcTest(UsersController.class)
 @AutoConfigureRestDocs
 class AuthApplicationTests {
 //	@Autowired
