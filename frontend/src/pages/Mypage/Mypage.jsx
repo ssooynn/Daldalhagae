@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
-import MypageSubscriptionsNow from './MypageSubscriptionsNow'
 import MypageSubscriptions from './MypageSubscriptions'
 import MypageUnwrittenReviews from './MypageUnwrittenReviews'
 import MypageReviews from './MypageReviews'
@@ -10,6 +9,7 @@ import MypageUserUpdate from './MypageUserUpdate'
 import MypagePetUpdate from './MypagePetUpdate'
 import MypagePetDetail from './MypagePetDetail'
 import MypageRoutingTitle from '../../components/Mypage/MypageRoutingTitle'
+import MypageSubscriptionDetail from './MypageSubscriptionDetail'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
@@ -39,7 +39,6 @@ const Mypage = () => {
   }, [])
 
   useEffect(()=>{
-    console.log(currentFocus)
   }, [currentFocus])
 
 
@@ -74,7 +73,7 @@ const Mypage = () => {
 
   return (
     <div>
-      <div style={{height:'60px'}}></div>
+      <div style={{height:'70px'}}></div>
       <div style={headerContainer}>
         <MypageHeaderCard user={userInfo}/>
       </div>
@@ -87,19 +86,25 @@ const Mypage = () => {
               exact="true"
               path=""
               element={
-                <MypageSubscriptionsNow setCurrentFocus={setCurrentFocus}/>
+                <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
               }
             />
             <Route
               path="subscriptionsNow"
               element={
-                <MypageSubscriptionsNow setCurrentFocus={setCurrentFocus}/>
+                <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
               }
             />
             <Route
               path="subscriptions"
               element={
                 <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
+              }            
+            />
+            <Route
+              path="subscriptionDetail"
+              element={
+                <MypageSubscriptionDetail/>
               }            
             />
             <Route

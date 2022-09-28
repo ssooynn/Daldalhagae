@@ -8,9 +8,10 @@ import imgA from '../assets/img/우리의한달을꽉차게.png'
 import imgB from '../assets/img/구독리스트1.png'
 import imgC from '../assets/img/구독리스트2.png'
 import imgD from '../assets/img/구독리스트3.png'
-import daldalPackage from '../assets/img/DalDalPackage.png'
-import toyPackage from '../assets/img/ToyPackage.png'
-import lightPackage from '../assets/img/lightPackage.png'
+import daldalPackage from '../assets/img/otherPackage1.png'
+import toyPackage from '../assets/img/otherPackage2.png'
+import lightPackage from '../assets/img/otherPackage3.png'
+import SideButton from '../components/SideButton';
 
 const MoveOtherOpions = styled.div`
   cursor: pointer;
@@ -20,7 +21,20 @@ const MoveOtherOpions = styled.div`
     background-color : rgba(0, 0, 0, 0.4);
   }
 `
-const MoveDetailButton = styled.div`
+const MoveDetailButton1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  height: 95%;
+  &:hover{
+    background-color : rgba(0, 0, 0, 0.2);
+  }
+`
+const MoveDetailButton2 = styled.div`
   cursor: pointer;
   padding: 10px;
   border-radius: 5px;
@@ -36,8 +50,68 @@ const SubscribeList = () => {
   function GoBasic() {
     Navigate("/subscribeDetail", {
       state: {
-        name: 'Basic Package'
-      }})
+        name: 'Basic Package',
+        intro: '사료 1개월',
+        components1: ['사료 1개월 분 (10~15kg)', '', '',],
+        components2: [1, 0, 0],
+        price: '21900',
+      }
+    })
+  }
+  function GoPlay() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Play Package',
+        intro: '간식 3종 + 장난감 2종',
+        components1: ['', '간식 3종', '장난감 2종'],
+        components2: [0, 3, 2],
+        price: '40000'
+      }
+    })
+  }
+  function GoAllInOne() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'All In One Package',
+        intro: '사료 1개월 + 간식 3종 + 장난감 2종',
+        components1: ['사료 1개월 분 (10~15kg)', '간식 3종', '장난감 2종',],
+        components2: [1, 3, 2],
+        price: '22900'
+      }
+    })
+  }
+  function GoDalDal() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'DalDal Package',
+        intro: '사료 1개월 + 간식 3종',
+        components1: ['사료 1개월 분 (10~15kg)', '간식 3종', '',],
+        components2: [1, 3, 0],
+        price: '23900'
+      }
+    })
+  }
+  function GoToy() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Toy Package',
+        intro: '사료 1개월 + 장난감 2종',
+        components1: ['사료 1개월 분 (10~15kg)', '', '장난감 2종',],
+        components2: [1, 0, 2],
+        price: '24900'
+      }
+    })
+  }
+  function GoLightAll() {
+    Navigate("/subscribeDetail", {
+      state: {
+        name: 'Light All Package',
+        intro: '사료 1개월 + 간식 1종 + 장난감 1종',
+        components1: ['사료 1개월 분 (10~15kg)', '간식 1종', '장난감 1종',],
+        components2: [1, 1, 1],
+        price: '25900'
+      }
+    })
   }
   function GoCustom() {
     Navigate("/setCustom")
@@ -50,24 +124,24 @@ const SubscribeList = () => {
         alignItems: 'center',
         margin: '8rem 0 0 0',
       }}>
-      <div> {/* 우리의 한달을 꽉 차게 */}
-        <img
-          src={imgA}
-          style={{
-            width: '1700px',
-            height: '500px',
-            filter: 'brightness(40%)',
-            position: 'relative',
-            marginBottom: '10rem'
-          }}alt="" />
+      <SideButton />
+      <div style={{ // 우리의 한달을 꽉 차게
+        width: '100%',
+        height: '30rem',
+        backgroundImage: `url(${imgA})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        // filter: 'brightness(40%)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginBottom: '10rem'
+      }}>
         <div
           style={{
             color: 'white',
-            position: 'absolute',
-            top: '50%',
-            left: '30%',
-            transform: 'translate( -50%, -50% )',
-            textAlign: 'start',
+            marginLeft: '20%',
           }}>
           <h1>우리의 한달을 꽉 차게</h1>
           <h3>반려견을 위한 1달 구독 서비스</h3>
@@ -85,24 +159,18 @@ const SubscribeList = () => {
           <img
             src={imgB}
             style={{
-              // width: '540px',
               width: '100%'
             }} alt="" />
-          <MoveDetailButton
-            onClick={GoBasic}
-            style={{
-              marginLeft: '15px',
-            }}>
+          <MoveDetailButton1 onClick={GoBasic}>
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                textAlign: 'end',
                 marginBottom: '6.7rem',
               }}>
-              <h1 style={{margin: '0 0 40px 0'}}>Basic Package</h1>
-              <p style={{margin: '0'}}>든든한 한달을 위한 기본 구성,</p>
-              <p style={{margin: '0'}}>기본에 충실하고 싶은 분에게 추천합니다.</p>
+              <h1 style={{ margin: '0 0 40px 0' }}>Basic Package</h1>
+              <p style={{ margin: '0' }}>든든한 한달을 위한 기본 구성,</p>
+              <p style={{ margin: '0' }}>기본에 충실하고 싶은 분에게 추천합니다.</p>
             </div>
             <div
               style={{
@@ -112,12 +180,12 @@ const SubscribeList = () => {
                 fontSize: '12px',
                 width: '450px',
               }}>
-              <p style={{fontWeight: 'bold', fontSize: '14px'}}>[사료 1개월 구성]</p>
+              <p style={{ fontWeight: 'bold', fontSize: '14px' }}>[사료 1개월 구성]</p>
               <p>고르기 힘든 반려견 사료, 이제 고민하지 마세요.</p>
               <p>'달달하개'가 기본에 충실한 사료 1개월 구성으로 반려인의 고민을 덜어드립니다.</p>
               <p>'홀리스틱' 등급만으로 구성된 반려견 사료 중 최적의 상품을 맞춤 추천해 보내드립니다.</p>
             </div>
-          </MoveDetailButton>
+          </MoveDetailButton1>
         </div>
         <div  // Play Package
           style={{
@@ -127,12 +195,7 @@ const SubscribeList = () => {
             marginBottom: '15rem',
             height: '400px'
           }}>
-          <MoveDetailButton
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              margin: '0 0 10rem 15px',
-            }}>
+          <MoveDetailButton2 onClick={GoPlay}>
             <div
               style={{
                 display: 'flex',
@@ -142,28 +205,27 @@ const SubscribeList = () => {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  marginBottom: '6rem'
+                  marginBottom: '7.1rem'
                 }}>
-                <h1 style={{margin: '0 0 40px 0'}}>Play Package</h1>
-                <p style={{margin: '0'}}>활발한 우리 반려견 놀이 생활을 위한 구성,</p>
-                <p style={{margin: '0'}}>항상 발랄하고 활동적인 반려견에게 추천합니다.</p>
+                <h1 style={{ margin: '0 0 40px 0' }}>Play Package</h1>
+                <p style={{ margin: '0' }}>활발한 우리 반려견 놀이 생활을 위한 구성,</p>
+                <p style={{ margin: '0' }}>항상 발랄하고 활동적인 반려견에게 추천합니다.</p>
               </div>
             </div>
             <div
               style={{
                 backgroundColor: 'rgba(235, 203, 177, 0.2)',
                 borderRadius: '5px',
-                padding: '1px 30px 1px 30px',
+                padding: '1px 10px 1px 30px',
                 fontSize: '12px',
-                width: '450px',
-                marginRight: '15px',
+                width: '480px',
               }}>
-              <p style={{fontWeight: 'bold', fontSize: '14px'}}>[간식 3종 + 장난감 2종 구성]</p>
+              <p style={{ fontWeight: 'bold', fontSize: '14px' }}>[간식 3종 + 장난감 2종 구성]</p>
               <p>항상 힘이 넘치는 우리 반려견, 어떻게 놀아줄까 고민이신가요?</p>
               <p>'달달하개'가 제안하는 Play Package를 통해 맛있고 즐거운 놀이 시간을 보내세요!</p>
               <p>다양한 간식 3종과 질리지 않는 장난감 2종 구성으로 달달하고 알찬 반려견 여가생활을 보장합니다.</p>
             </div>
-          </MoveDetailButton>
+          </MoveDetailButton2>
           <img
             src={imgC}
             style={{
@@ -183,12 +245,7 @@ const SubscribeList = () => {
             style={{
               width: '100%',
             }} alt="" />
-          <MoveDetailButton
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              margin: '0 0 10rem 15px',
-            }}>
+          <MoveDetailButton1 onClick={GoAllInOne}>
             <div
               style={{
                 display: 'flex',
@@ -196,9 +253,9 @@ const SubscribeList = () => {
                 textAlign: 'end',
                 marginBottom: '8.2rem'
               }}>
-              <h2 style={{margin: '0 0 40px 0'}}>All In One Package</h2>
-              <p style={{margin: '0'}}>사료, 간식, 장난감 꽉 찬 구성</p>
-              <p style={{margin: '0'}}>반려견에게 가득찬 한달을 선물하세요</p>
+              <h2 style={{ margin: '0 0 40px 0' }}>All In One Package</h2>
+              <p style={{ margin: '0' }}>사료, 간식, 장난감 꽉 찬 구성</p>
+              <p style={{ margin: '0' }}>반려견에게 가득찬 한달을 선물하세요</p>
             </div>
             <div
               style={{
@@ -208,13 +265,13 @@ const SubscribeList = () => {
                 fontSize: '12px',
                 width: '400px'
               }}>
-              <p style={{fontWeight: 'bold', fontSize: '14px'}}>[사료 1개월 + 간식 3종 + 장난감 2종 구성]</p>
+              <p style={{ fontWeight: 'bold', fontSize: '14px' }}>[사료 1개월 + 간식 3종 + 장난감 2종 구성]</p>
               <p>뭘 고를지 고민일땐? 다 사면되지!</p>
               <p>'달달하개'가 사료, 간식, 장난감 전부 책임지겠습니다.</p>
               <p>고민 없이 꽉 찬 한 달을 반려견과 함께 즐기세요. 한 달간 달달하개.</p>
               {/* <p style={{textAlign: 'end', cursor: 'pointer', fontWeight: 'bold'}}>상세설명 보러가기 →</p> */}
             </div>
-          </MoveDetailButton>
+          </MoveDetailButton1>
         </div>
       </div>
       <div  // Other Package
@@ -228,24 +285,24 @@ const SubscribeList = () => {
             display: 'flex',
             justifyContent: 'space-between',
           }}>
-          <MoveOtherOpions>
+          <MoveOtherOpions onClick={GoDalDal}>
             <img
               src={daldalPackage}
-              style={{width: '95%', opacity: '0.9'}}alt="" />
+              style={{ width: '95%', opacity: '0.9' }} alt="" />
             <h4>DalDal Package</h4>
             <p>[사료 1개월 + 간식 3종]</p>
           </MoveOtherOpions>
-          <MoveOtherOpions>
+          <MoveOtherOpions onClick={GoToy}>
             <img
               src={toyPackage}
-              style={{width: '95%', opacity: '0.9'}}alt="" />
+              style={{ width: '95%', opacity: '0.9' }} alt="" />
             <h4>Toy Package</h4>
             <p>[사료 1개월 + 장난감 2종]</p>
           </MoveOtherOpions>
-          <MoveOtherOpions>
+          <MoveOtherOpions onClick={GoLightAll}>
             <img
               src={lightPackage}
-              style={{width: '95%', opacity: '0.9'}}alt="" />
+              style={{ width: '95%', opacity: '0.9' }} alt="" />
             <h4>Light All Package</h4>
             <p>[사료 1개월 + 간식 1종 + 장난감 1종]</p>
           </MoveOtherOpions>
@@ -261,7 +318,7 @@ const SubscribeList = () => {
         <h2>.</h2>
         <p>달달하개에서는 원하는 구성으로 나만의 구독 패키지를 만들 수 있습니다!</p>
         <p>지금 바로 아래 버튼을 클릭해 시작해보세요</p>
-      <StyledButton SmallWhite style={{width: '100%', marginTop: '50px'}} onClick={(e) => GoCustom()}>나만의 구독 패키지 만들기</StyledButton>
+        <StyledButton SmallWhite style={{ width: '100%', marginTop: '50px' }} onClick={(e) => GoCustom()}>나만의 구독 패키지 만들기</StyledButton>
       </div>
       <Footer />
     </div>

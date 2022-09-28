@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 // 스타일 컴포넌트
 import styled from "styled-components";
 import { FlexBox } from './MainComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import Logo from '../assets/img/Logo2.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../stores/modules/user';
 
 
 // 처음엔 배경 투명도 100%
@@ -24,7 +25,7 @@ const Navbar = styled.div`
     align-items: center;
     display: flex;
     font-weight: 500;
-    z-index: 999;
+    z-index: 2;
     `
 
 
@@ -42,10 +43,12 @@ const Category = styled.div`
 let lastScrollTop = 0;
 let nowScrollTop = 0;
 export function NavBar({ ...props }) {
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("rgba(255,255,255,0)");
   const [boxShadow, setboxShadow] = useState("none")
-  const user = useSelector(state => state.user.user.user);
+  const [user, setUserLogin] = useState(useSelector(state => state.user.user.user));
 
   function showLoginModal() {
     setIsModalOpen(true);
@@ -75,7 +78,7 @@ export function NavBar({ ...props }) {
       // window.removeEventListener("scroll", () => { });
       mounted = false;
     };
-  }, []);
+  }, [user]);
 
   return (
     <Navbar backgroundColor={backgroundColor} boxShadow={boxShadow} {...props}>
@@ -90,6 +93,15 @@ export function NavBar({ ...props }) {
           {!user ? <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }}>로그인</Category> :
             <Link to="/mypage"><Category>My page</Category></Link>
           }
+          {user && <Category onClick={(e) => {
+            e.preventDefault(); setUserLogin("");
+            dispatch(
+              setUser({
+                token: "",
+              })
+            );
+            Navigate("/");
+          }}>로그아웃</Category>}
         </FlexBox>
       </FlexBox>
 
