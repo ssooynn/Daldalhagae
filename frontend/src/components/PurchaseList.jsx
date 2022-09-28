@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
-import imgA from '../assets/img/자유구독1.png'
 import DeleteButton from '../assets/img/delete.svg';
 import { addItem } from '../stores/modules/bag'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,10 +32,19 @@ const PurchaseList = (props) => {
   const [showPurchase, setShowPurchase] = useState([])
   const [checkPurchase, setCheckPurchase] = useState([])
   const bag = useSelector((state) => state.bag);
-  function addPet(params, e) {
-    console.log(props);
+  function deletePet(idx, e) {  // 구독 목록 삭제
+    e.preventDefault()
+    const copyShowPurchase = [...showPurchase]
+    const copyCheckPurchase = [...checkPurchase]
+    copyShowPurchase.splice(idx, 1)
+    copyCheckPurchase.splice(idx, 1)
+    setShowPurchase(copyShowPurchase)
+    setCheckPurchase(copyCheckPurchase)
+  }
+  function addPet(params, idx, e) {  // 구독 목록 추가
     e.preventDefault()
     if (checkPurchase.includes(params.name)) {
+      console.log(checkPurchase)
       alert("이미 구독 상태인 강아지입니다.")
     } else {
       setShowPurchase([...showPurchase, <div
@@ -46,7 +54,7 @@ const PurchaseList = (props) => {
           alignItems: 'center'
         }}>
         <p style={{ margin: '0 10px 0 0' }}>{props.info[0]} - {params.name}</p>
-        <img src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
+        <img onClick={(e)=>deletePet(idx, e)} src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
       </div>])
       setCheckPurchase([...checkPurchase, params.name])
       const temp = props.info.slice()
@@ -56,7 +64,7 @@ const PurchaseList = (props) => {
   }
   let totalPrice = Number(props.info[3]) * showPurchase.length
   for (let i = 0; i < pets.length; i++) {
-    showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], e) }}>
+    showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], showPurchase.length, e) }}>
       <img
         src={pets[i].image}
         style={{
@@ -135,7 +143,7 @@ const PurchaseList = (props) => {
         addItemInBag(e)
       }}>장바구니
     </div>
-    {bagOpen && <ShoppingBag setBagOpen={setBagOpen} />}
+    {bagOpen && <ShoppingBag setBagOpen={setBagOpen} info={info} />}
     <div  // 구독하기
       style={{
         width: '100%',
