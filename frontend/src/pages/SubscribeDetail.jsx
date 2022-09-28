@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React,{ useState, useEffect } from 'react'
+import axios from 'axios'
 import { useLocation } from 'react-router-dom';
 import img1 from '../assets/img/구독리스트1.png'
 import img2 from '../assets/img/구독리스트2.png'
@@ -49,8 +50,33 @@ const SubscribeDetail = () => {
   const components1 = location.state.components1
   const components2 = location.state.components2
   const price = location.state.price
-  const info = [name, intro, components1, price, components2]
-  console.log(info)
+  const [pets, setPets] = useState([])
+  const [feeds, setFeeds] = useState([])
+  const [snacks, setSnacks] = useState([])
+  const [toys, setToys] = useState([])
+
+  useEffect(()=>{
+    const usersSno = 'uXJFRDEC7DuyYasedNxU1'
+    // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+    // Authorization: `Bearer` + `a.a.a`
+    axios({
+      method: 'get',
+      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/subscription/detail/${usersSno}`,
+      headers: {
+        'Authorization': `Bearer a.a.a`
+      }
+    })
+      .then((res)=>{
+        setPets(res.data.pets)
+        setFeeds(res.data.feeds)
+        setSnacks(res.data.snacks)
+        setToys(res.data.toys)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+  }, [])
+  const info = [name, intro, components1, price, components2, pets]
   let image = undefined
   if (name === 'Basic Package') {
     image = img1
@@ -126,7 +152,7 @@ const SubscribeDetail = () => {
             <h3>사료 맞춤 추천</h3>
           </div>
         </div>
-        <AutoSlides />
+        <AutoSlides info={feeds}/>
         <div  // 간식 소개 시작
           style={{
             display: 'flex',
@@ -143,7 +169,7 @@ const SubscribeDetail = () => {
           </div>
           <img src={imgD} width='400px' alt='img' />
         </div>
-        <AutoSlides />
+        <AutoSlides info={snacks}/>
         <div  // 장난감 소개 시작
           style={{
             display: 'flex',
@@ -160,7 +186,7 @@ const SubscribeDetail = () => {
             <h3>장난감 맞춤 추천</h3>
           </div>
         </div>
-        <AutoSlides />
+        <AutoSlides info={toys}/>
         <div  // 마무리 글
           style={{
             margin: '15rem 0 15rem 0'
