@@ -70,9 +70,7 @@ public class FileUpload {
 		if(image ==null)
 			return true;
 		petImageUpload(image, pet);
-
 		return false;
-
 	}
 
 	public String getUniqueFileName(String fileName) {

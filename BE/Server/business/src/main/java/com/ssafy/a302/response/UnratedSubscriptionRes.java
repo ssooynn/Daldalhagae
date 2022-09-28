@@ -1,8 +1,10 @@
 package com.ssafy.a302.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssafy.a302.domain.Purchase;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -25,8 +27,10 @@ public class UnratedSubscriptionRes {
 //}]
     int subscriptionNo;
     String subscriptionName;
-    Date subscriptionStartDate;
-    Date subscriptionEndDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate subscriptionStartDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate subscriptionEndDate;
     String petSno;
     String petName;
     List<PurchaseRes> purchaseResList;
