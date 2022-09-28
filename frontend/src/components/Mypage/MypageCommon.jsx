@@ -80,7 +80,7 @@ export const InfoLayout = ({padding, subpadding, width, height, mainFontSize, fo
         <FlexBox justify='start' align='start' direction='column' span={span}>
             <SmallText fontSize={fontSize} fontWeight={fontWeight} textMargin={textMargin}>{label}</SmallText>
             <InfoBox width={width} height={height} mainFontSize={mainFontSize} margin={margin} padding={padding} style={{display:'flex', justifyContent:'space-between'}}>
-                <div style={{padding:subpadding}}>{children}</div>
+                <div style={{padding:subpadding}}>{children ? children: '-'}</div>
                 {sub? <div style={{padding:subpadding, width:'10%', borderLeft:'0.1px solid #969696', textAlign:'center'}}>{sub}</div>:<></>}
                 </InfoBox>
 
@@ -159,10 +159,10 @@ export const PetTag = ({children, height, width, bgColor}) => {
 export const ImgDiv = styled(animated.div)`
     width: ${(props)=> props.width || '100%'};
     height: ${(props)=> props.height || '130px'};
-    margin: 12px 0px;
+    margin:  ${(props)=> props.margin ||'12px 0px'};
     position: relative;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: ${(props)=> props.radius||'10px'};
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.48);
 `
 
@@ -170,16 +170,20 @@ export const RatingBox = styled.div`
 margin: 0 auto;
 
 & svg {
-  color: #C4C4C4;
+  color: #BEC3C6;
   cursor: pointer;
 }
 :hover svg {
-  color: black;
+  color: #FFD875;
 }
 & svg:hover ~ svg {
-  color: #C4C4C4;
+  color: #BEC3C6;
 }
 .black {
-  color: black;
+  color: #FFD875;
+}
+
+.marginR {
+  margin-right:'2px'
 }
 `
