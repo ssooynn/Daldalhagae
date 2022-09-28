@@ -3,6 +3,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import DefaultProfile1 from '../../assets/img/DefaultProfile1.png'
+import DefaultProfile2 from '../../assets/img/DefaultProfile2.png'
+import DefaultProfile3 from '../../assets/img/DefaultProfile3.png'
 import { StyledProfile, FlexBox, subTitleStyle, PetTag } from '../../components/Mypage/MypageCommon';
 import { PetAge } from '../../util/PetAge';
 
@@ -89,7 +92,7 @@ const MypagePetDetail = (props) => {
       <div style={{marginBottom:'40px'}}>
         <div style={profileBoxStyle}>
           <FlexBox direction="row" justify="start" align="start">
-            <StyledProfile src={pet.image} width='110px' />
+            <StyledProfile src={DefaultProfile1} width='110px' />
             <FlexBox direction="column" height="110px" justify="space-around" align="start" margin="0px 0px 0px 8%">
               <div>
                 <div style={{fontSize:'18px', marginBottom:'1px'}}>{pet.name}  <span style={{...detailText, fontSize:'11px', marginLeft:'2px'}}>[개월]</span></div>
@@ -118,8 +121,9 @@ const MypagePetDetail = (props) => {
             <div style={{...detailText, fontWeight:'300', marginBottom:'7px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
             <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))', marginBottom:'20px'}}>
               {materials.map((alergy,idx)=>{
+                const colorList=['#D2E0BF', '#DCC7B7','#A5AAAD','#E0D3ED','#E1AAAA','#FFC6AE']
                 return(
-                  <PetTag padding='6px 0px' key={idx}>{alergy}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%6]}>{alergy}</PetTag>
                 )
               })}
             </div>
@@ -130,9 +134,10 @@ const MypagePetDetail = (props) => {
             <div style={litTitle}>특별관리</div> 
             <div style={{...detailText, fontWeight:'300', marginBottom:'7px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
             <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))'}}>
-              {effects.map((alergy,idx)=>{
+              {effects.map((effect,idx)=>{
+                const colorList = ['#EAD0D0', '#F3BD94', '#EDDCCF', '#FFDF8E', '#DB9090', '#AC998A']
                 return(
-                  <PetTag padding='6px 0px' key={idx}>{alergy}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%6]}>{effect}</PetTag>
                 )
               })}
             </div>

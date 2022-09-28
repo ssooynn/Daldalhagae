@@ -3,6 +3,9 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { StyledLink } from './MypageCommon'
 
+import DefaultProfile1 from '../../assets/img/DefaultProfile1.png'
+import DefaultProfile2 from '../../assets/img/DefaultProfile2.png'
+import DefaultProfile3 from '../../assets/img/DefaultProfile3.png'
 
 
 const MypageHeaderCard = (props) => {
@@ -84,7 +87,7 @@ const MypageHeaderCard = (props) => {
 
   const plusProfile = {
     width:'100%',
-    height:'95%',
+    height:'83%',
     borderRadius:'7px',
     margin:'0',
     backgroundColor: '#EDEDED',
@@ -133,13 +136,18 @@ useEffect(()=>{
         <div style={{boxSizing:'border-box', width:'48%', borderLeft:'0.1px solid #929292', paddingLeft:'6%'}}>
           <div style={repDiv}>
             {user?.pets?.map((pet, idx)=>{
+              const profileList = [DefaultProfile1, DefaultProfile2, DefaultProfile3]
               return(
                 <StyledLink 
                   to={'petDetail'}
                   state= {{petId:pet.petSno}}
                   id={idx}
                 >
-                  <img style={miniProfile}  src={pet.image} alt="프로필 이미지"/>
+                  { pet.image ?
+                    <img style={miniProfile}  src={pet.image} alt="프로필 이미지"/> :
+                    <img style={miniProfile}  src={profileList[idx-1]} alt="프로필 이미지"/>
+                  }
+                  <div style={{fontSize:'12px'}}>{pet.name}</div>
                 </StyledLink >
               )
             })}
