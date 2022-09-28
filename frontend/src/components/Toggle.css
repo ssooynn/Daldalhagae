@@ -9,10 +9,10 @@
 }
 .card:hover {
   border-style: solid;
-  border-color : #CCA990;
+  border-color : #ffffff;
 }
 .clickCard {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 28%;
   height: 100%;
   border-radius: 5px;

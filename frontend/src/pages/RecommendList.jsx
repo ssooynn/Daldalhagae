@@ -72,7 +72,7 @@ const RecommendList = (s) => {
         </div>
       </div>
       <p>선택이 부족한 상품은 추천에 따라 자동 선택됩니다.</p>
-    <StyledButton onClick={GoPaymentList} SmallWhite style={{width: '250px', margin: '50px 0 200px 0'}}>선택 완료</StyledButton>
+    <StyledButton onClick={GoPaymentList} SmallWhite style={{width: '250px', margin: '50px 0 200px 0'}}>결제하기</StyledButton>
     <Footer />
     </div>
   )
