@@ -1,12 +1,14 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { FlexBox } from '../../components/Mypage/MypageCommon';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 
 const SubscriptionCarousel = (props) => {
   const [slides, setSlides] = useState([])
+  const [index, setIndex] = useState(0)
   const feeds = [{
     name:'도비 어덜트',
     image: 'https://image.homeplus.kr/td/2e4bb58e-2579-401e-ae75-9a5c14819ed9'
@@ -29,7 +31,7 @@ const SubscriptionCarousel = (props) => {
   }]
 
   useEffect(()=>{
-    setSlides([...feeds,...toy])
+    setSlides([...feeds,...toy,...snacks])
   },[])
 
   const grid3 = {
@@ -44,14 +46,15 @@ const SubscriptionCarousel = (props) => {
 
   const cardStyle = {
     backgroundColor:'white',
-    boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.25)',
+    boxShadow: '0px 1px 2.5px rgba(0, 0, 0, 0.25)',
     width:'100%',
     padding:'7%',
     borderRadius:'5px',
     textAlign:'center',
     boxSizing: 'border-box',
     color:'#1F1D1D',
-    fontWeight:'500'
+    fontWeight:'500',
+    fontSize:'0.8em'
   }
 
   const imgStyle={
@@ -68,7 +71,9 @@ const SubscriptionCarousel = (props) => {
     width:`${slides.length * (100 / 3)}%`,
     display: 'grid',
     gridTemplateColumns:`repeat(${slides.length}, minmax(0, 1fr))`,
-
+    gap: '1%',
+    padding: '10px 2px',
+    boxSizing: 'border-box'
   }
 
 
@@ -86,17 +91,21 @@ const SubscriptionCarousel = (props) => {
       </div>
       :
       <div style={carouselDiv}>
-        <div style={{overflow:'hidden', width:'100%'}}>
-          <div style={carouselGrid}>
-            {slides.map((slide,idx)=>{
-            return(
-            <div style={cardStyle} key={idx}>
-              <img src={slide.image} style={imgStyle} alt="" />
-              <div>{slide.name}</div>
-            </div>)
-            })}
+        <FlexBox width='100%' padding='10px'>
+          <FontAwesomeIcon icon={faChevronLeft} style={{color:'#776B62', fontSize:'26px', margin:'0px 8px', cursor:'pointer'}} onClick={()=>{setIndex(Math.max(0, index-1))}}/>
+          <div style={{overflow:'hidden', width:'100%'}}>
+              <div style={{...carouselGrid, transform: `translate3d(${-index * (100/slides.length)}%,0,0)`, transitionDuration:'1s'}}>
+                {slides.map((slide,idx)=>{
+                return(
+                <div style={cardStyle} key={idx}>
+                  <img src={slide.image} style={imgStyle} alt="" />
+                  <div>{slide.name}</div>
+                </div>)
+                })}
+              </div>
           </div>
-        </div>
+          <FontAwesomeIcon icon={faChevronRight} style={{color:'#776B62', fontSize:'26px', margin:'0px 8px', cursor:'pointer'}} onClick={()=>{setIndex(Math.min(slides.length-3, index+1))}}/>
+        </FlexBox>
       </div>
     }
       </>

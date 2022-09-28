@@ -25,8 +25,8 @@ const MypageSubscriptions = () => {
         const data = res.data
         const newData = data.map((subs, idx)=>{
           let newSubs = subs
-          newSubs.subscriptionEndDate = subs.endDate
-          newSubs.subscriptionStartDate = subs.startDate
+          newSubs.subscriptionEndDate = subs.endDate.join('.')
+          newSubs.subscriptionStartDate = subs.startDate.join('.')
           return (newSubs)
         })
         setSubscriptionList(newData)
@@ -39,8 +39,8 @@ const MypageSubscriptions = () => {
         const data = res.data
         const newData = data.map((subs, idx)=>{
           let newSubs = subs
-          newSubs.subscriptionEndDate = subs.endDate
-          newSubs.subscriptionStartDate = subs.startDate
+          newSubs.subscriptionEndDate = subs.endDate.join('.')
+          newSubs.subscriptionStartDate = subs.startDate.join('.')
           return (newSubs)
         })
         setSubscriptionList(newData)

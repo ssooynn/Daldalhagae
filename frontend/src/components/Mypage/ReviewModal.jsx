@@ -22,7 +22,7 @@ import Emo5Full from '../../assets/img/ReviewEmo5Full.png'
 
 const ReviewModal = (props) => {
   const {setPopup,subscription} = props
-  // console.log(subscription)
+  console.log(subscription)
   const [review, setReview] = useState({
     subscriptionNo:'',
     serviceReviewRate:'',
@@ -46,7 +46,7 @@ const ReviewModal = (props) => {
 
 
   useEffect(()=>{
-    const itemReview = subscription.purchaseList.map((purchase)=>{
+    const itemReview = subscription.purchaseResList.map((purchase)=>{
       return ({
         itemSno:purchase.itemSno,
         purchaseNo:purchase.purchaseNo,
@@ -90,10 +90,10 @@ const ReviewModal = (props) => {
     setFilename({name:e.target.files[0].name})
   }
 
-  useEffect(()=>{
-    document.querySelector('#fileTitle').innerHTML = filename.name
-    console.log(filename)
-  },[filename])
+  // useEffect(()=>{
+  //   document.querySelector('#fileTitle').innerHTML = filename.name
+  //   console.log(filename)
+  // },[filename])
 
   const onSubmit = () => {
     formData.append('ServiceReviewReq', JSON.stringify(review))
@@ -115,9 +115,9 @@ const ReviewModal = (props) => {
 
 
   const back = {
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.2)',
     zIndex: '10',
-    height:'100%',
+    height:'150%',
     width: '100%',
     overFlow:'hidden',
     position: 'absolute',
@@ -229,7 +229,7 @@ const ReviewModal = (props) => {
                 업로드
               </label>
               <input type="file" id="input-file" style={{display:"none"}} onChange={uploadPhoto}/> 
-              <span id="fileTitle"></span>
+              {/* <span id="fileTitle">{filename}</span> */}
             </div>
           </div>
           <div style={serviceRev}>
@@ -237,7 +237,7 @@ const ReviewModal = (props) => {
             <div style={detailText}>추천 받은 상품에 대해 얼마나 만족하시나요?</div>
             {/* map으로 돌리기 */}
             <div>
-              {subscription.purchaseList.map((purchase,idx)=>{
+              {subscription.purchaseResList.map((purchase,idx)=>{
                 
                 return(
                   <div key={purchase.purchaseNo} style={{margin:'20px 0px'}}>

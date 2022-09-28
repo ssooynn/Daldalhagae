@@ -9,6 +9,7 @@ import { userInfo } from '../../api/mypageUser'
 const MypageSubscriptionDetail = () => {
 
   const [user, setUser] = useState({})
+  const [reCredit, setReCredit] = useState('')
   const location = useLocation()
   const subscription = location.state
   // autoPaymentFlag: 1
@@ -34,15 +35,20 @@ const MypageSubscriptionDetail = () => {
     }) .catch((err)=>{
       console.log(err)
     })
+    const end = subscription.endDate
+    end[2] = end[2] - 1
+    setReCredit(end.join('.'))
   } ,[])
 
   const detailDiv = {
+    position:'relative',
     backgroundColor:'#FFFDFB',
     boxSizing: 'border-box',
     // height:'400px',
     width:'100%',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    padding:'5%'
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+    padding:'5%',
+    borderRadius:'5px'
   }
   
   const hrStyle = {
@@ -53,7 +59,7 @@ const MypageSubscriptionDetail = () => {
   }
   
   const title ={
-    fontSize:'18px',
+    fontSize:'16px',
     fontWeight:'500'
   }
 
@@ -61,22 +67,31 @@ const MypageSubscriptionDetail = () => {
   const gridDiv = {
     display:'grid',
     gridTemplateColumns:'repeat(4, minmax(0, 1fr))',
-    gap: '2%',
-    marginBottom: '15px',
+    gap: '7%',
+    marginBottom: '16px',
     fontSize: '14px'
   }
 
+  const cancelStyle = {
+    color: '#828282',
+    cursor:'pointer',
+    position:'absolute',
+    bottom: '2%',
+    right:'5%',
+    fontSize:'12px',
+    fontWeight:'300'
+  }
   return (
-    <div>
+    <div style={{paddingBottom:'50px'}}>
       <SubscriptionItem page='subsDetail' bgImg={subscription.subscriptionName.replaceAll(' ','')} subscription={subscription} reviewConnect={false} isDetail={true}></SubscriptionItem>
       <div style={detailDiv}>
-        <div style={title}>배송 상품</div>
+        <div style={{...title, marginBottom:'10px'}}>배송 상품</div>
           {/* carousel */}
         <SubscriptionCarousel></SubscriptionCarousel>
-        <div style={title}>구독 정보</div>
+        <div style={{...title, marginTop:'30px'}}>구독 정보</div>
         <hr style={hrStyle}/>
         {/* grid로 */}
-        <div style={{padding:'10px 15px', marginBottom:'25px'}}>
+        <div style={{padding:'12px 24px', marginBottom:'25px'}}>
           <div style={gridDiv}>
             <div >대상 반려견</div>
             <div>{subscription.petName}</div>
@@ -95,14 +110,14 @@ const MypageSubscriptionDetail = () => {
           </div>
           <div style={gridDiv}>
             <div >재결제일</div>
-            <div></div>
+            <div>{reCredit}</div>
           </div>
         </div>
        
 
         <div style={title}>배송 정보</div>
         <hr style={hrStyle}/>
-        <div style={{padding:'10px 15px', marginBottom:'25px'}}>
+        <div style={{padding:'12px 24px', marginBottom:'25px'}}>
           <div style={gridDiv}>
             <div >배송지</div>
             <div>{user?.address?.replaceAll(';', ' ')}</div>
@@ -115,9 +130,8 @@ const MypageSubscriptionDetail = () => {
             <div >전화번호</div>
             <div>{user.phone}</div>
           </div>
-
-
         </div>
+        <div style={cancelStyle} >구독 취소하기</div>
       </div>  
     </div>
   )
