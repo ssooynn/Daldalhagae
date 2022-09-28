@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
 import imgA from '../assets/img/자유구독1.png'
-import 삭제 from '../assets/img/삭제.png'
+import DeleteButton from '../assets/img/delete.svg';
+import { addItem } from '../stores/modules/bag'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ClickPet = styled.div`
   cursor: pointer;
@@ -17,6 +19,7 @@ const ClickPet = styled.div`
 `
 const info = []
 const PurchaseList = (props) => {
+  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false)
   const showModal = () => {
     setModalOpen(true)
@@ -25,31 +28,25 @@ const PurchaseList = (props) => {
   const showBag = () => {
     setBagOpen(true)
   }
-  const pets = [{
-    petId: 1,
-    name: '해리',
-    profile: '893fojrforjfa04jaof0asd'
-  }, {
-    petId: 2,
-    name: '포터',
-    profile: 'diaufoijfafe092r2jflefx'
-  }]
+  const pets = props.info[5]
   const showPets = []
   const [showPurchase, setShowPurchase] = useState([])
   const [checkPurchase, setCheckPurchase] = useState([])
+  const bag = useSelector((state) => state.bag);
   function addPet(params, e) {
+    console.log(props);
     e.preventDefault()
     if (checkPurchase.includes(params.name)) {
       alert("이미 구독 상태인 강아지입니다.")
     } else {
       setShowPurchase([...showPurchase, <div
-      style={{
-        display:'flex',
-        justifyContent: 'end',
-        alignItems: 'center'
-      }}>
-        <p style={{margin: '0 10px 0 0'}}>{props.info[0]} - {params.name}</p>
-        <img src={삭제} width='20px' height='20px' style={{cursor: 'pointer'}} alt="" />
+        style={{
+          display: 'flex',
+          justifyContent: 'end',
+          alignItems: 'center'
+        }}>
+        <p style={{ margin: '0 10px 0 0' }}>{props.info[0]} - {params.name}</p>
+        <img src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
       </div>])
       setCheckPurchase([...checkPurchase, params.name])
       const temp = props.info.slice()
@@ -59,16 +56,45 @@ const PurchaseList = (props) => {
   }
   let totalPrice = Number(props.info[3]) * showPurchase.length
   for (let i = 0; i < pets.length; i++) {
-    showPets.push(<ClickPet onClick={(e)=>{addPet(pets[i], e)}}>
+    showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], e) }}>
       <img
-        src={imgA}
+        src={pets[i].image}
         style={{
           width: '100px',
           height: '100px',
           borderRadius: '5px',
-        }} alt='pet'/>
-      <p style={{margin: 'auto'}}>{pets[i].name}</p>
+        }} alt='pet' />
+      <p style={{ margin: 'auto' }}>{pets[i].name}</p>
     </ClickPet>)
+  }
+  function addItemInBag(e) {
+    e.preventDefault();
+    showBag();
+    for (let i = 0; i < checkPurchase.length; i++) {
+      const bags = {
+        packageName: props.info[0],
+        petName: checkPurchase[i],
+        desc: props.info[1],
+        price: props.info[3],
+        feed: props.info[4][0],
+        snack: props.info[4][1],
+        toy: props.info[4][2],
+      }
+      //redux에 해당 상품이 이미 있는지 없는지 확인
+      let isExist = false;
+      for (let i = 0; i < bag.length; i++) {
+        if (bag[i].packageName === bags.packageName && bag[i].petName === bags.petName) {
+          isExist = true;
+        }
+      }
+      //redux에 없으면 추가
+      if (!isExist) {
+        dispatch(
+          addItem(bags)
+        );
+      }
+    }
+
   }
   return <div>
     <div  // 펫 목록
@@ -88,7 +114,7 @@ const PurchaseList = (props) => {
       }}>
       <h3>구독목록</h3>
       {showPurchase}
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h4>총 {showPurchase.length}개</h4>
         <h4>{totalPrice} 원</h4>
       </div>
@@ -105,9 +131,8 @@ const PurchaseList = (props) => {
         cursor: 'pointer',
         margin: '5px 0 5px 0',
       }}
-      onClick={event=>{
-        event.preventDefault()
-        showBag()
+      onClick={(e) => {
+        addItemInBag(e)
       }}>장바구니
     </div>
     {bagOpen && <ShoppingBag setBagOpen={setBagOpen} />}
@@ -122,13 +147,13 @@ const PurchaseList = (props) => {
         borderRadius: '5px',
         cursor: 'pointer'
       }}
-      onClick={event=>{
+      onClick={event => {
         event.preventDefault();
         showModal()
       }}
-      >구독하기
+    >구독하기
     </div>
-    {modalOpen && <Modal setModalOpen={setModalOpen} info={info}/>}
+    {modalOpen && <Modal setModalOpen={setModalOpen} info={info} />}
   </div>
 }
 

@@ -25,7 +25,7 @@ const Navbar = styled.div`
     align-items: center;
     display: flex;
     font-weight: 500;
-    z-index: 999;
+    z-index: 2;
     `
 
 
