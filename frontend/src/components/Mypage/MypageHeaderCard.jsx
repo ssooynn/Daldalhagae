@@ -7,7 +7,6 @@ import { StyledLink } from './MypageCommon'
 
 const MypageHeaderCard = (props) => {
   const {user} = props
-  console.log(user,'d')
   
   const cardContainer = {
     boxSizing:'border-box',
@@ -69,23 +68,24 @@ const MypageHeaderCard = (props) => {
   }
 
   const repDiv ={
-    display:'flex',
-    justifyContent:'space-around',
-    // width: '90%',
+    display:'grid',
+    gridTemplateColumns:'repeat(3, minmax(0, 1fr))',
+    gap: '7%',
+    height:'auto',
     margin:'auto',
   }
 
   const miniProfile = {
-    width:'62px',
+    width:'100%',
     aspectRatio: '1 / 1',
-    borderRadius:'3px',
+    borderRadius:'7px',
     objectFit: 'cover'
   }
 
   const plusProfile = {
-    width:'62px',
-    height:'62px',
-    borderRadius:'5px',
+    width:'100%',
+    height:'95%',
+    borderRadius:'7px',
     margin:'0',
     backgroundColor: '#EDEDED',
     display:'flex',
@@ -130,8 +130,7 @@ useEffect(()=>{
           <div style={detailContent}>{user.unReviewCnt}</div>
         </StyledLink >
         {/* 대표 반려견 - 필요 데이터: 펫 아이디 (prop 필요) */}
-        <div style={{boxSizing:'border-box', width:'45%', borderLeft:'0.1px solid #929292', paddingLeft:'5%'}}>
-          <div style={detailTitle}>반려견</div>
+        <div style={{boxSizing:'border-box', width:'48%', borderLeft:'0.1px solid #929292', paddingLeft:'6%'}}>
           <div style={repDiv}>
             {user?.pets?.map((pet, idx)=>{
               return(

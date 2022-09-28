@@ -70,11 +70,8 @@ const detailStyle = {
 
 
 const openReviewStyle={
-  fontSize:'14px',
+  fontSize:'13px',
   fontWeight: '500',
-  '&:hover':{
-    transform: 'scale(1.1)',
-  },
   width:'auto', height:'50%', whiteSpace:'nowrap'
 }
 

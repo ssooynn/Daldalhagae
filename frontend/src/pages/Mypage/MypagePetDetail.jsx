@@ -6,27 +6,29 @@ import { useLocation } from 'react-router-dom';
 import { StyledProfile, FlexBox, subTitleStyle, PetTag } from '../../components/Mypage/MypageCommon';
 import { PetAge } from '../../util/PetAge';
 
+import { petInfo } from '../../api/mypagePet';
+
 const MypagePetDetail = (props) => {
   const {setCurrentFocus} = props
   const location = useLocation()
   const petId = location.state.petId
   console.log(petId)
-  const [pet, setPet] = useState({
-    profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    name:'해리',
-    birthday:'2022-02-20',
-    alergies: ['콩', '당근'],
-    fatStat:'3',
-    subscribing:[{
-      subscibtionId:'P12566',
-      category:'3',
-      duration:'2022.09.08~ 10.07',
-      
-    }],
-    target: [1],
-    effect: []
+  const [pet, setPet] = useState({})
+  const [materials, setMaterials] = useState([])
+  const [effects, setEffects] = useState([])
 
-  })
+  useEffect(()=>{
+    petInfo(petId)
+    .then((res)=>{
+      console.log(res.data)
+      setPet(res.data.pets)
+      setMaterials(Object.values(res.data.pets.materials))
+      setEffects(Object.values(res.data.pets.effects))
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }, [petId])
 
   const fatList = ['야윈상태','저체중','정상체중','과체중','비만']
   const fatColor = ['#EDDCCF', '#BEC3C7','#FFE6A7','#F3BD94','#DB9090']
@@ -39,7 +41,7 @@ const MypagePetDetail = (props) => {
   const month = today.getMonth() + 1;  // 월
   const date = today.getDate();  // 날짜
   const todayStr = year + '-' + month + '-' + date 
-  const petAge = PetAge(todayStr, pet.birthday)
+  // const petAge = PetAge(todayStr, pet.birthday)
 
   useEffect(()=>{
     // petId 활용해서 정보 fetching
@@ -70,8 +72,14 @@ const MypagePetDetail = (props) => {
     width:'100%',
     display:'grid',
     gridTemplateColumns:'repeat(2, minmax(0, 1fr))',
-    gap: '2%',
+    gap: '1.5%',
     marginTop:'4px',
+  }
+
+  const litTitle = {
+    fontSize:'14px',
+    fontWeight: '500',
+    marginBottom: '5px'
   }
   
 
@@ -81,11 +89,11 @@ const MypagePetDetail = (props) => {
       <div style={{marginBottom:'40px'}}>
         <div style={profileBoxStyle}>
           <FlexBox direction="row" justify="start" align="start">
-            <StyledProfile src={pet.profileImg} width='110px' />
+            <StyledProfile src={pet.image} width='110px' />
             <FlexBox direction="column" height="110px" justify="space-around" align="start" margin="0px 0px 0px 8%">
               <div>
-                <div style={{fontSize:'20px', marginBottom:'1px'}}>{pet.name}  <span style={{...detailText, fontSize:'11px', marginLeft:'2px'}}>[{petAge}개월]</span></div>
-                <div style={detailText}>🎂 {pet.birthday.replaceAll('-','.')}</div>
+                <div style={{fontSize:'18px', marginBottom:'1px'}}>{pet.name}  <span style={{...detailText, fontSize:'11px', marginLeft:'2px'}}>[개월]</span></div>
+                <div style={detailText}>🎂 {pet.birthday}</div>
               </div>
 
               <div style={{width:'100%'}}>
@@ -93,33 +101,46 @@ const MypagePetDetail = (props) => {
                 {/* <div style={detailText}>체중: <span>{fatList[pet.fatStat-1]}</span></div> */}
                 <div style={{height:'15px'}}> </div>
                 <div style={gridDiv}>
-                  <PetTag bgColor={fatColor[[pet.fatStat-1]]}>{fatList[pet.fatStat-1]}</PetTag>
-                  <PetTag bgColor={targetColor[[pet.target-1]]}>{targetList[pet.target-1]}</PetTag>
+                  <PetTag bgColor={fatColor[[pet.fat-1]]}>{fatList[pet.fat-1]}</PetTag>
+                  <PetTag bgColor={targetColor[targetList.indexOf(pet.target)]}>{pet.target}</PetTag>
                 </div>
               </div>
             </FlexBox>
           </FlexBox>
         </div>
       </div>
-      <div>
+      { (materials||effects) && <div>
         <div style={subTitleStyle}>상세정보</div>
-        
-        <div>
-          알러지
-          {/* {pet.alergies?.map((alergy, idx)=>{return (컴포넌트)})} */}
-        </div>
-        <div>
-          특별관리
-          {/* {pet.alergies?.map((alergy, idx)=>{return (컴포넌트)})} */}
-        </div>
-        {pet.subscribing? 
-        <div>
-          구독중인 상품
-          {/* 컴포넌트 */}
-        </div>
-      :<></>}
-      </div>
+        <div style={{padding:'0px 10px'}}>
+          {materials &&
+          <>
+            <div style={litTitle}>알러지</div> 
+            <div style={{...detailText, fontWeight:'300', marginBottom:'7px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
+            <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))', marginBottom:'20px'}}>
+              {materials.map((alergy,idx)=>{
+                return(
+                  <PetTag padding='6px 0px' key={idx}>{alergy}</PetTag>
+                )
+              })}
+            </div>
+          </>
+          }
+          {effects &&
+          <>
+            <div style={litTitle}>특별관리</div> 
+            <div style={{...detailText, fontWeight:'300', marginBottom:'7px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
+            <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))'}}>
+              {effects.map((alergy,idx)=>{
+                return(
+                  <PetTag padding='6px 0px' key={idx}>{alergy}</PetTag>
+                )
+              })}
+            </div>
+          </>
+          }
 
+        </div>
+      </div>}
       
     </div>
   )
