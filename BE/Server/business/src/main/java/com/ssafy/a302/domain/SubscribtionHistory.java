@@ -1,5 +1,6 @@
 package com.ssafy.a302.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +21,9 @@ public class SubscribtionHistory {
 	@Column(name="SUBSCRIBTION_HISTORY_NO")
 	private int subscribtionHistoryNo;
 	@Column(name="START_DATE")
-	private Date startDate;
+	private LocalDate startDate;
 	@Column(name="END_DATE")
-	private Date endDate;
+	private LocalDate endDate;
 	@Column(name="AUTO_PAYMENT_FLAG")
 	private int autoPaymentFlag;
 	
@@ -43,7 +44,7 @@ public class SubscribtionHistory {
 	@OneToOne(mappedBy = "subscribtionHistory", fetch = FetchType.LAZY)
 	private SubscribtionHistorySubscribtion subscribtionHistorySubscribtion;
 	@Builder
-	public SubscribtionHistory(int subscribtionHistoryNo, Date startDate, Date endDate, int autoPaymentFlag, Users users, Pet pet, List<Purchase> purchases, ServiceReview serviceReview, SubscribtionHistorySubscribtion subscribtionHistorySubscribtion) {
+	public SubscribtionHistory(int subscribtionHistoryNo, LocalDate startDate, LocalDate endDate, int autoPaymentFlag, Users users, Pet pet, List<Purchase> purchases, ServiceReview serviceReview, SubscribtionHistorySubscribtion subscribtionHistorySubscribtion) {
 		this.subscribtionHistoryNo = subscribtionHistoryNo;
 		this.startDate = startDate;
 		this.endDate = endDate;
