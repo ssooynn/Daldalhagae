@@ -38,6 +38,8 @@ public class UsersServiceImpl implements UsersService{
 			Users users = usersRep.findByKakaoId(kakaoId);
 			String accessToken = createJWT.createAccessToken(users.getUsersSno());
 			loginReq.setUsers(users,accessToken);
+		}else {
+			loginReq.setKakaoId(kakaoId);
 		}
 		
 		return loginReq;

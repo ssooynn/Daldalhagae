@@ -60,7 +60,6 @@ public class Users {
 
 	
 	public Users(String usersSno,String kakaoId, String email, String name, String phone, String address) {
-		super();
 		this.usersSno = usersSno;
 		this.kakaoId = kakaoId;
 		this.email = email;
