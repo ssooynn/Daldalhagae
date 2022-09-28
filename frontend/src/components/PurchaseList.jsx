@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
-import imgA from '../assets/img/자유구독1.png'
 import 삭제 from '../assets/img/삭제.png'
 
 const ClickPet = styled.div`
@@ -25,15 +24,7 @@ const PurchaseList = (props) => {
   const showBag = () => {
     setBagOpen(true)
   }
-  const pets = [{
-    petId: 1,
-    name: '해리',
-    profile: '893fojrforjfa04jaof0asd'
-  }, {
-    petId: 2,
-    name: '포터',
-    profile: 'diaufoijfafe092r2jflefx'
-  }]
+  const pets = props.info[5]
   const showPets = []
   const [showPurchase, setShowPurchase] = useState([])
   const [checkPurchase, setCheckPurchase] = useState([])
@@ -61,7 +52,7 @@ const PurchaseList = (props) => {
   for (let i = 0; i < pets.length; i++) {
     showPets.push(<ClickPet onClick={(e)=>{addPet(pets[i], e)}}>
       <img
-        src={imgA}
+        src={pets[i].image}
         style={{
           width: '100px',
           height: '100px',

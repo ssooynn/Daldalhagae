@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import imgA from '../assets/img/자유구독1.png'
 import imgB from '../assets/img/자유구독2.png'
 import imgD from '../assets/img/구독상세페이지5.png'
@@ -45,7 +46,33 @@ const SetCustom = () => {
   const components1 = ['', '', '',]
   const components2 = [feedNum, snackNum, toyNum]
   const price = '50000'
-  const info = [name, intro, components1, price, components2]
+  const [pets, setPets] = useState([])
+  const [feeds, setFeeds] = useState([])
+  const [snacks, setSnacks] = useState([])
+  const [toys, setToys] = useState([])
+
+  useEffect(()=>{
+    const usersSno = 'uXJFRDEC7DuyYasedNxU1'
+    // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+    // Authorization: `Bearer` + `a.a.a`
+    axios({
+      method: 'get',
+      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/subscription/detail/${usersSno}`,
+      headers: {
+        'Authorization': `Bearer a.a.a`
+      }
+    })
+      .then((res)=>{
+        setPets(res.data.pets)
+        setFeeds(res.data.feeds)
+        setSnacks(res.data.snacks)
+        setToys(res.data.toys)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+  }, [])
+  const info = [name, intro, components1, price, components2, pets]
   
   return (
     <div
@@ -233,7 +260,7 @@ const SetCustom = () => {
             <h3>사료 맞춤 추천</h3>
           </div>
         </div>
-        <AutoSlides />
+        <AutoSlides info={feeds} />
         <div  // 간식 소개 시작
           style={{
             display: 'flex',
@@ -250,7 +277,7 @@ const SetCustom = () => {
           </div>
           <img src={imgD} width='400px' alt='img'/>
         </div>
-        <AutoSlides />
+        <AutoSlides info={snacks} />
         <div  // 장난감 소개 시작
           style={{
             display: 'flex',
@@ -267,7 +294,7 @@ const SetCustom = () => {
             <h3>장난감 맞춤 추천</h3>
           </div>
         </div>
-        <AutoSlides />
+        <AutoSlides info={toys} />
         <div  // 마무리 글
           style={{
             margin: '15rem 0 15rem 0'

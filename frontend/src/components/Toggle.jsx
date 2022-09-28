@@ -2,11 +2,108 @@ import React, { useState } from 'react'
 import MoreReview from '../components/MoreReview'
 import imgA from '../assets/img/추천페이지1.png'
 import imgD from '../assets/img/구독상세페이지4.png'
+import './Toggle.css'
+import { useEffect } from 'react'
+
+function Reviews() {
+  const recentreview = []
+  for (let i = 0; i < 2; i++) {
+    recentreview.push(<div>
+      <div style={{margin: 'auto', display: 'flex', justifyContent: 'space-between'}}>
+        <p style={{color: 'orange'}}>★★★★★</p>
+        <p>이이이</p>
+      </div>
+      <p style={{margin: 'auto'}}>아이가 좋아해요!</p>
+    </div>)
+  }
+  return <div>
+    {recentreview}
+  </div>
+}
 
 function RecommendProducts(props) {
   const [reviewOpen, setReviewOpen] = useState(false)
   const showMoreReview = ()=>{
     setReviewOpen(true)
+  }
+  const [feeds, setFeeds] = useState([])
+  useEffect(()=>{
+  for (let i = 0; i < 3; i++) {
+    feeds.push(false)
+  }}, [])
+  function clickCard(i) {
+    let copiedFeeds = [...feeds]
+    if (feeds[i]) {
+      copiedFeeds[i] = false
+      setFeeds(copiedFeeds)
+    } else {
+      for (let j = 0; j < 3; j++) {
+        copiedFeeds[j] = false
+      }
+      copiedFeeds[i] = true
+      setFeeds(copiedFeeds)
+    }
+  }
+  const cards = useState([])
+  for (let i = 0; i < 3; i++) {
+    cards.push(
+    <div className={feeds[i] ? 'clickCard' : 'card'} onClick={(e)=>{clickCard(i)}}>
+      <div style={{textAlign: 'center'}}> {/* 상품설명 */}
+        <div>
+          <img src={imgD} width='180px' alt="" />
+          <p>사료 이름</p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '12px'
+          }}>
+          <p>주 원료</p>
+          <p>주 원료</p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '12px'
+          }}>
+          <p>급여 대상</p>
+          <p>급여 대상</p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '12px'
+          }}>
+          <p>입자 크기</p>
+          <p>입자 크기</p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '12px'
+          }}>
+          <p>기능</p>
+          <p>기능</p>
+        </div>
+      </div>
+      <div> {/* 리뷰 */}
+        <p>67명이 이 사료를 받았어요</p>
+        <div>
+          <p style={{margin: 'auto'}}>최근 리뷰</p>
+        </div>
+        <Reviews />
+        <p
+          onClick={event=>{
+            event.preventDefault()
+            showMoreReview()
+          }} className='moreReview'>리뷰 더보기</p>
+        {reviewOpen && <MoreReview setReviewOpen={setReviewOpen} />}
+      </div>
+    </div>)
   }
   return (
   <div  // 추천 제품 상세 목록
@@ -24,87 +121,19 @@ function RecommendProducts(props) {
         style={{
           textAlign: 'start',
           margin: '0 0 1rem 0'
-        }}>'{props.name}' 을/를 위한 사료 추천(택1)</p>
+        }}>추천된 사료를 선택해 주세요.(택1)</p>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-        <div  // 카드
-          style={{
-            backgroundColor: '#FFFFFF',
-            width: '28%',
-            height: '100%',
-            borderRadius: '5px',
-            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.25)',
-            padding: '30px 10px 10px 10px',
-          }}>
-          <div style={{textAlign: 'center'}}>
-            <div>
-              <img src={imgD} width='180px' alt="" />
-              <p>사료 이름</p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontSize: '12px'
-              }}>
-              <p>주 원료</p>
-              <p>주 원료</p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontSize: '12px'
-              }}>
-              <p>급여 대상</p>
-              <p>급여 대상</p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontSize: '12px'
-              }}>
-              <p>입자 크기</p>
-              <p>입자 크기</p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontSize: '12px'
-              }}>
-              <p>기능</p>
-              <p>기능</p>
-            </div>
-          </div>
-          <div>
-            <p>0명이 이 사료를 받았어요</p>
-            <div>
-              <p>최근 리뷰</p>
-            </div>
-            <p
-              onClick={event=>{
-                event.preventDefault()
-                showMoreReview()
-              }}
-              style={{
-                fontSize: '10px',
-                color: 'gray',
-                textAlign: 'end',
-                cursor: 'pointer'
-              }}>리뷰 더보기</p>
-            {reviewOpen && <MoreReview setReviewOpen={setReviewOpen} />}
-          </div>
-        </div>
+        {cards}
       </div>
     </div>
   </div>
   )
 }
+
 const Toggle = (props) => {
   const [togleOpen, setTogleOpen] = useState(false)
   const showTogle = ()=>{
@@ -136,7 +165,7 @@ const Toggle = (props) => {
 						justifyContent: 'space-between',
 						alignItems: 'center'
 					}}>
-					<h2>{props.info[0]} - {props.info[4]}</h2>
+					<h2>{props.info[0]} - {props.info[6]}</h2>
 					<p>월 {props.info[3]}원</p>
 				</div>
 			<p>{props.info[1]}</p>
@@ -150,7 +179,6 @@ const Toggle = (props) => {
 						cursor: 'pointer',
 						textAlign: 'end',
 						fontSize: '12px',
-						// fontWeight: 'bold',
 					}}>접기 △</p> : 
 				<p
 					onClick={event=>{
@@ -161,11 +189,10 @@ const Toggle = (props) => {
 						cursor: 'pointer',
 						textAlign: 'end',
 						fontSize: '12px',
-						// fontWeight: 'bold',
 					}}>추천 제품 고르기 ▽</p>}
 			</div>
 		</div>
-		{togleOpen && <RecommendProducts name={props.info[4]} setTogleOpen={setTogleOpen} />}
+		{togleOpen && <RecommendProducts name={props.info[6]} setTogleOpen={setTogleOpen} />}
 	</div>
   )
 }
