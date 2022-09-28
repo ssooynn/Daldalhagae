@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import img1 from '../assets/img/구독리스트1.png'
 import img2 from '../assets/img/구독리스트2.png'
@@ -17,16 +17,17 @@ import 장난감 from '../assets/img/상품구성_장난감.png'
 import PurchaseList from '../components/PurchaseList'
 import AutoSlides from '../components/AutoSlides'
 import Footer from '../components/Footer';
+import SideButton from '../components/SideButton';
 
 function Component(props) {
-  const images = [사료,간식,장난감]
+  const images = [사료, 간식, 장난감]
   const showComponents = useState([])
   for (let i = 0; i < props.components.length; i++) {
     if (props.components[i]) {
       showComponents.push(
         <div>
           <img src={images[i]} width='300px' height='300px' alt='pet'
-           style={{borderRadius: '5px'}}/>
+            style={{ borderRadius: '5px' }} />
           <p>{props.components[i]}</p>
         </div>)
     }
@@ -72,6 +73,7 @@ const SubscribeDetail = () => {
         alignItems: 'center',
         flexDirection: 'column',
       }}>
+      <SideButton />
       <div  // 상담: 구독 설정
         style={{
           display: 'flex',
@@ -80,13 +82,13 @@ const SubscribeDetail = () => {
           textAlign: 'end',
           width: '70%'
         }}>
-        <img src={image} width='540px' height='400' alt='package'/>
+        <img src={image} width='540px' height='400' alt='package' />
         <div>
-          <h2 style={{margin: 'auto'}}>{name}</h2>
-          <p style={{margin: '0.5rem auto', fontSize: '12px'}}>{intro}</p>
-          <h4 style={{margin: 'auto'}}>월 {price}원</h4>
-          <p   style={{margin: '1.5rem 0 0.5rem 0'}}>누구를 위한 사료인가요?</p>
-          <PurchaseList info={info}/>
+          <h2 style={{ margin: 'auto' }}>{name}</h2>
+          <p style={{ margin: '0.5rem auto', fontSize: '12px' }}>{intro}</p>
+          <h4 style={{ margin: 'auto' }}>월 {price}원</h4>
+          <p style={{ margin: '1.5rem 0 0.5rem 0' }}>누구를 위한 사료인가요?</p>
+          <PurchaseList info={info} />
         </div>
       </div>
       <div  // 하단: 구독 서비스 설명
@@ -99,7 +101,7 @@ const SubscribeDetail = () => {
         <div> {/* 설명 헤더 */}
           <h2>우리 강아지만을 위한 맞춤 구독 서비스</h2>
           <h2>{name}</h2>
-          <img src={imgB} width='100%' alt='package'/>
+          <img src={imgB} width='100%' alt='package' />
           <h5>반려견을 위한 모든 것을 한번에 구독하세요</h5>
         </div>
         <div> {/* 구성 상품 */}
@@ -115,11 +117,11 @@ const SubscribeDetail = () => {
             alignItems: 'center',
             marginTop: '15rem'
           }}>
-          <img src={imgF} width='400px' alt='img' style={{borderRadius: '5px'}}/>
+          <img src={imgF} width='400px' alt='img' style={{ borderRadius: '5px' }} />
           <div
             style={{
 
-          }}>
+            }}>
             <p>안전한 홀리스틱 등급 이상의</p>
             <h3>사료 맞춤 추천</h3>
           </div>
@@ -135,11 +137,11 @@ const SubscribeDetail = () => {
           <div
             style={{
 
-          }}>
+            }}>
             <p>반려견에게 생기를 불어 넣어주는</p>
             <h3>간식 맞춤 추천</h3>
           </div>
-          <img src={imgD} width='400px' alt='img'/>
+          <img src={imgD} width='400px' alt='img' />
         </div>
         <AutoSlides />
         <div  // 장난감 소개 시작
@@ -149,11 +151,11 @@ const SubscribeDetail = () => {
             alignItems: 'center',
             marginTop: '15rem'
           }}>
-          <img src={imgE} width='400px' alt='img'/>
+          <img src={imgE} width='400px' alt='img' />
           <div
             style={{
 
-          }}>
+            }}>
             <p>반려견이 재밌게 놀 수 있게</p>
             <h3>장난감 맞춤 추천</h3>
           </div>

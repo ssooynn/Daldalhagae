@@ -3,8 +3,8 @@ import axios from "axios";
 const businessInstance = axios.create({
   baseURL: "https://j7a302.p.ssafy.io/api-gateway/business-api/user",
   headers: {
-   "Content-type": "multipart/form-data",
-    Authorization: `Bearer `+'a.a.a' ,
+    "Content-type": "multipart/form-data",
+    Authorization: `Bearer ` + "a.a.a",
   },
 });
 
@@ -26,12 +26,8 @@ const LoginApi = async (code, success, fail) => {
   await instance.post(`/login`, { kakaoId: code }).then(success).catch(fail);
 };
 
-const SignupApi = async(formData, success, fail) =>{
-  await businessInstance.post(`/signup`,formData).then(success).catch(fail);
-}
+const SignupApi = async (formData, success, fail) => {
+  await businessInstance.post(`/signup`, formData).then(success).catch(fail);
+};
 
-const TestApi = async(data,success,fail)=>{
-  await fileinstance.post(`/test`,{req:data}).then(success).catch(fail);
-}
-
-export { LoginApi,SignupApi,TestApi };
+export { LoginApi, SignupApi };

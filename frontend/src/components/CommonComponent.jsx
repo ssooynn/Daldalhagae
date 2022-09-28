@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import { animated } from "@react-spring/web";
 
 const Button = styled(animated.button)`
-    height: 70px;
     border-radius: 10px;
     border: 0px;
     font-size: 12px;
@@ -14,6 +13,7 @@ const Button = styled(animated.button)`
     width: ${(props) => props.width || "300px"};
     color: ${(props) => props.color || "#1f1d1d"};
     background-color: ${(props) => props.bgcolor || "white"};
+    height: ${(props) => props.height || "70px"};
 
   ${(props) =>
     props.FullDeepBrown &&
@@ -189,9 +189,9 @@ const Button = styled(animated.button)`
       font-size: 12px;
     `}
 `;
-export function StyledButton({ children, width, color, bgcolor, margin, ...props }) {
+export function StyledButton({ children, width, height, color, bgcolor, margin, ...props }) {
   return (
-    <Button width={width} color={color} bgcolor={bgcolor} margin={margin} {...props}>
+    <Button width={width} color={color} bgcolor={bgcolor} margin={margin} height={height} {...props}>
       {children}
     </Button>
   );
