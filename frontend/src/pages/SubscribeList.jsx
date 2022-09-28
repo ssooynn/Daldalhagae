@@ -132,7 +132,6 @@ const SubscribeList = () => {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        // filter: 'brightness(40%)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

@@ -1,12 +1,98 @@
-import React, {useEffect} from 'react'
-
+import React, {useEffect, useState} from 'react'
+import axios from 'axios'
 import imgD from '../assets/img/구독상세페이지4.png'
+import styled from 'styled-components'
+
+const ReviewCard = styled.div`
+background-color: #F6F1EC;
+border-radius: 5px;
+box-shadow: 1px 2px rgba(0, 0, 0, 0.25);
+display: flex;
+justify-content: space-around;
+margin: 3px 0 10px 0;
+text-align: start;
+padding: 0 2rem 0 2rem;
+`
+
+function Reviews() {
+  const [showReviews, setShowReviews] = useState([])
+  const [itemSno, page, size, sort] = ['f05C8ZXZjHZrZaeUB8eYN', 0, 5, 'date']
+  const [showPaginator, setShowPaginator] = useState([])
+  useEffect(()=>{
+    axios({
+      method: 'get',
+      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/review/item/${itemSno}?page=${page}&size=${size}&sort=${sort}`,
+      headers: {
+        'Authorization': `Bearer a.a.a`
+      }
+    })
+    .then((res)=>{
+      for (let i = 0; i < res.data.totalPages; i++) {
+        showPaginator.push(<p style={{margin: 'auto 3px'}}>{i+1}</p>)
+      }
+      const copyShowPaginator = [...showPaginator]
+      setShowPaginator(copyShowPaginator)
+      const reviews = res.data.reviewList
+      for (let i = 0; i < reviews.length; i++) {
+        let star;
+        switch (reviews[i].rate) {
+          case 1:
+            star = '★☆☆☆☆'
+            break;
+          case 2:
+            star = '★★☆☆☆'
+            break;
+          case 3:
+            star = '★★★☆☆'
+            break;
+          case 4:
+            star = '★★★★☆'
+            break;
+          default:
+            star = '★★★★★'
+            break;
+        }
+        showReviews.push(<ReviewCard>
+            <div style={{ marginRight: '2rem'}}>
+              <p style={{ fontWeight: 'bold'}}>{reviews[i].usersName}</p>
+              <p style={{color: '#FFD100'}}>{star}</p>
+            </div>
+            <div style={{ marginRight: '2rem'}}>
+              {/* <p>{reviews[i].content}</p> */}
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+              <p></p>
+            </div>
+            <p
+              style={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                fontSize: '12px',
+                width: '300px',
+                justifyContent: 'flex-end',
+              }}>{reviews[i].date}</p>
+          </ReviewCard>)
+      }
+      const copyShowReviews = [...showReviews]
+      setShowReviews(copyShowReviews)
+
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }, [])
+  return <div>
+      {showReviews}
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        {showPaginator}
+      </div>
+    </div>
+}
 
 function MoreReview(props) {
   function closeReview() { // 모달 끄기
     props.setReviewOpen(false)
   }
-  useEffect(() => {  // 배경화면 스크롤 움직임 막기
+  useEffect(() => {
     document.body.style.cssText = `
       position: fixed;
       top: -${window.scrollY}px;
@@ -57,7 +143,7 @@ function MoreReview(props) {
               right: '30px',
               top: '0',
             }}>✖</p>
-          <div
+          <div  // 제품 정보
             style={{
               display: 'flex',
               justifyContent: 'space-between'
@@ -109,88 +195,14 @@ function MoreReview(props) {
               </div>
             </div>
           </div>
-          <div
+          <div  // 리뷰
             style={{
               fontSize: '13px'
             }}>
             <p style={{textAlign: 'end'}}>리뷰목록</p>
           </div>
           <hr />
-          <div
-            style={{
-              backgroundColor: '#F6F1EC',
-              borderRadius: '5px',
-              boxShadow: '1px 2px rgba(0, 0, 0, 0.25)',
-              display: 'flex',
-              justifyContent: 'space-around',
-              margin: '3px 0 10px 0',
-              textAlign: 'start',
-              padding: '0 2rem 0 2rem'
-            }}>
-              <div style={{ marginRight: '2rem'}}>
-                <p style={{ fontWeight: 'bold'}}>작성자이름</p>
-                <p>☆☆☆☆☆</p>
-              </div>
-              <div style={{ marginRight: '2rem'}}>
-                <p>딱 필요한 구성으로 고르고 받아볼 수 있어서 아주 만족했습니다! 추천 받은 상품들도 만족스러워요~</p>
-              </div>
-              <p
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  fontSize: '12px'
-                }}>2022.08.25</p>
-            </div>
-          <div
-            style={{
-              backgroundColor: '#F6F1EC',
-              borderRadius: '5px',
-              boxShadow: '1px 2px rgba(0, 0, 0, 0.25)',
-              display: 'flex',
-              justifyContent: 'space-around',
-              margin: '3px 0 10px 0',
-              textAlign: 'start',
-              padding: '0 2rem 0 2rem'
-            }}>
-              <div style={{ marginRight: '2rem'}}>
-                <p style={{ fontWeight: 'bold'}}>작성자이름</p>
-                <p>☆☆☆☆☆</p>
-              </div>
-              <div style={{ marginRight: '2rem'}}>
-                <p>딱 필요한 구성으로 고르고 받아볼 수 있어서 아주 만족했습니다! 추천 받은 상품들도 만족스러워요~</p>
-              </div>
-              <p
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  fontSize: '12px'
-                }}>2022.08.25</p>
-            </div>
-          <div
-            style={{
-              backgroundColor: '#F6F1EC',
-              borderRadius: '5px',
-              boxShadow: '1px 2px rgba(0, 0, 0, 0.25)',
-              display: 'flex',
-              justifyContent: 'space-around',
-              margin: '3px 0 10px 0',
-              textAlign: 'start',
-              padding: '0 2rem 0 2rem'
-            }}>
-              <div style={{ marginRight: '2rem'}}>
-                <p style={{ fontWeight: 'bold'}}>작성자이름</p>
-                <p>☆☆☆☆☆</p>
-              </div>
-              <div style={{ marginRight: '2rem'}}>
-                <p>딱 필요한 구성으로 고르고 받아볼 수 있어서 아주 만족했습니다! 추천 받은 상품들도 만족스러워요~</p>
-              </div>
-              <p
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  fontSize: '12px'
-                }}>2022.08.25</p>
-            </div>
+          <Reviews></Reviews>
         </div>
       </div>
     </div>

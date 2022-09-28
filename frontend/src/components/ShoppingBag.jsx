@@ -9,6 +9,7 @@ import PackageImage2 from '../assets/img/구독상세페이지2.png'
 import { useState } from 'react'
 import DeleteButton from '../assets/img/delete.svg';
 import { deleteItem } from '../stores/modules/bag'
+import Modal from '../components/RecommendConfirmModal'
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -82,6 +83,10 @@ const ShoppingBag = (props) => {
   const dispatch = useDispatch();
   const bag = useSelector((state) => state.bag);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false)
+  const showModal = () => {
+    setModalOpen(true)
+  }
 
   useEffect(() => {
     let total = 0;
@@ -127,7 +132,8 @@ const ShoppingBag = (props) => {
             <StyledText weight="500" size="16px" margin="20px 50px" style={{ position: "relative" }}>총 금액 합계</StyledText>
             <StyledText weight="500" size="16px" margin="20px 50px" style={{ position: "relative" }}>월 {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</StyledText>
           </FlexBox>
-          <StyledButton bgcolor="#CCAA90" width="250px" height="50px" margin="10px 0px"><StyledText weight="500" size="16px">결제하기</StyledText></StyledButton>
+          <StyledButton onClick={showModal} bgcolor="#CCAA90" width="250px" height="50px" margin="10px 0px"><StyledText weight="500" size="16px">결제하기</StyledText></StyledButton>
+          {modalOpen && <Modal setModalOpen={setModalOpen} info={props.info} />}
         </ShoppingListBox>
       </BagStyled>
     </ModalBackground >

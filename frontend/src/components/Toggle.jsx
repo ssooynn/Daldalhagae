@@ -1,9 +1,56 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import MoreReview from '../components/MoreReview'
-import imgA from '../assets/img/추천페이지1.png'
 import imgD from '../assets/img/구독상세페이지4.png'
+import PackageImage1 from '../assets/img/구독리스트1.png'
+import PackageImage2 from '../assets/img/구독리스트2.png'
+import PackageImage3 from '../assets/img/구독리스트3.png'
+import daldalPackage from '../assets/img/otherPackage1.png'
+import toyPackage from '../assets/img/otherPackage2.png'
+import lightPackage from '../assets/img/otherPackage3.png'
+import 자유구독 from '../assets/img/자유구독1.png'
 import './Toggle.css'
-import { useEffect } from 'react'
+import { StyledButton } from '../components/CommonComponent';
+
+const ToggleBox  = styled.div`
+background-image: ${(props) => {
+  let iamge;
+  switch (props.packageName) {
+    case 'Basic Package':
+      iamge = `url(${PackageImage1})`;
+      break;
+    case 'Play Package':
+      iamge = `url(${PackageImage2})`;
+      break;
+    case 'All In One Package':
+      iamge = `url(${PackageImage3})`;
+      break;
+    case 'DalDal Package':
+      iamge = `url(${daldalPackage})`;
+      break;
+    case 'Toy Package':
+      iamge = `url(${toyPackage})`;
+      break;
+    case 'Light Package':
+      iamge = `url(${lightPackage})`;
+      break;
+    default:
+      iamge = `url(${자유구독})`;
+      break;
+  }
+  return iamge
+}};
+background-repeat: no-repeat;
+background-size: cover;
+opacity: 0.8;
+width: 100%;
+height: 160px;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 3rem;
+border-radius: 10px 10px 0 0;
+`
 
 function Reviews() {
   const recentreview = []
@@ -25,6 +72,9 @@ function RecommendProducts(props) {
   const [reviewOpen, setReviewOpen] = useState(false)
   const showMoreReview = ()=>{
     setReviewOpen(true)
+  }
+  const closeTogle = ()=>{
+    props.setTogleOpen(false)
   }
   const [feeds, setFeeds] = useState([])
   useEffect(()=>{
@@ -113,7 +163,7 @@ function RecommendProducts(props) {
       height: '100%',
       borderRadius: '0 0 5px 5px',
       boxShadow: '0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)',
-      padding: '50px 0 70px 0',
+      paddingTop: '50px',
       position: 'relative',
     }}>
     <div style={{margin: '0 50px 0 50px'}}>
@@ -129,13 +179,17 @@ function RecommendProducts(props) {
         }}>
         {cards}
       </div>
+      <div style={{textAlign: 'center', }}>
+        <StyledButton onClick={closeTogle} SmallWhite style={{width: '250px', margin: '50px auto'}}>선택 완료</StyledButton>
+      </div>
     </div>
   </div>
   )
 }
 
 const Toggle = (props) => {
-  const [togleOpen, setTogleOpen] = useState(false)
+  console.log(props)
+  const [togleOpen, setTogleOpen] = useState(true)
   const showTogle = ()=>{
     setTogleOpen(true)
   }
@@ -143,18 +197,7 @@ const Toggle = (props) => {
     setTogleOpen(false)
   }
   return (<div>
-		<div
-			style={{
-        backgroundImage: `url(${imgA})`,
-        backgroundRepeat: 'no-repeat',
-				width: '100%',
-				height: '160px',
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				marginTop: '3rem',
-        borderRadius: '5px 5px 0 0'
-			}}>
+		<ToggleBox packageName={props.info[0]}>
 			<div
 				style={{
 					width: '80%',
@@ -163,12 +206,13 @@ const Toggle = (props) => {
 					style={{
 						display: 'flex',
 						justifyContent: 'space-between',
-						alignItems: 'center'
+						alignItems: 'center',
+            fontWeight: '900'
 					}}>
 					<h2>{props.info[0]} - {props.info[6]}</h2>
 					<p>월 {props.info[3]}원</p>
 				</div>
-			<p>{props.info[1]}</p>
+			<p style={{fontWeight: '700'}}>{props.info[1]}</p>
 			{togleOpen ? 
 				<p
 					onClick={event=>{
@@ -179,6 +223,7 @@ const Toggle = (props) => {
 						cursor: 'pointer',
 						textAlign: 'end',
 						fontSize: '12px',
+            fontWeight: '700'
 					}}>접기 △</p> : 
 				<p
 					onClick={event=>{
@@ -189,9 +234,10 @@ const Toggle = (props) => {
 						cursor: 'pointer',
 						textAlign: 'end',
 						fontSize: '12px',
+            fontWeight: '700'
 					}}>추천 제품 고르기 ▽</p>}
 			</div>
-		</div>
+		</ToggleBox>
 		{togleOpen && <RecommendProducts name={props.info[6]} setTogleOpen={setTogleOpen} />}
 	</div>
   )
