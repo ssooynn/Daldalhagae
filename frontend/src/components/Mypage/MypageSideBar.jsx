@@ -75,7 +75,7 @@ const MypageSideBar = () => {
     <div style={sideBarBox}>
       {menus.map((menu, idx)=> {
         return (
-          <div id={idx}>
+          <div key={idx}>
             <p style={menuTitle}>{menu.title}</p>
             <div style={subMenuList}>
               {menu.subMenus.map((subMenu, index)=>{
@@ -83,7 +83,7 @@ const MypageSideBar = () => {
                     <NavLink 
                       to={subMenu.path} 
                       style={({ isActive }) => subMenuTitle(isActive)}
-                      id={index}
+                      key={index}
                     >{subMenu.name}</NavLink>
                 )
               })}

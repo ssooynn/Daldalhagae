@@ -141,7 +141,7 @@ useEffect(()=>{
                 <StyledLink 
                   to={'petDetail'}
                   state= {{petId:pet.petSno}}
-                  id={idx}
+                  key={idx}
                 >
                   { pet.image ?
                     <img style={miniProfile}  src={pet.image} alt="프로필 이미지"/> :
@@ -153,7 +153,8 @@ useEffect(()=>{
             })}
               {(user?.pets?.length < 3 ) ? 
                 [...Array(3-user?.pets?.length)].map((no, idx)=>{
-                  return <StyledLink 
+                  return <StyledLink
+                            key={idx} 
                             to={'petAdd'}
                             state={{}}
                             style={plusProfile} id={idx}>+</StyledLink>})
