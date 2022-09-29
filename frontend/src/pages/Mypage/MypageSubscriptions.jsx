@@ -53,7 +53,7 @@ const MypageSubscriptions = () => {
 
   return (
     <div style={{padding:'10px 5px', position:'relative'}}>
-    <LoadingComponent></LoadingComponent>
+    {/* <LoadingComponent></LoadingComponent> */}
     {subscriptionList ? 
       subscriptionList.map((subscription, idx)=>{
         return(
