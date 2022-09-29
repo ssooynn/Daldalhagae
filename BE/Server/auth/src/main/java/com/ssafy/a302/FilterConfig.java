@@ -18,7 +18,7 @@ public class FilterConfig implements WebMvcConfigurer{
 		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>(new JWTFilter());
 		registrationBean.setOrder(Integer.MIN_VALUE);
 		//registrationBean.addUrlPatterns("/*");
-		registrationBean.setUrlPatterns(Arrays.asList("user/logout"));
+		registrationBean.setUrlPatterns(Arrays.asList("/user/logout"));
 		return registrationBean;
 	}
 }
