@@ -13,8 +13,8 @@ import SignupRegisterPet from "./SignupRegisterPet";
 import { useEffect } from "react";
 
 export default function Signup() {
-  const location=useLocation();
-  const [code, ] = useState(location.state)
+  const location = useLocation();
+  const [kakaoId,] = useState(location.state)
   const [step, setStep] = useState(1);
   const [user, setUser] = useState({
     name: "",
@@ -33,7 +33,7 @@ export default function Signup() {
     // effects:[],
     // fat:""}
   ]);
-  
+
 
   return (
     <MainContent height="90%" style={{ marginTop: "100px" }}>
@@ -56,7 +56,7 @@ export default function Signup() {
         <Route
           path="signupPet"
           element={
-            <SignupPet setStep={setStep} pets={pets} setPets={setPets} user={user} code={code}/>
+            <SignupPet setStep={setStep} pets={pets} setPets={setPets} user={user} kakaoId={kakaoId} />
           }
         />
 
