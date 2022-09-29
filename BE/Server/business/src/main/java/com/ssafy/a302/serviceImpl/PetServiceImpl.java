@@ -112,7 +112,10 @@ public class PetServiceImpl implements PetService {
 		logger.info("---기존 이미지 삭제 및 수정---");
 		if(signUpPetReq.getImageFlag()!=0) {
 			fileUpload.petImageUpdate(prePet.getImage(), image, signUpPetReq);
+		}else {
+			signUpPetReq.setImage(prePet.getImage());
 		}
+		signUpPetReq.birthToTargetNo();
 		logger.info("---Pet entity 만들기---");
 		Pet pet = signUpPetReq.transforPet(users, target);
 
@@ -163,7 +166,7 @@ public class PetServiceImpl implements PetService {
 		signUpPetReq.setPetSno(petSno);
 		if (!(image == null))
 			fileUpload.petImageUpload(image, signUpPetReq);
-
+		signUpPetReq.birthToTargetNo();
 		Target target = targetRep.findByTargetNo(signUpPetReq.getTargetNo());
 		Pet pet = signUpPetReq.transforPet(users, target);
 		petRepository.saveAndFlush(pet);

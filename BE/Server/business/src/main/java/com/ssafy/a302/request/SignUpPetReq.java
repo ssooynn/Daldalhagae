@@ -1,5 +1,6 @@
 package com.ssafy.a302.request;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,5 +35,20 @@ public class SignUpPetReq {
 		return new Pet(petSno, name, birth, fat, image, users, target);
 	}
 	
+	public void birthToTargetNo() {
+		Calendar beforeOne = Calendar.getInstance();
+		Calendar beforeEight = Calendar.getInstance();
+		beforeOne.add(Calendar.YEAR, -1);
+		beforeEight.add(Calendar.YEAR, -8);
+		
+		if(birth.before(beforeOne.getTime())) {
+			this.targetNo=1;
+		}else if(birth.after(beforeEight.getTime())) {
+			this.targetNo=2;
+		}else {
+			this.targetNo=3;
+		}
+		
+	}
 	
 }

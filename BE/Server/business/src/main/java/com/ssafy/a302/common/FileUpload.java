@@ -23,7 +23,6 @@ public class FileUpload {
 	public boolean petsImageUpload(List<MultipartFile> images, SignUpPetReq pet)
 			throws IllegalStateException, IOException {
 		File folder = new File(filePath.getPetImageUploadPath());
-		System.out.println(filePath);
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
@@ -49,7 +48,8 @@ public class FileUpload {
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-
+		if(pet.getImage()==null || "".equals(pet.getImage()))
+				return true;
 		if (image.getOriginalFilename().equals(pet.getImage())) {
 			String getImageName = image.getOriginalFilename();
 			String uniqueName = getUniqueFileName(getImageName);
