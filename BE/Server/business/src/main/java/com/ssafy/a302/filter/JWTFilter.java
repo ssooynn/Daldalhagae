@@ -28,7 +28,6 @@ public class JWTFilter implements Filter{
         	handleUnAuthorized(res);
         	return;
         }
-        System.out.println("-------------------------------------------------------------------------------------------");
         authorization = authorization.replace("Bearer", "").trim();
         if(!authorization.equals("a.a.a")) {
         	handleUnAuthorized(res);
