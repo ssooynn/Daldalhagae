@@ -19,8 +19,6 @@ spring:
         uri : lb://${BUSINESS_NAME}
         predicates:
           - Path=/api-gateway/business-api/**
-        filters:
-          - AuthorizationHeaderFilter
       - id : authId
         uri : lb://${AUTH_NAME}
         predicates:
