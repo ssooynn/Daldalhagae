@@ -43,9 +43,9 @@ public class reviewController {
     
     
     /*리뷰 등록 API*/
-    @Caching(evict= {
-			@CacheEvict(value="itemReview", allEntries=true)
-	})
+//    @Caching(evict= {
+//			@CacheEvict(value="itemReview", allEntries=true)
+//	})
     @ApiOperation(value = "리뷰작성",notes = "리뷰를 등록합니다. ")
     @PostMapping("/")
     public ResponseEntity<?> post(@RequestPart(name = "리뷰이미지파일",required = false) MultipartFile file ,
