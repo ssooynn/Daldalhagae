@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class Pet {
 	@Column(name = "NAME")
 	private String name;
 	@Column(name = "BIRTH")
-	private Date birth;
+	private LocalDate birth;
 	@Column(name = "FAT")
 	private int fat;
 	@Column(name = "IMAGE")
@@ -59,7 +59,7 @@ public class Pet {
 	@OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
 	private List<SubscribtionHistory> subscribtionHistorys = new ArrayList<>();
 
-	public Pet(String petSno, String name, Date birth, int fat, String image, Users users, Target target) {
+	public Pet(String petSno, String name, LocalDate birth, int fat, String image, Users users, Target target) {
 		super();
 		this.petSno = petSno;
 		this.name = name;
