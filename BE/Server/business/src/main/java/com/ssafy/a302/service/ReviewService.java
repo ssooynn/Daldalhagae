@@ -11,6 +11,7 @@ import com.ssafy.a302.request.ServiceReviewReq;
 import com.ssafy.a302.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,9 @@ public class ReviewService {
     public ItemReview findByItemReviewNo(int itemReviewNo) {
         return itemReviewRepository.findByItemReviewNo(itemReviewNo);
     }
+    
     /*상품리뷰목록 조회: 상품번호*/
+    @Cacheable(value="itemReview", key="#itemSno", cacheManager = "cacheManager")
     public  ItemReviewPageRes findByItemSno(String itemSno, PageRequest pageRequest){
         Page<ItemReview> pages = itemReviewRepository.findPageByItemSno(itemSno,pageRequest);
         List<ItemReviewRes> itemReviewResList = new ArrayList<>();
