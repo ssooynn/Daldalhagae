@@ -12,7 +12,7 @@ public class MyPagePetRes {
 	public MyPagePetRes(Pet pet, String imagePath) {
 		this.petSno = pet.getPetSno();
 		this.name = pet.getName();
-		if (pet.getImage() != null)
+		if (pet.getImage() != null && "".equals(pet.getImage()))
 			this.image = imagePath + pet.getImage();
 	}
 }
