@@ -15,6 +15,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -37,7 +40,12 @@ public class reviewController {
     @Autowired
     ReviewService reviewService;
 
+    
+    
     /*리뷰 등록 API*/
+    @Caching(evict= {
+			@CacheEvict(value="itemReview", allEntries=true)
+	})
     @ApiOperation(value = "리뷰작성",notes = "리뷰를 등록합니다. ")
     @PostMapping("/")
     public ResponseEntity<?> post(@RequestPart(name = "리뷰이미지파일",required = false) MultipartFile file ,
@@ -58,6 +66,8 @@ public class reviewController {
         List<ItemReviewRes> reviewList = reviewService.findByUsersSno(usersSno);
         return new ResponseEntity(reviewList, HttpStatus.OK);
     }
+    
+    @Cacheable(value="itemReview", key="#itemSno", cacheManager = "cacheManager")
     //todo: 페이징 사용하기.
     @ApiOperation(value = "상품 별 리뷰 조회",notes = "상품번호로 해당 상품의 리뷰 전체를 조회합니다.")
     @GetMapping("/item/{itemSno}")
