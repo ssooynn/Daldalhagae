@@ -1,5 +1,7 @@
 package com.ssafy.a302.dto;
 
+import java.time.LocalDate;
+
 import com.ssafy.a302.domain.Pet;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +17,7 @@ public class PetDto {
 	private String petSno;
 	private String userSno;
 	private String name;
-	private String birth;
+	private LocalDate birth;
 	private int fat;
 	private String materials;
 	private String effects;
