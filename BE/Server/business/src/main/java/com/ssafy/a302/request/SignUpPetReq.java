@@ -1,10 +1,9 @@
 package com.ssafy.a302.request;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.a302.domain.Pet;
 import com.ssafy.a302.domain.Target;
@@ -23,7 +22,7 @@ public class SignUpPetReq {
 	private int targetNo;
 	private String name;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date birth;
+	private LocalDate birth;
 	private int fat;
 	private String image;
 	private List<Integer> materials;
