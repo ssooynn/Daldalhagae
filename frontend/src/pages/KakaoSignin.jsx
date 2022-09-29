@@ -26,12 +26,12 @@ const KakaoSignin = () => {
         dispatch(
           setUser({
             token: token,
-            usersSno : res.data.usersSno,
+            usersSno: res.data.usersSno,
           })
         );
         Navigate("/");
       } else if (res.data.message === "fail") { // 유저데이터가 없음 (회원가입)
-        Navigate("/signup",{state:code});
+        Navigate("/signup", { state: res.data.kakaoId });
       }
     }
       , (err) => {
@@ -46,7 +46,7 @@ const KakaoSignin = () => {
     <MainContent>
       <img src={Loading} alt="로딩중" width="200px"></img>
       <StyledText size="18px" margin="30px 10px 5px 10px" weight="500" color="#ccaa90">Loading</StyledText>
-      </MainContent>
+    </MainContent>
   )
 }
 
