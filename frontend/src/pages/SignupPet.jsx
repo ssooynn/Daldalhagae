@@ -32,64 +32,64 @@ export default function SignupPet(props) {
   }
 
   //회원가입 버튼
-function Signup(){
+  function Signup() {
 
-  //api전송을 위한 formData객체
-  const formData = new FormData();
+    //api전송을 위한 formData객체
+    const formData = new FormData();
 
-  //user 객체 만들기
-  const users = JSON.stringify({
-    kakaoId: props.code,
-    email:props.user.email,
-    name:props.user.name,
-    phone:props.user.phoneNum,
-    address:props.user.fullAddress+";"+props.user.detailAddress+";"+props.user.postZip,
-  });
+    //user 객체 만들기
+    const users = JSON.stringify({
+      kakaoId: props.kakaoId,
+      email: props.user.email,
+      name: props.user.name,
+      phone: props.user.phoneNum,
+      address: props.user.fullAddress + ";" + props.user.detailAddress + ";" + props.user.postZip,
+    });
 
-  //Pet 객체 만들기
-  let petdata=[];
-  if(pets){
-    for (let i = 0; i < pets.length; i++) {
-      petdata[i] = {
-        targetNo: 1,
-        name:pets[i].name,
-        birth:"2022-01-01",
-        fat:pets[i].fat,
-        materials:pets[i].materials,
-        effects:pets[i].effects,
-        image:pets[i].file.name,
+    //Pet 객체 만들기
+    let petdata = [];
+    if (pets) {
+      for (let i = 0; i < pets.length; i++) {
+        petdata[i] = {
+          targetNo: 1,
+          name: pets[i].name,
+          birth: "2022-01-01",
+          fat: pets[i].fat,
+          materials: pets[i].materials,
+          effects: pets[i].effects,
+          image: pets[i].file.name,
+        }
       }
     }
+
+    console.log(users);
+    console.log(petdata);
+
+    //이미지 배열 만들어서 formData에 넣기
+    for (let i = 0; i < props.pets.length; i++) {
+      formData.append("images", props.pets[i].file);
+    }
+
+    //users객체 formdata에 넣기
+    const blob = new Blob([users], {
+      type: "application/json",
+    });
+    formData.append("users", blob);
+
+    //pet객체배열 formdata에 넣기
+    const blob2 = new Blob([JSON.stringify(petdata)], {
+      type: "application/json",
+    });
+    formData.append("pets", blob2);
+
+    //Api 전송
+    SignupApi(formData, (res) => {
+      console.log(res);
+      Navigate("/");
+    }, (err) => {
+      console.log(err);
+    })
   }
-
-  console.log(users);
-  console.log(petdata);
-
-  //이미지 배열 만들어서 formData에 넣기
-  for (let i = 0; i < props.pets.length; i++) {
-    formData.append("images",props.pets[i].file);
-  }
-
-  //users객체 formdata에 넣기
-  const blob = new Blob([users], {
-    type: "application/json",
-  });
-  formData.append("users", blob);
-
-  //pet객체배열 formdata에 넣기
-  const blob2 = new Blob([JSON.stringify(petdata)], {
-    type: "application/json",
-  });
-  formData.append("pets",blob2);
-
-  //Api 전송
-  SignupApi(formData,(res)=>{
-    console.log(res);
-    Navigate("/");
-  }, (err)=>{
-    console.log(err);
-  })
-}
 
   function PreviousStep() {
     props.setStep(1);

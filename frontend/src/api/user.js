@@ -23,7 +23,7 @@ const fileinstance = axios.create({
 });
 
 const LoginApi = async (code, success, fail) => {
-  await instance.post(`/login`, { kakaoId: code }).then(success).catch(fail);
+  await instance.post(`/login`, { code: code }).then(success).catch(fail);
 };
 
 const SignupApi = async (formData, success, fail) => {

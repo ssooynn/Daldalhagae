@@ -1,10 +1,17 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components";
 import cart from "../assets/img/cart.svg";
 import upArrow from "../assets/img/upArrow.svg";
 import chat from "../assets/img/chat.svg";
 import { FlexBox } from './MainComponent';
 import ShoppingBag from '../components/ShoppingBag'
+import Chatbot from "react-chatbot-kit";
+import config from './bot/config';
+import ActionProvider from './bot/ActionProvider';
+import MessageParser from './bot/MassageParser';
+import 'react-chatbot-kit/build/main.css'
+import "./bot/bot.css";
+
 const SideButtonStyled = styled.div`
 width:30px;
 height: 120px;
@@ -16,11 +23,16 @@ padding:20px 10px;
 border-radius: 50px;
 border: 2px solid #776B62;
 z-index: 5;
-    `
-
+`
+const StyledBotBox = styled.div`
+  position: fixed;
+  bottom:5%;
+  right:3%;
+`
 //스크롤 움직일때는 opacity?
 export default function SideButton({ ...props }) {
   const [bagOpen, setBagOpen] = useState(false);
+  const [chatbotOpen, setChatbotOpen] = useState(true);
   const showBag = (e) => {
     e.preventDefault();
     setBagOpen(true)
@@ -31,6 +43,14 @@ export default function SideButton({ ...props }) {
   return (
     <SideButtonStyled {...props}>
       {bagOpen && <ShoppingBag setBagOpen={setBagOpen} />}
+      <StyledBotBox>
+
+        {chatbotOpen && <Chatbot
+          config={config}
+          messageParser={MessageParser}
+          actionProvider={ActionProvider}
+        />}
+      </StyledBotBox>
       <FlexBox direction="column" margin="0px" justify="space-between" height="100%">
         <img src={cart} alt="장바구니 버튼" width="30px" height="30px" onClick={(e) => showBag(e)}></img>
         <img src={chat} alt="챗봇 버튼" width="25px" height="25px"></img>
