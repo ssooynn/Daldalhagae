@@ -19,6 +19,7 @@ const MypagePetDetail = (props) => {
   const [pet, setPet] = useState({})
   const [materials, setMaterials] = useState([])
   const [effects, setEffects] = useState([])
+  const [age, setAge] = useState(0)
 
   useEffect(()=>{
     petInfo(petId)
@@ -27,6 +28,17 @@ const MypagePetDetail = (props) => {
       setPet(res.data.pets)
       setMaterials(Object.values(res.data.pets.materials))
       setEffects(Object.values(res.data.pets.effects))
+      const today = new Date();   
+
+      const year = today.getFullYear(); // 년도
+      const month = today.getMonth() + 1;  // 월
+      const date = today.getDate();  // 날짜
+      const todayStr = year + '-' + month + '-' + date 
+      if (res.data.pets?.birth){
+        const petAge = PetAge(todayStr, res.data.pets.birth?.join('-'))
+        setAge(petAge)  
+      }
+
     })
     .catch((err)=>{
       console.log(err)
@@ -38,19 +50,12 @@ const MypagePetDetail = (props) => {
   const targetList = ['퍼피','어덜트', '시니어', '임신/수유', '대형견', '중형견']
   const targetColor = ['#D2E0BF', '#DCC7B7','#A5AAAD','#E0D3ED','#E1AAAA','#FFC6AE']
 
-  const today = new Date();   
-
-  const year = today.getFullYear(); // 년도
-  const month = today.getMonth() + 1;  // 월
-  const date = today.getDate();  // 날짜
-  const todayStr = year + '-' + month + '-' + date 
-  // const petAge = PetAge(todayStr, pet.birthday)
 
   useEffect(()=>{
     // petId 활용해서 정보 fetching
     setCurrentFocus({category:'pet', val:petId})
     
-  }, [])
+  }, [petId])
 
   const profileBoxStyle = {
     fontSize:'18px',
@@ -59,7 +64,7 @@ const MypagePetDetail = (props) => {
     margin:'25px 0px',
     boxSizing:'border-box', 
     width:'47%',
-    minWidth:'300px',
+    minWidth:'320px',
     padding: '20px', 
     borderRadius:'15px', 
     backgroundColor:'#FFFDFB', 
@@ -75,7 +80,7 @@ const MypagePetDetail = (props) => {
     width:'100%',
     display:'grid',
     gridTemplateColumns:'repeat(2, minmax(0, 1fr))',
-    gap: '1.5%',
+    gap: ' 8px 1.2%',
     marginTop:'4px',
   }
 
@@ -92,11 +97,11 @@ const MypagePetDetail = (props) => {
       <div style={{marginBottom:'40px'}}>
         <div style={profileBoxStyle}>
           <FlexBox direction="row" justify="start" align="start">
-            <StyledProfile src={DefaultProfile1} width='110px' />
+            <StyledProfile src={pet.image ? pet.image: DefaultProfile2} width='110px' height='110px' />
             <FlexBox direction="column" height="110px" justify="space-around" align="start" margin="0px 0px 0px 8%">
               <div>
-                <div style={{fontSize:'18px', marginBottom:'1px'}}>{pet.name}  <span style={{...detailText, fontSize:'11px', marginLeft:'2px'}}>[개월]</span></div>
-                <div style={detailText}>🎂 {pet.birthday}</div>
+                <div style={{fontSize:'18px', marginBottom:'1px'}}>{pet.name}  <span style={{...detailText, fontSize:'11px', marginLeft:'2px'}}>[ {age} 개월 ]</span></div>
+                <div style={{fontSize:'13.5px'}}>🎂 {pet.birth?.join('.')}</div>
               </div>
 
               <div style={{width:'100%'}}>
@@ -121,9 +126,9 @@ const MypagePetDetail = (props) => {
             <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
             <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))', marginBottom:'20px'}}>
               {materials.map((alergy,idx)=>{
-                const colorList=['#D2E0BF', '#DCC7B7','#A5AAAD','#E0D3ED','#E1AAAA','#FFC6AE']
+                const colorList=['#EDDCCF','#F4E8E8','#E7E1DC','#D6C9C0','#E4D1C2']
                 return(
-                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%6]}>{alergy}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%5]}>{alergy}</PetTag>
                 )
               })}
             </div>
@@ -135,9 +140,9 @@ const MypagePetDetail = (props) => {
             <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
             <div style={{...gridDiv, gridTemplateColumns:'repeat(7, minmax(0, 1fr))'}}>
               {effects.map((effect,idx)=>{
-                const colorList = ['#EAD0D0', '#F3BD94', '#EDDCCF', '#FFDF8E', '#DB9090', '#AC998A']
+                const colorList = ['#EAD0D0', '#D3AFAF', '#EDDCCF', '#F4E8E8', '#F4E8E8']
                 return(
-                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%6]}>{effect}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%5]}>{effect}</PetTag>
                 )
               })}
             </div>

@@ -228,6 +228,7 @@ const ProfileStyled = styled.img`
   height: ${(props) => props.height || "100px"};
   width: ${(props) => props.width || "100px"};
   border-radius: 10px;
+  aspect-ratio:'1/1';
   margin: ${(props) => props.margin || "5px"};
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 `;

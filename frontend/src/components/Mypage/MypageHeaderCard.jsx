@@ -145,7 +145,7 @@ useEffect(()=>{
                 >
                   { pet.image ?
                     <img style={miniProfile}  src={pet.image} alt="프로필 이미지"/> :
-                    <img style={miniProfile}  src={profileList[idx-1]} alt="프로필 이미지"/>
+                    <img style={miniProfile}  src={profileList[idx]} alt="프로필 이미지"/>
                   }
                   <div style={{fontSize:'12px'}}>{pet.name}</div>
                 </StyledLink >
