@@ -24,6 +24,7 @@ public class SignUpPetReq {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birth;
 	private int fat;
+	private int imageFlag;
 	private String image;
 	private List<Integer> materials;
 	private List<Integer> effects;

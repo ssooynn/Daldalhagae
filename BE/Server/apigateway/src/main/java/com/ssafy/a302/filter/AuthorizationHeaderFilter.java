@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,11 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 	@Autowired
 	RedisService redisService;
 	
+	@Value("${AUTH_SERVER_PAHT}")
+	String authPath;
+	@Value("${BUSINESS_SERVER_PATH}")
+	String businessPath;
+	
     public AuthorizationHeaderFilter() {
         super(Config.class);
     }
@@ -36,8 +42,18 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
         	ServerHttpRequest request = exchange.getRequest();
-        	System.out.println(32423);
-
+        	
+//        	String uri = request.getURI().getPath();
+//        	
+//        	if(uri.startsWith(authPath)) {
+//        		if(!uri.replace(authPath, "").startsWith("user/logout"))
+//        			return chain.filter(exchange);
+//        	}else if(uri.startsWith(businessPath)){
+//        		uri = uri.replace(businessPath, "");
+//        		if(uri.startsWith("pet") ||
+//        				uri.startsWith("/"))
+//        			/pet/*", "/review", "/review/unrated/*/
+//        	}
         	
         	
             // Request Header 에 token 이 존재하지 않을 때
