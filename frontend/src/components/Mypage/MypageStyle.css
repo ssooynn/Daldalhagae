@@ -1,0 +1,122 @@
+.hoverBox{
+    width:100%;
+    height: 98%;
+    border-radius: 3px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hoverProfile:hover .hoverBox{
+    opacity:1;
+}
+
+.scrollLock { overflow: hidden; }
+
+
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.filebox label {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  color: #999;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+}
+
+/* named upload */
+.filebox .upload-name {
+  display: inline-block;
+  height: 35px;
+  font-size:18px; 
+  padding: 0 10px;
+  vertical-align: middle;
+  background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+
+}
+
+/* 임의의 영역 생성 */
+.scrollBar{
+  height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding:5%;
+}
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.scrollBar::-webkit-scrollbar {
+    width: 7px;  /* 스크롤바의 너비 */
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #AC998A; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
+input[type=text]{
+	width:98%;
+	border:2px solid #aaa;
+	border-radius:4px;
+	margin: 4px 2px;
+	outline: none;
+	padding:8px;
+	box-sizing: border-box;
+	transition:.3s;
+}
+
+input[type=text]:focus{
+	border-color: #AC998A;
+	box-shadow:0 0 8px 0 dodgetBlue;
+}
+
+textarea {
+  width:100%;
+  height: 80px;
+	border:2px solid #aaa;
+	border-radius:4px;
+	margin: 8px auto;
+	outline: none;
+	padding:8px;
+	box-sizing: border-box;
+	transition:.3s;
+  resize: none;
+}
+
+textarea:focus{
+	border-color: #AC998A;
+	box-shadow:0 0 8px 0 dodgetBlue;
+}
+
+.input-file-button{
+  padding: 6px 25px;
+  background-color:#FF6600;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
