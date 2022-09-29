@@ -112,7 +112,9 @@ public class PetServiceImpl implements PetService {
 		Pet prePet = petRepository.findByPetSno(signUpPetReq.getPetSno());
 
 		logger.info("---기존 이미지 삭제 및 수정---");
-		fileUpload.petImageUpdate(prePet.getImage(), image, signUpPetReq);
+		if(signUpPetReq.getImageFlag()!=0) {
+			fileUpload.petImageUpdate(prePet.getImage(), image, signUpPetReq);
+		}
 		logger.info("---Pet entity 만들기---");
 		Pet pet = signUpPetReq.transforPet(users, target);
 
