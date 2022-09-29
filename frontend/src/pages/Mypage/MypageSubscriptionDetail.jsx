@@ -120,15 +120,15 @@ const MypageSubscriptionDetail = () => {
         <div style={{padding:'12px 24px', marginBottom:'25px'}}>
           <div style={gridDiv}>
             <div >배송지</div>
-            <div>{user?.address?.replaceAll(';', ' ')}</div>
+            <div style={{gridColumn:'span 3'}}>{user?.address?.replaceAll(';', ' ')}</div>
           </div>
           <div style={gridDiv}>
             <div >수령인</div>
-            <div>{user.name}</div>
+            <div style={{gridColumn:'span 3'}}>{user.name}</div>
           </div>          
           <div style={gridDiv}>
             <div >전화번호</div>
-            <div>{user.phone}</div>
+            <div style={{gridColumn:'span 3'}}>{user.phone}</div>
           </div>
         </div>
         <div style={cancelStyle} >구독 취소하기</div>

@@ -42,7 +42,7 @@ const MypageRoutingTitle = (props) => {
   console.log(currentFocus)
   const onClickSetting = () => {
     console.log(title[param].settingpath)
-    navigate(title[param].settingpath, currentFocus ? {state:{Id:currentFocus}}: '');
+    navigate(title[param].settingpath, currentFocus ? {state:currentFocus}: '');
   }
 
   return (
