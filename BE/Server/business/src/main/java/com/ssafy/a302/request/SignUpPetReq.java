@@ -2,10 +2,12 @@ package com.ssafy.a302.request;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.a302.domain.Pet;
 import com.ssafy.a302.domain.Target;
@@ -24,7 +26,7 @@ public class SignUpPetReq {
 	private int targetNo;
 	private String name;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date birth;
+	private LocalDate birth;
 	private int fat;
 	private int imageFlag;
 	private String image;
@@ -40,10 +42,12 @@ public class SignUpPetReq {
 		Calendar beforeEight = Calendar.getInstance();
 		beforeOne.add(Calendar.YEAR, -1);
 		beforeEight.add(Calendar.YEAR, -8);
+		Instant instant = birth.atStartOfDay(ZoneId.systemDefault()).toInstant();
+		Date birthDate = Date.from(instant);
 		
-		if(birth.before(beforeOne.getTime())) {
+		if(birthDate.before(beforeOne.getTime())) {
 			this.targetNo=1;
-		}else if(birth.after(beforeEight.getTime())) {
+		}else if(birthDate.after(beforeEight.getTime())) {
 			this.targetNo=2;
 		}else {
 			this.targetNo=3;
