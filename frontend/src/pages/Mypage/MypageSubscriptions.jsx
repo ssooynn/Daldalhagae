@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SubscriptionItem from '../../components/Mypage/SubscriptionItem'
+import LoadingComponent from '../../components/LoadingComponent'
 
 import { currentSubscription, subscriptionAll } from '../../api/mypageSubscription'
 
@@ -17,6 +18,7 @@ const MypageSubscriptions = () => {
     // fetching 
     // path에 따라 /mypage || /mypage/subscriptionsNow => 현재 구독 리스트 
     //  /mypage/subscriptions => 전체 구독 리스트
+    setSubscriptionList([])
     const path = location.pathname
     if (['/mypage','/mypage/subscriptionsNow'].includes(path)) {
       currentSubscription(userSno)
@@ -50,12 +52,13 @@ const MypageSubscriptions = () => {
   },[location])
 
   return (
-    <div style={{padding:'10px 5px'}}>
+    <div style={{padding:'10px 5px', position:'relative'}}>
+    <LoadingComponent></LoadingComponent>
     {subscriptionList ? 
       subscriptionList.map((subscription, idx)=>{
         return(
           // 구독 리스트 아이템 컴포넌트
-          <div id={idx}>
+          <div key={idx}>
             <SubscriptionItem page='subsNow' bgImg={subscription.subscriptionName.replaceAll(' ','')} subscription={subscription} reviewConnect={false} isDetail={false}></SubscriptionItem>
           </div>
         )

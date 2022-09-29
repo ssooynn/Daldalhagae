@@ -267,7 +267,7 @@ const ReviewModal = (props) => {
                         </div>
                       </FlexBox>
                     </div>
-                    <input type="text" value={review.itemReviewReqList[idx]?.content} onChange={(e)=>{onContentInput(e, idx)}} placeholder='상세한 후기를 들려주세요 :)'/>
+                    <input id='styledInput' type="text" value={review.itemReviewReqList[idx]?.content} onChange={(e)=>{onContentInput(e, idx)}} placeholder='상세한 후기를 들려주세요 :)'/>
                   </div>
                 )
               })}

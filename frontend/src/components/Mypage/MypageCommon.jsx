@@ -133,7 +133,7 @@ export const MypageButton = ({children, onClick, color,hoverColor, padding, heig
 }
 
 export const subTitleStyle = {
-    margin:'20px 0px 25px', 
+    margin:'20px 0px 18px', 
     borderBottom:'0.1px solid #929292', 
     paddingBottom:'10px',
     fontWeight:'500',
@@ -143,7 +143,7 @@ export const subTitleStyle = {
 const TagDiv = styled.div`
   height: ${(props)=> props.height || 'auto'};
   width: ${(props)=> props.width || '100%'};
-  padding: 2.5px 0px;
+  padding: ${(props)=>props.padding|| '2.5px 0px'};
   background-color: ${(props)=> props.bgColor || '#FFE6A7'}; 
   font-size: 13px;
   font-weight: 400;
@@ -153,11 +153,12 @@ const TagDiv = styled.div`
 `
 
 
-export const PetTag = ({children, height, width, bgColor}) => {
+export const PetTag = ({children, height, width, bgColor, padding}) => {
     return (
-        <TagDiv height={height} width={width} bgColor={bgColor} >{children}</TagDiv>
+        <TagDiv height={height} padding={padding} width={width} bgColor={bgColor} >{children}</TagDiv>
     )
 }
+
 
 export const ImgDiv = styled(animated.div)`
     width: ${(props)=> props.width || '100%'};
