@@ -26,11 +26,6 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 	@Autowired
 	RedisService redisService;
 	
-	@Value("${AUTH_SERVER_PAHT}")
-	String authPath;
-	@Value("${BUSINESS_SERVER_PATH}")
-	String businessPath;
-	
     public AuthorizationHeaderFilter() {
         super(Config.class);
     }
