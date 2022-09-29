@@ -103,6 +103,7 @@ public class UsersServiceImpl implements UsersService {
 				logger.info("----이미지 넣기 ----");
 				fileUpload.petsImageUpload(images, signUpPetReq);
 			}
+			signUpPetReq.birthToTargetNo();
 			Pet pet = signUpPetReq.transforPet(users, target);
 			petRepository.saveAndFlush(pet);
 			logger.info("---펫 저장 끝---");
