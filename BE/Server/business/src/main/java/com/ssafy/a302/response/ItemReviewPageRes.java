@@ -1,11 +1,14 @@
 package com.ssafy.a302.response;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class ItemReviewPageRes {
     private List<ItemReviewRes> reviewList;
     private int pageSize; //한 페이지 원소 수

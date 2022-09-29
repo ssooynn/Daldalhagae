@@ -67,7 +67,7 @@ public class reviewController {
         return new ResponseEntity(reviewList, HttpStatus.OK);
     }
     
-    @Cacheable(value="itemReview", key="#itemSno", cacheManager = "cacheManager")
+    
     //todo: 페이징 사용하기.
     @ApiOperation(value = "상품 별 리뷰 조회",notes = "상품번호로 해당 상품의 리뷰 전체를 조회합니다.")
     @GetMapping("/item/{itemSno}")
