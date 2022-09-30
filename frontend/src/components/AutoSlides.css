@@ -20,14 +20,14 @@
   height: 170px;
   margin: 0 10px 0 10px;
   text-align: center;
-
-  -webkit-animation: moveSlideshow 6s linear infinite;
+  animation: moveSlideshow 30s linear infinite;
+  /* -webkit-animation: moveSlideshow 6s linear infinite;
   -moz-animation: moveSlideshow 6s linear infinite;
-  -o-animation: moveSlideshow 6s linear infinite;
+  -o-animation: moveSlideshow 6s linear infinite; */
 }
 
 @keyframes moveSlideshow {
   100% {
-    transform: translateX(-180px);
+    transform: translateX(-1127%);
   }
 }
