@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import imgD from '../assets/img/구독상세페이지4.png'
 import styled from 'styled-components'
+import Loading from './LoadingComponent'
 
 const ReviewCard = styled.div`
 background-color: #F6F1EC;
 border-radius: 5px;
 box-shadow: 1px 2px rgba(0, 0, 0, 0.25);
 display: flex;
-justify-content: space-around;
+justify-content: space-between;
 margin: 3px 0 10px 0;
 text-align: start;
 padding: 0 2rem 0 2rem;
@@ -16,9 +17,20 @@ padding: 0 2rem 0 2rem;
 
 function Reviews() {
   const [showReviews, setShowReviews] = useState([])
-  const [itemSno, page, size, sort] = ['f05C8ZXZjHZrZaeUB8eYN', 0, 5, 'date']
+  const [itemSno, setItemSno] = useState('f05C8ZXZjHZrZaeUB8eYN')
+  const [page, setPage] = useState(0)
+  const [size, setSize] = useState(5)
+  const [sort, setSort] = useState('date')
   const [showPaginator, setShowPaginator] = useState([])
+  const [loading, setLoading] = useState(true)
+  function MovePage(e, i) {
+    e.preventDefault()
+    setPage(i)
+    setShowPaginator([])
+    setShowReviews([])
+  }
   useEffect(()=>{
+    setLoading(true)
     axios({
       method: 'get',
       url: `https://j7a302.p.ssafy.io/api-gateway/business-api/review/item/${itemSno}?page=${page}&size=${size}&sort=${sort}`,
@@ -27,14 +39,14 @@ function Reviews() {
       }
     })
     .then((res)=>{
-      for (let i = 0; i < res.data.totalPages; i++) {
-        showPaginator.push(<p style={{margin: 'auto 3px'}}>{i+1}</p>)
+      for (let i = 0; i < 10; i++) {
+        showPaginator.push(<p onClick={(e)=>MovePage(e, i)} style={{margin: 'auto 3px', cursor: 'pointer'}}>{i+1}</p>)
       }
       const copyShowPaginator = [...showPaginator]
       setShowPaginator(copyShowPaginator)
       const reviews = res.data.reviewList
-      for (let i = 0; i < reviews.length; i++) {
-        let star;
+      for (let i = 0; i < size; i++) {
+        let star = '';
         switch (reviews[i].rate) {
           case 1:
             star = '★☆☆☆☆'
@@ -53,39 +65,43 @@ function Reviews() {
             break;
         }
         showReviews.push(<ReviewCard>
-            <div style={{ marginRight: '2rem'}}>
-              <p style={{ fontWeight: 'bold'}}>{reviews[i].usersName}</p>
-              <p style={{color: '#FFD100'}}>{star}</p>
-            </div>
-            <div style={{ marginRight: '2rem'}}>
-              {/* <p>{reviews[i].content}</p> */}
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-              <p></p>
+            <div style={{ display: 'flex'}}>
+              <div style={{marginRight: '2rem'}}>
+                <p style={{ fontWeight: 'bold'}}>{reviews[i].usersName}</p>
+                <p style={{color: '#FFD100'}}>{star}</p>
+              </div>
+              <div style={{marginRight: '1rem'}}>
+                <p style={{fontSize: '13px'}}>{reviews[i].content}</p>
+              </div>
             </div>
             <p
               style={{
                 display: 'flex',
                 alignItems: 'flex-end',
                 fontSize: '12px',
-                width: '300px',
+                width: '100px',
                 justifyContent: 'flex-end',
               }}>{reviews[i].date}</p>
           </ReviewCard>)
       }
       const copyShowReviews = [...showReviews]
       setShowReviews(copyShowReviews)
-
+      setLoading(false)
     })
     .catch((err)=>{
       console.log(err)
     })
-  }, [])
+  }, [page])
   return <div>
-      {showReviews}
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-        {showPaginator}
+    {loading ? 
+      <Loading></Loading> : <div>
+        {showReviews}
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          {showPaginator}
+        </div>
       </div>
-    </div>
+    }
+  </div>
 }
 
 function MoreReview(props) {
@@ -104,6 +120,8 @@ function MoreReview(props) {
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
   }, [])
+
+  const info = props.info
   return (
     <div
       onClick={closeReview}
@@ -116,9 +134,11 @@ function MoreReview(props) {
         backgroundColor: 'rgba(0, 0, 0, 0.15)',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        cursor: 'default'
       }}>
       <div
+        className='scrollBar'
         onClick={(e)=>e.stopPropagation()}
         style={{
           backgroundColor: 'white',
@@ -130,6 +150,7 @@ function MoreReview(props) {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           textAlign: 'center',
+          height: '35rem'
         }}>
         <div
           style={{
@@ -150,7 +171,7 @@ function MoreReview(props) {
             }}>
             <div>
               <img src={imgD} width='200px' height='150px' alt="img" />
-              <p>제품명</p>
+              <p>{info.name}</p>
             </div>
             <div>
               <div
@@ -161,7 +182,7 @@ function MoreReview(props) {
                   fontSize: '10px'
                 }}>
                 <p>주원료</p>
-                <p>닭, 오리, 연어</p>
+                <p>{info.materials}</p>
               </div>
               <div
                 style={{
@@ -171,7 +192,7 @@ function MoreReview(props) {
                   fontSize: '10px'
                 }}>
                 <p>급여 대상</p>
-                <p>퍼피, 어덜트, 시니어, 임신 / 수유, 대형견</p>
+                <p>{info.targets}</p>
               </div>
               <div
                 style={{
@@ -181,7 +202,7 @@ function MoreReview(props) {
                   fontSize: '10px'
                 }}>
                 <p>입자크기</p>
-                <p>보통 8 ~ 13 mm</p>
+                <p>{info.particle}</p>
               </div>
               <div
                 style={{
@@ -191,7 +212,7 @@ function MoreReview(props) {
                   fontSize: '10px'
                 }}>
                 <p>기능</p>
-                <p>영양공급, 저알러지, 식욕증진</p>
+                <p>{info.effects}</p>
               </div>
             </div>
           </div>

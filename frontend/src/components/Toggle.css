@@ -3,13 +3,14 @@
   width: 28%;
   height: 100%;
   border-radius: 5px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);
   padding: 30px 10px 10px 10px;
   cursor: pointer;
+  border: solid 4px;
+  border-color: rgba(204, 170, 144, 0.3);
 }
 .card:hover {
-  border-style: solid;
-  border-color : #ffffff;
+  /* border: solid 4px;
+  border-color: rgba(204, 170, 144, 1); */
 }
 .clickCard {
   background-color: #ffffff;
@@ -18,14 +19,13 @@
   border-radius: 5px;
   padding: 30px 10px 10px 10px;
   cursor: pointer;
-  border-style: solid;
-  border-color : #CCA990;
+  border: solid 4px;
+  border-color: rgba(204, 170, 144, 1);
 }
 .moreReview {
   font-size: 12px;
   color: gray;
   text-align: end;
-  cursor: pointer;
 }
 .moreReview:hover {
   font-weight: bold;
