@@ -20,13 +20,7 @@ public class ServiceReviewReq {
     String serviceReviewContent;
     @ApiModelProperty(name = "서비스리뷰이미지", example = "")
     String serviceReviewImage;
-    //이미지는 file따로받기
+    //    //이미지는 file따로받기
     @ApiModelProperty(name = "아이템리뷰리스트", example = "[{itemReviewReq}]")
     List<ItemReviewReq> itemReviewReqList;
-
-
-
-
-
-
 }
