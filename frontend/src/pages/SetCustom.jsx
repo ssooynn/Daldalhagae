@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import imgA from '../assets/img/자유구독1.png'
+import imgA from '../assets/img/나만의구독서비스.png'
 import imgB from '../assets/img/자유구독2.png'
 import imgD from '../assets/img/구독상세페이지5.png'
 import imgE from '../assets/img/구독상세페이지6.png'
@@ -16,29 +16,29 @@ const SetCustom = () => {
   const [toyNum, setToyNum] = useState(0)
   function plusFeed(e) {
     e.preventDefault()
-    setFeedNum(feedNum+1)
+    setFeedNum(feedNum + 1)
   } function minusFeed(e) {
     e.preventDefault()
-    if (feedNum>0) {
-      setFeedNum(feedNum-1)
+    if (feedNum > 0) {
+      setFeedNum(feedNum - 1)
     }
   }
   function plusSnack(e) {
     e.preventDefault()
-    setSnackNum(snackNum+1)
+    setSnackNum(snackNum + 1)
   } function minusSnack(e) {
     e.preventDefault()
-    if (snackNum>0) {
-      setSnackNum(snackNum-1)
+    if (snackNum > 0) {
+      setSnackNum(snackNum - 1)
     }
   }
   function plusToy(e) {
     e.preventDefault()
-    setToyNum(toyNum+1)
+    setToyNum(toyNum + 1)
   } function minusToy(e) {
     e.preventDefault()
-    if (toyNum>0) {
-      setToyNum(toyNum-1)
+    if (toyNum > 0) {
+      setToyNum(toyNum - 1)
     }
   }
   const name = '나만의 구독 서비스'
@@ -51,7 +51,7 @@ const SetCustom = () => {
   const [snacks, setSnacks] = useState([])
   const [toys, setToys] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     const usersSno = 'uXJFRDEC7DuyYasedNxU1'
     // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
     // Authorization: `Bearer` + `a.a.a`
@@ -62,18 +62,18 @@ const SetCustom = () => {
         'Authorization': `Bearer a.a.a`
       }
     })
-      .then((res)=>{
+      .then((res) => {
         setPets(res.data.pets)
         setFeeds(res.data.feeds)
         setSnacks(res.data.snacks)
         setToys(res.data.toys)
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       })
   }, [])
   const info = [name, intro, components1, price, components2, pets]
-  
+
   return (
     <div
       style={{
@@ -97,7 +97,7 @@ const SetCustom = () => {
             width: '50%',
             height: '50%',
             borderRadius: '10px'
-          }} alt='package'/>
+          }} alt='package' />
         <div>
           <h2>나만의 구독 서비스</h2>
           <h5>어떤 구성으로 만들고 싶으신가요?</h5>
@@ -111,9 +111,9 @@ const SetCustom = () => {
                 justifyContent: 'flex-end'
               }}>
               <p>사료(+12,900)</p>
-              <p style={{fontSize: '10px', color: '#949494', marginRight: '1rem'}}>(10~15kg)</p>
+              <p style={{ fontSize: '10px', color: '#949494', marginRight: '1rem' }}>(10~15kg)</p>
               <div  // - 버튼
-                onClick={(e)=>minusFeed(e)}
+                onClick={(e) => minusFeed(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -127,9 +127,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>{feedNum}</p>
+              <p style={{ margin: '0 1rem 0 1rem' }}>{feedNum}</p>
               <div  // + 버튼
-                onClick={(e)=>plusFeed(e)}
+                onClick={(e) => plusFeed(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -152,9 +152,9 @@ const SetCustom = () => {
                 margin: 'auto',
                 justifyContent: 'flex-end'
               }}>
-              <p style={{marginRight: '1rem'}}>간식(+2,900)</p>
+              <p style={{ marginRight: '1rem' }}>간식(+2,900)</p>
               <div  // - 버튼
-                onClick={(e)=>minusSnack(e)}
+                onClick={(e) => minusSnack(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -168,9 +168,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>{snackNum}</p>
+              <p style={{ margin: '0 1rem 0 1rem' }}>{snackNum}</p>
               <div  // + 버튼
-                onClick={(e)=>plusSnack(e)}
+                onClick={(e) => plusSnack(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -193,9 +193,9 @@ const SetCustom = () => {
                 margin: 'auto',
                 justifyContent: 'flex-end'
               }}>
-              <p style={{marginRight: '1rem'}}>장난감(+2,900)</p>
+              <p style={{ marginRight: '1rem' }}>장난감(+2,900)</p>
               <div  // - 버튼
-               onClick={(e)=>minusToy(e)}
+                onClick={(e) => minusToy(e)}
                 style={{
                   backgroundColor: '#F6F1EC',
                   width: '30px',
@@ -209,9 +209,9 @@ const SetCustom = () => {
                 }}>
                 -
               </div>
-              <p style={{margin: '0 1rem 0 1rem'}}>{toyNum}</p>
+              <p style={{ margin: '0 1rem 0 1rem' }}>{toyNum}</p>
               <div  // + 버튼
-                onClick={(e)=>plusToy(e)}
+                onClick={(e) => plusToy(e)}
                 style={{
                   backgroundColor: '#EDDCCF',
                   width: '30px',
@@ -227,7 +227,7 @@ const SetCustom = () => {
               </div>
             </div>
           </div>
-          <PurchaseList info={info}/>
+          <PurchaseList info={info} />
         </div>
       </div>
       <div  // 구독 서비스 설명
@@ -240,8 +240,8 @@ const SetCustom = () => {
           <div>
             <h3>우리 강아지만을 위한 맞춤 구독 서비스</h3>
             <h2>나만의 구독 서비스</h2>
-            <img src={imgB} width='100%' alt='package'/>
-            <p style={{fontSize: '12px'}}>반려견의 취향에 맞는 선물을 조합해보세요.</p>
+            <img src={imgB} width='100%' alt='package' />
+            <p style={{ fontSize: '12px' }}>반려견의 취향에 맞는 선물을 조합해보세요.</p>
           </div>
         </div>
         <div  // 사료 소개 시작
@@ -251,11 +251,11 @@ const SetCustom = () => {
             alignItems: 'center',
             marginTop: '15rem'
           }}>
-          <img src={imgF} style={{borderRadius: '5px'}} width='400px' alt='img'/>
+          <img src={imgF} style={{ borderRadius: '5px' }} width='400px' alt='img' />
           <div
             style={{
 
-          }}>
+            }}>
             <p>안전한 홀리스틱 등급 이상의</p>
             <h3>사료 맞춤 추천</h3>
           </div>
@@ -271,11 +271,11 @@ const SetCustom = () => {
           <div
             style={{
 
-          }}>
+            }}>
             <p>반려견에게 생기를 불어 넣어주는</p>
             <h3>간식 맞춤 추천</h3>
           </div>
-          <img src={imgD} width='400px' alt='img'/>
+          <img src={imgD} width='400px' alt='img' />
         </div>
         <AutoSlides info={snacks} />
         <div  // 장난감 소개 시작
@@ -285,11 +285,11 @@ const SetCustom = () => {
             alignItems: 'center',
             marginTop: '15rem'
           }}>
-          <img src={imgE} width='400px' alt='img'/>
+          <img src={imgE} width='400px' alt='img' />
           <div
             style={{
 
-          }}>
+            }}>
             <p>반려견이 재밌게 놀 수 있게</p>
             <h3>장난감 맞춤 추천</h3>
           </div>
