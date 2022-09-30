@@ -12,7 +12,7 @@ const MypageReviews = () => {
   useEffect(()=>{
     reviewList(userSno)
     .then((res)=>{
-      console.log(res.data)
+      console.log(res)
       setReviews(res.data)
     })
     .catch((err)=>{

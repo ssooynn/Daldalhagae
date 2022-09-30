@@ -1,15 +1,58 @@
 import React, {useState} from 'react'
-import MoreReview from '../components/MoreReview'
+import styled from 'styled-components'
+import PaymentCarousel from '../components/PaymentCarousel'
+import { StyledButton } from '../components/CommonComponent';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
-import imgA from '../assets/img/추천페이지1.png'
-import imgD from '../assets/img/구독상세페이지4.png'
-import leftArrow from '../assets/img/왼쪽.png'
-import rightArrow from '../assets/img/오른쪽.png'
+import PackageImage1 from '../assets/img/추천페이지1.png'
+import PackageImage2 from '../assets/img/toggle_play.png'
+import PackageImage3 from '../assets/img/toggle_all.png'
+import daldalPackage from '../assets/img/toggle_daldal.png'
+import toyPackage from '../assets/img/toggle_toy.png'
+import lightPackage from '../assets/img/toggle_light.png'
+import 자유구독 from '../assets/img/toggle_custom.png'
+
+const PackageBox  = styled.div`
+background-image: ${(props) => {
+  let iamge;
+  switch (props.packageName) {
+    case 'Basic Package':
+      iamge = `url(${PackageImage1})`;
+      break;
+    case 'Play Package':
+      iamge = `url(${PackageImage2})`;
+      break;
+    case 'All In One Package':
+      iamge = `url(${PackageImage3})`;
+      break;
+    case 'DalDal Package':
+      iamge = `url(${daldalPackage})`;
+      break;
+    case 'Toy Package':
+      iamge = `url(${toyPackage})`;
+      break;
+    case 'Light All Package':
+      iamge = `url(${lightPackage})`;
+      break;
+    default:
+      iamge = `url(${자유구독})`;
+      break;
+  }
+  return iamge
+}};
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 3rem;
+border-radius: 10px 10px 0 0;
+`
 
 const PaymentCheck = () => {
-  const [reviewOpen, setReviewOpen] = useState(false)
-  const showMoreReview = ()=>{
-    setReviewOpen(true)
+  const Navigate = useNavigate();
+  function GoMainPage() {
+    Navigate("/")
   }
   return (
     <div
@@ -34,158 +77,27 @@ const PaymentCheck = () => {
             }}>결제 완료 내역 확인</h3>
         </div>
         <hr style={{backgroundColor: '#CCAA90'}}/>
-        <div  // 토글
-          style={{
-            width: '100%',
-            position: 'relative',
-            marginTop: '30px'
-          }}>
-          <img
-            src={imgA}
-            alt="img"
-            style={{
-              width: '100%',
-              verticalAlign: 'middle',
-              borderRadius: '5px 5px 0 0'
-            }}/>
+        <PackageBox>
           <div
             style={{
-              display: 'flex'
+              width: '80%',
             }}>
-            <h4
-              style={{
-                position: 'absolute',
-                top: '-10%',
-                left: '10%',
-                transform: 'translate(0%, 0%)'
-              }}>package name - pet name</h4>
-            <p
-              style={{
-                position: 'absolute',
-                top: '0%',
-                right: '10%',
-                transform: 'translate(0%, 0%)'
-              }}>월 21,900원</p>
-          </div>
-          <p
-            style={{
-              position: 'absolute',
-              top: '40%',
-              left: '10%',
-              transform: 'translate(0%, 0%)',
-              fontSize: '13px'
-            }}>(사료1 + 간식2 + 장난감3)</p>
-        </div>
-        <div  // 이번 달 배송 예정 상품
-          style={{
-            backgroundColor: '#FFFDFB',
-            height: '100%',
-            borderRadius: '0 0 5px 5px',
-            boxShadow: '0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)',
-            padding: '10px 30px 20px 30px',
-            position: 'relative',
-          }}>
-          <h3>이번 달 배송 예정 상품</h3>
-          <div
-            style={{
-              paddingTop: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}>
-            <img src={leftArrow} style={{cursor: 'pointer', width: '30px', height: '30px'}} alt="" />
-            <div  // 상품 정보 카드
+            <div
               style={{
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}>
-              <div
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  width: '200px',
-                  height: '100%',
-                  borderRadius: '5px',
-                  boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.05)',
-                  padding: '30px 10px 10px 10px',
-                  textAlign: 'center'
-                }}>
-                <img src={imgD} width='100%' alt="" />
-                <p>사료 이름</p>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: '12px'
-                  }}>
-                  <p>주 원료</p>
-                  <p>주 원료</p>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: '12px'
-                  }}>
-                  <p>급여 대상</p>
-                  <p>급여 대상</p>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: '12px'
-                  }}>
-                  <p>입자 크기</p>
-                  <p>입자 크기</p>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontSize: '12px'
-                  }}>
-                  <p>기능</p>
-                  <p>기능</p>
-                </div>
-                <p
-                  onClick={event=>{
-                    event.preventDefault()
-                    showMoreReview()
-                  }}
-                  style={{
-                    fontSize: '10px',
-                    color: 'gray',
-                    textAlign: 'end',
-                    cursor: 'pointer'
-                  }}>리뷰 더보기</p>
-                {reviewOpen && <MoreReview setReviewOpen={setReviewOpen} />}
-              </div>
+              <h2>packageName - petName</h2>
+              <p>월 Price원</p>
             </div>
-            <img src={rightArrow} style={{cursor: 'pointer', width: '30px', height: '30px'}} alt="" />
+            <p>Components</p>
           </div>
-        </div>
+        </PackageBox>
+        <PaymentCarousel></PaymentCarousel>
       </div>
-      <div
-          style={{
-          display: 'flex',
-          justifyContent: 'center'
-          }}>
-          <div
-            style={{
-              backgroundColor: '#CCAA90',
-              width: '250px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: '10px',
-              height: '50px',
-              margin: '5rem 0 15rem 0',
-              cursor: 'pointer',
-            }}>
-            <h3 style={{
-            }}>메인으로 돌아가기</h3>
-          </div>
-        </div>
+      <StyledButton onClick={GoMainPage} SmallWhite style={{width: '250px', margin: '100px 0 100px 0'}}>메인으로 돌아가기</StyledButton>
+      <Footer />
     </div>
   )
 }
