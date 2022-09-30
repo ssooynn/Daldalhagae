@@ -14,7 +14,16 @@ import lightPackage from '../assets/img/LightAllInOnePackage.png'
 import 자유구독 from '../assets/img/나만의구독서비스.png'
 
 const ToggleBox = styled.div`
-background-image: ${(props) => {
+position: relative;
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 1.2rem;
+::before{
+  border-radius: 10px;
+  background-size: cover;
+  background-image: ${(props) => {
     let iamge;
     switch (props.packageName) {
       case 'Basic Package':
@@ -41,14 +50,16 @@ background-image: ${(props) => {
     }
     return iamge
   }};
-background-repeat: no-repeat;
-background-size: cover;
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-top: 3rem;
-border-radius: 10px 10px 0 0;
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  opacity: 0.35;
+}
+object-fit: cover;
+cursor: pointer;
 `
 
 function Reviews() {
@@ -216,7 +227,7 @@ function RecommendProducts(props) {
         width: '100%',
         height: '100%',
         borderRadius: '0 0 5px 5px',
-        boxShadow: '0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         paddingTop: '50px',
         position: 'relative',
       }}>
@@ -243,16 +254,29 @@ function RecommendProducts(props) {
 
 
 const Toggle = (props) => {
-  const [togleOpen, setTogleOpen] = useState(true)
+  const [togleOpen, setTogleOpen] = useState(false)
   const showTogle = () => {
     setTogleOpen(true)
   }
   const closeTogle = () => {
     setTogleOpen(false)
   }
+  const [flag, setFlag] = useState(true)
+  function TogleOnOff(e, flag) {
+    e.preventDefault()
+    if (flag) {
+      showTogle()
+      setFlag(false)
+    } else {
+      closeTogle()
+      setFlag(true)
+    }
+  }
 
   return (<div>
-    <ToggleBox packageName={props.info[0]}>
+    <ToggleBox
+      onClick={(e) => {TogleOnOff(e, flag)}}
+      packageName={props.info[0]}>
       <div
         style={{
           width: '80%',
@@ -267,27 +291,6 @@ const Toggle = (props) => {
           <p>월 {props.info[3]}원</p>
         </div>
         <p>{props.info[1]}</p>
-        {togleOpen ?
-          <p
-            onClick={event => {
-              event.preventDefault()
-              closeTogle()
-            }}
-            style={{
-              cursor: 'pointer',
-              textAlign: 'end',
-              fontSize: '12px',
-            }}>접기 △</p> :
-          <p
-            onClick={event => {
-              event.preventDefault()
-              showTogle()
-            }}
-            style={{
-              cursor: 'pointer',
-              textAlign: 'end',
-              fontSize: '12px',
-            }}>추천 제품 고르기 ▽</p>}
       </div>
     </ToggleBox>
     {togleOpen && <RecommendProducts name={props.info[6]} setTogleOpen={setTogleOpen} />}
