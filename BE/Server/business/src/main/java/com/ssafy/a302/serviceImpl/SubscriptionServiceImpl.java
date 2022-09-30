@@ -8,6 +8,9 @@ import java.util.Map;
 import com.ssafy.a302.domain.*;
 import com.ssafy.a302.repository.*;
 import com.ssafy.a302.request.SubscriptionReq;
+import com.ssafy.a302.response.FeedDetailRes;
+import com.ssafy.a302.response.SnackDetailRes;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	private final SubscriptionsHistoryRepository subscriptionsHistoryRepository;
 	private final UsersRepository usersRepository;
 	private final PetRepository petRepository;
+	private final FeedRepository feedRep;
+	private final SnackRepository snackRep;
 	private final SubscriptionRepository subscriptionRepository;
 	private final SubscriptionProductTypeRepository subscriptionProductTypeRepository;
 	private final SubscriptionHistorySubscriptionRepository subscriptionHistorySubscriptionRepository;
@@ -59,17 +64,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 			// 3. Items
 			List<Purchase> items = new ArrayList<>();
-			List<Snack> snacks = new ArrayList<>();
-			List<Feed> feeds = new ArrayList<>();
 			List<Toy> toy = new ArrayList<>();
+			List<FeedDetailRes> feedDetailRes = new ArrayList<>();
+			List<SnackDetailRes> snackDetailRes = new ArrayList<>();
 			for (Purchase purchase : sub.getPurchases()) {
 				String sno = purchase.getItemSno();
 				//FEED
 				if(sno.charAt(0) == 'f'){
-					feeds.add(subscriptionsHistoryRepository.findFeedInfo(sno));
+					Feed feed = feedRep.findById(sno).get();
+					feedDetailRes.add(new FeedDetailRes(feed));
 				}//SNACK
 				else if(sno.charAt(0) == 's'){
-					snacks.add(subscriptionsHistoryRepository.findSnackInfo(sno));
+					Snack snack =  snackRep.findById(sno).get();
+					snackDetailRes.add(new SnackDetailRes(snack));
 				}//TOY
 				else{
 					toy.add(subscriptionsHistoryRepository.findToyInfo(sno));
@@ -77,9 +84,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			}
 
 			// 4. 그 외 정보
-			map.put("feed", feeds);
-			map.put("snack", snacks);
-			map.put("toy", toy);
+			map.put("feeds", feedDetailRes);
+			map.put("snacks", snackDetailRes);
+			map.put("toys", toy);
 
 			map.put("petName", sub.getPet().getName());
 			map.put("startDate", sub.getStartDate());
