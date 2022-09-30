@@ -4,8 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { StyledButton, StyledText } from './CommonComponent'
 import { FlexBox } from './MainComponent'
-import PackageImage1 from '../assets/img/자유구독2.png'
-import PackageImage2 from '../assets/img/구독상세페이지2.png'
+import BasicPackage from '../assets/img/BasicPackage.png';
+import PlayPackage from '../assets/img/PlayPackage.png';
+import AllInOnePackage from '../assets/img/AllInOnePackage.png';
+import DalDalPackage from '../assets/img/DalDalPackage.png';
+import ToyPackage from '../assets/img/ToyPackage.png';
+import LightAllPackage from '../assets/img/LightAllInOnePackage.png';
+import 나만의구독서비스 from '../assets/img/나만의구독서비스.png';
+
 import { useState } from 'react'
 import DeleteButton from '../assets/img/delete.svg';
 import { deleteItem } from '../stores/modules/bag'
@@ -55,14 +61,29 @@ const SubBox = styled.div`
     background-image: ${(props) => {
     let a;
     switch (props.packageName) {
-      case 'Play Package':
-        a = `url(${PackageImage1})`;
-        break;
       case 'Basic Package':
-        a = `url(${PackageImage2})`;
+        a = `url(${BasicPackage})`;
+        break;
+      case 'Play Package':
+        a = `url(${PlayPackage})`;
+        break;
+      case 'All In One Package':
+        a = `url(${AllInOnePackage})`;
+        break;
+      case 'DalDal Package':
+        a = `url(${DalDalPackage})`;
+        break;
+      case 'Toy Package':
+        a = `url(${ToyPackage})`;
+        break;
+      case 'Light All Package':
+        a = `url(${LightAllPackage})`;
+        break;
+      case '나만의 구독 서비스':
+        a = `url(${나만의구독서비스})`;
         break;
       default:
-        a = `url(${PackageImage1})`;
+        a = `url(${BasicPackage})`;
         break;
     }
     return a
