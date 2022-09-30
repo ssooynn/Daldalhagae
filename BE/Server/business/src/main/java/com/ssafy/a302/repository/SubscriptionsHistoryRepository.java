@@ -17,25 +17,25 @@ import org.springframework.data.repository.query.Param;
 
 public interface SubscriptionsHistoryRepository extends JpaRepository<SubscribtionHistory, Integer>{
 	@Query("select s from SubscribtionHistory s where s.users.usersSno = :userId and s.startDate <= CURRENT_DATE and s.endDate > CURRENT_DATE")
-	List<SubscribtionHistory> findSubNowByUserId(String userId);
+	List<SubscribtionHistory> findSubNowByUserId(@Param("userId") String userId);
 
 	@Query("select s from SubscribtionHistory s where s.users.usersSno = :userId")
-	List<SubscribtionHistory> findSubAllByUserId(String userId);
+	List<SubscribtionHistory> findSubAllByUserId(@Param("userId")String userId);
 
 	@Query("select p from Purchase p where p.subscribtionHistory.subscribtionHistoryNo = :subId")
-	List<Purchase> findPurchaseBySubId(String subId);
+	List<Purchase> findPurchaseBySubId(@Param("subId")String subId);
 
 	@Query("select f from Feed f join f.feedEffects join f.feedMaterials join f.feedTargets join f.grade join f.particle where f.feedSno = :feedId")
-	Feed findFeedInfo(String feedId);
+	Feed findFeedInfo(@Param("feedId")String feedId);
 
 	@Query("select t from Toy t where t.toySno = :toyId")
-	Toy findToyInfo(String toyId);
+	Toy findToyInfo(@Param("toyId")String toyId);
 
 	@Query("select s from Snack s join s.snackEffects join s.snackMaterials join s.snackTargets  where s.snackSno = :snackId")
-	Snack findSnackInfo(String snackId);
+	Snack findSnackInfo(@Param("snackId")String snackId);
 
 	@Modifying
 	@Query("update SubscribtionHistory s set s.autoPaymentFlag = 0 where s.subscribtionHistoryNo = :historyId")
-	void updateSubInfoAsCanceled(int historyId);
+	void updateSubInfoAsCanceled(@Param("historyId")int historyId);
 
 	}

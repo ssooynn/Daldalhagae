@@ -18,13 +18,14 @@ public class MyPageRes {
 	int unReviewCnt;
 	List<MyPagePetRes> pets;
 	
-	public MyPageRes(Users users,String imagePath) {
+	public MyPageRes(Users users,String imagePath, int subscriptionCnt, int unReviewCnt) {
 		this.name =users.getName();
 		pets = new ArrayList<MyPagePetRes>();
 		Iterator<Pet> iter = users.getPets().iterator();
 		while(iter.hasNext()) {
 			pets.add(new MyPagePetRes(iter.next(),imagePath));
 		}
-		
+		this.subscriptionCnt =subscriptionCnt;
+		this.unReviewCnt =unReviewCnt;
 	}
 }
