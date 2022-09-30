@@ -85,6 +85,7 @@ public class reviewController {
         List<MyReviewRes> myReviewList = reviewService.getMyReviews(usersSno);
         return new ResponseEntity(myReviewList, HttpStatus.OK);
     }
+    
     @ApiOperation(value = "리뷰 미작성 구독 조회",notes = "리뷰 .")
     @GetMapping("/unrated/{usersSno}")
     public ResponseEntity<?> getUnrated(@PathVariable("usersSno") String usersSno) {
