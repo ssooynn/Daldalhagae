@@ -4,10 +4,10 @@ import './AutoSlides.css'
 const AutoSlides = (props) => {
   const info = props.info
   const showProducts = []
-  for (let i = 0; i < info.length; i++) {
+  for (let i = 0; i < info.length * 2; i++) {
     showProducts.push(<div className='element'>
-        <img src={info[i].image} width='140px' height='130px' alt='product'/>
-        <p style={{color: 'black', marginTop: '10px'}}>{info[i].name.split(' ')[0]}</p>
+        <img src={info[i%10].image} width='140px' height='130px' alt='product'/>
+        <p style={{color: 'black', marginTop: '10px'}}>{info[i%10].name.split(' ')[0]}</p>
       </div>)
   }
   

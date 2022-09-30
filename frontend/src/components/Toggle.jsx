@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import MoreReview from '../components/MoreReview'
-import imgD from '../assets/img/구독상세페이지4.png'
-import PackageImage1 from '../assets/img/BasicPackage.png'
-import PackageImage2 from '../assets/img/PlayPackage.png'
-import PackageImage3 from '../assets/img/AllInOnePackage.png'
-import daldalPackage from '../assets/img/otherPackage1.png'
-import toyPackage from '../assets/img/otherPackage2.png'
-import lightPackage from '../assets/img/otherPackage3.png'
-import 자유구독 from '../assets/img/나만의구독서비스.png'
-import './Toggle.css'
 import { StyledButton } from '../components/CommonComponent';
+import './Toggle.css'
+
+import imgD from '../assets/img/구독상세페이지4.png'
+import PackageImage1 from '../assets/img/추천페이지1.png'
+import PackageImage2 from '../assets/img/toggle_play.png'
+import PackageImage3 from '../assets/img/toggle_all.png'
+import daldalPackage from '../assets/img/toggle_daldal.png'
+import toyPackage from '../assets/img/toggle_toy.png'
+import lightPackage from '../assets/img/toggle_light.png'
+import 자유구독 from '../assets/img/toggle_custom.png'
 
 const ToggleBox = styled.div`
 background-image: ${(props) => {
@@ -31,7 +32,7 @@ background-image: ${(props) => {
       case 'Toy Package':
         iamge = `url(${toyPackage})`;
         break;
-      case 'Light Package':
+      case 'Light All Package':
         iamge = `url(${lightPackage})`;
         break;
       default:
@@ -42,9 +43,7 @@ background-image: ${(props) => {
   }};
 background-repeat: no-repeat;
 background-size: cover;
-opacity: 0.8;
 width: 100%;
-height: 160px;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -73,36 +72,90 @@ function RecommendProducts(props) {
   const showMoreReview = () => {
     setReviewOpen(true)
   }
-  const closeTogle = () => {
-    props.setTogleOpen(false)
-  }
-  const [feeds, setFeeds] = useState([])
+  const feeds = [
+    {
+      sno: '',
+      name: '사료1',
+      image: '',
+      effects: ['건강에 좋음'],
+      targets: ['전연령'],
+      materials: ['밀가루', '돼지고기'],
+      particle: '중',
+      grade: '',
+      reviewNum: '',
+      reviewList: [{
+        rate: '',
+        content: '',
+        usersName: '',
+        date: ''
+      }]
+    },
+    {
+      sno: '',
+      name: '사료2',
+      image: '',
+      effects: ['건강에 좋음'],
+      targets: ['전연령'],
+      materials: ['밀가루', '돼지고기'],
+      particle: '중',
+      grade: '',
+      reviewNum: '',
+      reviewList: [{
+        rate: '',
+        content: '',
+        usersName: '',
+        date: ''
+      }]
+    },
+    {
+      sno: '',
+      name: '사료3',
+      image: '',
+      effects: ['건강에 좋음'],
+      targets: ['전연령'],
+      materials: ['밀가루', '돼지고기'],
+      particle: '중',
+      grade: '',
+      reviewNum: '',
+      reviewList: [{
+        rate: '',
+        content: '',
+        usersName: '',
+        date: ''
+      }]
+    }
+  ]
+  const [checkFeeds, setcheckFeeds] = useState([])
   useEffect(() => {
     for (let i = 0; i < 3; i++) {
-      feeds.push(false)
+      checkFeeds.push(false)
     }
   }, [])
+
   function clickCard(i) {
-    let copiedFeeds = [...feeds]
-    if (feeds[i]) {
+    let copiedFeeds = [...checkFeeds]
+    if (checkFeeds[i]) {
       copiedFeeds[i] = false
-      setFeeds(copiedFeeds)
+      setcheckFeeds(copiedFeeds)
     } else {
       for (let j = 0; j < 3; j++) {
         copiedFeeds[j] = false
       }
       copiedFeeds[i] = true
-      setFeeds(copiedFeeds)
+      setcheckFeeds(copiedFeeds)
     }
+  }
+  function closeTogle() {
+    props.setTogleOpen(false)
   }
   const cards = useState([])
   for (let i = 0; i < 3; i++) {
     cards.push(
-      <div className={feeds[i] ? 'clickCard' : 'card'} onClick={(e) => { clickCard(i) }}>
+      <div className={checkFeeds[i] ? 'clickCard' : 'card'} onClick={(e) => { clickCard(i) }}>
         <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
           <div>
             <img src={imgD} width='180px' alt="" />
-            <p>사료 이름</p>
+            <p>{feeds[i].name}</p>
           </div>
           <div
             style={{
@@ -111,7 +164,7 @@ function RecommendProducts(props) {
               fontSize: '12px'
             }}>
             <p>주 원료</p>
-            <p>주 원료</p>
+            <p>{feeds[i].materials}</p>
           </div>
           <div
             style={{
@@ -120,7 +173,7 @@ function RecommendProducts(props) {
               fontSize: '12px'
             }}>
             <p>급여 대상</p>
-            <p>급여 대상</p>
+            <p>{feeds[i].targets}</p>
           </div>
           <div
             style={{
@@ -129,7 +182,7 @@ function RecommendProducts(props) {
               fontSize: '12px'
             }}>
             <p>입자 크기</p>
-            <p>입자 크기</p>
+            <p>{feeds[i].particle}</p>
           </div>
           <div
             style={{
@@ -138,7 +191,7 @@ function RecommendProducts(props) {
               fontSize: '12px'
             }}>
             <p>기능</p>
-            <p>기능</p>
+            <p>{feeds[i].effects}</p>
           </div>
         </div>
         <div> {/* 리뷰 */}
@@ -152,7 +205,7 @@ function RecommendProducts(props) {
               event.preventDefault()
               showMoreReview()
             }} className='moreReview'>리뷰 더보기</p>
-          {reviewOpen && <MoreReview setReviewOpen={setReviewOpen} />}
+          {reviewOpen && <MoreReview setReviewOpen={setReviewOpen} info={feeds[i]} />}
         </div>
       </div>)
   }
@@ -180,16 +233,16 @@ function RecommendProducts(props) {
           }}>
           {cards}
         </div>
-        <div style={{ textAlign: 'center', }}>
-          <StyledButton onClick={closeTogle} SmallWhite style={{ width: '250px', margin: '50px auto' }}>선택 완료</StyledButton>
+        <div style={{ textAlign: 'end' }}>
+          <StyledButton onClick={closeTogle} SmallWhite style={{ width: '50px', height: '30px', margin: '20px auto', fontSize: '14px' }}>닫기</StyledButton>
         </div>
       </div>
     </div>
   )
 }
 
+
 const Toggle = (props) => {
-  console.log(props)
   const [togleOpen, setTogleOpen] = useState(true)
   const showTogle = () => {
     setTogleOpen(true)
@@ -197,6 +250,7 @@ const Toggle = (props) => {
   const closeTogle = () => {
     setTogleOpen(false)
   }
+
   return (<div>
     <ToggleBox packageName={props.info[0]}>
       <div
@@ -208,12 +262,11 @@ const Toggle = (props) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontWeight: '900'
           }}>
           <h2>{props.info[0]} - {props.info[6]}</h2>
           <p>월 {props.info[3]}원</p>
         </div>
-        <p style={{ fontWeight: '700' }}>{props.info[1]}</p>
+        <p>{props.info[1]}</p>
         {togleOpen ?
           <p
             onClick={event => {
@@ -224,7 +277,6 @@ const Toggle = (props) => {
               cursor: 'pointer',
               textAlign: 'end',
               fontSize: '12px',
-              fontWeight: '700'
             }}>접기 △</p> :
           <p
             onClick={event => {
@@ -235,7 +287,6 @@ const Toggle = (props) => {
               cursor: 'pointer',
               textAlign: 'end',
               fontSize: '12px',
-              fontWeight: '700'
             }}>추천 제품 고르기 ▽</p>}
       </div>
     </ToggleBox>
