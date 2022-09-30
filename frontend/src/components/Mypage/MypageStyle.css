@@ -79,7 +79,7 @@
     background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
 }
 
-input[type=text]{
+input[id=styledInput]{
 	width:98%;
 	border:2px solid #aaa;
 	border-radius:4px;
@@ -90,7 +90,7 @@ input[type=text]{
 	transition:.3s;
 }
 
-input[type=text]:focus{
+input[id=styledInput]:focus{
 	border-color: #AC998A;
 	box-shadow:0 0 8px 0 dodgetBlue;
 }

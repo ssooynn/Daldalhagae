@@ -7,9 +7,11 @@ import { nameCheck } from '../../util/NameCheck'
 import { telCheck } from '../../util/PhoneNoCheck'
 import { userInfo, userEdit } from '../../api/mypageUser' 
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
 
 
-const MypageUserUpdate = () => {
+const MypageUserUpdate = (props) => {
+  const {setRerender, rerender} = props 
   // redux에서 아이디 꺼내서 
   const [user, setUser] = useState({})
   const [parseAddress, setParseAddress] = useState([])
@@ -18,6 +20,7 @@ const MypageUserUpdate = () => {
   const [postZip, setPostZip] = useState(parseAddress[2])
   const [popup, setPopup] = useState(false);
   const [phoneUpdate, setPhoneUpdate] = useState(0)
+  const navigate = useNavigate()
 
   useEffect(()=>{
     const userSno = 'uXJFRDEC7DuyYasedNxU1'
@@ -103,13 +106,16 @@ const MypageUserUpdate = () => {
       if (result.isConfirmed) {
         userEdit(user)
           .then((res)=>{
+            console.log(res)
+            setRerender(rerender+1)
             Swal.fire({
               position: "center",
               icon: "success",
+              imageWidth:'30px',
               title: "저장성공!",
               showConfirmButton: false,
               timer: 1500,
-            });
+            }).then(()=>{navigate('/mypage/user')})
             
           }).catch((err)=>{console.log(err)})
       }
@@ -141,7 +147,7 @@ const MypageUserUpdate = () => {
         <StyledInputBox value={fullAddress? fullAddress+',  '+postZip : ''} name='address' span='span 4' disabled={true}></StyledInputBox>
         <MypageButton onClick={handleComplete} height='100%'>주소 검색</MypageButton>
       </div>
-      <StyledInputBox value={user.addressDetail} name='addressDetail' onChange={onDetailAddressChange}></StyledInputBox>
+      <StyledInputBox value={detailAddress} name='addressDetail' onChange={onDetailAddressChange}></StyledInputBox>
       <MypageButton padding='12px' fontSize='16px' color='#E6D9D3' margin='35px 0px' onClick={onSubmit}>수정 완료</MypageButton>
       {popup && <Post setPopup={setPopup} setPostZip={setPostZip} setFullAddress={setFullAddress} setDetailAddress={setDetailAddress}></Post>}
       

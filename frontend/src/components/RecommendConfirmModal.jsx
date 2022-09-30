@@ -88,6 +88,7 @@ function RecommendConfirmModal(props) {
           onClick={GoPaymentList}
           style={{
             backgroundColor: '#F6F1EC',
+            height: '50px',
             color: '#6E6E6E',
             display: 'flex',
             justifyContent: 'center',

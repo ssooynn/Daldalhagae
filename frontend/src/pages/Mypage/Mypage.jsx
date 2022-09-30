@@ -17,33 +17,22 @@ import { mypageMain } from '../../api/mypageUser'
 
 const Mypage = () => {
   const userSno = 'uXJFRDEC7DuyYasedNxU1'
-  const [userInfo, setUserInfo] = useState({
-    user:{
-      name:'김김김',
-      profile:'',
-    },
-    delivering:0,
-    subscribingCnt: 1,
-    unwrittenReviews: 2,
-    pet: [
-      {
-        name:'해리',
-        petId:'A12455',
-        profileImg:'https://images.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      }
-    ]
-  }
-)
+  const [userInfo, setUserInfo] = useState({name:'',
+  subscriptionCnt:0, 
+  unReviewCnt: 0, 
+  pets: []
+ })
   const [currentFocus, setCurrentFocus] = useState({})
+  const [rerender, setRerender] = useState(0)
 
 // userfetching api: 마이페이지 메인
   useEffect(()=>{
     mypageMain(userSno).then((res)=>{
       setUserInfo(res.data)
-      console.log(res.data)  
+      console.log(res.data,'main')  
     }
     )
-  },[])
+  },[rerender])
 
   useEffect(()=>{
   }, [currentFocus])
@@ -82,7 +71,7 @@ const Mypage = () => {
     <div>
       <div style={{height:'70px'}}></div>
       <div style={headerContainer}>
-        <MypageHeaderCard user={userInfo}/>
+        <MypageHeaderCard user={userInfo} rerender={rerender}/>
       </div>
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
@@ -135,25 +124,25 @@ const Mypage = () => {
             <Route
               path="userUpdate"
               element={
-                <MypageUserUpdate/>
+                <MypageUserUpdate rerender={rerender} setRerender={setRerender}/>
               }               
             />
             <Route
               path="petDetail"
               element={
-                <MypagePetDetail setCurrentFocus={setCurrentFocus}/>
+                <MypagePetDetail rerender={rerender} setCurrentFocus={setCurrentFocus}/>
               }               
             />
             <Route
               path="petAdd"
               element={
-                <MypagePetUpdate/>
+                <MypagePetUpdate rerender={rerender} setRerender={setRerender}/>
               }               
             />
             <Route
               path="petUpdate"
               element={
-                <MypagePetUpdate/>
+                <MypagePetUpdate rerender={rerender} setRerender={setRerender}/>
               }               
             />
           </Routes>  
