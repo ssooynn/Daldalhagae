@@ -47,9 +47,9 @@ public class reviewController {
 //			@CacheEvict(value="itemReview", allEntries=true)
 //	})
     @ApiOperation(value = "리뷰작성",notes = "리뷰를 등록합니다. ")
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> post(@RequestPart(name = "리뷰이미지파일",required = false) MultipartFile file ,
-                                  @RequestBody ServiceReviewReq serviceReviewReq) {
+                                  @RequestPart(name="serviceReviewReq") ServiceReviewReq serviceReviewReq) {
         try {
             reviewService.saveReview(serviceReviewReq,file);
         } catch (IOException e) {
