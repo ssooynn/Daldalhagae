@@ -5,13 +5,13 @@ import { StyledButton } from '../components/CommonComponent';
 import './Toggle.css'
 
 import imgD from '../assets/img/구독상세페이지4.png'
-import PackageImage1 from '../assets/img/추천페이지1.png'
-import PackageImage2 from '../assets/img/toggle_play.png'
-import PackageImage3 from '../assets/img/toggle_all.png'
-import daldalPackage from '../assets/img/toggle_daldal.png'
-import toyPackage from '../assets/img/toggle_toy.png'
-import lightPackage from '../assets/img/toggle_light.png'
-import 자유구독 from '../assets/img/toggle_custom.png'
+import PackageImage1 from '../assets/img/BasicPackage.png'
+import PackageImage2 from '../assets/img/PlayPackage.png'
+import PackageImage3 from '../assets/img/AllInOnePackage.png'
+import daldalPackage from '../assets/img/DalDalPackage.png'
+import toyPackage from '../assets/img/ToyPackage.png'
+import lightPackage from '../assets/img/LightAllInOnePackage.png'
+import 자유구독 from '../assets/img/나만의구독서비스.png'
 
 const ToggleBox = styled.div`
 background-image: ${(props) => {
