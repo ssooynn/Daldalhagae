@@ -1,12 +1,12 @@
-import React,{ useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom';
-import img1 from '../assets/img/구독리스트1.png'
-import img2 from '../assets/img/구독리스트2.png'
-import img3 from '../assets/img/구독리스트3.png'
-import daldalPackage from '../assets/img/otherPackage1.png'
-import toyPackage from '../assets/img/otherPackage2.png'
-import lightPackage from '../assets/img/otherPackage3.png'
+import img1 from '../assets/img/BasicPackage.png'
+import img2 from '../assets/img/PlayPackage.png'
+import img3 from '../assets/img/AllInOnePackage.png'
+import daldalPackage from '../assets/img/DalDalPackage.png'
+import toyPackage from '../assets/img/ToyPackage.png'
+import lightPackage from '../assets/img/LightAllInOnePackage.png'
 import imgB from '../assets/img/구독상세페이지2.png'
 import imgD from '../assets/img/구독상세페이지5.png'
 import imgE from '../assets/img/구독상세페이지6.png'
@@ -55,7 +55,7 @@ const SubscribeDetail = () => {
   const [snacks, setSnacks] = useState([])
   const [toys, setToys] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     const usersSno = 'uXJFRDEC7DuyYasedNxU1'
     // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
     // Authorization: `Bearer` + `a.a.a`
@@ -66,13 +66,13 @@ const SubscribeDetail = () => {
         'Authorization': `Bearer a.a.a`
       }
     })
-      .then((res)=>{
+      .then((res) => {
         setPets(res.data.pets)
         setFeeds(res.data.feeds)
         setSnacks(res.data.snacks)
         setToys(res.data.toys)
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       })
   }, [])
@@ -152,7 +152,7 @@ const SubscribeDetail = () => {
             <h3>사료 맞춤 추천</h3>
           </div>
         </div>
-        <AutoSlides info={feeds}/>
+        <AutoSlides info={feeds} />
         <div  // 간식 소개 시작
           style={{
             display: 'flex',
@@ -169,7 +169,7 @@ const SubscribeDetail = () => {
           </div>
           <img src={imgD} width='400px' alt='img' />
         </div>
-        <AutoSlides info={snacks}/>
+        <AutoSlides info={snacks} />
         <div  // 장난감 소개 시작
           style={{
             display: 'flex',
@@ -186,7 +186,7 @@ const SubscribeDetail = () => {
             <h3>장난감 맞춤 추천</h3>
           </div>
         </div>
-        <AutoSlides info={toys}/>
+        <AutoSlides info={toys} />
         <div  // 마무리 글
           style={{
             margin: '15rem 0 15rem 0'

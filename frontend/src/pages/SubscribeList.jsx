@@ -5,18 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 import imgA from '../assets/img/우리의한달을꽉차게.png'
-import imgB from '../assets/img/구독리스트1.png'
-import imgC from '../assets/img/구독리스트2.png'
-import imgD from '../assets/img/구독리스트3.png'
-import daldalPackage from '../assets/img/otherPackage1.png'
-import toyPackage from '../assets/img/otherPackage2.png'
-import lightPackage from '../assets/img/otherPackage3.png'
+import imgB from '../assets/img/BasicPackage.png'
+import imgC from '../assets/img/PlayPackage.png'
+import imgD from '../assets/img/AllInOnePackage.png'
+import daldalPackage from '../assets/img/DalDalPackage.png'
+import toyPackage from '../assets/img/ToyPackage.png'
+import lightPackage from '../assets/img/LightAllInOnePackage.png'
 import SideButton from '../components/SideButton';
 
 const MoveOtherOpions = styled.div`
   cursor: pointer;
   padding: 10px 0 0 0;
   border-radius: 5px;
+  width:35%;
   &:hover{  
     background-color : rgba(0, 0, 0, 0.4);
   }
@@ -43,6 +44,21 @@ const MoveDetailButton2 = styled.div`
   &:hover{
     background-color : rgba(0, 0, 0, 0.2);
   }
+`
+
+const PackageImg = styled.img`
+    border-radius: 5px;
+    width: 90%;
+    object-fit: cover;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2);
+`
+
+const OtherPackageImg = styled.img`
+    border-radius: 5px;
+    width: 90%;
+    height: 75%;
+    object-fit: cover;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2);
 `
 
 const SubscribeList = () => {
@@ -155,11 +171,7 @@ const SubscribeList = () => {
             marginBottom: '15rem',
             height: '400px'
           }}>
-          <img
-            src={imgB}
-            style={{
-              width: '100%'
-            }} alt="" />
+          <PackageImg src={imgB} alt="" />
           <MoveDetailButton1 onClick={GoBasic}>
             <div
               style={{
@@ -225,11 +237,7 @@ const SubscribeList = () => {
               <p>다양한 간식 3종과 질리지 않는 장난감 2종 구성으로 달달하고 알찬 반려견 여가생활을 보장합니다.</p>
             </div>
           </MoveDetailButton2>
-          <img
-            src={imgC}
-            style={{
-              width: '100%',
-            }} alt="" />
+          <PackageImg src={imgC} alt="" />
         </div>
         <div  // All In One Package
           style={{
@@ -239,11 +247,7 @@ const SubscribeList = () => {
             marginBottom: '15rem',
             height: '400px'
           }}>
-          <img
-            src={imgD}
-            style={{
-              width: '100%',
-            }} alt="" />
+          <PackageImg src={imgD} alt="" />
           <MoveDetailButton1 onClick={GoAllInOne}>
             <div
               style={{
@@ -285,23 +289,17 @@ const SubscribeList = () => {
             justifyContent: 'space-between',
           }}>
           <MoveOtherOpions onClick={GoDalDal}>
-            <img
-              src={daldalPackage}
-              style={{ width: '95%', opacity: '0.9' }} alt="" />
+            <OtherPackageImg src={daldalPackage} alt="" />
             <h4>DalDal Package</h4>
             <p>[사료 1개월 + 간식 3종]</p>
           </MoveOtherOpions>
           <MoveOtherOpions onClick={GoToy}>
-            <img
-              src={toyPackage}
-              style={{ width: '95%', opacity: '0.9' }} alt="" />
+            <OtherPackageImg src={toyPackage} alt="" />
             <h4>Toy Package</h4>
             <p>[사료 1개월 + 장난감 2종]</p>
           </MoveOtherOpions>
           <MoveOtherOpions onClick={GoLightAll}>
-            <img
-              src={lightPackage}
-              style={{ width: '95%', opacity: '0.9' }} alt="" />
+            <OtherPackageImg src={lightPackage} alt="" />
             <h4>Light All Package</h4>
             <p>[사료 1개월 + 간식 1종 + 장난감 1종]</p>
           </MoveOtherOpions>
