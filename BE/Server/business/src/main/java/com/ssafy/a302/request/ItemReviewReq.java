@@ -2,6 +2,7 @@ package com.ssafy.a302.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.io.File;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ApiModel("ItemReviewReq")
 public class ItemReviewReq {
 //    @ApiModelProperty(name = "유저번호", example = "uLItaqlcMuasbRY1kmils")
