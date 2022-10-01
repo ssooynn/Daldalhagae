@@ -16,7 +16,7 @@ import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 import { mypageMain } from '../../api/mypageUser'
 
 const Mypage = () => {
-  const userSno = 'uXJFRDEC7DuyYasedNxU1'
+  const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
   const [userInfo, setUserInfo] = useState({name:'',
   subscriptionCnt:0, 
   unReviewCnt: 0, 

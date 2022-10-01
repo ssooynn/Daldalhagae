@@ -109,7 +109,7 @@ export default function MypagePetUpdate(props) {
   const [selectedEffect, setSelectedEffect] = useState([]);
   const [bcs, setBcs] = useState(0);
   const [pet, setPet] = useState({
-    usersSno : '',
+    usersSno : 'udZ0a32z4Ur2LvGlmEXsN',
     targetNo : 1,
     name : '',
     birth : '', 
@@ -119,29 +119,23 @@ export default function MypagePetUpdate(props) {
     image : '',
     imageFlag:0,
   })
-  
+  useEffect(()=>{
+    console.log(pet)
+  },[pet])
 
   useEffect(()=>{
-    const usersSno = 'uXJFRDEC7DuyYasedNxU1'
     const path = location.pathname
+    console.log(path)
     if (path === '/mypage/petAdd'){
-      setPet({
-        usersSno : usersSno,
-        targetNo : 1,
-        name : '',
-        birth : '', 
-        fat : 0,
-        materials : [], 
-        effects : [],
-        image : '',
-        imageFlag:0,
-      })
+      const usersSn = 'udZ0a32z4Ur2LvGlmEXsN'
+      console.log(usersSn, 'add')
       setProfile('')
       setSelectedEffect([])
       setSeletedTag([])
       setImage('')
       setBcs(0)
     } else if (path==='/mypage/petUpdate'){
+      const usersSn = 'udZ0a32z4Ur2LvGlmEXsN'
       const petId = location.state?.val
       console.log(petId)
       if (!petId) {
@@ -159,7 +153,7 @@ export default function MypagePetUpdate(props) {
           console.log(res.data)
           const temp = {
             petSno: petId,
-            usersSno : usersSno,
+            usersSno : usersSn,
             targetNo : 1,
             name : res.data.pets.name,
             birth : res.data.pets.birth.join('-'), 
@@ -181,9 +175,7 @@ export default function MypagePetUpdate(props) {
         })
       }
     }
-  },[location.pathname])
-
-  useEffect(()=>{console.log(selectedEffect,selectedTag)},[selectedEffect, selectedTag])
+  },[,location.pathname])
   
   useEffect(()=>{
     setPet({
@@ -239,7 +231,9 @@ export default function MypagePetUpdate(props) {
     const path = location.pathname
 
     if (path === '/mypage/petAdd'){
-      petAdd(formData)
+      petAdd(formData).then((res)=>{
+        console.log(res)
+      })
     } else{
       petEdit(formData)
       .then((res)=>{

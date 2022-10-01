@@ -23,7 +23,7 @@ const MypageUserUpdate = (props) => {
   const navigate = useNavigate()
 
   useEffect(()=>{
-    const userSno = 'uXJFRDEC7DuyYasedNxU1'
+    const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
     userInfo(userSno)
     .then((res)=>{
       setUser(res.data)
