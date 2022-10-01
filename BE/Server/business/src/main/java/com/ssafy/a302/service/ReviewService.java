@@ -145,7 +145,6 @@ public class ReviewService {
 
         //serviceReview 저장
         ServiceReview serviceReview = ServiceReview.builder()
-                .serviceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo())
                 .users(subscribtionHistory.getUsers())
                 .rate(serviceReviewReq.getServiceReviewRate())
                 .content(serviceReviewReq.getServiceReviewContent())
