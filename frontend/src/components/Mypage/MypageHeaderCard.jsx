@@ -135,7 +135,7 @@ useEffect(()=>{
         {/* 대표 반려견 - 필요 데이터: 펫 아이디 (prop 필요) */}
         <div style={{boxSizing:'border-box', width:'48%', borderLeft:'0.1px solid #929292', paddingLeft:'6%'}}>
           <div style={repDiv}>
-            {user?.pets?.map((pet, idx)=>{
+            {user?.pets?.slice(0,3).map((pet, idx)=>{
               const profileList = [DefaultProfile1, DefaultProfile2, DefaultProfile3]
               return(
                 <StyledLink 

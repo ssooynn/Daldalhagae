@@ -27,7 +27,7 @@ const MypageSubscriptionDetail = () => {
   console.log(subscription)
 
   useEffect(()=>{
-    const userSno = 'uXJFRDEC7DuyYasedNxU1'
+    const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
     userInfo(userSno)
     .then((res)=>{
       setUser(res.data)
@@ -87,7 +87,7 @@ const MypageSubscriptionDetail = () => {
       <div style={detailDiv}>
         <div style={{...title, marginBottom:'10px'}}>배송 상품</div>
           {/* carousel */}
-        <SubscriptionCarousel></SubscriptionCarousel>
+        <SubscriptionCarousel feed={subscription.feeds} snack={subscription.snacks} toy={subscription.toys}></SubscriptionCarousel>
         <div style={{...title, marginTop:'30px'}}>구독 정보</div>
         <hr style={hrStyle}/>
         {/* grid로 */}

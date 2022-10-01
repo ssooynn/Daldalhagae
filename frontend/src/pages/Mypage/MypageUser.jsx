@@ -4,7 +4,7 @@ import { InfoLayout, subTitleStyle } from '../../components/Mypage/MypageCommon'
 import { userInfo } from '../../api/mypageUser' 
 
 const MypageUser = () => {
-  const userSno = 'uXJFRDEC7DuyYasedNxU1'
+  const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
 
   const [user, setUser] = useState({})
   const [parseAddress, setParseAddress] =useState([])
