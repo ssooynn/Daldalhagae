@@ -48,7 +48,7 @@ public class reviewController {
 //	})
     @ApiOperation(value = "리뷰작성",notes = "리뷰를 등록합니다. ")
     @PostMapping("")
-    public ResponseEntity<?> post(@RequestPart(name = "리뷰이미지파일",required = false) MultipartFile file ,
+    public ResponseEntity<?> post(@RequestPart(name = "file",required = false) MultipartFile file ,
                                   @RequestPart(name="serviceReviewReq") ServiceReviewReq serviceReviewReq) {
         try {
             reviewService.saveReview(serviceReviewReq,file);
