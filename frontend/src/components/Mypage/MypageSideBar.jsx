@@ -11,7 +11,8 @@ const MypageSideBar = () => {
     minWidth: '190px',
     maxWidth: '200px',
     padding: '2.1em',
-    border:'0.5px solid #D3D3D3'
+    border:'0.5px solid #D3D3D3',
+    // height: '380px'
   }
 
   const menuTitle = {
