@@ -95,6 +95,7 @@ const ReviewModal = (props) => {
 
   const onSubmit = () => {
     console.log(review)
+    console.log(profile)
     const formData = new FormData()
     const reviewBlob = new Blob([JSON.stringify(review)], {
       type: "application/json",

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SubscriptionItem from '../../components/Mypage/SubscriptionItem'
 import SubscriptionCarousel from './SubscriptionCarousel'
-import { userInfo } from '../../api/mypageUser'
+import { userInfoGet } from '../../api/mypageUser'
 
 const MypageSubscriptionDetail = () => {
 
@@ -28,7 +28,7 @@ const MypageSubscriptionDetail = () => {
 
   useEffect(()=>{
     const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
-    userInfo(userSno)
+    userInfoGet(userSno)
     .then((res)=>{
       setUser(res.data)
       console.log(res.data)
@@ -82,7 +82,7 @@ const MypageSubscriptionDetail = () => {
     fontWeight:'300'
   }
   return (
-    <div style={{paddingBottom:'50px'}}>
+    <div>
       <SubscriptionItem page='subsDetail' bgImg={subscription.subscriptionName.replaceAll(' ','')} subscription={subscription} reviewConnect={false} isDetail={true}></SubscriptionItem>
       <div style={detailDiv}>
         <div style={{...title, marginBottom:'10px'}}>배송 상품</div>
