@@ -46,6 +46,7 @@ public class ReviewService {
     SubscribtionHistoryRepository subscribtionHistoryRepository;
 
     private final FileUpload fileUpload;
+    private final FilePath filePath;
 
     /*상품 리뷰 조회: 리뷰pk */
     public ItemReview findByItemReviewNo(int itemReviewNo) {
@@ -91,16 +92,19 @@ public class ReviewService {
         for(SubscribtionHistory subscribtionHistory: subscribtionHistoryList){
             if(subscribtionHistory.getServiceReview()==null) continue;
             System.out.println();
+            ServiceReview sr = subscribtionHistory.getServiceReview();
             MyReviewRes myReviewRes = new MyReviewRes();
             myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
             myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
             myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
             myReviewRes.setSubscriptionEndDate(subscribtionHistory.getEndDate());
-            myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
-            myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
-            myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
-            myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
-            myReviewRes.setServiceReviewRegDate(subscribtionHistory.getServiceReview().getRegDate());
+            myReviewRes.setServiceReviewNo(sr.getServiceReviewNo());
+            myReviewRes.setServiceReviewRate(sr.getRate());
+            myReviewRes.setServiceReviewContent(sr.getContent());
+            myReviewRes.setServiceReviewRegDate(sr.getRegDate());
+            if(sr.getImage()!=null && !"".equals(sr)){
+                myReviewRes.setServiceReviewImg(filePath.getReviewImageLoadPath()+"/"+sr.getImage());
+            }
             //아이템리뷰dto
             List<ItemReviewRes> itemReviewResList = new ArrayList<>();
             for (Purchase purchase : subscribtionHistory.getPurchases()) {
