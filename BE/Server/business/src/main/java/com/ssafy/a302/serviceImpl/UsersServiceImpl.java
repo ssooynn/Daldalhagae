@@ -156,13 +156,15 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/* 회원 탈퇴 */
+	@Transactional
 	@Override
 	public void usersWithdrow(String usersSno) {
 		Users users = usersRep.findByUsersSno(usersSno);
+		users.withdrow();
+		usersRep.saveAndFlush(users);
 		UsersLog usersLog = usersLogRep.findByUsers(users);
 		usersLog.updateuUserDeletedAt(new Date());
 		usersLogRep.save(usersLog);
-		
 	}
 
 	/* 마이페이지 */

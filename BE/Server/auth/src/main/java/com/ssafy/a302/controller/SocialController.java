@@ -30,7 +30,9 @@ import com.ssafy.a302.service.UsersService;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -97,15 +99,11 @@ public class SocialController {
 
 	@ApiOperation(value = "로그아웃")
 	@PostMapping("/logout")
-	public String logout(@RequestBody Map<String, Object> map, HttpServletRequest req) throws Exception {
+	public String logout(@RequestBody Map<String, String> map, HttpServletRequest req) throws Exception {
 		String token = req.getHeader(Utils.AUTHORIZATION).replace(Utils.BEARER, "").trim();
-
-		Object object = map.get("usersSno");
-		if (!(object instanceof String)) {
-			throw new Exception();
-		}
-
-		if (usersService.logout((String) object, token))
+		log.info("로그아웃 token : {}", token);
+		String usersSno = map.get("usersSno");
+		if (usersService.logout(usersSno, token))
 			return Utils.SUCCESS;
 		return Utils.FAIL;
 	}
