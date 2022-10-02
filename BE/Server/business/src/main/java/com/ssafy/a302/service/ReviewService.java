@@ -137,11 +137,7 @@ public class ReviewService {
             itemReviewRepository.save(itemReview);
         }
         //리뷰이미지저장.
-        if(file!=null){
-            fileUpload.reviewImageUpload(file,serviceReviewReq);
-        }else{
-            serviceReviewReq.setServiceReviewImage(".");
-        }
+        fileUpload.reviewImageUpload(file,serviceReviewReq);
 
         //serviceReview 저장
         ServiceReview serviceReview = ServiceReview.builder()

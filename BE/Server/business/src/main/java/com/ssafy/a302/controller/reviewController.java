@@ -51,6 +51,7 @@ public class reviewController {
     public ResponseEntity<?> post(@RequestPart(name = "file",required = false) MultipartFile file ,
                                   @RequestPart(name="serviceReviewReq") ServiceReviewReq serviceReviewReq) {
         try {
+            System.out.println(file.getOriginalFilename());
             reviewService.saveReview(serviceReviewReq,file);
         } catch (IOException e) {
             return new ResponseEntity("IOException",HttpStatus.INTERNAL_SERVER_ERROR);
