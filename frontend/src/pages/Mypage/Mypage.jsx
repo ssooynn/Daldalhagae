@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+
 import { Route, Routes } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
 import MypageSubscriptions from './MypageSubscriptions'
@@ -14,12 +16,14 @@ import MypageSubscriptionDetail from './MypageSubscriptionDetail'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
 
+import Swal from 'sweetalert2'
 import { mypageMain } from '../../api/mypageUser'
 
 const Mypage = () => {
+  const navigate = useNavigate()
+
   const usersSno = useSelector((state)=>state.user.user.user.usersSno)
   const user = useSelector((state)=>state.user.user.user)
-  console.log(user)
   const [userInfo, setUserInfo] = useState({name:'',
   subscriptionCnt:0, 
   unReviewCnt: 0, 
@@ -28,6 +32,22 @@ const Mypage = () => {
   const [currentFocus, setCurrentFocus] = useState({})
   const [rerender, setRerender] = useState(0)
 
+  useEffect(()=>{
+    if (!usersSno) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "잘못된 접근입니다. \n 로그인을 진행해주세요.",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title:'midFont'
+        }
+      }).then(()=>{
+        navigate("/");
+      })
+    }
+  },[])
 // userfetching api: 마이페이지 메인
   useEffect(()=>{
     mypageMain(usersSno).then((res)=>{
@@ -139,13 +159,13 @@ const Mypage = () => {
             <Route
               path="petAdd"
               element={
-                <MypagePetUpdate rerender={rerender} setRerender={setRerender} usersSno={usersSno}/>
+                <MypagePetUpdate rerender={rerender} setRerender={setRerender} pets={userInfo.pets}/>
               }               
             />
             <Route
               path="petUpdate"
               element={
-                <MypagePetUpdate rerender={rerender} setRerender={setRerender} usersSno={usersSno}/>
+                <MypagePetUpdate rerender={rerender} setRerender={setRerender} pets={userInfo.pets}/>
               }               
             />
           </Routes>  
