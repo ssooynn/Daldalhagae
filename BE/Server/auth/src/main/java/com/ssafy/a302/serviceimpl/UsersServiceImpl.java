@@ -4,8 +4,10 @@ package com.ssafy.a302.serviceimpl;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.a302.domain.Users;
+import com.ssafy.a302.domain.UsersLog;
 import com.ssafy.a302.dto.UsersDto;
 import com.ssafy.a302.jwt.CreateJWT;
+import com.ssafy.a302.repository.UsersLogRepository;
 import com.ssafy.a302.repository.UsersRepository;
 import com.ssafy.a302.response.LoginReq;
 import com.ssafy.a302.service.RedisService;
@@ -22,6 +24,7 @@ public class UsersServiceImpl implements UsersService{
 	private final UsersRepository usersRep;
 	private final CreateJWT createJWT;
 	private final RedisService redisService;
+	private final UsersLogRepository usersLogRep;
 	
 	@Override
 	public boolean existsByKakaoId(String kakaoId) {
@@ -39,8 +42,14 @@ public class UsersServiceImpl implements UsersService{
 		
 		if(usersRep.existsByKakaoId(kakaoId)) {
 			Users users = usersRep.findByKakaoId(kakaoId);
+			UsersLog usersLog = usersLogRep.findByUsers(users);
+			if(usersLog.getUserDeletedAt() !=null) {
+				return loginReq;
+			}
+			
 			String accessToken = createJWT.createAccessToken(users.getUsersSno());
 			loginReq.setUsers(users,accessToken);
+			
 		}else {
 			loginReq.setKakaoId(kakaoId);
 		}
