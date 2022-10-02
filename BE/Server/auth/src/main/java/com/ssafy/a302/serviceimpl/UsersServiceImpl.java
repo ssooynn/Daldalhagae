@@ -12,7 +12,10 @@ import com.ssafy.a302.service.RedisService;
 import com.ssafy.a302.service.UsersService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService{
@@ -47,7 +50,9 @@ public class UsersServiceImpl implements UsersService{
 
 	@Override
 	public boolean logout(String usersSno, String token) {
-		if(redisService.getValues(usersSno).equals(token)) {
+		log.info("usersSno : {}", usersSno);
+		String redisToken = redisService.getValues(usersSno);
+		if(redisToken != null && redisToken.equals(token)) {
 			redisService.deleteValues(usersSno);
 			return true;
 		}

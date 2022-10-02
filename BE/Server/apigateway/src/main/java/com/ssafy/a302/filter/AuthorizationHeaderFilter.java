@@ -15,67 +15,72 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.google.common.net.HttpHeaders;
+import com.ssafy.a302.jwt.VerificationJWT;
 import com.ssafy.a302.service.RedisService;
 
 import io.netty.handler.codec.http.HttpScheme;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Component
-public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config>{
+public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
+
 	@Autowired
-	RedisService redisService;
-	
-    public AuthorizationHeaderFilter() {
-        super(Config.class);
-    }
+	VerificationJWT verificationJWT;
 
-    public static class Config {
-    }
+	public AuthorizationHeaderFilter() {
+		super(Config.class);
+	}
 
-    @Override
-    public GatewayFilter apply(Config config) {
-        return (exchange, chain) -> {
-        	ServerHttpRequest request = exchange.getRequest();
-        	
-//        	String uri = request.getURI().getPath();
-//        	
-//        	if(uri.startsWith(authPath)) {
-//        		if(!uri.replace(authPath, "").startsWith("user/logout"))
-//        			return chain.filter(exchange);
-//        	}else if(uri.startsWith(businessPath)){
-//        		uri = uri.replace(businessPath, "");
-//        		if(uri.startsWith("pet") ||
-//        				uri.startsWith("/"))
-//        			/pet/*", "/review", "/review/unrated/*/
-//        	}
-        	
-        	
-            // Request Header 에 token 이 존재하지 않을 때
-            if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
-            	return handleUnAuthorized(exchange);
-            }
+	public static class Config {
+	}
 
-            // Request Header 에서 token 문자열 받아오기
-            List<String> token = request.getHeaders().get(HttpHeaders.AUTHORIZATION);
-            String tokenString = Objects.requireNonNull(token).get(0);
-            tokenString = tokenString.replace("Bearer", "").trim();
-            System.out.println(tokenString);
-            if(!tokenString.equals("a.a.a")) {
-            	return handleUnAuthorized(exchange);
-            }
-            
-            return chain.filter(exchange);
-        };
-    }
+	@Override
+	public GatewayFilter apply(Config config) {
+		return (exchange, chain) -> {
+			ServerHttpRequest request = exchange.getRequest();
 
-        // 인증 실패시 401 반환
-    private Mono<Void> handleUnAuthorized(ServerWebExchange exchange) {
-        ServerHttpResponse response = exchange.getResponse();
+			try {
 
-        response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        return response.setComplete();
-    }
+				// Request Header 에 token 이 존재하지 않을 때
+				if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+					return handleUnAuthorized(exchange);
+				}
 
-    
+				// Request Header 에서 token 문자열 받아오기
+				List<String> token = request.getHeaders().get(HttpHeaders.AUTHORIZATION);
+				String accessToken = Objects.requireNonNull(token).get(0);
+				log.info("bearer token : {}", accessToken);
+				accessToken = accessToken.replace("Bearer ", "").trim();
+				log.info("token : {}", accessToken);
+
+//				// 토큰 정보가 redis에 있는지 확인
+//				if (!verificationJWT.existAccessToken(accessToken)) {
+//					log.info("----------------해당 토큰이 redis에 없음");
+//					return handleUnAuthorized(exchange);
+//				}
+				if(accessToken == null || !accessToken.equals("a.a.a")) {
+					return handleUnAuthorized(exchange);
+				}
+
+			} catch (Exception e) {
+				log.info("토큰 예외");
+				e.printStackTrace();
+				return handleUnAuthorized(exchange);
+			}
+
+			return chain.filter(exchange);
+		};
+	}
+
+	// 인증 실패시 401 반환
+	private Mono<Void> handleUnAuthorized(ServerWebExchange exchange) {
+		ServerHttpResponse response = exchange.getResponse();
+
+		response.setStatusCode(HttpStatus.UNAUTHORIZED);
+		return response.setComplete();
+	}
+
 }
