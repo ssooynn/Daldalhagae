@@ -168,7 +168,7 @@ return(
               (isDetail ? 
                 <></> :
                 (isToggle ?
-                  <div style={{whiteSpace:'nowrap', fontSize:'12px', fontWeight:'400'}}>후기 작성일: {subscription?.serviceReviewRegDate.replaceAll('-', '.')} <span style={{fontWeight:'500', marginLeft:'5px', fontSize:'11.5px'}}>{toggle ? '∧': '∨'}</span></div>
+                  <div style={{whiteSpace:'nowrap', fontSize:'12px', fontWeight:'400'}}>후기 작성일: {subscription?.serviceReviewRegDate?.replaceAll('-', '.')} <span style={{fontWeight:'500', marginLeft:'5px', fontSize:'11.5px'}}>{toggle ? '∧': '∨'}</span></div>
                   :
                   <div style={openReviewStyle}>상세보기</div>
                   )
@@ -224,7 +224,7 @@ return(
                   <FlexBox padding='10px 0px'>
                     <img src={colorImg[itemReview.rate-1]} style={{width:'24px', margin:'auto'}} alt="" />
                   </FlexBox>
-                  <FlexBox padding='0px 20px' justify='start' style={{gridColumn:'span 7', borderLeft:'0.1px solid #929292'}}>
+                  <FlexBox padding='15px 20px' direction='column' align='start' justify='start' style={{gridColumn:'span 7', borderLeft:'0.1px solid #929292'}}>
                     <div style={{fontSize:'13px'}}>{expression[itemReview.rate-1]}</div>
                     <div style={{fontSize:'13px' ,marginTop:'3px'}}>{itemReview.content}</div>
                   </FlexBox>

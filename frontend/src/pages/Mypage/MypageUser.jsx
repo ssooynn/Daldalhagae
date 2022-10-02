@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { InfoLayout, subTitleStyle } from '../../components/Mypage/MypageCommon'
-import { userInfo } from '../../api/mypageUser' 
+import { userInfoGet } from '../../api/mypageUser' 
 
-const MypageUser = () => {
-  const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
+const MypageUser = (props) => {
+  const {usersSno} = props
 
   const [user, setUser] = useState({})
   const [parseAddress, setParseAddress] =useState([])
 
   useEffect(()=>{
-    userInfo(userSno)
+    userInfoGet(usersSno)
     .then((res)=>{
       setUser(res.data)
       setParseAddress(res.data.address.split(';'))
