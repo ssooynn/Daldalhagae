@@ -90,28 +90,29 @@ public class ReviewService {
         List<SubscribtionHistory> subscribtionHistoryList=subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
         for(SubscribtionHistory subscribtionHistory: subscribtionHistoryList){
             if(subscribtionHistory.getServiceReview()==null) continue;
-                System.out.println();
-                MyReviewRes myReviewRes = new MyReviewRes();
-                myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
-                myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
-                myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
-                myReviewRes.setSubscriptionEndDate(subscribtionHistory.getEndDate());
-                myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
-                myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
-                myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
-                myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
-                myReviewRes.setServiceReviewRegDate(subscribtionHistory.getServiceReview().getRegDate());
-                //아이템리뷰dto
-                List<ItemReviewRes> itemReviewResList = new ArrayList<>();
-                for (Purchase purchase : subscribtionHistory.getPurchases()) {
-                    ItemReview itemReview = purchase.getItemReview();
-                    ItemReviewRes itemReviewRes = itemReview.toItemReviewRes();
-                    //엔티티 내에 getItem 구현.
-                    itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
-                    itemReviewResList.add(itemReviewRes);
-                }
-                myReviewRes.setItemReviewResList(itemReviewResList);
-                myReviewList.add(myReviewRes);
+            System.out.println();
+            MyReviewRes myReviewRes = new MyReviewRes();
+            myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
+            myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
+            myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
+            myReviewRes.setSubscriptionEndDate(subscribtionHistory.getEndDate());
+            myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
+            myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
+            myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
+            myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
+            myReviewRes.setServiceReviewRegDate(subscribtionHistory.getServiceReview().getRegDate());
+            //아이템리뷰dto
+            List<ItemReviewRes> itemReviewResList = new ArrayList<>();
+            for (Purchase purchase : subscribtionHistory.getPurchases()) {
+                ItemReview itemReview = purchase.getItemReview();
+                if(itemReview==null) continue;
+                ItemReviewRes itemReviewRes = itemReview.toItemReviewRes();
+                //엔티티 내에 getItem 구현.
+                itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
+                itemReviewResList.add(itemReviewRes);
+            }
+            myReviewRes.setItemReviewResList(itemReviewResList);
+            myReviewList.add(myReviewRes);
         }
         return myReviewList;
     }
