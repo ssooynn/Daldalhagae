@@ -26,7 +26,7 @@ const SubscriptionItem = (props) => {
 
   const imgStyle = {
     zIndex:'-1',
-    opacity: '.5',
+    opacity: '.45',
     position: 'absolute',
     width:'100%',
     height:'100%',
@@ -41,7 +41,7 @@ const textStyle = ({isHover}) => ({
     position: 'absolute',
     width:'100%',
     height:'100%',
-    backgroundColor: isHover||isDetail||toggle ? 'rgba(0,0,0,0.035)':'rgba(255,255,255,0.25)',
+    backgroundColor: isHover||isDetail||toggle ? 'rgba(0,0,0,0.055)':'rgba(255,250,250,0.2)',
     borderRadius: isDetail||toggle ?'10px 10px 0px 0px':'10px',
     display:'flex',
     flexDirection:'column',
@@ -207,7 +207,7 @@ return(
                 )
               })}
             </div>
-            <div style={{boxSizing:'border-box',padding:'8px', backgroundColor:'#fff', borderRadius:'5px', border:'0.1px solid #929292', color:subscription.serviceReviewContent ? 'black':'#828282', width:'100%', height:'100%'}}>{subscription.serviceReviewContent ? subscription.serviceReviewContent: '다음엔 리뷰 텍스트를 작성해주세요 :)'}</div>
+            <div style={{boxSizing:'border-box',padding:'10px 12px', backgroundColor:'#fff', borderRadius:'5px', border:'0.1px solid #929292', color:subscription.serviceReviewContent ? 'black':'#828282', width:'100%', height:'100%'}}>{subscription.serviceReviewContent ? subscription.serviceReviewContent: '다음엔 리뷰 텍스트를 작성해주세요 :)'}</div>
           </FlexBox>
         </div>
         {subscription?.itemReviewResList.length &&
@@ -225,7 +225,7 @@ return(
                     <img src={colorImg[itemReview.rate-1]} style={{width:'24px', margin:'auto'}} alt="" />
                   </FlexBox>
                   <FlexBox padding='15px 20px' direction='column' align='start' justify='start' style={{gridColumn:'span 7', borderLeft:'0.1px solid #929292'}}>
-                    <div style={{fontSize:'13px'}}>{expression[itemReview.rate-1]}</div>
+                    <div style={{fontSize:'12.5px', color:'#525252'}}>{expression[itemReview.rate-1]}</div>
                     <div style={{fontSize:'13px' ,marginTop:'3px'}}>{itemReview.content}</div>
                   </FlexBox>
                   

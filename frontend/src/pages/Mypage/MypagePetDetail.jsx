@@ -24,6 +24,7 @@ const MypagePetDetail = (props) => {
   const [materials, setMaterials] = useState([])
   const [effects, setEffects] = useState([])
   const [age, setAge] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(()=>{
     if(!petId){
@@ -56,7 +57,7 @@ const MypagePetDetail = (props) => {
         const petAge = PetAge(todayStr, res.data.pets.birth?.join('-'))
         setAge(petAge)  
       }
-
+      setIsLoading(false)
     })
     .catch((err)=>{
       console.log(err)
@@ -135,10 +136,11 @@ const MypagePetDetail = (props) => {
           </FlexBox>
         </div>
       </div>
-      { (materials||effects) && <div>
+      { (materials?.length||effects?.length) ?
+        <div>
         <div style={subTitleStyle}>상세정보</div>
         <div style={{padding:'0px 10px'}}>
-          {materials &&
+          {materials?.length ?
           <>
             <div style={litTitle}>알러지</div> 
             <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
@@ -151,8 +153,10 @@ const MypagePetDetail = (props) => {
               })}
             </div>
           </>
+          :
+          <></>
           }
-          {effects &&
+          {effects?.length ?
           <>
             <div style={litTitle}>특별관리</div> 
             <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
@@ -165,10 +169,14 @@ const MypagePetDetail = (props) => {
               })}
             </div>
           </>
+          :
+          <></>
           }
-
         </div>
-      </div>}
+      </div>
+      :
+      <></>  
+    }
       
     </div>
   )

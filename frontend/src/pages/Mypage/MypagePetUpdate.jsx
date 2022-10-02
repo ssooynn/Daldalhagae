@@ -60,13 +60,12 @@ border-radius: 5px;
 `;
 
 export default function MypagePetUpdate(props) {
-  const {setRerender, rerender} = props
+  const {setRerender, rerender, pets} = props
   const navigate = useNavigate();
   const location = useLocation()
   const usersSno = useSelector((state)=>state.user.user.user.usersSno)
 
 
-  const [name, setName] = useState("");
   const [effectsOpen, setEffectsOpen] = useState(false);
   const [locale, ] = React.useState("ko");
   const [date, setDate] = useState(new Date());
@@ -131,6 +130,20 @@ export default function MypagePetUpdate(props) {
     const path = location.pathname
     console.log(path)
     if (path === '/mypage/petAdd'){
+      console.log(pets.length)
+      if (pets?.length >= 3){
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "반려견은 3마리까지만 등록가능합니다 ",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass:{
+            title:'midFont'
+          }
+        });
+        navigate("/mypage");
+      }
       setProfile('')
       setSelectedEffect([])
       setSeletedTag([])
@@ -253,7 +266,7 @@ export default function MypagePetUpdate(props) {
           customClass:{
             icon:'smallIcon',
             title:'midFont'
-          }}).then(()=>{navigate('/mypage/user')})
+          }}).then(()=>{navigate('/mypage')})
       }).catch((err)=>{
         console.log(err)
         Swal.fire({
