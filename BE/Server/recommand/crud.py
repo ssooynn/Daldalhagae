@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 import models, schemas
 
+
 #
 # def get_user(db: Session, user_id: int):
 #     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -12,6 +13,10 @@ def get_reviews_by_id(db: Session, no: int):
 
 def get_reviews(db: Session, skip: int = 0, limit: int = 1000):
     return db.query(models.ItemReview).offset(skip).limit(limit).all()
+
+
+def get_new_reviews(db: Session):
+    return db.query(models.ItemReview).filter(models.ItemReview.PURCHASE_NO != 1).all()
 
 #
 # def create_user(db: Session, user: schemas.UserCreate):

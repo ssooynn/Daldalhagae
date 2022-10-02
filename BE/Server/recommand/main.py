@@ -1,16 +1,18 @@
 from typing import List
 
-from fastapi import Depends, FastAPI, HTTPException, Request, Response
+from fastapi import Depends, FastAPI, HTTPException, Request, Response,BackgroundTasks
 from sqlalchemy.orm import Session
 import crud, models, schemas
+import recommendations
+import train
 from database import SessionLocal, engine
 import pandas as pd
 from pandas import DataFrame
+import pickle
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
@@ -54,6 +56,7 @@ async def get_review_by_id(item_review_no: int, db: Session = Depends(get_db)):
     return db_review
 
 
+
 @app.post("/to_csv")
 async def to_csv(reviews: schemas.ReviewList, db: Session = Depends(get_db)):
     # db_review = crud.get_reviews(db, item_review_no=item_review_no)'
@@ -77,3 +80,19 @@ async def to_csv(reviews: schemas.ReviewList, db: Session = Depends(get_db)):
     df = DataFrame(data)
     df.to_csv('ItemCsvFile.csv')
     return
+#
+@app.get("/train")
+# 백그라운드 태스크로 처리.
+async def train_data(background_tasks: BackgroundTasks,db: Session = Depends(get_db)):
+    # 새로운 리뷰들  db에서 꺼내와 csv로 저장.
+    db_review = crud.get_new_reviews(db)
+    train.save_new_reviews(db_review)
+    # train돌리기.>>백그라운드
+    background_tasks.add_task(train.train_all())
+    return {"saved new reviews, now i'm training.."}
+
+# 추천리스트
+@app.get("api/item/{pet_no}")
+async def recommendation(pet_no: str):
+    rec = recommendations.get_recommendations(pet_no)
+    return rec
