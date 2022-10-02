@@ -67,6 +67,8 @@ public class Users {
 		this.phone = phone;
 		this.address = address;
 	}
-	
+	public void withdrow() {
+		this.kakaoId+="(탈퇴)";
+	}
 	
 }
