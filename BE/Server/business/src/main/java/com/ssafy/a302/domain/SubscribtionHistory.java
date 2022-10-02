@@ -56,6 +56,15 @@ public class SubscribtionHistory {
 		this.serviceReview = serviceReview;
 		this.subscribtionHistorySubscribtion = subscribtionHistorySubscribtion;
 	}
+	
+	public SubscribtionHistory(Users users, Pet pet) {
+		this.users = users;
+		this.pet = pet;
+		this.startDate = LocalDate.now();
+		this.endDate = LocalDate.now().plusMonths(1);
+		this.autoPaymentFlag = 1;
+	}
+	
 	public UnratedSubscriptionRes toUnratedSubscriptionRes(List<PurchaseRes> purchaseResList){
 		UnratedSubscriptionRes unratedSubscriptionRes = new UnratedSubscriptionRes();
 		unratedSubscriptionRes.setSubscriptionNo(this.subscribtionHistoryNo);

@@ -42,4 +42,11 @@ public class Subscribtion {
 		this.describtion = subscriptionReq.getDesc();
 		this.price = subscriptionReq.getPrice();
     }
+	public Subscribtion(String name, String describtion, int price) {
+		super();
+		this.name = name;
+		this.describtion = describtion;
+		this.price = price;
+	}
+    
 }
