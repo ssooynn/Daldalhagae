@@ -102,14 +102,16 @@ public class FileUpload {
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-
-		if (image.getOriginalFilename().equals(review.getServiceReviewImage())) {
-			String getImageName = image.getOriginalFilename();
-			String uniqueName = getUniqueFileName(getImageName);
-			image.transferTo(new File(filePath.getPetImageUploadPath() + "/" + uniqueName));
-			review.setServiceReviewImage(uniqueName);
+		if(image ==null) {
+			review.setServiceReviewImage(".");
 			return true;
 		}
-		return false;
+		String getImageName = image.getOriginalFilename();
+		String uniqueName = getUniqueFileName(getImageName);
+		System.out.println("---------------step3------------");
+		System.out.println(filePath.getReviewImageUploadPath());
+		image.transferTo(new File(filePath.getReviewImageUploadPath() + "/" + uniqueName));
+		review.setServiceReviewImage(uniqueName);
+		return true;
 	}
 }

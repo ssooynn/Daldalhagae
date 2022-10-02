@@ -3,6 +3,7 @@ package com.ssafy.a302.domain;
 import javax.persistence.*;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@DynamicInsert//date 넘길때 null값 넘기지 않도록 해준다.
 @Table(name = "SERVICE_REVIEW")
 public class ServiceReview {
 	@Id
@@ -32,16 +34,16 @@ public class ServiceReview {
 	private SubscribtionHistory subscribtionHistory;
 
 	@Column(name="REG_DATE")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private LocalDate regDate;
 
 	@Builder
-	public ServiceReview(int serviceReviewNo, int rate, String content, String image, Users users, SubscribtionHistory subscribtionHistory) {
+	public ServiceReview(int serviceReviewNo, int rate, String content, String image, Users users, SubscribtionHistory subscribtionHistory, LocalDate regDate) {
 		this.serviceReviewNo = serviceReviewNo;
 		this.rate = rate;
 		this.content = content;
 		this.image = image;
 		this.users = users;
 		this.subscribtionHistory = subscribtionHistory;
+		this.regDate = regDate;
 	}
 }
