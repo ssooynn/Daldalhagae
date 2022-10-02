@@ -1,17 +1,19 @@
 .ajax-loader{
 	position: absolute;
-	top: 50%;
+	top: 25%;
 	left: 50%;
 	transform-origin: 50% 50%;
-	transform: rotate(90deg) translate(-50%, 0%);
+	transform: rotate(90deg) translate(-50%, -35%);
 	font-size: 50px;
 	width: 1em;
 	height: 3em;
-	color: #d31145;
+	color: #AC998A;
+	margin-right:20px;
 
 	.paw{
-		width: 1em;
-		height: 1em;
+		width: 2rem;
+		height: 2rem;
+		margin: 1rem;
 		animation: 2050ms pawAnimation ease-in-out infinite;
 		opacity: 0;
 		
@@ -54,4 +56,13 @@
 	100%{
 		opacity: 0;
 	}
+}
+
+.loading {
+	position: absolute;
+	top:120%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	color: #AC998A;
+
 }

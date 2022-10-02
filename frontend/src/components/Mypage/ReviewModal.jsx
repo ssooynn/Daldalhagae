@@ -7,8 +7,13 @@ import './MypageStyle.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmarkSquare } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+
 
 import { reviewWrite } from '../../api/mypageReview';
+
+import Swal from 'sweetalert2'
+
 
 import Emo1 from '../../assets/img/ReviewEmo1.png'
 import Emo1Full from '../../assets/img/ReviewEmo1Full.png'
@@ -23,6 +28,7 @@ import Emo5Full from '../../assets/img/ReviewEmo5Full.png'
 
 
 const ReviewModal = (props) => {
+  const navigate = useNavigate()
   const {setPopup,subscription} = props
   const [review, setReview] = useState({
     subscriptionNo:'',
@@ -94,17 +100,45 @@ const ReviewModal = (props) => {
   }
 
   const onSubmit = () => {
-    console.log(review)
-    console.log(profile)
-    const formData = new FormData()
-    const reviewBlob = new Blob([JSON.stringify(review)], {
-      type: "application/json",
-    });
-    formData.append("serviceReviewReq", reviewBlob);
-    formData.append("file",profile)
-    reviewWrite(formData).then((res)=>{console.log(res)})
-    .catch((err)=>{console.log(err)})
-  }
+    Swal.fire({
+      padding:'15px',
+      text: "수정 내용을 저장하시겠습니까?",
+      width:'30%',
+      showCancelButton: true,
+      confirmButtonColor: '#AC998A',
+      cancelButtonColor: '#BEC3C6',
+      confirmButtonText: '저장하기',
+      cancelButtonText: '취소하기',
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        console.log(review)
+        const formData = new FormData()
+        const reviewBlob = new Blob([JSON.stringify(review)], {
+          type: "application/json",
+        });
+        formData.append("serviceReviewReq", reviewBlob);
+        formData.append("file",profile)
+        
+        reviewWrite(formData)
+        .then((res)=>{
+          console.log(res)
+          Swal.fire({
+            width:'25%',
+            position: "center",
+            title: "🤎  저장되었습니다 :)",
+            showConfirmButton: false,
+            timer: 1000,
+            customClass:{
+              icon:'smallIcon',
+              title:'midFont'
+            }
+          })
+          setPopup(false)
+          navigate('/mypage/reviews')
+        })
+        .catch((err)=>{console.log(err)})
+      }})}
 
 
   const back = {
