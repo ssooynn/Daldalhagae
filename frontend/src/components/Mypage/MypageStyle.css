@@ -161,3 +161,16 @@ textarea:focus{
   text-align: center;
   border-radius: 50%;
 }
+
+.alignCenter {
+  text-align: 'center';
+}
+
+.smallIcon{
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.midFont{
+  font-size: 18px !important;
+}

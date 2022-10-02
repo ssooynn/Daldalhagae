@@ -9,7 +9,7 @@ import { reviewUnwritten } from '../../api/mypageReview'
 import { range } from "lodash";
 
 
-const MypageUnwrittenReviews = () => {
+const MypageUnwrittenReviews = (props) => {
   const userSno = 'udZ0a32z4Ur2LvGlmEXsN'
   const [subscriptionList, setSubscriptionList] = useState([])
   const [popup, setPopup] = useState(false)

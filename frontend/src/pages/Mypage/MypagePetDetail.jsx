@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import DefaultProfile1 from '../../assets/img/DefaultProfile1.png'
 import DefaultProfile2 from '../../assets/img/DefaultProfile2.png'
@@ -11,10 +11,14 @@ import { PetAge } from '../../util/PetAge';
 
 import { petInfo } from '../../api/mypagePet';
 
+import Swal from 'sweetalert2'
+
+
 const MypagePetDetail = (props) => {
   const {setCurrentFocus} = props
   const location = useLocation()
-  const petId = location.state.petId
+  const navigate = useNavigate()
+  const petId = location.state?.petId
   console.log(petId)
   const [pet, setPet] = useState({})
   const [materials, setMaterials] = useState([])
@@ -22,6 +26,20 @@ const MypagePetDetail = (props) => {
   const [age, setAge] = useState(0)
 
   useEffect(()=>{
+    if(!petId){
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "잘못된 접근입니다.",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title:'midFont'
+        }
+      }).then(()=>{
+        navigate("/mypage");
+      })
+    }
     petInfo(petId)
     .then((res)=>{
       console.log(res.data)
