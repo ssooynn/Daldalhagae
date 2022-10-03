@@ -184,7 +184,12 @@ public class UsersServiceImpl implements UsersService {
 		MyPageRes myPageRes = new MyPageRes(users, filePath.getPetImageLoadPath(),subCnt,unReviewCnt);
 		return myPageRes;
 	}
-	
-	
+
+	@Override
+	public int countUser() {
+		Long count = usersRep.countUsersBy();
+		return count.intValue();
+	}
+
 
 }

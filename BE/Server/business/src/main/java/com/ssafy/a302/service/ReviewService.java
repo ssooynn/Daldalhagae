@@ -1,25 +1,22 @@
 package com.ssafy.a302.service;
 
-import com.netflix.discovery.converters.Auto;
 import com.ssafy.a302.common.FilePath;
 import com.ssafy.a302.common.FileUpload;
 import com.ssafy.a302.domain.*;
-import com.ssafy.a302.dto.ItemReviewDto;
 import com.ssafy.a302.repository.*;
 import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.ServiceReviewReq;
 import com.ssafy.a302.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
-import java.beans.Transient;
 import java.io.IOException;
 import java.util.*;
 
@@ -44,6 +41,7 @@ public class ReviewService {
     SnackRepository snackRepository;
     @Autowired
     SubscribtionHistoryRepository subscribtionHistoryRepository;
+
 
     private final FileUpload fileUpload;
     private final FilePath filePath;
@@ -186,5 +184,17 @@ public class ReviewService {
             return toyRepository.findById(itemSno).get();
         }
         return null;
+    }
+
+    public List<ServiceReviewRes> getServiceReviewByReviews(){
+        List<ServiceReview> list = serviceReviewRepository.getServiceReviewByRate();
+        List<ServiceReviewRes> res = new ArrayList<>();
+
+
+        for (int i = 0; i < 3; i++) {
+            int random = (int) (Math.random()*list.size());
+            res.add(new ServiceReviewRes(list.get(random), filePath.getReviewImageLoadPath()));
+        }
+        return res;
     }
 }

@@ -20,4 +20,5 @@ public interface UsersService {
 	void usersUpdate(UsersDto usersDto);
 	void usersWithdrow(String usersSno);
 	MyPageRes myPageInfo(String usersSno);
+    int countUser();
 }
