@@ -1,6 +1,7 @@
 package com.ssafy.a302.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -143,6 +144,9 @@ public class SocialController {
 				request,
 				String.class);
 	}
+	
+	
+	
 	
 	/* access 토큰으로 사용자 정보 받아오기 */
 	private ResponseEntity<String> getKakaoInfo(String accessToken){
