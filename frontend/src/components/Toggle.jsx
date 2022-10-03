@@ -338,7 +338,7 @@ const Toggle = (props) => {
     padding: '10px 2px',
     boxSizing: 'border-box',
   }
-  const fff = <div style={{display: 'flex', overflow:'hidden', width:'100%'}}>
+  const fff = <div style={{overflow:'hidden', width:'100%'}}>
     <div style={{...feedCarouselGrid, transform: `translate3d(${-index * (200/feeds.length)}%,0,0)`, transitionDuration:'1s'}}>
       {feeds.map((feed, i)=>{
           return <div className={checkFeeds[i] ? 'clickCard' : 'card'} onClick={(e) => { clickFeedCard(e, i, props.info[4]) }}>
@@ -401,7 +401,7 @@ const Toggle = (props) => {
         })}
     </div> 
   </div> 
-  const sss = <div style={{display: 'flex', overflow:'hidden', width:'100%'}}>
+  const sss = <div style={{ overflow:'hidden', width:'100%'}}>
     <div style={{...snackCarouselGrid, transform: `translate3d(${-index * (100/snacks.length)}%,0,0)`, transitionDuration:'1s'}}>
       {snacks.map((snack, i)=>{
         return <div className={checkSnacks[i] ? 'clickCard' : 'card'} onClick={(e) => { clickSnackCard(e, i, props.info[4]) }}>
