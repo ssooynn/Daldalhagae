@@ -48,7 +48,7 @@ export function NavBar({ ...props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("rgba(255,255,255,0)");
   const [boxShadow, setboxShadow] = useState("none")
-  const [user, setUserLogin] = useState(useSelector(state => state.user.user.user));
+  const user = useSelector(state => state.user.user.user);
 
   function showLoginModal() {
     setIsModalOpen(true);
@@ -90,18 +90,18 @@ export function NavBar({ ...props }) {
         <FlexBox width="300px" justify="space-between">
           <Link to="/reviewList"><Category>고객 후기</Category></Link>
           <Link to="/subscribeList"><Category>상품 목록</Category></Link>
-          {!user ? <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }}>로그인</Category> :
+          {!user.token ? <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }} style={{ cursor: "pointer" }}>로그인</Category> :
             <Link to="/mypage"><Category>My page</Category></Link>
           }
-          {user && <Category onClick={(e) => {
-            e.preventDefault(); setUserLogin("");
+          {user.token && <Category onClick={(e) => {
+            e.preventDefault();
             dispatch(
               setUser({
                 token: "",
               })
             );
             Navigate("/");
-          }}>로그아웃</Category>}
+          }} style={{ cursor: "pointer" }}>로그아웃</Category>}
         </FlexBox>
       </FlexBox>
 

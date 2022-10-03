@@ -106,7 +106,12 @@ const ShoppingBag = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [modalOpen, setModalOpen] = useState(false)
   const showModal = () => {
-    setModalOpen(true)
+    console.log(Boolean(bag.length));
+    if (bag.length) {
+      setModalOpen(true)
+    } else {
+      alert("담은 상품이 없습니다.")
+    }
   }
 
   useEffect(() => {

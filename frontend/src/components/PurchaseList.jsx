@@ -54,7 +54,7 @@ const PurchaseList = (props) => {
           alignItems: 'center'
         }}>
         <p style={{ margin: '0 10px 0 0' }}>{props.info[0]} - {params.name}</p>
-        <img onClick={(e)=>deletePet(idx, e)} src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
+        <img onClick={(e) => deletePet(idx, e)} src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
       </div>])
       setCheckPurchase([...checkPurchase, params.name])
       const temp = props.info.slice()
@@ -92,6 +92,9 @@ const PurchaseList = (props) => {
       let isExist = false;
       for (let i = 0; i < bag.length; i++) {
         if (bag[i].packageName === bags.packageName && bag[i].petName === bags.petName) {
+          isExist = true;
+        } else if (bag[i].petName === bags.petName) {
+          alert("해당 반려견을 위한 구독상품이 장바구니에 있습니다.");
           isExist = true;
         }
       }

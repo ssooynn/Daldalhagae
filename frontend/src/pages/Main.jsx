@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Main1 from "../assets/img/Main1.png";
 import { StyledButton, StyledText } from '../components/CommonComponent';
 import { ArrowImg, FlexBox, MainContent, MainReviewCard, MainSubscribeCard } from '../components/MainComponent';
-import { useSpring, useChain, useSpringRef } from '@react-spring/web';
+import { useSpring, useChain, useSpringRef, animated } from '@react-spring/web';
 
 //Content3에 들어갈 사진
 import ServiceInfo1 from "../assets/img/MainServiceInfo1.svg";
@@ -76,6 +76,12 @@ export default function Main() {
     config: { duration: 300 },
   })
 
+  const [number, setNumber] = useState(12089);
+  const [open, setOpen] = useState(false);
+  const numberCount = useSpring({
+    number: open ? number : 0,
+    delay: 700,
+  })
   useChain([fadeInRef, fadeInRef2, startButtonRef], [0, 0.5, 1])
 
   // 1페이지씩 스크롤 기능
@@ -86,6 +92,12 @@ export default function Main() {
 
   //setPage가 바뀌면 페이지 이동
   function GoPage(page) {
+    if (page == 6) {
+      console.log("6페이지");
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
     const pageHeight = window.innerHeight;
     outerDivRef.current.scrollTo({
       top: pageHeight * (page - 1) + DIVIDER_HEIGHT * (page - 1),
@@ -229,7 +241,7 @@ export default function Main() {
         <MainContent style={{ backgroundColor: "#776b62" }}>
           <FlexBox direction="column" justify="space-evenly" align="center" width="70%">
             <FlexBox direction="row" justify="space-between" align="center" width="100%">
-              <img src={ServiceInfo4} alt="반려동물 장난감으로 노는 사진" height="80%" style={{ maxHeight: "50vh" }}></img>
+              <img src={ServiceInfo4} alt="반려동물 장난감으로 노는 사진" height="85%" style={{ maxHeight: "50vh", borderRadius: "5px" }}></img>
               <FlexBox direction="column" justify="center" align="center" width="50%">
                 <StyledText weight="500" size="28px" color="#eddccf">당신의 반려동물을 즐겁게</StyledText>
                 <StyledText weight="300" size="18px" margin="10px 10px 2px 10px" color="#eddccf">아이의 크기, 기호도 등을 바탕으로</StyledText>
@@ -242,7 +254,7 @@ export default function Main() {
                 <StyledText weight="300" size="18px" margin="10px 10px 2px 10px" color="#eddccf">아이의 알러지 유무, 크기와 특성, 필요 기능 등을 바탕으로</StyledText>
                 <StyledText weight="300" size="18px" margin="2px 10px 2px 10px" color="#eddccf">딱 맞는 사료와 간식을 추천해드립니다.</StyledText>
               </FlexBox>
-              <img src={ServiceInfo5} alt="사료 사진" height="80%" style={{ maxHeight: "50vh" }}></img>
+              <img src={ServiceInfo5} alt="사료 사진" height="85%" style={{ maxHeight: "50vh", borderRadius: "5px" }}></img>
             </FlexBox>
           </FlexBox>
         </MainContent>
@@ -264,7 +276,7 @@ export default function Main() {
           <FlexBox direction="column" justify="space-evenly" align="center" width="70%" height="60%">
             <FlexBox direction="row" justify="center" align="center">
               <StyledText weight="500" size="24px">지금까지</StyledText>
-              <StyledText weight="600" size="36px">8021</StyledText>
+              <animated.div><StyledText weight="600" size="36px">{numberCount.number.to(x => x.toFixed(0))}</StyledText></animated.div>
               <StyledText weight="500" size="24px">명이 이용했어요</StyledText>
             </FlexBox>
             <MainReviewCard />
