@@ -22,6 +22,8 @@ import { useEffect } from "react";
 
 import Swal from "sweetalert2"
 import { petInfo, petAdd, petEdit } from "../../api/mypagePet";
+import { mypageMain } from '../../api/mypageUser'
+
 
 
 const SignupBox = styled.div`
@@ -63,7 +65,7 @@ export default function MypagePetUpdate(props) {
   const {setRerender, rerender, pets} = props
   const navigate = useNavigate();
   const location = useLocation()
-  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+  const usersSno = useSelector((state)=>state.user.user.user?.usersSno)
 
 
   const [effectsOpen, setEffectsOpen] = useState(false);
@@ -122,28 +124,27 @@ export default function MypagePetUpdate(props) {
     image : '',
     imageFlag:0,
   })
-  useEffect(()=>{
-    console.log(pet)
-  },[pet])
 
   useEffect(()=>{
     const path = location.pathname
     console.log(path)
     if (path === '/mypage/petAdd'){
-      console.log(pets.length)
-      if (pets?.length >= 3){
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "반려견은 3마리까지만 등록가능합니다 ",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass:{
-            title:'midFont'
-          }
-        });
-        navigate("/mypage");
-      }
+      console.log(pets, 'p')
+      mypageMain(usersSno).then((res)=>{
+        if (res.data.pets?.length >= 3){
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "반려견은 3마리까지만 등록가능합니다 ",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass:{
+              title:'midFont'
+            }
+          });
+          navigate("/mypage");
+        }
+      })
       setProfile('')
       setSelectedEffect([])
       setSeletedTag([])
@@ -198,7 +199,7 @@ export default function MypagePetUpdate(props) {
         })
       }
     }
-  },[,location.pathname])
+  },[location.pathname])
   
   useEffect(()=>{
     setPet({
@@ -209,6 +210,7 @@ export default function MypagePetUpdate(props) {
     })
   },
   [selectedEffect, selectedTag, bcs])
+
 
 
   const WantUpdateProfile = (e) => {

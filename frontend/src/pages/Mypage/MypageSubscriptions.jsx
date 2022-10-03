@@ -16,7 +16,7 @@ const MypageSubscriptions = () => {
  const location = useLocation()
  const path = location.pathname
  console.log(path)
- const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+ const usersSno = useSelector((state)=>state.user.user.user?.usersSno)
  
  const [subscriptionList, setSubscriptionList] = useState([])
  const [page, setPage] = useState(1);

@@ -12,7 +12,7 @@ import { range } from "lodash";
 
 
 const MypageUnwrittenReviews = (props) => {
-  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+  const usersSno = useSelector((state)=>state.user.user.user?.usersSno)
   const [subscriptionList, setSubscriptionList] = useState([])
   const [popup, setPopup] = useState(false)
   const [page, setPage] = useState(1);
