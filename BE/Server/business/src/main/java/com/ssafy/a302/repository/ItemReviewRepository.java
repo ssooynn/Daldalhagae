@@ -12,9 +12,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ItemReviewRepository extends JpaRepository<ItemReview,Integer>, ItemReviewCustom  {
+public interface ItemReviewRepository extends JpaRepository<ItemReview,Integer>{
     ItemReview findByItemReviewNo(@Param("itemReviewNo") int itemReviewNo);
-
+    List<ItemReview> findTop2ByItemSno(@Param("itemSno")String itemSno);
     List<ItemReview> findByUsers_UsersSno(@Param("usersSno")String usersSno);
     Page<ItemReview> findPageByItemSno(@Param("itemSno")String itemSno, Pageable pageable);
+    int countByItemSno(@Param("itemSno")String itemSno);
 }

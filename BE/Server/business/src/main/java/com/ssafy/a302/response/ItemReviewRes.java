@@ -1,13 +1,19 @@
 package com.ssafy.a302.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ssafy.a302.domain.ItemReview;
+import com.ssafy.a302.repository.FeedRepository;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 
 @Data
+@NoArgsConstructor
 public class ItemReviewRes {
     private int itemReviewNo;
     private String itemSno;
@@ -26,6 +32,25 @@ public class ItemReviewRes {
 //    private UsersDto users;
 //    private PurchaseDto purchase;
 //    private PetDto pet;
+    
+    
+	public ItemReviewRes(ItemReview itemReview, String imagePath, String itemName ) {
+		super();
+		this.itemSno = itemReview.getItemSno();
+		this.itemReviewNo = itemReview.getItemReviewNo();
+		this.itemName = itemName;
+		this.rate = itemReview.getRate();
+		this.content = itemReview.getContent();
+		if(itemReview.getImage() !=null && "".equals(itemReview.getImage())) {
+			this.image = imagePath+itemReview.getImage();
+		}
+		this.date = itemReview.getDate();
+		this.usersSno = itemReview.getUsers().getUsersSno();
+		this.usersName = itemReview.getUsers().getName();
+		this.petSno = itemReview.getPet().getPetSno();
+		this.petName = itemReview.getPet().getName();
+	}
 
+    
 
 }
