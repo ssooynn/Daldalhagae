@@ -59,12 +59,32 @@ public class RecommendServiceImpl implements RecommendService{
 		feeds.add("f05C8ZXZjHZrZaeUB8eYN");
 		feeds.add("f0i4tJenuSL6PgjIhxSae");
 		feeds.add("f0j9YWBhZVd1FmDb7T2Am");
+		feeds.add("fiiayczyaQqfHxVDBC0Jn");
+		feeds.add("fG6WPVgrEnPtRmKtr3hOC");
+		feeds.add("fe0Y4s6jpd3cDJ5oUw72E");
+		feeds.add("fcIamF4JXrVtT4HIgnD63");
+		feeds.add("fbbbuJOP4ev6fvIhMsCam");
+		feeds.add("famt7yPjM0HbhF1nMSNG1");
+		
 		snacks.add("s07dPUgvRaaiV5eGyOFna");
 		snacks.add("s0Cg9gcgztbdeG3zHo9FS");
 		snacks.add("s0hfieToEaO96HP99xqxc");
+		snacks.add("s8tcgSV5qgDKIvMSBTdxe");
+		snacks.add("s8hZ7ktN2cu3ZIqmVCAb6");
+		snacks.add("s7vq8kGkBvsBriVJFmT14");
+		snacks.add("s6eQcYeI2Eci2slkCHyVL");
+		snacks.add("s5JdZv9Soz6WhjTlz8Amb");
+		snacks.add("s5CCctpjeGCtMrTWT1e9y");
+		
 		toys.add("T06pFAhAD5wgNV4Eq497F");
 		toys.add("T018jGPXn0Vej3iLUgc9S");
 		toys.add("T0Y1bsNon4xDt1VYTQYA7");
+		toys.add("T2Ss8MqdRbLvqaIK4ZD0X");
+		toys.add("T2y7c2NI1m2gf87XF69pR");
+		toys.add("T3MYEPFKl42oCGV3JX5Y6");
+		toys.add("T4y1ac7x16tC5O6VxQ86z");
+		toys.add("T5h9xz6FW2puwZcT549c1");
+		toys.add("T5iUs81D0IsAzs6lkpkHa");
 		
 		List<Feed> feedList =feedRep.findByFeedSnoIn(feeds);
 		List<Snack> snackList =snackRep.findBySnackSnoIn(snacks);
