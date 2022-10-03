@@ -92,7 +92,7 @@ async def train_data(background_tasks: BackgroundTasks,db: Session = Depends(get
     return {"saved new reviews, now i'm training.."}
 
 # 추천리스트
-@app.get("api/item/{pet_no}")
+@app.get("/api/item/{pet_no}")
 async def recommendation(pet_no: str):
     rec = recommendations.get_recommendations(pet_no)
     return rec
