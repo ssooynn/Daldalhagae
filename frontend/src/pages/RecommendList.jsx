@@ -1,58 +1,102 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Toggle from '../components/Toggle'
 import { StyledButton } from '../components/CommonComponent';
 import Footer from '../components/Footer';
 
-import imgD from '../assets/img/구독상세페이지4.png'
-
 const RecommendList = (s) => {
   const location = useLocation()
   const infos = location.state.info  // name, intro, components1, price, components2, pets, pet
   const showToggle = []
+  const [pickedProducts, setPickedProducts] = useState([])
+  useEffect(()=>{
+    const copyPickedProducts = [...pickedProducts]
+    infos.map((info, idx)=>{
+      copyPickedProducts.push([[], [], []])
+    })
+    setPickedProducts(copyPickedProducts)
+  }, [])
   for (let i = 0; i < infos.length; i++) {
-    showToggle.push(<Toggle info={infos[i]} />)
+    showToggle.push(<Toggle info={infos[i]} index={i} products={pickedProducts} setPickedProducts={setPickedProducts} />)
   }
   const Navigate = useNavigate();
   function GoPaymentList() {
-    Navigate("/paymentList", {
-      state: infos})
+    console.log(pickedProducts)
+    let flag = false
+    const checkEmptyBag = []
+    // pickedProducts.map((pickedProduct, idx)=>{  // 빈 곳이 있는지 검사
+    //   pickedProduct.map((products, jdx)=>{
+    //     if (products.length === 0) {
+    //       flag = true
+    //       checkEmptyBag.push([idx, jdx])
+    //     }
+    //   })
+    // })
+    // if (flag) {
+    //   if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
+    //     Navigate("/paymentList", {state: {
+    //       pickedProducts: pickedProducts,
+    //       checkEmptyBag: checkEmptyBag,
+    //       flag: flag,
+    //     }})
+    //   } else {}
+    // } else {
+    //   Navigate("/paymentList", {state: {
+    //     pickedProducts: pickedProducts,
+    //     checkEmptyBag: checkEmptyBag,
+    //     flag: flag,
+    //   }})
+    // }
   }
-  const products = [
-    {
-      sno : '',
-      name : '로얄캐닌 인도어 10kg',
-      image : imgD,
-      effects: ['건강에 좋음'],
-      targets: ['전연령'],
-      materials: ['밀가루', '돼지고기'],
-      particle: '중',
-      grade: '',
-      reviewNum: '',
-      reviewList: [{
-        rate: '',
-        content:'',
-        usersName:'',
-        date : ''
-      }]
-    },
-    {
-      sno : '',
-      name : '강아지 하루간식',
-      image : imgD,
-      effects: ['건강에 좋음'],
-      targets: ['전연령'],
-      materials: ['밀가루', '돼지고기'],
-      particle: '중',
-      grade: '',
-      reviewNum: '',
-      reviewList: [{
-        rate: '',
-        content:'',
-        usersName:'',
-        date : ''
-      }]
-    },]
+  
+  function PickedProducts(props) {
+    const types = props.types
+    return <div style={{display:'flex'}}>
+      {types.map((type, jdx)=>{
+        return type.map((product, jdx)=>{
+          return <div style={{
+            display:'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            margin: 'auto 5px',
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            padding: '10px',
+            height: '170px',
+            width: '170px',
+            boxShadow: '1px 1px 1px 1px #dab8b8',
+            height: '100%'
+            }}>
+            <img src={product.image} width='150px' height='150px' alt="" />
+            <p style={{margin: '5px auto'}}>{product.name}</p>
+          </div>
+        })
+      })}
+    </div>
+  }
+  function Packages() {
+    return <div>
+    {pickedProducts.map((types, idx)=>{
+        return <div
+          style={{
+            backgroundColor: 'rgb(240 229 221)',
+            borderRadius: '10px',
+            marginBottom: '10px',
+            padding: '0 25px 25px 25px',
+
+          }}>
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <h3>{infos[idx][0]} - {infos[idx][6]}</h3>
+            <p>{infos[idx][1]}</p>
+          </div>
+          <div>
+            {types.length > 0 ?
+              <PickedProducts types={types} />:
+              <div></div>}
+          </div>
+        </div>})}
+    </div>
+  }
   return (
     <div
       style={{
@@ -96,29 +140,7 @@ const RecommendList = (s) => {
           }}> 
           <h3 style={{margin: 'auto'}}>선택한 목록</h3>
           <hr />
-          {infos.map((info, idx)=>{
-              return <div info={info}>
-                <h4>{info[0]} - {info[6]} ({info[1]})</h4>
-                <div style={{display:'flex'}}>
-                  {products.map((product, jdx)=>{
-                    return <div style={{
-                      display:'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      margin: 'auto 5px',
-                      backgroundColor: 'white',
-                      borderRadius: '10px',
-                      padding: '10px',
-                      height: '170px',
-                      width: '170px',
-                      boxShadow: '1px 1px 1px 1px #dab8b8'
-                      }}>
-                      <img src={product.image} width='150px' alt="" />
-                      <p>{product.name}</p>
-                    </div>
-                  })}
-                </div>
-              </div>})}
+          <Packages />
         </div>
       </div>
       <p>선택이 부족한 상품은 추천에 따라 자동 선택됩니다.</p>

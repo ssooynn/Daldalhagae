@@ -8,6 +8,7 @@ import Payment from "./pages/Payment";
 import PaymentCheck from "./pages/PaymentCheck";
 import PaymentList from "./pages/PaymentList";
 import RecommendList from "./pages/RecommendList";
+import ResetRecommentList from "./pages/ResetRecommentList";
 import Mypage from "./pages/Mypage/Mypage";
 import KakaoSignin from "./pages/KakaoSignin";
 import Signup from "./pages/Signup";
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/paymentCheck" element={<PaymentCheck />} />
         <Route path="/paymentList" element={<PaymentList />} />
         <Route path="/recommendList" element={<RecommendList />} />
+        <Route path="/ResetRecommentList" element={<ResetRecommentList />} />
         <Route path="/signup/*" element={<Signup />} />
         <Route path="/mypage/*" element={<Mypage />} />
         <Route path="/reviewList" element={<ReviewList />} />
