@@ -4,69 +4,116 @@ import { StyledButton } from '../components/CommonComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
-import PackageImage1 from '../assets/img/추천페이지1.png'
-import PackageImage2 from '../assets/img/toggle_play.png'
-import PackageImage3 from '../assets/img/toggle_all.png'
-import daldalPackage from '../assets/img/toggle_daldal.png'
-import toyPackage from '../assets/img/toggle_toy.png'
-import lightPackage from '../assets/img/toggle_light.png'
-import 자유구독 from '../assets/img/toggle_custom.png'
+import PackageImage1 from '../assets/img/BasicPackage.png'
+import PackageImage2 from '../assets/img/PlayPackage.png'
+import PackageImage3 from '../assets/img/AllInOnePackage.png'
+import daldalPackage from '../assets/img/DalDalPackage.png'
+import toyPackage from '../assets/img/ToyPackage.png'
+import lightPackage from '../assets/img/LightAllInOnePackage.png'
+import 자유구독 from '../assets/img/나만의구독서비스.png'
+import axios from 'axios';
 
 
 const PackageBox  = styled.div`
-background-image: ${(props) => {
-  let iamge;
-  switch (props.packageName) {
-    case 'Basic Package':
-      iamge = `url(${PackageImage1})`;
-      break;
-    case 'Play Package':
-      iamge = `url(${PackageImage2})`;
-      break;
-    case 'All In One Package':
-      iamge = `url(${PackageImage3})`;
-      break;
-    case 'DalDal Package':
-      iamge = `url(${daldalPackage})`;
-      break;
-    case 'Toy Package':
-      iamge = `url(${toyPackage})`;
-      break;
-    case 'Light All Package':
-      iamge = `url(${lightPackage})`;
-      break;
-    default:
-      iamge = `url(${자유구독})`;
-      break;
-  }
-  return iamge
-}};
+position: relative;
 width: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-top: 3rem;
-border-radius: 10px 10px 0 0;
+margin-top: 1.2rem;
+::before{
+  border-radius: 10px;
+  background-size: cover;
+  background-image: ${(props) => {
+    let iamge;
+    switch (props.packageName) {
+      case 'Basic Package':
+        iamge = `url(${PackageImage1})`;
+        break;
+      case 'Play Package':
+        iamge = `url(${PackageImage2})`;
+        break;
+      case 'All In One Package':
+        iamge = `url(${PackageImage3})`;
+        break;
+      case 'DalDal Package':
+        iamge = `url(${daldalPackage})`;
+        break;
+      case 'Toy Package':
+        iamge = `url(${toyPackage})`;
+        break;
+      case 'Light All Package':
+        iamge = `url(${lightPackage})`;
+        break;
+      default:
+        iamge = `url(${자유구독})`;
+        break;
+    }
+    return iamge
+  }};
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  opacity: 0.35;
+}
+object-fit: cover;
 `
 
 const PaymentList = () => {
   const location = useLocation()
   const infos = location.state  // name, intro, components1, price, components2, pets, pet
-  
+  const Navigate = useNavigate();
+
+  const [userInfo, setUserInfo] = useState([])
+  useEffect(() => {
+    const usersSno = 'udZ0a32z4Ur2LvGlmEXsN'
+    // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+    // Authorization: `Bearer` + `a.a.a`
+    axios({
+      method: 'get',
+      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/user/info/${usersSno}`,
+      headers: {
+        'Authorization': `Bearer a.a.a`
+      }
+    })
+      .then((res) => {
+        setUserInfo(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   let totalPrice = infos.map((info)=>{return Number(info[3])}).reduce((a, b)=>a+b, 0)
 
   const REDIRECT_URL = "http://localhost:3000/paymentCheck";
+
+  function Productinfos(props) {
+    const product = props.product
+    return <div
+      style={{
+        display: 'flex',
+        textAlign: 'center'
+      }}>
+      <p style={{width: '30%'}}>사료</p>
+      <p style={{width: '40%'}}>{product.name}</p>
+      <p style={{width: '30%'}}>{product.materials}</p>
+    </div>
+  }
 
   function Purchase() {
     const { IMP } = window;
     IMP.init("imp10157701");
     const data = {
       pg: "kakaopay",
-      merchant_uid: "_order_no_7", // 상점에서 관리하는 주문 번호
+      merchant_uid: userInfo.paymentNo, // 상점에서 관리하는 주문 번호
       name: "주문명: " + "나만의 구독 서비스",
-      amount: 21900,
+      amount: totalPrice,
       customer_uid: "TCSUBSCRIP",
-      buyer_email: "dldkgus98@naver.com",
+      // buyer_email: "dldkgus98@naver.com",
       buyer_name: "이아현",
       buyer_tel: "010-2872-1882",
       buyer_addr: "경기도 남양주시 진접읍 금강로 1553-26 106동 1305호",
@@ -90,6 +137,7 @@ const PaymentList = () => {
     if (success) {
       //결제 성공
       alert("결제 성공");
+      Navigate("/paymentCheck", {state: infos})
     } else {
       alert(`결제 실패 : ${error_msg}`);
     }
@@ -125,81 +173,63 @@ const PaymentList = () => {
         <hr style={{ backgroundColor: '#CCAA90' }} />
         {infos.map((info, idx)=>{
           return <div>
-          <PackageBox>
-            <div
-              style={{
-                width: '80%',
-              }}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <h2>{info[0]} - {info[6]}</h2>
-                <p>월 {info[3]}원</p>
+            <PackageBox packageName={info[0]}>
+              <div style={{width: '80%'}}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <h2>{info[0]} - {info[6]}</h2>
+                  <p>월 {info[3]}원</p>
+                </div>
+                <p>{info[1]}</p>
               </div>
-              <p>{info[1]}</p>
-            </div>
-          </PackageBox>
-          <div  // 결제 목록
-            style={{
-              backgroundColor: '#FFFDFB',
-              height: '100%',
-              borderRadius: '0 0 5px 5px',
-              boxShadow: '0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)',
-              padding: '10px 0 20px 0',
-              position: 'relative',
-            }}>
-            <div
+            </PackageBox>
+            <div  // 결제 목록
               style={{
-                margin: '0 20px 0 20px',
-                paddingTop: '20px'
+                backgroundColor: '#FFFDFB',
+                height: '100%',
+                borderRadius: '0 0 5px 5px',
+                boxShadow: '0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)',
+                padding: '10px 0 20px 0',
+                position: 'relative',
               }}>
-              <div  // 표 제목
+              <div  // 상품 정보
                 style={{
-                  display: 'flex',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  fontSize: '18px'
+                  margin: '0 20px 0 20px',
+                  paddingTop: '20px'
                 }}>
-                <p
+                <div  // 표 제목
                   style={{
-                    width: '30%',
-                    margin: 'auto'
-                  }}>분류</p>
-                <p
-                  style={{
-                    width: '40%',
-                    margin: 'auto'
-                  }}>제품명</p>
-                <p
-                  style={{
-                    width: '30%',
-                    margin: 'auto'
-                  }}>주 원료 / 소재</p>
-              </div>
-              <hr style={{ backgroundColor: '#F3CEB2', height: '0.1px' }} />
-              <div  // 본문
-                style={{
-                  display: 'flex',
-                  textAlign: 'center'
-                }}>
-                <p
-                  style={{
-                    width: '30%',
-                  }}>사료</p>
-                <p
-                  style={{
-                    width: '40%'
-                  }}>로얄캐닌 인도어 10kg</p>
-                <p
-                  style={{
-                    width: '30%'
-                  }}>닭, 오리, 연어</p>
+                    display: 'flex',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: '18px'
+                  }}>
+                  <p
+                    style={{
+                      width: '30%',
+                      margin: 'auto'
+                    }}>분류</p>
+                  <p
+                    style={{
+                      width: '40%',
+                      margin: 'auto'
+                    }}>제품명</p>
+                  <p
+                    style={{
+                      width: '30%',
+                      margin: 'auto'
+                    }}>주 원료 / 소재</p>
+                </div>
+                <hr style={{ backgroundColor: '#F3CEB2', height: '0.1px' }} />
+                {info[7].map((product, idx)=>{
+                  return <Productinfos product={product} />
+                })}
               </div>
             </div>
-          </div>
           </ div>
         })}
         <div  // 결제 금액
@@ -221,11 +251,11 @@ const PaymentList = () => {
             </tr>
             <tr>
               <td>이름</td>
-              <td>손흥민</td>
+              <td>{userInfo.name}</td>
             </tr>
             <tr>
               <td>전화번호</td>
-              <td>010-7777-7777</td>
+              <td>{userInfo.phone}</td>
             </tr>
           </table>
         </div>
@@ -238,15 +268,15 @@ const PaymentList = () => {
           <table>
             <tr>
               <td width="200px">배송지</td>
-              <td>강원도 춘천시 xx면 xx읍 xx리</td>
+              <td>{userInfo.address}</td>
             </tr>
             <tr>
               <td>이름</td>
-              <td>손흥민</td>
+              <td>{userInfo.name}</td>
             </tr>
             <tr>
               <td>전화번호</td>
-              <td>010-7777-7777</td>
+              <td>{userInfo.phone}</td>
             </tr>
           </table>
           <div style={{ fontSize: '8px', marginTop: '30px' }}>

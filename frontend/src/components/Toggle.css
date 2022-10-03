@@ -1,12 +1,15 @@
 .card {
   background-color: #FFFFFF;
-  width: 28%;
-  height: 100%;
+  width: 100%;
   border-radius: 5px;
   padding: 30px 10px 10px 10px;
   cursor: pointer;
   border: solid 4px;
   border-color: rgba(204, 170, 144, 0.3);
+  box-sizing: border-box;
+}
+.card:now(:last-of-type) {
+  margin-right: 15px;
 }
 .card:hover {
   /* border: solid 4px;
@@ -14,8 +17,7 @@
 }
 .clickCard {
   background-color: #ffffff;
-  width: 28%;
-  height: 100%;
+  width: 100%;
   border-radius: 5px;
   padding: 30px 10px 10px 10px;
   cursor: pointer;
