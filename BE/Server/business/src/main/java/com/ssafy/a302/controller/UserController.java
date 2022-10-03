@@ -84,4 +84,9 @@ public class UserController {
 		System.out.println(req.get(0).getMf().getOriginalFilename());
 	}
 
+	@GetMapping("/userCount")
+	public int countUser(){
+		return usersService.countUser();
+	}
+
 }

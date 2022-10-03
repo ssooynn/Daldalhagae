@@ -5,10 +5,7 @@ import com.ssafy.a302.dto.ItemReviewDto;
 import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.ServiceReviewReq;
 import com.ssafy.a302.request.SignUpReq;
-import com.ssafy.a302.response.ItemReviewPageRes;
-import com.ssafy.a302.response.ItemReviewRes;
-import com.ssafy.a302.response.MyReviewRes;
-import com.ssafy.a302.response.UnratedSubscriptionRes;
+import com.ssafy.a302.response.*;
 import com.ssafy.a302.service.ReviewService;
 import com.ssafy.a302.service.UsersService;
 import io.swagger.annotations.Api;
@@ -18,9 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +36,6 @@ public class reviewController {
     @Autowired
     ReviewService reviewService;
 
-    
     
     /*리뷰 등록 API*/
 //    @Caching(evict= {
@@ -93,5 +88,11 @@ public class reviewController {
         return new ResponseEntity(unratedSubscriptionResList, HttpStatus.OK);
     }
 
+
+    @GetMapping("/serviceReviewTop")
+    public ResponseEntity<?> getServiceReviewTop(){
+        List<ServiceReviewRes> res = reviewService.getServiceReviewByReviews();
+        return new ResponseEntity(res, HttpStatus.OK);
+    }
 
 }
