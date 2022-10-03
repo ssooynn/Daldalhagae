@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginApi } from '../api/user';
 import { useDispatch } from "react-redux";
 import { setUser } from '../stores/modules/user';
-import Loading from '../assets/img/test.gif'
+import Spinner from '../assets/img/Spinner.gif'
 import { MainContent } from '../components/MainComponent';
 import { StyledText } from '../components/CommonComponent';
 
@@ -44,7 +44,7 @@ const KakaoSignin = () => {
   }, []);
   return (
     <MainContent>
-      <img src={Loading} alt="로딩중" width="200px"></img>
+      <img src={Spinner} alt="로딩중" width="200px"></img>
       <StyledText size="18px" margin="30px 10px 5px 10px" weight="500" color="#ccaa90">Loading</StyledText>
     </MainContent>
   )
