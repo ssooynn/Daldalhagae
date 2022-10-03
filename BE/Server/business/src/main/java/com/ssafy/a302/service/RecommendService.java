@@ -1,5 +1,7 @@
 package com.ssafy.a302.service;
 
-public interface RecommendService {
+import com.ssafy.a302.response.RecommendRes;
 
+public interface RecommendService {
+	RecommendRes recommend(String petSno);
 }

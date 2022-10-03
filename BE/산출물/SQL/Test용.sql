@@ -100,8 +100,8 @@ select * from ITEM_REVIEW;
 select * from PET where USERS_SNO = 'u6bszQdUpHgSwAYoIxTSj';
 select * from SUBSCRIBTION_HISTORY where USERS_SNO = 'u6bszQdUpHgSwAYoIxTSj';
 select * from PURCHASE where SUBSCRIBTION_HISTORY_NO=249;
-
-
+select * from USERS_LOG where USERS_SNO= 'u6ji1Sw7NEoQEEc0QafCZ';
+update USERS_LOG set USERS_DELETED_AT =curdate() where USERS_SNO='u6ji1Sw7NEoQEEc0QafCZ';
 
 select * from PURCHASE;
 select * from USERS;
@@ -120,3 +120,4 @@ select * from EFFECT;
 select * from PET_EFFECT;
 select * from SUBSCRIBTION;
 select * from PRODUCT_TYPE;
+select * from ITEM_REVIEW;
