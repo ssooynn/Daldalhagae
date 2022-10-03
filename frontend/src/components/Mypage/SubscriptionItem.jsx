@@ -108,7 +108,7 @@ const onReviewOpen = (e) => {
 }
 
 // 구독 진행중 여부 판단
-const endDate = new Date(subscription.subscriptionEndDate)
+const endDate = new Date(subscription?.subscriptionEndDate)
 const today = new Date()
 
 let onGoing
@@ -153,11 +153,11 @@ return(
             onPointerOut={() => setIsHover(false)}>
 
           <div>
-            <div style={titleStyle}>{subscription.subscriptionName} <span style={subTitleStyle}>[ {onGoing} ]</span></div>
+            <div style={titleStyle}>{subscription?.subscriptionName} <span style={subTitleStyle}>[ {onGoing} ]</span></div>
           </div>
           <FlexBox justify='space-between' align='end' padding='0px'>
             <FlexBox direction='column' align='start' padding='0px'>
-              <div style={detailStyle}>구독 ID: {subscription.subscriptionNo||subscription.subscriptionNum}</div>
+              <div style={detailStyle}>구독 ID: {subscription?.subscriptionNo||subscription?.subscriptionNum}</div>
               <div style={detailStyle}>구독 기간 {subscription?.subscriptionStartDate.toString().replaceAll('-','.')} ~ {subscription?.subscriptionEndDate.toString().replaceAll('-','.')}</div>
             </FlexBox>
             {reviewConnect? 

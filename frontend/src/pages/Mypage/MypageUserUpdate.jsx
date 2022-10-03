@@ -26,7 +26,7 @@ const MypageUserUpdate = (props) => {
   const [phoneUpdate, setPhoneUpdate] = useState(0)
   const navigate = useNavigate()
 
-  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+  const usersSno = useSelector((state)=>state.user.user.user?.usersSno)
   const dispatch = useDispatch()
 
   const Toast = Swal.mixin({

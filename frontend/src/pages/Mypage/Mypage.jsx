@@ -21,9 +21,13 @@ import { mypageMain } from '../../api/mypageUser'
 
 const Mypage = () => {
   const navigate = useNavigate()
-
-  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
   const user = useSelector((state)=>state.user.user.user)
+  console.log(user)
+  const [usersToken, setUsersToken] = useState(user?.token || '')
+  const [usersSno, setUsersSno] = useState(user?.usersSno || '')
+  
+
+
   const [userInfo, setUserInfo] = useState({name:'',
   subscriptionCnt:0, 
   unReviewCnt: 0, 
@@ -33,7 +37,11 @@ const Mypage = () => {
   const [rerender, setRerender] = useState(0)
 
   useEffect(()=>{
-    if (!usersSno) {
+    setUsersToken(user?.token || '')
+    setUsersSno(user?.usersSno || '')
+  },[user])
+  useEffect(()=>{
+    if (!usersToken) {
       Swal.fire({
         position: "center",
         icon: "error",
@@ -123,7 +131,7 @@ const Mypage = () => {
             <Route
               path="subscriptionDetail"
               element={
-                <MypageSubscriptionDetail/>
+                <MypageSubscriptionDetail usersSno={usersSno}/>
               }            
             />
             <Route
