@@ -54,6 +54,7 @@ export function NavBar({ ...props }) {
     setIsModalOpen(true);
   }
   useEffect(() => {
+    console.log(user);
     let mounted = true;
     window.addEventListener("scroll", () => {
       if (mounted) {
@@ -90,10 +91,10 @@ export function NavBar({ ...props }) {
         <FlexBox width="300px" justify="space-between">
           <Link to="/reviewList"><Category>고객 후기</Category></Link>
           <Link to="/subscribeList"><Category>상품 목록</Category></Link>
-          {!user.token ? <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }} style={{ cursor: "pointer" }}>로그인</Category> :
+          {!user || !user.token ? <Category onClick={(e) => { e.preventDefault(); showLoginModal(); }} style={{ cursor: "pointer" }}>로그인</Category> :
             <Link to="/mypage"><Category>My page</Category></Link>
           }
-          {user.token && <Category onClick={(e) => {
+          {user && user.token && <Category onClick={(e) => {
             e.preventDefault();
             dispatch(
               setUser({
