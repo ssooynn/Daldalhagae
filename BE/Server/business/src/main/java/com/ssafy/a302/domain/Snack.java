@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,12 +32,15 @@ public class Snack extends Item{
 //	@Column(name="IMAGE")
 //	private String image;
 	
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "snack", fetch = FetchType.LAZY)
 	private List<SnackEffect> snackEffects = new ArrayList<>();
-
+	
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "snack", fetch = FetchType.LAZY)
 	private List<SnackMaterial> snackMaterials = new ArrayList<>();
 
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "snack", fetch = FetchType.LAZY)
 	private List<SnackTarget> snackTargets = new ArrayList<>();
 }

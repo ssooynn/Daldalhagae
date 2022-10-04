@@ -26,11 +26,11 @@ public class SnackTarget {
 	@Column(name = "SNACK_TARGET_NO")
 	private int snackTargetNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="SNACK_SNO")
 	private Snack snack;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="TARGET_NO")
 	private Target target;
 }

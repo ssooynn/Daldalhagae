@@ -26,11 +26,11 @@ public class FeedMaterial {
 	@Column(name="FEED_MATERIAL_NO")
 	private int feedMaterialNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="FEED_SNO")
 	private Feed feed;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="MATERIAL_NO")
 	private Material material;
 }
