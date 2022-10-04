@@ -18,8 +18,9 @@ const MoveOtherOpions = styled.div`
   padding: 10px 0 0 0;
   border-radius: 5px;
   width:35%;
+  height: 400px;
   &:hover{  
-    background-color : rgba(0, 0, 0, 0.4);
+    background-color : rgba(0, 0, 0, 0.3);
   }
 `
 const MoveDetailButton1 = styled.div`
