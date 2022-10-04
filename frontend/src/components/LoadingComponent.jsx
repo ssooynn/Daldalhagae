@@ -21,7 +21,6 @@ const LoadingComponent = () => {
         <div class="paw"><svg class="icon"><use xlinkHref='#paw'/></svg></div>
         <div class="paw"><svg class="icon"><use xlinkHref='#paw'/></svg></div>
     </div>
-    <div className='loading'>LOADING...</div>
     </div>
   )
 }
