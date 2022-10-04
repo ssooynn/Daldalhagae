@@ -7,6 +7,7 @@
   border: solid 4px;
   border-color: rgba(204, 170, 144, 0.3);
   box-sizing: border-box;
+  position: relative;
 }
 .card:now(:last-of-type) {
   margin-right: 15px;
@@ -23,11 +24,17 @@
   cursor: pointer;
   border: solid 4px;
   border-color: rgba(204, 170, 144, 1);
+  box-sizing: border-box;
+  position: relative;
 }
 .moreReview {
-  font-size: 12px;
+  font-size: 16px;
   color: gray;
   text-align: end;
+  margin: 15px 0 0 0;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 .moreReview:hover {
   font-weight: bold;

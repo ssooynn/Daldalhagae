@@ -64,9 +64,10 @@ object-fit: cover;
 
 const PaymentList = () => {
   const location = useLocation()
-  const infos = location.state  // name, intro, components1, price, components2, pets, pet
+  const infos = location.state.infos
+  const pickedProducts = location.state.pickedProducts
+  // console.log('info', infos)
   const Navigate = useNavigate();
-
   const [userInfo, setUserInfo] = useState([])
   useEffect(() => {
     const usersSno = 'udZ0a32z4Ur2LvGlmEXsN'
@@ -86,41 +87,105 @@ const PaymentList = () => {
         console.log(err)
       })
   }, [])
-
-  let totalPrice = infos.map((info)=>{return Number(info[3])}).reduce((a, b)=>a+b, 0)
-
+  // console.log('user', userInfo)
+  const [totalPrice, setTotalPrice] = useState(infos.map((info)=>{return Number(info[3])}).reduce((a, b)=>a+b, 0))
+  useEffect(()=>{
+    infos.map((info, idx)=>{
+      if (info[0] === '나만의 구독 서비스') {
+        setTotalPrice(totalPrice + pickedProducts[idx][0].length * 12900 + pickedProducts[idx][1].length * 2900 + pickedProducts[idx][2].length * 2900)
+      }
+    })
+  }, [])
+  
   const REDIRECT_URL = "http://localhost:3000/paymentCheck";
 
-  function Productinfos(props) {
-    const product = props.product
-    return <div
-      style={{
-        display: 'flex',
-        textAlign: 'center'
-      }}>
-      <p style={{width: '30%'}}>사료</p>
-      <p style={{width: '40%'}}>{product.name}</p>
-      <p style={{width: '30%'}}>{product.materials}</p>
-    </div>
+  const subscriptionHistorys = []
+  const [subscriptionNo, setSubcriptionNo] = useState(0)
+  const subscriptionHistoryNo = 0
+  const petSno = 'pfIXrHnfzcKy7zGF1Ha9T'
+  useEffect(()=>{
+    infos.map((info, idx)=>{
+      switch (info[0]) {
+        case 'Basic Package':
+          setSubcriptionNo(1)
+          break
+        case 'Play Package':
+          setSubcriptionNo(2)
+          break
+        case 'All In One Package':
+          setSubcriptionNo(3)
+          break
+        case 'DalDal Package':
+          setSubcriptionNo(4)
+          break
+        case 'Toy Package':
+          setSubcriptionNo(5)
+          break
+        case 'Light Package':
+          setSubcriptionNo(6)
+          break
+        default:
+          setSubcriptionNo(7)
+          break
+      }
+      subscriptionHistorys.push({
+        subscriptionHistoryNo: subscriptionHistoryNo,
+        perSno: petSno,
+        subscription: {
+          subscriptionNo: subscriptionNo,
+          name: info[0],
+          description: info[1],
+          price: totalPrice
+        },
+        feeds: pickedProducts[idx][0],
+        snacks: pickedProducts[idx][1],
+        toys: pickedProducts[idx][2],
+      })
+    })
+  }, [])
+
+  const finalData = {
+    paymentFlag : "false", //  false=첫결재
+    usersSno : "udZ0a32z4Ur2LvGlmEXsN",
+    subscriptionHistorys : subscriptionHistorys
   }
 
-  function Purchase() {
+  function Purchase(e, packageName) {
+    e.preventDefault()
     const { IMP } = window;
     IMP.init("imp10157701");
     const data = {
       pg: "kakaopay",
       merchant_uid: userInfo.paymentNo, // 상점에서 관리하는 주문 번호
-      name: "주문명: " + "나만의 구독 서비스",
+      name: `주문명: ${packageName}`,
       amount: totalPrice,
       customer_uid: "TCSUBSCRIP",
-      // buyer_email: "dldkgus98@naver.com",
-      buyer_name: "이아현",
-      buyer_tel: "010-2872-1882",
-      buyer_addr: "경기도 남양주시 진접읍 금강로 1553-26 106동 1305호",
+      buyer_name: userInfo.name,
+      buyer_tel: userInfo.phone,
+      buyer_addr: userInfo.address,
       buyer_postcode: "",
       m_redirect_url: REDIRECT_URL,
     };
     IMP.request_pay(data, callback);
+
+    axios({
+      method: 'post',
+      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/payment`,
+      headers: {
+        'Authorization': `Bearer a.a.a`
+      },
+      data: finalData
+    })
+      .then((res)=>{
+        console.log(res.data)
+        Navigate("/paymentCheck", {state: {
+          infos: infos,
+          pickedProducts: pickedProducts
+        }})
+      })
+      .catch((err)=>{
+        console.log(err.response)
+      })
   }
 
   function callback(response) {
@@ -137,7 +202,7 @@ const PaymentList = () => {
     if (success) {
       //결제 성공
       alert("결제 성공");
-      Navigate("/paymentCheck", {state: infos})
+      // Navigate("/paymentCheck", {state: infos})
     } else {
       alert(`결제 실패 : ${error_msg}`);
     }
@@ -148,6 +213,26 @@ const PaymentList = () => {
   let month = today.getMonth() + 1;  // 월
   let date = today.getDate();  // 날짜
   
+  function Productinfos(props) {
+    const products = props.products
+    return <div
+      style={{
+        display: 'flex',
+        textAlign: 'center',
+        flexDirection: 'column'
+      }}>
+      {products.map((product, idx)=>{
+        return <div style={{display: 'flex'}}>
+          {props.i === 0 ? <p style={{width: '30%'}}>사료</p> :
+          (props.i === 1 ? <p style={{width: '30%'}}>간식</p> :
+          <p style={{width: '30%'}}>장난감</p>)}
+          <p style={{width: '40%'}}>{product.name}</p>
+          <p style={{width: '30%'}}>{product.materials}</p>
+        </div>
+      })}
+    </div>
+  }
+
   return (
     <div
       style={{
@@ -196,11 +281,7 @@ const PaymentList = () => {
                 padding: '10px 0 20px 0',
                 position: 'relative',
               }}>
-              <div  // 상품 정보
-                style={{
-                  margin: '0 20px 0 20px',
-                  paddingTop: '20px'
-                }}>
+              <div style={{margin: '0 20px 0 20px',paddingTop: '20px'}}>
                 <div  // 표 제목
                   style={{
                     display: 'flex',
@@ -225,8 +306,8 @@ const PaymentList = () => {
                     }}>주 원료 / 소재</p>
                 </div>
                 <hr style={{ backgroundColor: '#F3CEB2', height: '0.1px' }} />
-                {info[7].map((product, idx)=>{
-                  return <Productinfos product={product} />
+                {pickedProducts[idx].map((products, idx)=>{
+                  return <Productinfos products={products} i={idx} />
                 })}
               </div>
             </div>
@@ -287,7 +368,7 @@ const PaymentList = () => {
           </div>
         </div>
       </div>
-      <StyledButton onClick={Purchase} SmallWhite style={{width: '250px', margin: '100px 0 100px 0', fontWeight: '700'}}>결제하기</StyledButton>
+      <StyledButton onClick={(e)=>Purchase(e)} SmallWhite style={{width: '250px', margin: '100px 0 100px 0', fontWeight: '700'}}>결제하기</StyledButton>
       <Footer />
     </div>
   )
