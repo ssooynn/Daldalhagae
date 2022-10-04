@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecommendReq {
-	private List<RecoReq> recoReq;
+	private RecoReq recoReq;
 }
