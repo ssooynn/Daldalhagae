@@ -98,10 +98,22 @@ select * from PURCHASE where SUBSCRIBTION_HISTORY_NO = 13;
 select * from ITEM_REVIEW;
 
 select * from PET where USERS_SNO = 'u6bszQdUpHgSwAYoIxTSj';
-select * from SUBSCRIBTION_HISTORY where USERS_SNO = 'u6bszQdUpHgSwAYoIxTSj';
+select * from SUBSCRIBTION_HISTORY where USERS_SNO = 'udZ0a32z4Ur2LvGlmEXsN';
 select * from PURCHASE where SUBSCRIBTION_HISTORY_NO=249;
 select * from USERS_LOG where USERS_SNO= 'u6ji1Sw7NEoQEEc0QafCZ';
 update USERS_LOG set USERS_DELETED_AT =curdate() where USERS_SNO='u6ji1Sw7NEoQEEc0QafCZ';
+select * from USERS where USERS_SNO ='uWwBySFc32xGoUpvCLJG1';
+
+select i.ITEM_REVIEW_NO as itemReviewNo, i.USERS_SNO as usersSno, i.PET_SNO as petSno, 
+    		+ i.ITEM_SNO as itemSno, i.RATE as rate, i.CONTENT as content, i.IMAGE as image, 
+    		+ i.CREATED_AT as date, u.NAME as usersName, p.NAME as petName from 
+(select * from ITEM_REVIEW  where ITEM_SNO = "f05C8ZXZjHZrZaeUB8eYN" limit 2) i
+join USERS u on u.USERS_SNO = i.USERS_SNO 
+join PET p on p.PET_SNO = i.PET_SNO;
+
+
+select s.* from ITEM_REVIEW s;
+
 
 select * from PURCHASE;
 select * from USERS;

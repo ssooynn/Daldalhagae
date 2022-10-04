@@ -26,11 +26,11 @@ public class SnackEffect {
 	@Column(name = "SNACK_EFFECT_NO")
 	private int snackEffectNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="SNACK_SNO")
 	private Snack snack;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="EFFECT_NO")
 	private Effect effect;
 }

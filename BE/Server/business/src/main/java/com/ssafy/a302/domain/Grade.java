@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +33,8 @@ public class Grade {
 	@Column(name="NAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "grade",fetch = FetchType.LAZY)
+	@BatchSize(size=30)
+	@OneToMany(mappedBy = "grade")
 	List<Feed> feeds = new ArrayList<>();
 	
 }

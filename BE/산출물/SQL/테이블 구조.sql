@@ -515,6 +515,8 @@ alter table SUBSCRIBTION auto_increment=100;
 alter table `ITEM_REVIEW` modify `PURCHASE_NO` INT UNSIGNED;
 SET FOREIGN_KEY_CHECKS =1;
 
+CREATE INDEX idx_itemSno ON ITEM_REVIEW ( ITEM_SNO );
+
 insert into SUBSCRIBTION(SUBSCRIBTION_NO, NAME, DESCRIBTION, PRICE) values
 (1,"Basic Package","사료 1",30000),
 (2,"Play Package","간식 3, 장난감 2",70000),

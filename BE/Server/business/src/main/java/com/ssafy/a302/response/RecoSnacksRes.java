@@ -42,12 +42,12 @@ public class RecoSnacksRes {
 		}
 		
 		for(SnackTarget st : snack.getSnackTargets()) {
-			this.materials.add(st.getTarget().getName());
+			this.targets.add(st.getTarget().getName());
 		}
 		
-		List<ItemReview> itemList = itemReviewRep.findTop2ByItemSno(this.sno);
+		List<RecoReviewRes> itemList = itemReviewRep.findTop2ByItemSno(this.sno);
 		this.reviewNum = itemReviewRep.countByItemSno(this.sno);
-		for(ItemReview ir : itemList) {
+		for(RecoReviewRes ir : itemList) {
 			this.itemReviewResList.add(new ItemReviewRes(ir, imagePath, this.name));
 		}
 	}
