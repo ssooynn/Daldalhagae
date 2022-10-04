@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Toggle from '../components/Toggle'
 import { StyledButton } from '../components/CommonComponent';
+import CarouselPickedProducts from '../components/CarouselPickedProducts';
 import Footer from '../components/Footer';
 
 const RecommendList = (s) => {
@@ -17,61 +18,41 @@ const RecommendList = (s) => {
     setPickedProducts(copyPickedProducts)
   }, [])
   for (let i = 0; i < infos.length; i++) {
-    showToggle.push(<Toggle info={infos[i]} index={i} products={pickedProducts} setPickedProducts={setPickedProducts} />)
+    showToggle.push(<Toggle info={infos[i]} index={i} products={pickedProducts} setPickedProducts={setPickedProducts} packageNo={i} />)
   }
   const Navigate = useNavigate();
   function GoPaymentList() {
     console.log(pickedProducts)
     let flag = false
     const checkEmptyBag = []
-    // pickedProducts.map((pickedProduct, idx)=>{  // 빈 곳이 있는지 검사
-    //   pickedProduct.map((products, jdx)=>{
-    //     if (products.length === 0) {
-    //       flag = true
-    //       checkEmptyBag.push([idx, jdx])
-    //     }
-    //   })
-    // })
-    // if (flag) {
-    //   if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
-    //     Navigate("/paymentList", {state: {
-    //       pickedProducts: pickedProducts,
-    //       checkEmptyBag: checkEmptyBag,
-    //       flag: flag,
-    //     }})
-    //   } else {}
-    // } else {
-    //   Navigate("/paymentList", {state: {
-    //     pickedProducts: pickedProducts,
-    //     checkEmptyBag: checkEmptyBag,
-    //     flag: flag,
-    //   }})
-    // }
+    pickedProducts.map((pickedProduct, idx)=>{  // 빈 곳이 있는지 검사
+      pickedProduct.map((products, jdx)=>{
+        if (products.length === 0) {
+          flag = true
+          checkEmptyBag.push([idx, jdx])
+        }
+      })
+    })
+    console.log(checkEmptyBag)
+    if (flag) {
+      if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
+        Navigate("/paymentList", {state: {
+          pickedProducts: pickedProducts,
+          infos: infos
+        }})
+      } else {}
+    } else {
+      Navigate("/paymentList", {state: {
+        pickedProducts: pickedProducts,
+        infos: infos
+      }})
+    }
   }
   
   function PickedProducts(props) {
     const types = props.types
-    return <div style={{display:'flex'}}>
-      {types.map((type, jdx)=>{
-        return type.map((product, jdx)=>{
-          return <div style={{
-            display:'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            margin: 'auto 5px',
-            backgroundColor: 'white',
-            borderRadius: '10px',
-            padding: '10px',
-            height: '170px',
-            width: '170px',
-            boxShadow: '1px 1px 1px 1px #dab8b8',
-            height: '100%'
-            }}>
-            <img src={product.image} width='150px' height='150px' alt="" />
-            <p style={{margin: '5px auto'}}>{product.name}</p>
-          </div>
-        })
-      })}
+    return <div>
+      <CarouselPickedProducts types={types} />
     </div>
   }
   function Packages() {

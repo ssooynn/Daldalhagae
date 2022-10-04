@@ -45,7 +45,7 @@ const SetCustom = () => {
   const intro = `사료: ${feedNum}, 간식: ${snackNum}, 장난감: ${toyNum}`
   const components1 = ['', '', '',]
   const components2 = [feedNum, snackNum, toyNum]
-  const price = '50000'
+  const price = '0'
   const [pets, setPets] = useState([])
   const [feeds, setFeeds] = useState([])
   const [snacks, setSnacks] = useState([])

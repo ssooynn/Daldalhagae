@@ -63,7 +63,8 @@ object-fit: cover;
 
 const PaymentCheck = () => {
   const location = useLocation()
-  const infos = location.state  // name, intro, components1, price, components2, pets, pet
+  const infos = location.state.infos  // name, intro, components1, price, components2, pets, pet
+  const pickedProducts = location.state.pickedProducts
   console.log('결제확인', infos)
 
   const Navigate = useNavigate();
@@ -109,7 +110,7 @@ const PaymentCheck = () => {
                 <p>{info[1]}</p>
               </div>
             </PackageBox>
-            <PaymentCarousel infos={infos} />
+            <PaymentCarousel info={info} pickedProducts={pickedProducts[idx]} />
           </ div>
         })}
       </div>
