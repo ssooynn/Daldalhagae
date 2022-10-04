@@ -1,7 +1,4 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import pandas as pd
 from surprise import Dataset, SVD,Reader,KNNBasic
 from surprise.model_selection import train_test_split
@@ -11,14 +8,18 @@ import pickle
 # Surprise : 리뷰 평점기반 SVD,knn
 
 def train(algorithm:str,type:str):
+    # csv encoding
+    encoding = 'CP949'
+    if type=='toy':
+        encoding='utf-8'
     # set type
     print("[training started] algo:"+algorithm+" item_type:"+type)
 
     # data loading
-    df = pd.DataFrame(pd.read_csv(ROOT_DIR+'\\data\\' + type + '_review_csv.csv', encoding='CP949')).filter(items=['pet_sno', 'item_sno', 'rate'])
-    df_new = pd.DataFrame(pd.read_csv(ROOT_DIR+'\\data\\' + type + '_new_review.csv', encoding='CP949')).filter(items=['pet_sno', 'item_sno', 'rate'])
-    items = pd.read_csv(ROOT_DIR+'\\data\\feed_csv.csv', encoding='CP949')
-    pets = pd.read_csv(ROOT_DIR+'\\data\\feed_review_csv.csv', encoding='CP949')
+    df = pd.DataFrame(pd.read_csv(ROOT_DIR+'/data/' + type + '_review_csv.csv', encoding=encoding)).filter(items=['pet_sno', 'item_sno', 'rate'])
+    df_new = pd.DataFrame(pd.read_csv(ROOT_DIR+'/data/' + type + '_new_review.csv', encoding=encoding)).filter(items=['pet_sno', 'item_sno', 'rate'])
+    items = pd.read_csv(ROOT_DIR+'/data/' + type + '_csv.csv', encoding=encoding)
+    pets = pd.read_csv(ROOT_DIR+'/data/' + type + '_review_csv.csv', encoding=encoding)
     df_concat = pd.concat([df,df_new])
 
     # active pet 리스트
@@ -40,7 +41,7 @@ def train(algorithm:str,type:str):
 
     #펫, 아이템 데이터
     result = {}
-    # train
+    # train : active user에 대해서만 수행.
     for pet_id in pet_set:
         # 평가완료 데이터
         unrated = get_unrated(items,pets,pet_id)
@@ -57,7 +58,7 @@ def train(algorithm:str,type:str):
         result[pet_id]=top_items
 
     # pickle 저장.
-    with open(ROOT_DIR+'\\result\\'+algorithm+'_'+type+'.pkl', 'wb') as f:
+    with open(ROOT_DIR+'/result/'+algorithm+'_'+type+'.pkl', 'wb') as f:
         pickle.dump(result, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     print("[completed train] algo:"+algorithm+" item_type:"+type)
@@ -65,6 +66,7 @@ def get_unrated(items,pets,petSno):
     rated_items = pets[pets.pet_sno == petSno]['item_sno'].tolist()
     total_items = items['item_sno'].tolist()
     unrated_items = [item for item in total_items if item not in rated_items]
+    # print("pet_sno 의 unrated items:"+len(unrated_items))
     return unrated_items
 
     # print(petId + " 를 위한 사료추천 by SVD")

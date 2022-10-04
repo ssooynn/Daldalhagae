@@ -96,3 +96,7 @@ async def train_data(background_tasks: BackgroundTasks,db: Session = Depends(get
 async def recommendation(pet_no: str):
     rec = recommendations.get_recommendations(pet_no)
     return rec
+@app.get("/api/item/tfidf/{item_no}")
+async def item_ifidf(item_no: str):
+    rec = recommendations.get_tdidf(item_no)
+    return rec

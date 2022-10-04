@@ -1,7 +1,7 @@
 import pickle
 import pandas as pd
 from algorithm import SVD
-from algorithm import TDIDF
+from algorithm import TFIDF
 
 
 def save_new_reviews(db_review):
@@ -25,23 +25,24 @@ def save_new_reviews(db_review):
     for i in range(3):
         name = ['feed', 'snack', 'toy']
         df = pd.DataFrame(data[i])
-        df.to_csv('data\\' + name[i] + '_new_review.csv')
+        df.to_csv('data/' + name[i] + '_new_review.csv')
     return
 
 
 def train_all():
-    # algo=['SVD','KNN','TDIDF']
-    algos='SVD'
-    # types=['feed','snack','toy']
-    types = ['feed', 'snack']
-    for type in types:
-        SVD.train(algos,type)
+    algos=['SVD','KNN']
+    # algos='SVD'
+    types=['feed','snack','toy']
+    # types = ['feed', 'snack']
+    for algo in algos:
+        for type in types:
+            SVD.train(algo,type)
     return
 
 
-def train(algo, type, new_reviews):
+def train(algo, type):
     if algo == 'SVD':
         SVD.train(algo, type)
     elif algo == 'TDIDF':
-        TDIDF(algo, type)
+        TFIDF(algo, type)
     return
