@@ -46,12 +46,11 @@ public class RecommendServiceImpl implements RecommendService{
 		List<String> snacks = (List<String>) responseEntity.getBody().get("snacks");
 		List<String> toys = (List<String>) responseEntity.getBody().get("toys");
 		
-		
 		List<Feed> feedList = new ArrayList<Feed>();
 		List<Snack> snackList = new ArrayList<Snack>();
 		List<Toy> toyList = new ArrayList<Toy>();
 
-		if(feedList.size()>0) {
+		if(feeds.size()>0) {
 			feedList =feedRep.findByFeedSnoInFetch(feeds);
 		}
 	
