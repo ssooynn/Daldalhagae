@@ -3,9 +3,9 @@ from config import ROOT_DIR
 
 # 데이터 로드
 # 딕셔너리형태로 저장되어있음. key:petSno, value:list
-with open(ROOT_DIR+'\\result\\SVD_feed.pkl', 'rb') as f:
+with open(ROOT_DIR+'/result/SVD_feed.pkl', 'rb') as f:
     feeds = pickle.load(f)
-with open(ROOT_DIR+'\\result\\SVD_snack.pkl', 'rb') as f:
+with open(ROOT_DIR+'/result/SVD_snack.pkl', 'rb') as f:
     snacks = pickle.load(f)
 # with open('..\\result\\toys_SVD.pkl', 'rb') as f:
 #     toys = pickle.load(f)
@@ -27,7 +27,7 @@ def get_tdidf(item_no:str):
         item = 'snack'
     else:
         item = 'toy'
-    with open(ROOT_DIR + '\\result\\TFIDF_'+item+'.pkl', 'rb') as f:
+    with open(ROOT_DIR + '/result/TFIDF_'+item+'.pkl', 'rb') as f:
         recommendations = pickle.load(f)
     return recommendations[item_no]
 
