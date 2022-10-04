@@ -28,10 +28,9 @@ public class ItemReview {
 	@Column(name = "IMAGE")
 	private String image;
 	@Column(name = "CREATED_AT")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private LocalDate date;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "USERS_SNO")
 	private Users users;
 	
@@ -39,7 +38,7 @@ public class ItemReview {
 	@JoinColumn(name = "PURCHASE_NO")
 	private Purchase purchase;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
 

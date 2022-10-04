@@ -26,11 +26,11 @@ public class FeedEffect {
 	@Column(name = "FEED_EFFECT_NO")
 	private int feedEffectNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="FEED_SNO")
 	private Feed feed;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="EFFECT_NO")
 	private Effect effect;
 }

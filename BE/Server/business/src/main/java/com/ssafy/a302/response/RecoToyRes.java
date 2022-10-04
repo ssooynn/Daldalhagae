@@ -26,9 +26,9 @@ public class RecoToyRes {
 		this.effects =toy.getEffect();
 		this.itemReviewResList = new ArrayList<ItemReviewRes>();
 		
-		List<ItemReview> itemList = itemReviewRep.findTop2ByItemSno(this.sno);
+		List<RecoReviewRes> itemList = itemReviewRep.findTop2ByItemSno(this.sno);
 		this.reviewNum = itemReviewRep.countByItemSno(this.sno);
-		for(ItemReview ir : itemList) {
+		for(RecoReviewRes ir : itemList) {
 			this.itemReviewResList.add(new ItemReviewRes(ir, imagePath, this.name));
 		}
 	}
