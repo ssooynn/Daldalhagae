@@ -50,7 +50,25 @@ public class ItemReviewRes {
 		this.petSno = itemReview.getPet().getPetSno();
 		this.petName = itemReview.getPet().getName();
 	}
+	
+	public ItemReviewRes(RecoReviewRes itemReview, String imagePath, String itemName ) {
+		super();
+		this.itemSno = itemReview.getItemSno();
+		this.itemReviewNo = itemReview.getItemReviewNo();
+		this.itemName = itemName;
+		this.rate = itemReview.getRate();
+		this.content = itemReview.getContent();
+		if(itemReview.getImage() !=null && "".equals(itemReview.getImage())) {
+			this.image = imagePath+itemReview.getImage();
+		}
+		this.date = itemReview.getDate();
+		this.usersSno = itemReview.getUsersSno();
+		this.usersName = itemReview.getUsersName();
+		this.petSno = itemReview.getPetSno();
+		this.petName = itemReview.getPetName();
+	}
 
+	
     
 
 }

@@ -86,8 +86,11 @@ public class RecommendServiceImpl implements RecommendService{
 		toys.add("T5h9xz6FW2puwZcT549c1");
 		toys.add("T5iUs81D0IsAzs6lkpkHa");
 		
-		List<Feed> feedList =feedRep.findByFeedSnoIn(feeds);
-		List<Snack> snackList =snackRep.findBySnackSnoIn(snacks);
+		long feedStart = System.currentTimeMillis();
+		List<Feed> feedList =feedRep.findByFeedSnoInFetch(feeds);
+		long feedend = System.currentTimeMillis();
+		log.info("---------------------------------- 사료 찾는 시간 : {}", feedend-feedStart);
+		List<Snack> snackList =snackRep.findBySnackSnoInFetch(snacks);
 		List<Toy> toyList =toyRep.findByToySnoIn(toys);
 		Payment payment = new Payment();
 		paymentRep.save(payment);
@@ -95,6 +98,7 @@ public class RecommendServiceImpl implements RecommendService{
 		
 		RecommendRes recommendRes = new RecommendRes(feedList, snackList, toyList, filePath.getReviewImageLoadPath(), itemReviewRep, paymentNo);
 		return recommendRes;
+//		return null;
 	}
 	
 	/* fast api에서 값 가져오기 */

@@ -11,7 +11,9 @@ import com.ssafy.a302.repository.ItemReviewRepository;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
 @NoArgsConstructor
 public class RecoFeedRes {
@@ -29,6 +31,7 @@ public class RecoFeedRes {
 	
 	public RecoFeedRes(Feed feed, String imagePath, ItemReviewRepository itemReviewRep) {
 		super();
+		
 		this.sno = feed.getFeedSno();
 		this.name = feed.getName();
 		this.image = feed.getImage();
@@ -39,7 +42,8 @@ public class RecoFeedRes {
 		this.targets = new ArrayList<String>();
 		this.itemReviewResList = new ArrayList<ItemReviewRes>();
 		
-		
+//		log.info("----------8888888888888888888888888888888888888888888888888");
+//		long feedStart = System.currentTimeMillis();
 		for(FeedMaterial fm : feed.getFeedMaterials()) {
 			this.materials.add(fm.getMaterial().getName());
 		}
@@ -49,14 +53,30 @@ public class RecoFeedRes {
 		}
 		
 		for(FeedTarget ft : feed.getFeedTargets()) {
-			this.materials.add(ft.getTarget().getName());
+			this.targets.add(ft.getTarget().getName());
 		}
 		
-		List<ItemReview> itemList = itemReviewRep.findTop2ByItemSno(this.sno);
+//		long feedend = System.currentTimeMillis();
+//		log.info("---------------------------------- 사료 정보 주입 걸린시간 : {}", feedend-feedStart);
+		
+		
+//		feedStart = System.currentTimeMillis();
+		List<RecoReviewRes> itemList = itemReviewRep.findTop2ByItemSno(this.sno);
+//		feedend = System.currentTimeMillis();
+//		log.info("---------------------------------- 리뷰 2개 가져오는시간 : {}", feedend-feedStart);
+
+//		feedStart = System.currentTimeMillis();
 		this.reviewNum = itemReviewRep.countByItemSno(this.sno);
-		for(ItemReview ir : itemList) {
+//		feedend = System.currentTimeMillis();
+//		log.info("---------------------------------- 리뷰 갯수 시간 : {}", feedend-feedStart);
+
+		
+//		feedStart = System.currentTimeMillis();
+		for(RecoReviewRes ir : itemList) {
 			this.itemReviewResList.add(new ItemReviewRes(ir, imagePath, this.name));
 		}
+//		feedend = System.currentTimeMillis();
+//		log.info("---------------------------------- 리뷰 주입 시간 : {}", feedend-feedStart);
 		
 		
 	}

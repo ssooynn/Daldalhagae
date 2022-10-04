@@ -14,5 +14,9 @@ public interface FeedRepository extends JpaRepository<Feed,String> {
 	@Query(value = "SELECT * FROM FEED order by RAND() limit 10",nativeQuery = true)
 	List<Feed> findTop10Rand();
 	List<Feed> findByFeedSnoIn(@Param("list") List<String> list);
+	
+	@Query(value="SELECT distinct f from Feed f join fetch f.feedEffects "
+			+ "where f.feedSno IN (:list)")
+	List<Feed> findByFeedSnoInFetch(@Param("list") List<String> list);
 	Feed findTop1ByFeedSno(@Param("feedSno") String feedSno);
 }
