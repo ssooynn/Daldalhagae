@@ -15,6 +15,7 @@ import MypageRoutingTitle from '../../components/Mypage/MypageRoutingTitle'
 import MypageSubscriptionDetail from './MypageSubscriptionDetail'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
+import Footer from '../../components/Footer';
 
 import Swal from 'sweetalert2'
 import { mypageMain } from '../../api/mypageUser'
@@ -179,7 +180,8 @@ const Mypage = () => {
           </Routes>  
         </div>       
         </div>
-        <div style={{height:'400px'}}></div>
+        <div style={{height:'200px'}}></div>
+        <Footer></Footer>
       </div>
 
   )
