@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0241cfb4-dc86-42b2-97b8-3d607b3df36d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/domain/FeedTarget.java" beforeDir="false" afterPath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/domain/FeedTarget.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/recommand.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recommand.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithm/SVD.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/SVD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithm/TDIDF.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/TFIDF.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithm/tunning.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/tunning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recommendations.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommendations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/SVD_feed.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/result/SVD_feed.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +105,7 @@
       <workItem from="1664712921784" duration="19567000" />
       <workItem from="1664787241413" duration="1117000" />
       <workItem from="1664788384029" duration="1562000" />
-      <workItem from="1664908372809" duration="277000" />
+      <workItem from="1664908372809" duration="1015000" />
     </task>
     <servers />
   </component>
