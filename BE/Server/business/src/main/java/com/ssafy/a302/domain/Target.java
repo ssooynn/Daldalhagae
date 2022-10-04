@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,12 +33,15 @@ public class Target {
 	@Column(name = "NAME")
 	private String name;
 	
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
 	private List<FeedTarget> feedTargets = new ArrayList<>();
 	
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
 	private List<Pet> pets = new ArrayList<>();
 	
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "target", fetch = FetchType.LAZY)
 	private List<SnackTarget> snackTargets = new ArrayList<>();
 	
