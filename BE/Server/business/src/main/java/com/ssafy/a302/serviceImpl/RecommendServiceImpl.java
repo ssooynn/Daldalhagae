@@ -46,12 +46,23 @@ public class RecommendServiceImpl implements RecommendService{
 		List<String> snacks = (List<String>) responseEntity.getBody().get("snacks");
 		List<String> toys = (List<String>) responseEntity.getBody().get("toys");
 		
-		long feedStart = System.currentTimeMillis();
-		List<Feed> feedList =feedRep.findByFeedSnoInFetch(feeds);
-		long feedend = System.currentTimeMillis();
-		log.info("---------------------------------- 사료 찾는 시간 : {}", feedend-feedStart);
-		List<Snack> snackList =snackRep.findBySnackSnoInFetch(snacks);
-		List<Toy> toyList =toyRep.findByToySnoIn(toys);
+		
+		List<Feed> feedList = new ArrayList<Feed>();
+		List<Snack> snackList = new ArrayList<Snack>();
+		List<Toy> toyList = new ArrayList<Toy>();
+
+		if(feedList.size()>0) {
+			feedList =feedRep.findByFeedSnoInFetch(feeds);
+		}
+	
+		if(snacks.size()>0) {
+			snackList =snackRep.findBySnackSnoInFetch(snacks);
+		}
+		
+		if(toys.size()>0) {
+			toyList =toyRep.findByToySnoIn(toys);
+		}
+		
 		Payment payment = new Payment();
 		paymentRep.save(payment);
 		int paymentNo = payment.getPaymentNo();
