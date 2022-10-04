@@ -30,17 +30,17 @@ def get_db(request: Request):
     return request.state.db
 
 
-@app.get("/")
+@app.get("/recommend-api")
 async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/hello/{name}")
+@app.get("/recommend-api/hello/{name}")
 async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 
 
-@app.get("/get_review")
+@app.get("/recommend-api/get_review")
 async def get_review(db: Session = Depends(get_db)):
     db_review = crud.get_reviews(db)
     if db_review is None:
@@ -48,7 +48,7 @@ async def get_review(db: Session = Depends(get_db)):
     return db_review
 
 
-@app.get("/get_review/{item_review_no}")
+@app.get("/recommend-api/get_review/{item_review_no}")
 async def get_review_by_id(item_review_no: int, db: Session = Depends(get_db)):
     db_review = crud.get_reviews_by_id(db, item_review_no)
     if db_review is None:
@@ -57,7 +57,7 @@ async def get_review_by_id(item_review_no: int, db: Session = Depends(get_db)):
 
 
 
-@app.post("/to_csv")
+@app.post("/recommend-api/to_csv")
 async def to_csv(reviews: schemas.ReviewList, db: Session = Depends(get_db)):
     # db_review = crud.get_reviews(db, item_review_no=item_review_no)'
     data = {'ITEM_REVIEW_NO': [],
@@ -81,7 +81,7 @@ async def to_csv(reviews: schemas.ReviewList, db: Session = Depends(get_db)):
     df.to_csv('ItemCsvFile.csv')
     return
 #
-@app.get("/train")
+@app.get("/recommend-api/train")
 # 백그라운드 태스크로 처리.
 async def train_data(background_tasks: BackgroundTasks,db: Session = Depends(get_db)):
     # 새로운 리뷰들  db에서 꺼내와 csv로 저장.
@@ -92,11 +92,11 @@ async def train_data(background_tasks: BackgroundTasks,db: Session = Depends(get
     return {"saved new reviews, now i'm training.."}
 
 # 추천리스트
-@app.get("/api/item/{pet_no}")
+@app.get("/recommend-api/item/{pet_no}")
 async def recommendation(pet_no: str):
     rec = recommendations.get_recommendations(pet_no)
     return rec
-@app.get("/api/item/tfidf/{item_no}")
+@app.get("/recommend-api/item/tfidf/{item_no}")
 async def item_ifidf(item_no: str):
     rec = recommendations.get_tdidf(item_no)
     return rec
