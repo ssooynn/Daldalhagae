@@ -70,6 +70,7 @@ cursor: pointer;
 `
 
 const Toggle = (props) => {
+  console.log('toggle', props)
   const [toggleOpen, setToggleOpen] = useState(false)
   const showToggle = () => {setToggleOpen(true)}
   const closeToggle = () => {setToggleOpen(false)}
@@ -101,8 +102,14 @@ const Toggle = (props) => {
   const [feeds, setFeeds] = useState([])
   const [snacks, setSnacks] = useState([])
   const [toys, setToys] = useState([])
-  const petSno = 'pfIXrHnfzcKy7zGF1Ha9T'
+  const petSno = props.info[7]
   let subscriptionNo = 0
+  let historyNo = 0
+  let recoFlag = false
+  if (props.flag) {
+    recoFlag = true
+    historyNo = props.subscriptionHistoryNo
+  }
   useEffect(()=>{
     switch (props.info[0]) {  // 더미 데이터
       case 'Basic Package': // 사료 3
@@ -200,10 +207,10 @@ const Toggle = (props) => {
         'Authorization': `Bearer a.a.a`
       },
       data: {
-        recoFlag: false,
+        recoFlag: recoFlag,
         petSno: petSno,
         subscriptionNo: subscriptionNo,
-        historyNo: 0
+        historyNo: historyNo
       }
     })
     .then((res)=>{
