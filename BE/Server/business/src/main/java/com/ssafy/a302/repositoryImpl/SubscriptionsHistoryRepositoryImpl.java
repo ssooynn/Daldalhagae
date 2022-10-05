@@ -16,6 +16,4 @@ public class SubscriptionsHistoryRepositoryImpl implements SubscriptionsHistoryC
 	public List<SubscriptionsHistoryCustom> findByUserInfoCustom(Users users) {
 		return null;
 	}
-	
-	
 }

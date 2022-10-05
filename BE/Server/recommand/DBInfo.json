@@ -4,6 +4,6 @@
     "password": "a302ef1234",
     "host": "3.38.115.242" ,
     "port": 3306,
-    "database": "test"
+    "database": "business"
   }
 }

@@ -18,6 +18,7 @@ def get_reviews(db: Session, skip: int = 0, limit: int = 1000):
 def get_new_reviews(db: Session):
     return db.query(models.ItemReview).filter(models.ItemReview.PURCHASE_NO != 1).all()
 
+
 #
 # def create_user(db: Session, user: schemas.UserCreate):
 #     fake_hashed_password = user.password + "notreallyhashed"

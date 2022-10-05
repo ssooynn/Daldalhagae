@@ -1,9 +1,12 @@
 package com.ssafy.a302.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.a302.domain.*;
+import com.ssafy.a302.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,15 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.a302.common.FilePath;
-import com.ssafy.a302.domain.Feed;
-import com.ssafy.a302.domain.Payment;
-import com.ssafy.a302.domain.Snack;
-import com.ssafy.a302.domain.Toy;
-import com.ssafy.a302.repository.FeedRepository;
-import com.ssafy.a302.repository.ItemReviewRepository;
-import com.ssafy.a302.repository.PaymentRepository;
-import com.ssafy.a302.repository.SnackRepository;
-import com.ssafy.a302.repository.ToyRepository;
 import com.ssafy.a302.request.RecoReq;
 import com.ssafy.a302.response.RecommendRes;
 import com.ssafy.a302.service.RecommendService;
@@ -34,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendServiceImpl implements RecommendService{
 	private final RestTemplate restTemplate;
 	private final FeedRepository feedRep;
+	private final PetRepository petRep;
 	private final SnackRepository snackRep;
 	private final ToyRepository toyRep;
 	private final ItemReviewRepository itemReviewRep;
@@ -74,6 +69,15 @@ public class RecommendServiceImpl implements RecommendService{
 	
 	/* fast api에서 값 가져오기 */
 	private ResponseEntity<Map> requestFast(String petSno){
-		return restTemplate.getForEntity("https://j7a302.p.ssafy.io/recommend-api/item/"+petSno, Map.class);
+		StringBuilder sb = new StringBuilder();
+		sb.append("alergy=");
+		for(PetMaterial petMaterial:petRep.findByPetSno(petSno).getPetMaterials()){
+			sb.append(petMaterial.getMaterial().getMaterialNo()+",");
+		}
+		sb.deleteCharAt(sb.length()-1);
+		System.out.println(sb);
+
+		return restTemplate.getForEntity("https://j7a302.p.ssafy.io/recommend-api/item/"+petSno+"?"+sb, Map.class);
+//		return restTemplate.getForEntity("http://localhost:8000/recommend-api/item/"+petSno+"?"+sb, Map.class);
 	}
 }

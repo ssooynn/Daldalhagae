@@ -48,7 +48,7 @@ def train(algorithm:str,type:str):
         predictions = [algo.predict(pet_id, item) for item in unrated]
         # 내림차순 정렬
         predictions.sort(key=lambda x: x.est,reverse=True)
-        top_preds = predictions[:10]
+        top_preds = predictions[:20]
         top_items = [pred.iid for pred in top_preds]
         # top_rates = [pred.est for pred in top_preds]
         # top_names = items[items.item_sno.isin(top_items)]['name']
