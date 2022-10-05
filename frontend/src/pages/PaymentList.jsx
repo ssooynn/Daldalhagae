@@ -86,17 +86,19 @@ const PaymentList = () => {
         console.log(err)
       })
   }, [])
-  
+  console.log('infos', infos)
+  console.log('picked', pickedProducts)
+
   const [totalPrice, setTotalPrice] = useState(infos.map((info)=>{return Number(info[3])}).reduce((a, b)=>a+b, 0))
   
   const REDIRECT_URL = "http://localhost:3000/paymentCheck";
 
   const [subscriptionHistorys, setSubscriptionHistorys] = useState([])
-  // const [subscriptionNo, setSubcriptionNo] = useState(0)
   let subscriptionNo = 0
   const subscriptionHistoryNo = 0
   
   useEffect(()=>{
+    const copySubscriptionHistorys = [...subscriptionHistorys]
     infos.map((info, idx)=>{
       if (info[0] === 'Basic Package') {
         subscriptionNo = 1
@@ -134,14 +136,15 @@ const PaymentList = () => {
           subscriptionNo: subscriptionNo,
           name: info[0],
           description: info[1],
-          price: totalPrice
+          price: Number(info[3])
         },
         feeds: feeds,
         snacks: snacks,
         toys: toys,
       }
-      setSubscriptionHistorys([...subscriptionHistorys, temp])
+      copySubscriptionHistorys.push(temp)
     })
+    setSubscriptionHistorys(copySubscriptionHistorys)
   }, [])
 
   const finalData = {
@@ -173,6 +176,7 @@ const PaymentList = () => {
       m_redirect_url: REDIRECT_URL,
     };
     IMP.request_pay(data, callback);
+
     console.log(finalData)
     axios({
       method: 'post',
