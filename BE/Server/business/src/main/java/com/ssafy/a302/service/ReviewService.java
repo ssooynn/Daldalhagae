@@ -42,7 +42,6 @@ public class ReviewService {
     @Autowired
     SubscribtionHistoryRepository subscribtionHistoryRepository;
 
-
     private final FileUpload fileUpload;
     private final FilePath filePath;
 
@@ -193,8 +192,14 @@ public class ReviewService {
 
         for (int i = 0; i < 3; i++) {
             int random = (int) (Math.random()*list.size());
+            System.out.println(list.get(random).getRate());
             res.add(new ServiceReviewRes(list.get(random), filePath.getReviewImageLoadPath()));
         }
         return res;
+    }
+
+    public Slice<ServiceReviewRes> getServiceReviewAll(Pageable pageable){
+        Slice<ServiceReviewRes> reviews = serviceReviewRepository.findAll(pageable).map(m -> new ServiceReviewRes(m, filePath.getReviewImageLoadPath()));
+        return reviews;
     }
 }
