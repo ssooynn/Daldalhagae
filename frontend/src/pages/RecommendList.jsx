@@ -84,9 +84,10 @@ function FillPickedProducts(infos, pickedProducts, setPickedProducts) {
   })
 }
 
-const RecommendList = (s) => {
+const RecommendList = () => {
   const location = useLocation()
   const infos = location.state.info  // name, intro, components1, price, components2, pets, pet
+  console.log('recomlist', infos)
   const Navigate = useNavigate();
   const showToggle = []
   const [pickedProducts, setPickedProducts] = useState([])
@@ -100,8 +101,6 @@ const RecommendList = (s) => {
   for (let i = 0; i < infos.length; i++) {
     showToggle.push(<Toggle info={infos[i]} index={i} products={pickedProducts} setPickedProducts={setPickedProducts} packageNo={i} />)
   }
-  console.log(infos)
-  console.log(pickedProducts)
   const [totalCount, setTotalCount] = useState(0)
   useEffect(()=>{
     infos.map((info, idx)=>{
