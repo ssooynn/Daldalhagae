@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Icon from '../assets/img/modalIcon.png'
+import { useDispatch, useSelector } from 'react-redux'
 
 function RecommendConfirmModal(props) {
+  const bag = useSelector((state) => state.bag);
+
   function closeModal() { // 모달 끄기
     props.setModalOpen(false)
   }
@@ -27,7 +30,15 @@ function RecommendConfirmModal(props) {
   }
   function GoPaymentList() {
     alert('결제 목록 창으로 넘어갑니다.')
-    Navigate("/paymentList")
+    let pickedProducts = []
+    bag.map((info, idx)=>{
+      pickedProducts.push([[],[],[]])
+    })
+    Navigate("/paymentList",  {
+      state: {
+        infos: bag,
+        pickedProducts: pickedProducts,
+      }})
   }
   return (
     <div
