@@ -108,6 +108,7 @@ public class PetServiceImpl implements PetService {
 		logger.info("---유저 찾기---");
 		Users users = usersRep.findByUsersSno(usersSno);
 		logger.info("---타겟 찾기---");
+		signUpPetReq.birthToTargetNo();
 		Target target = targetRep.findByTargetNo(signUpPetReq.getTargetNo());
 		Pet prePet = petRepository.findByPetSno(signUpPetReq.getPetSno());
 
@@ -117,7 +118,6 @@ public class PetServiceImpl implements PetService {
 		}else {
 			signUpPetReq.setImage(prePet.getImage());
 		}
-		signUpPetReq.birthToTargetNo();
 		logger.info("---Pet entity 만들기---");
 		Pet pet = signUpPetReq.transforPet(users, target);
 
