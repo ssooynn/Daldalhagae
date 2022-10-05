@@ -148,7 +148,7 @@ const MypagePetDetail = (props) => {
               {materials.map((alergy,idx)=>{
                 const colorList=['#EDDCCF','#F4E8E8','#E7E1DC','#D6C9C0','#E4D1C2']
                 return(
-                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%5]}>{alergy}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={'#F4E8E8'}>{alergy}</PetTag>
                 )
               })}
             </div>
@@ -164,7 +164,7 @@ const MypagePetDetail = (props) => {
               {effects.map((effect,idx)=>{
                 const colorList = ['#EAD0D0', '#D3AFAF', '#EDDCCF', '#F4E8E8', '#F4E8E8']
                 return(
-                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%5]}>{effect}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={'#EDDCCF'}>{effect}</PetTag>
                 )
               })}
             </div>
