@@ -8,7 +8,6 @@ import './CarouselFeed.css'
 const PaymentCarousel = (props) => {
   const info = props.info
   const types = props.pickedProducts
-  console.log(types)
 
   const [reviewOpen, setReviewOpen] = useState(false)
   const [reviewCategory, setReviewCategory] = useState("");
@@ -150,10 +149,6 @@ const PaymentCarousel = (props) => {
     })
     setCardcase(copyCardcase)
   }, [])
-
-  useEffect(()=>{
-    console.log('aaaa', cardcase)
-  }, [cardcase])
   
   return (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFDFB'}}>
     {(types[0].length + types[1].length + types[2].length)>3 ? 

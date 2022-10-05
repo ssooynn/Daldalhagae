@@ -89,13 +89,6 @@ const PaymentList = () => {
   }, [])
   // console.log('user', userInfo)
   const [totalPrice, setTotalPrice] = useState(infos.map((info)=>{return Number(info[3])}).reduce((a, b)=>a+b, 0))
-  useEffect(()=>{
-    infos.map((info, idx)=>{
-      if (info[0] === '나만의 구독 서비스') {
-        setTotalPrice(totalPrice + pickedProducts[idx][0].length * 12900 + pickedProducts[idx][1].length * 2900 + pickedProducts[idx][2].length * 2900)
-      }
-    })
-  }, [])
   
   const REDIRECT_URL = "http://localhost:3000/paymentCheck";
 
