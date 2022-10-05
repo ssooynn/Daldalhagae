@@ -6,6 +6,9 @@ import SubscriptionItem from '../../components/Mypage/SubscriptionItem'
 import SubscriptionCarousel from './SubscriptionCarousel'
 import { FlexBox } from '../../components/Mypage/MypageCommon'
 import { userInfoGet } from '../../api/mypageUser'
+import { subscriptionCancel } from '../../api/mypageSubscription'
+import Swal from 'sweetalert2'
+
 
 const MypageSubscriptionDetail = (props) => {
   const {usersSno} = props
@@ -99,13 +102,63 @@ const MypageSubscriptionDetail = (props) => {
     delivery.push(`간식 ${subscription?.toys.length}`)
   }
 
+    // 구독 진행중 여부 판단
+  const endDate = new Date(subscription?.subscriptionEndDate)
+  console.log(endDate)
+  const today = new Date()
+
+  let onGoing
+  if (endDate >= today) {
+    onGoing = '구독 중'
+  } else{
+    onGoing = '구독 종료'
+  }
+
+  const cancelSubs = ()=>{
+    Swal.fire({
+      title: "정말 구독을 취소하시겠어요? &#128546 \n 다음달부터 상품을 받아볼 수 없어요",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#A9ACB1',
+      cancelButtonColor: '#AC998A',
+      confirmButtonText: '구독 그만하기',
+      cancelButtonText: '구독 계속하기',
+      focusConfirm:false,
+      focusCancel:true,
+      customClass:{
+        title:'midFont'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        subscriptionCancel(subscription.subscriptionNum).then((res)=>{
+          console.log(res)
+          navigate('/mypage')
+          Swal.fire({
+            width:'25%',
+            position: "center",
+            title: "구독이 취소되었습니다. \n언제든 재구독해주세요 :)",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass:{
+              icon:'smallIcon',
+              title:'midFont'
+            }
+          })
+        })
+        
+  }})
+
+  }
+
+
+
   return (
     <div>
       <SubscriptionItem page='subsDetail' bgImg={subscription?.subscriptionName.replaceAll(' ','')} subscription={subscription} reviewConnect={false} isDetail={true}></SubscriptionItem>
       <div style={detailDiv}>
         <FlexBox justify='space-between' align='end' padding='0px'>
           <div style={{...title}}>배송 상품 <span style={{fontSize:'14px', fontWeight:'400', marginLeft:'7px'}}>[ {delivery.join('+')} ]</span></div>
-          <div style={{fontSize:'12px', fontWeight:'400', color:'#525252', cursor:'pointer'}} onClick={onRecommendChoose}>다음 배송 상품 고르기</div>
+          {onGoing==='구독 중'?<div style={{fontSize:'12px', fontWeight:'400', color:'#525252', cursor:'pointer'}} onClick={onRecommendChoose}>다음 배송 상품 고르기</div>:<></>}
         </FlexBox>
         <hr style={hrStyle}/>
 
@@ -154,7 +207,7 @@ const MypageSubscriptionDetail = (props) => {
             <div style={{gridColumn:'span 3'}}>{user.phone}</div>
           </div>
         </div>
-        <div style={cancelStyle} >구독 취소하기</div>
+        {onGoing==='구독 중'?<div style={cancelStyle} onClick={cancelSubs}>구독 취소하기</div>:<></>}
       </div>  
     </div>
   )
