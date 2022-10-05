@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import imgD from '../assets/img/구독상세페이지4.png'
 import styled from 'styled-components'
 import Loading from './LoadingComponent'
 
@@ -15,11 +14,11 @@ text-align: start;
 padding: 0 2rem 0 2rem;
 `
 
-function Reviews() {
+function Reviews(props) {
   const [showReviews, setShowReviews] = useState([])
-  const [itemSno, setItemSno] = useState('f05C8ZXZjHZrZaeUB8eYN')
+  const [itemSno, setItemSno] = useState(props.itemSno)
   const [page, setPage] = useState(0)
-  const [size, setSize] = useState(5)
+  const [size, setSize] = useState(2)
   const [sort, setSort] = useState('date')
   const [showPaginator, setShowPaginator] = useState([])
   const [loading, setLoading] = useState(true)
@@ -46,7 +45,7 @@ function Reviews() {
       setShowPaginator(copyShowPaginator)
       const reviews = res.data.reviewList
       for (let i = 0; i < size; i++) {
-        let star = '';
+        let star = '★';
         switch (reviews[i].rate) {
           case 1:
             star = '★☆☆☆☆'
@@ -105,6 +104,7 @@ function Reviews() {
 }
 
 function MoreReview(props) {
+  const info = props.info
   function closeReview() { // 모달 끄기
     props.setReviewOpen(false)
   }
@@ -120,8 +120,141 @@ function MoreReview(props) {
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
   }, [])
-
-  const info = props.info
+  
+  const [productInfo, setProductInfo] = useState('')
+  useEffect(()=>{
+    switch (props.kind) {
+      case '사료':
+        return setProductInfo(<div  // 제품 정보
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}>
+          <div>
+            <img src={info.image} width='200px' height='150px' alt="img" />
+            <p>{info.name}</p>
+          </div>
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '300px',
+                fontSize: '10px'
+              }}>
+              <p>주원료</p>
+              <p>{info.materials}</p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '300px',
+                fontSize: '10px'
+              }}>
+              <p>급여 대상</p>
+              <p>{info.targets}</p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '300px',
+                fontSize: '10px'
+              }}>
+              <p>입자크기</p>
+              <p>{info.particle}</p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '300px',
+                fontSize: '10px'
+              }}>
+              <p>기능</p>
+              <p>{info.effects}</p>
+            </div>
+          </div>
+        </div>)
+      case '간식':
+        return  setProductInfo(<div  // 제품 정보
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}>
+        <div>
+          <img src={info.image} width='200px' height='150px' alt="img" />
+          <p>{info.name}</p>
+        </div>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '300px',
+              fontSize: '10px'
+            }}>
+            <p>주원료</p>
+            <p>{info.materials}</p>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '300px',
+              fontSize: '10px'
+            }}>
+            <p>급여 대상</p>
+            <p>{info.targets}</p>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '300px',
+              fontSize: '10px'
+            }}>
+            <p>기능</p>
+            <p>{info.effects}</p>
+          </div>
+        </div>
+      </div>)
+      default:
+        return  setProductInfo(<div  // 제품 정보
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}>
+        <div>
+          <img src={info.image} width='200px' height='150px' alt="img" />
+          <p>{info.name}</p>
+        </div>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '300px',
+              fontSize: '10px'
+            }}>
+            <p>소재</p>
+            <p>{info.materials}</p>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '300px',
+              fontSize: '10px'
+            }}>
+            <p>기능</p>
+            <p>{info.effects}</p>
+          </div>
+        </div>
+      </div>)
+    }
+  }, [])
   return (
     <div
       onClick={closeReview}
@@ -131,7 +264,7 @@ function MoreReview(props) {
         left: '0',
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.15)',
+        backgroundColor: 'rgba(0, 0, 0, 0.08)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -142,9 +275,9 @@ function MoreReview(props) {
         onClick={(e)=>e.stopPropagation()}
         style={{
           backgroundColor: 'white',
-          width: '800px',
+          width: '80%',
           padding: '2rem 0 1rem 0',
-          zIndex: '1',
+          zIndex: '99',
           position: 'absolute',
           top: '50%',
           left: '50%',
@@ -164,66 +297,13 @@ function MoreReview(props) {
               right: '30px',
               top: '0',
             }}>✖</p>
-          <div  // 제품 정보
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between'
-            }}>
-            <div>
-              <img src={imgD} width='200px' height='150px' alt="img" />
-              <p>{info.name}</p>
-            </div>
-            <div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '300px',
-                  fontSize: '10px'
-                }}>
-                <p>주원료</p>
-                <p>{info.materials}</p>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '300px',
-                  fontSize: '10px'
-                }}>
-                <p>급여 대상</p>
-                <p>{info.targets}</p>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '300px',
-                  fontSize: '10px'
-                }}>
-                <p>입자크기</p>
-                <p>{info.particle}</p>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '300px',
-                  fontSize: '10px'
-                }}>
-                <p>기능</p>
-                <p>{info.effects}</p>
-              </div>
-            </div>
-          </div>
+          {productInfo}
           <div  // 리뷰
-            style={{
-              fontSize: '13px'
-            }}>
+            style={{fontSize: '13px'}}>
             <p style={{textAlign: 'end'}}>리뷰목록</p>
           </div>
           <hr />
-          <Reviews></Reviews>
+          <Reviews itemSno={info.sno}></Reviews>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import SubscribeList from "./pages/SubscribeList";
@@ -12,17 +12,19 @@ import ResetRecommentList from "./pages/ResetRecommentList";
 import Mypage from "./pages/Mypage/Mypage";
 import KakaoSignin from "./pages/KakaoSignin";
 import Signup from "./pages/Signup";
-import SignupTerm from "./pages/SignupTerm";
-import SignupUser from "./pages/SignupUser";
-import SignupPet from "./pages/SignupPet";
+import NotFound404 from './pages/NotFound404'
 
 import ReviewList from "./pages/ReviewList";
 import { NavBar } from "./components/NavBar";
 
 function Router() {
+  const [isNotFound, setIsNotFound] = useState(false)
   return (
     <div>
+      {isNotFound ?
+      <></>:
       <NavBar />
+      }
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/subscribeList" element={<SubscribeList />} />
@@ -37,6 +39,7 @@ function Router() {
         <Route path="/mypage/*" element={<Mypage />} />
         <Route path="/reviewList" element={<ReviewList />} />
         <Route path="/kakaoSignin/*" element={<KakaoSignin />} />
+        <Route path="/*" element={<NotFound404 setIsNotFound={setIsNotFound}/>} />
       </Routes>
     </div>
   );
