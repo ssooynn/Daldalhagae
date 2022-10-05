@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Modal from '../components/RecommendConfirmModal'
@@ -60,9 +60,20 @@ const PurchaseList = (props) => {
       const temp = props.info.slice()
       temp.push(params.name)
       info.push(temp)
+      // info[3] += info[4][0].length * 12900 + info[4][1].length * 2900 + info[4][2].length * 2900
     }
   }
   let totalPrice = Number(props.info[3]) * showPurchase.length
+  
+  useEffect(()=>{
+    // infos.map((info, idx)=>{
+    //   if (info[0] === '나만의 구독 서비스') {
+    //     setTotalPrice(totalPrice + pickedProducts[idx][0].length * 12900 + pickedProducts[idx][1].length * 2900 + pickedProducts[idx][2].length * 2900)
+    //   }
+    // })
+    console.log(info)
+  }, [showPurchase])
+
   for (let i = 0; i < pets.length; i++) {
     showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], showPurchase.length, e) }}>
       <img

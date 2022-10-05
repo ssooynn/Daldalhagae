@@ -179,12 +179,15 @@ const Toggle = (props) => {
       subscriptionNo = 7
         for (let i = 0; i < 3; i++) {
           // feeds.push(product)
+          checkFeeds.push(false)
         }
         for (let i = 0; i < 6; i++) {
           // snacks.push(product)
+          checkSnacks.push(false)
         }
         for (let i = 0; i < 6; i++) {
           // toys.push(product)
+          checkToys.push(false)
         }
         break;
     }
@@ -197,12 +200,10 @@ const Toggle = (props) => {
         'Authorization': `Bearer a.a.a`
       },
       data: {
-        recoReq: [{
-          recoFlag: false,
-          petSno: petSno,
-          subscriptionNo: subscriptionNo,
-          historyNo: 0
-        }]
+        recoFlag: false,
+        petSno: petSno,
+        subscriptionNo: subscriptionNo,
+        historyNo: 0
       }
     })
     .then((res)=>{
@@ -445,51 +446,63 @@ const Toggle = (props) => {
       </div>
       default: // 자유 구독
       return <div style={{ margin: '0 50px 0 50px' }}>
-      <CarouselFeed  // 사료
-        products1={feeds}
-        checkProducts={checkFeeds}
-        setCheckProducts={setcheckFeeds}
-        products={props.products}
-        setPickedProducts={props.setPickedProducts}
-        numbers={props.numbers[0]}
-        reviewOpen={reviewOpen}
-        setReviewOpen={setReviewOpen}
-        showMoreReview={showMoreReview}
-        kind={'사료'}
-        packageNo={props.packageNo}
-        />
-      {reviewOpen && reviewCategory==="사료" && <MoreReview setReviewOpen={setReviewOpen} info={feeds[index]} kind={'사료'} />}
+        {feeds.length > 0 ?
+        <div>
+          <CarouselFeed  // 사료
+            products1={feeds}
+            checkProducts={checkFeeds}
+            setCheckProducts={setcheckFeeds}
+            products={props.products}
+            setPickedProducts={props.setPickedProducts}
+            numbers={props.numbers[0]}
+            reviewOpen={reviewOpen}
+            setReviewOpen={setReviewOpen}
+            showMoreReview={showMoreReview}
+            kind={'사료'}
+            packageNo={props.packageNo}
+            />
+          {reviewOpen && reviewCategory==="사료" && <MoreReview setReviewOpen={setReviewOpen} info={feeds[index]} kind={'사료'} />}
+        </div> :
+        <div></div>}
       
-      <CarouselFeed  // 간식
-        products1={snacks}
-        checkProducts={checkSnacks}
-        setCheckProducts={setcheckSnacks}
-        products={props.products}
-        setPickedProducts={props.setPickedProducts}
-        numbers={props.numbers[1]}
-        reviewOpen={reviewOpen}
-        setReviewOpen={setReviewOpen}
-        showMoreReview={showMoreReview}
-        kind={'간식'}
-        packageNo={props.packageNo}
-        />
-      {reviewOpen && reviewCategory==="간식" && <MoreReview setReviewOpen={setReviewOpen} info={snacks[index]} kind={'간식'} />}
+      {snacks.length > 0 ?
+        <div>
+          <CarouselFeed  // 간식
+            products1={snacks}
+            checkProducts={checkSnacks}
+            setCheckProducts={setcheckSnacks}
+            products={props.products}
+            setPickedProducts={props.setPickedProducts}
+            numbers={props.numbers[1]}
+            reviewOpen={reviewOpen}
+            setReviewOpen={setReviewOpen}
+            showMoreReview={showMoreReview}
+            kind={'간식'}
+            packageNo={props.packageNo}
+            />
+          {reviewOpen && reviewCategory==="간식" && <MoreReview setReviewOpen={setReviewOpen} info={snacks[index]} kind={'간식'} />}
+        </div> :
+        <div></div>}
       
-      <CarouselFeed  // 장난감
-          products1={toys}
-          checkProducts={checkToys}
-          setCheckProducts={setcheckToys}
-          products={props.products}
-          setPickedProducts={props.setPickedProducts}
-          numbers={props.numbers[2]}
-          reviewOpen={reviewOpen}
-          setReviewOpen={setReviewOpen}
-          showMoreReview={showMoreReview}
-          kind={'장난감'}
-          packageNo={props.packageNo}
-          />
-        {reviewOpen && reviewCategory==="장난감" && <MoreReview setReviewOpen={setReviewOpen} info={toys[index]} kind={'장난감'} />}
-        <div style={{ textAlign: 'end' }}>
+      {toys.length > 0 ?
+        <div>
+          <CarouselFeed  // 장난감
+            products1={toys}
+            checkProducts={checkToys}
+            setCheckProducts={setcheckToys}
+            products={props.products}
+            setPickedProducts={props.setPickedProducts}
+            numbers={props.numbers[2]}
+            reviewOpen={reviewOpen}
+            setReviewOpen={setReviewOpen}
+            showMoreReview={showMoreReview}
+            kind={'장난감'}
+            packageNo={props.packageNo}
+            />
+          {reviewOpen && reviewCategory==="장난감" && <MoreReview setReviewOpen={setReviewOpen} info={toys[index]} kind={'장난감'} />}
+        </div> :
+        <div></div>}
+      <div style={{ textAlign: 'end' }}>
           <StyledButton onClick={closeToggle} SmallWhite style={{ width: '50px', height: '30px', margin: '20px auto', fontSize: '14px' }}>닫기</StyledButton>
         </div>
       </div>
