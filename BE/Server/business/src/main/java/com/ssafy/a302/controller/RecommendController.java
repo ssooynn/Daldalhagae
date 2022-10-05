@@ -36,7 +36,7 @@ public class RecommendController {
 	@ApiOperation(value = "상품 추천")
 	@PostMapping("/item")
 	public RecommendRes recommend(@RequestBody RecoReq recoReq){
-		RecommendRes recommendRes = reService.recommend(recoReq.getPetSno());
+		RecommendRes recommendRes = reService.recommend(recoReq);
 		return recommendRes;
 //		return null;
 	}

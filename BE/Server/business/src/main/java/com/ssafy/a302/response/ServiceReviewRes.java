@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 public class ServiceReviewRes {
     private String userSno;
+    private String userName;
     private String subName;
     private int rate;
     private String content;
@@ -16,8 +17,10 @@ public class ServiceReviewRes {
 
     public ServiceReviewRes(ServiceReview serviceReview, String imagePath){
         this.userSno = serviceReview.getUsers().getUsersSno();
+        this.userName = serviceReview.getUsers().getName();
         this.subName = serviceReview.getSubscribtionHistory().getSubscribtionHistorySubscribtion().getSubscribtion().getName();
         this.content = serviceReview.getContent();
+        this.rate = serviceReview.getRate();
         if(serviceReview.getImage() != null)  {
             this.image = imagePath + serviceReview.getImage();
         }
