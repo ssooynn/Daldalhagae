@@ -45,12 +45,12 @@ public class SignUpPetReq {
 		Instant instant = birth.atStartOfDay(ZoneId.systemDefault()).toInstant();
 		Date birthDate = Date.from(instant);
 		
-		if(birthDate.before(beforeOne.getTime())) {
-			this.targetNo=1;
-		}else if(birthDate.after(beforeEight.getTime())) {
+		if(birthDate.before(beforeEight.getTime())) {
+			this.targetNo=3;
+		}else if(birthDate.before(beforeOne.getTime())) {
 			this.targetNo=2;
 		}else {
-			this.targetNo=3;
+			this.targetNo=1;
 		}
 		
 	}

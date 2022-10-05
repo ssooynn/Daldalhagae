@@ -23,63 +23,48 @@ insert into SUBSCRIBTION_HISTORY(PET_SNO, USERS_SNO, START_DATE, END_DATE, AUTO_
 ('pfIXrHnfzcKy7zGF1Ha9T', 'udZ0a32z4Ur2LvGlmEXsN', '2022-09-20', '2022-10-19', 2),
 ('pfIXrHnfzcKy7zGF1Ha9T', 'udZ0a32z4Ur2LvGlmEXsN', '2022-09-20', '2022-10-19', 0);
 
+
+insert into SUBSCRIBTION_HISTORY(PET_SNO, USERS_SNO, START_DATE, END_DATE, AUTO_PAYMENT_FLAG) values
+('p00PNeXOyk6PVRIRPH6pO', 'ujfFzytsMIYr4hguEqZnv', '2022-07-20', '2022-08-19', 1);
+
+
 insert into PRODUCT_TYPE(PRODUCT_TYPE_NO,NAME) values
 (1,'feed'),(2,'snack'),(3,'toy');
 
 insert into SUBSCRIBTION_PRODUCT_TYPE(PRODUCT_TYPE_NO, SUBSCRIBTION_NO) values
-(1,0),
+(1,1),
 
-(2,1),
-(2,1),
-(2,1),
 (2,2),
 (2,2),
-
-(3,0),
-(3,1),
-(3,1),
-(3,1),
+(2,2),
 (3,2),
 (3,2),
 
-(4,0),
-(4,1),
-(4,1),
-(4,1),
+(1,3),
+(2,3),
+(2,3),
+(2,3),
+(3,3),
+(3,3),
 
-(5,0),
-(5,2),
-(5,2),
+(1,4),
+(2,4),
+(2,4),
+(2,4),
 
-(6,0),
-(6,1),
-(6,2);
+(3,5),
+(3,5),
+(3,5),
+
+(1,6),
+(2,6),
+(3,6);
 
 insert into SUBSCRIBTION_HISTORY_SUBSCRIBTION(SUBSCRIBTION_HISTORY_NO, SUBSCRIBTION_NO) values
-(244,1),
-(245,1),
-(246,1),
-(247,3),
-(248,2);
+(1,1);
 
 insert into PURCHASE(SUBSCRIBTION_HISTORY_NO, ITEM_SNO) values
-(244,'f05C8ZXZjHZrZaeUB8eYN'),
-
-(245,'f05C8ZXZjHZrZaeUB8eYN'),
-
-(246,'f05C8ZXZjHZrZaeUB8eYN'),
-
-(247,'f05C8ZXZjHZrZaeUB8eYN'),
-(247,'s0hfieToEaO96HP99xqxc'),
-(247,'s0hfieToEaO96HP99xqxc'),
-(247,'s0hfieToEaO96HP99xqxc'),
-(247,'t0hfieToEaO96HP99xqxc'),
-
-(248,'s0hfieToEaO96HP99xqxc'),
-(248,'s0hfieToEaO96HP99xqxc'),
-(248,'s0hfieToEaO96HP99xqxc'),
-(248,'t0hfieToEaO96HP99xqxc'),
-(248,'t0hfieToEaO96HP99xqxc');
+(1,'f05C8ZXZjHZrZaeUB8eYN');
 
 
 insert into SERVICE_REVIEW(USERS_SNO, SUBSCRIBTION_HISTORY_NO, RATE, REG_DATE) values
@@ -114,7 +99,7 @@ join PET p on p.PET_SNO = i.PET_SNO;
 
 select s.* from ITEM_REVIEW s;
 
-
+select * from PARTICLE;
 select * from PURCHASE;
 select * from USERS;
 select * from MATERIAL;

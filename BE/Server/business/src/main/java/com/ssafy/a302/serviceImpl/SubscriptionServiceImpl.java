@@ -56,13 +56,17 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			// 1. subscriptionName
 			map.put("subscriptionName", sub.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
 
-			// 2. subscriptionNum
-			map.put("subscriptionNum", sub.getSubscribtionHistoryNo());
+			// 2. subscriptionHistoryNum
+			map.put("subscriptionHistoryNo", sub.getSubscribtionHistoryNo());
 
-			// 2. price
+			// 3. price
 			map.put("price", sub.getSubscribtionHistorySubscribtion().getSubscribtion().getPrice());
 
-			// 3. Items
+
+			// 4. subscriptionHistoryNum
+			map.put("subscriptionNo", sub.getSubscribtionHistorySubscribtion().getSubscribtion().getSubscribtionNo());
+
+			// 5. Items
 			List<Purchase> items = new ArrayList<>();
 			List<Toy> toy = new ArrayList<>();
 			List<FeedDetailRes> feedDetailRes = new ArrayList<>();

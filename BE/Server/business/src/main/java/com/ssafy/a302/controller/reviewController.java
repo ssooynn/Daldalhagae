@@ -95,4 +95,11 @@ public class reviewController {
         return new ResponseEntity(res, HttpStatus.OK);
     }
 
+    @GetMapping("/serviceReviewAll")
+    public ResponseEntity<?> getServiceReviewAll(Pageable pageable){
+        return new ResponseEntity(reviewService.getServiceReviewAll(pageable), HttpStatus.OK);
+    }
+
+
+
 }
