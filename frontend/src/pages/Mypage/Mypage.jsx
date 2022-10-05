@@ -84,6 +84,7 @@ const Mypage = () => {
 
   const contentContainer = {
     width:'70%',
+    minWidth:'960px', maxWidth:'1080px',
     margin:'0 auto',
     paddingTop:'2em',
     display:'flex',
