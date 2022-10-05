@@ -265,7 +265,7 @@ export default function Main() {
         <MainContent>
           <FlexBox direction="column" justify="space-evenly" align="center" width="70%">
             <StyledText weight="500" size="28px">당신을 위한 구독 서비스</StyledText>
-            <StyledButton XSmallIvory style={{ alignSelf: "flex-end" }}>더보기</StyledButton>
+            <StyledButton XSmallIvory style={{ alignSelf: "flex-end" }} onClick={(e) => Navigate("/subscribeList")}>더보기</StyledButton>
             <MainSubscribeCard />
           </FlexBox>
         </MainContent>

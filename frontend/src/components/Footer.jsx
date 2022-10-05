@@ -10,19 +10,15 @@ const Foot = styled.div`
     color:#767676;
     font-weight: 500;
     padding:0.5%;
+    display: flex;
+    justify-content: center;
     `
 
 export default function Footer({ ...props }) {
   return (
     <Foot {...props}>
-      <FlexBox direction="column" align="flex-start">
+      <FlexBox direction="column" align="flex-start" justify="center">
         <StyledText size="20px" margin="10px 30px 1px 30px">(주) 달달하개</StyledText>
-        <FlexBox direction="row" justify="flex-start" margin="2px 20px">
-          <StyledText size="14px">고객후기</StyledText>
-          <StyledText size="14px">상품목록</StyledText>
-          <StyledText size="14px">공지사항</StyledText>
-          <StyledText size="14px">입점신청 문의</StyledText>
-        </FlexBox>
         <FlexBox direction="column" align="flex-start">
           <StyledText size="12px" margin="3px 20px">상호명 : (주) 달달하개 대표이사 : 김연준</StyledText>
           <StyledText size="12px" margin="3px 20px">A302조 김연준 배한빈 이아현 이수연 이경무 이준경</StyledText>

@@ -85,7 +85,7 @@ export function NavBar({ ...props }) {
     <Navbar backgroundColor={backgroundColor} boxShadow={boxShadow} {...props}>
       <FlexBox width="70%" justify="space-between">
         {/* 내브바 왼쪽 로고 */}
-        <Link to="/"><img src={Logo} width="80px"></img></Link>
+        <Link to="/"><img src={Logo} alt="달달하개" width="80px"></img></Link>
 
         {/* 내브바 오른쪽 카테고리 리스트 */}
         <FlexBox width="300px" justify="space-between">

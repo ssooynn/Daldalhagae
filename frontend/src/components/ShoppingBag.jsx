@@ -16,6 +16,7 @@ import { useState } from 'react'
 import DeleteButton from '../assets/img/delete.svg';
 import { deleteItem } from '../stores/modules/bag'
 import Modal from '../components/RecommendConfirmModal'
+import { useNavigate } from 'react-router-dom'
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -102,10 +103,16 @@ const SubBox = styled.div`
 
 const ShoppingBag = (props) => {
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const bag = useSelector((state) => state.bag);
   const [totalPrice, setTotalPrice] = useState(0);
   const [modalOpen, setModalOpen] = useState(false)
+  const user = useSelector(state => state.user.user.user);
   const showModal = () => {
+    if (!user || !user.token) {
+      alert("로그인을 먼저 해주세요.");
+      props.setBagOpen(false);
+    }
     console.log(Boolean(bag.length));
     if (bag.length) {
       setModalOpen(true)
@@ -144,7 +151,7 @@ const ShoppingBag = (props) => {
         <StyledText size="18px" weight="500" margin="10px 10px 10px 0px">장바구니</StyledText>
         <hr style={{ backgroundColor: '#CCAA90', height: '1px' }} />
         <ShoppingListBox>
-          {bag ? bag.map((item, idx) => (
+          {bag.length ? bag.map((item, idx) => (
             <SubBox key={idx} packageName={item.packageName} >
               <FlexBox direction="column" justify="center" align="flex-start" margin="0px" width="auto">
                 <StyledText weight="500" size="16px" margin="0px 0px 10px 0px" style={{ position: "relative" }}>{item.packageName} - {item.petName}</StyledText>
