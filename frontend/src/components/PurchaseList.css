@@ -1,17 +1,17 @@
-.card {
+.card1 {
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 5px;
     padding: 10px;
     border-radius: 5px;
-    background-color: #FFFDFB;
+
   }
 .card:hover {
-    background-color : rgba(0, 0, 0, 0.2);
+    background-color : #ccb59036;
 }
-.clickCard {
+.clickCard1 {
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 5px;
     padding: 10px;
     border-radius: 5px;
-    background-color : rgba(0, 0, 0, 0.2);
+    background-color : #ccb59036;
 }
