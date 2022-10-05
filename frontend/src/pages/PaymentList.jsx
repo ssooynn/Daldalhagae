@@ -143,14 +143,21 @@ const PaymentList = () => {
     subscriptionHistorys : subscriptionHistorys
   }
 
-  function Purchase(e, packageName) {
+  function Purchase(e, infos) {
+    console.log(infos)
     e.preventDefault()
+    let packageName = ''
+    if (infos.length > 1) {
+      packageName = `${infos[0][0]}외 ${infos.length-1}개`
+    } else {
+      packageName = infos[0][0]
+    }
     const { IMP } = window;
     IMP.init("imp10157701");
     const data = {
       pg: "kakaopay",
       merchant_uid: userInfo.paymentNo, // 상점에서 관리하는 주문 번호
-      name: `주문명: ${packageName}`,
+      name: packageName,
       amount: totalPrice,
       customer_uid: "TCSUBSCRIP",
       buyer_name: userInfo.name,
@@ -251,7 +258,7 @@ const PaymentList = () => {
         <hr style={{ backgroundColor: '#CCAA90' }} />
         {infos.map((info, idx)=>{
           return <div>
-            <PackageBox packageName={info[0]}>
+            <PackageBox>
               <div style={{width: '80%'}}>
                 <div
                   style={{
@@ -361,7 +368,7 @@ const PaymentList = () => {
           </div>
         </div>
       </div>
-      <StyledButton onClick={(e)=>Purchase(e)} SmallWhite style={{width: '250px', margin: '100px 0 100px 0', fontWeight: '700'}}>결제하기</StyledButton>
+      <StyledButton onClick={(e)=>Purchase(e,  infos)} SmallWhite style={{width: '250px', margin: '100px 0 100px 0', fontWeight: '700'}}>결제하기</StyledButton>
       <Footer />
     </div>
   )

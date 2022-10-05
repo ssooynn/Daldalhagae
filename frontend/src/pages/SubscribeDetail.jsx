@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 import img1 from '../assets/img/BasicPackage.png'
 import img2 from '../assets/img/PlayPackage.png'
 import img3 from '../assets/img/AllInOnePackage.png'
@@ -54,10 +55,10 @@ const SubscribeDetail = () => {
   const [feeds, setFeeds] = useState([])
   const [snacks, setSnacks] = useState([])
   const [toys, setToys] = useState([])
+  // const usersSno = 'uXJFRDEC7DuyYasedNxU1'
+  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
 
   useEffect(() => {
-    const usersSno = 'uXJFRDEC7DuyYasedNxU1'
-    // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
     // Authorization: `Bearer` + `a.a.a`
     axios({
       method: 'get',
@@ -76,7 +77,6 @@ const SubscribeDetail = () => {
         console.log(err)
       })
   }, [])
-  const info = [name, intro, components1, price, components2, pets]
   let image = undefined
   if (name === 'Basic Package') {
     image = img1
@@ -114,7 +114,7 @@ const SubscribeDetail = () => {
           <p style={{ margin: '0.5rem auto', fontSize: '12px' }}>{intro}</p>
           <h4 style={{ margin: 'auto' }}>월 {price}원</h4>
           <p style={{ margin: '1.5rem 0 0.5rem 0' }}>누구를 위한 사료인가요?</p>
-          <PurchaseList info={info} />
+          <PurchaseList pets={pets} name={name} intro={intro} components1={components1} components2={components2} price={price} />
         </div>
       </div>
       <div  // 하단: 구독 서비스 설명
