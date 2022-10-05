@@ -4,85 +4,6 @@ import Toggle from '../components/Toggle'
 import { StyledButton } from '../components/CommonComponent';
 import CarouselPickedProducts from '../components/CarouselPickedProducts';
 import Footer from '../components/Footer';
-import axios from 'axios';
-
-function GetData(packageName) {
-  const petSno = 'pfIXrHnfzcKy7zGF1Ha9T'
-  const [feeds, setFeeds] = useState([])
-  const [snacks, setSnacks] = useState([])
-  const [toys, setToys] = useState([])
-  let subscriptionNo = 0
-  switch (packageName) {  // 더미 데이터
-    case 'Basic Package': // 사료 3
-    subscriptionNo = 1
-      break;
-    case 'Play Package': // 간식 6, 장난감 6
-    subscriptionNo = 2
-      break;
-    case 'All In One Package': // 사료 3, 간식 6, 장난감 6
-    subscriptionNo = 3
-      break;
-    case 'DalDal Package': // 사료 3, 간식 6,
-    subscriptionNo = 4
-      break;
-    case 'Toy Package': // 사료 3, 장난감 6
-    subscriptionNo = 5
-      break;
-    case 'Light All Package': // 사료 3, 간식 3, 장난감 3
-    subscriptionNo = 6
-      break;
-    default:  // 자유 구독
-  }
-  axios({
-    method: 'post',
-    url: `https://j7a302.p.ssafy.io/api-gateway/business-api/recommend/item`,
-    headers: {
-      'Authorization': `Bearer a.a.a`
-    },
-    data: {
-      recoReq: [{
-        recoFlag: false,
-        petSno: petSno,
-        subscriptionNo: subscriptionNo,
-        historyNo: 0
-      }]
-    }
-  }).then((res)=>{
-      console.log(res.data)
-      setFeeds(res.data.feeds)
-      setSnacks(res.data.snacks)
-      setToys(res.data.toys)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-
-  return [feeds, snacks, toys]
-}
-
-function FillPickedProducts(infos, pickedProducts, setPickedProducts) {
-  infos.map((info, idx)=>{
-    const datas = GetData(info[0])
-    console.log(datas)
-    pickedProducts[idx].map((type, jdx)=>{
-      if (type.length !== info[4]) {
-        const temp = info[4] - type.length
-        const copyPickedProducts = [...pickedProducts]
-        let i = 0
-        while (i !== temp) {
-          for (let j = 0; j < 9; j++) {
-            // if (!copyPickedProducts[idx].include(feeds[j])) {
-            //   copyPickedProducts[idx].push(feeds[j])
-            //   i++
-            //   if (i === temp) {break}
-            // }
-          }
-        }
-        setPickedProducts(copyPickedProducts)
-      }
-    })
-  })
-}
 
 const RecommendList = () => {
   const location = useLocation()
@@ -103,13 +24,12 @@ const RecommendList = () => {
   }
   let totalCount = 0
   infos.map((info, idx)=>{totalCount += info[4].reduce((a, b) => a+b, 0)})
+
   function GoPaymentList() {
     let countProducts = 0
     pickedProducts.map((subcription, idx)=>{subcription.map((type, jdx)=>{countProducts += type.length})})
-    console.log(totalCount, countProducts)
     if (totalCount !== countProducts) {
       if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
-        FillPickedProducts(infos, pickedProducts, setPickedProducts)
         Navigate("/paymentList", {state: {
           pickedProducts: pickedProducts,
           infos: infos
@@ -117,6 +37,7 @@ const RecommendList = () => {
       } else {alert('신중하게 생각하고 누르십쇼;;')}
     } else {
       Navigate("/paymentList", {state: {
+        setPickedProducts: setPickedProducts,
         pickedProducts: pickedProducts,
         infos: infos
       }})

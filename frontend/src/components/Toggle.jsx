@@ -70,7 +70,7 @@ cursor: pointer;
 `
 
 const Toggle = (props) => {
-  console.log('toggle', props)
+  // console.log('toggle', props)
   const [toggleOpen, setToggleOpen] = useState(false)
   const showToggle = () => {setToggleOpen(true)}
   const closeToggle = () => {setToggleOpen(false)}
