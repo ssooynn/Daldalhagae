@@ -1,72 +1,15 @@
 import React,{ useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
 import { StyledButton } from '../components/CommonComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
+import PackageBox from '../components/PackageBox';
 import Footer from '../components/Footer';
-
-import PackageImage1 from '../assets/img/BasicPackage.png'
-import PackageImage2 from '../assets/img/PlayPackage.png'
-import PackageImage3 from '../assets/img/AllInOnePackage.png'
-import daldalPackage from '../assets/img/DalDalPackage.png'
-import toyPackage from '../assets/img/ToyPackage.png'
-import lightPackage from '../assets/img/LightAllInOnePackage.png'
-import 자유구독 from '../assets/img/나만의구독서비스.png'
 import axios from 'axios';
-
-
-const PackageBox  = styled.div`
-position: relative;
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-top: 1.2rem;
-::before{
-  border-radius: 10px;
-  background-size: cover;
-  background-image: ${(props) => {
-    let iamge;
-    switch (props.packageName) {
-      case 'Basic Package':
-        iamge = `url(${PackageImage1})`;
-        break;
-      case 'Play Package':
-        iamge = `url(${PackageImage2})`;
-        break;
-      case 'All In One Package':
-        iamge = `url(${PackageImage3})`;
-        break;
-      case 'DalDal Package':
-        iamge = `url(${daldalPackage})`;
-        break;
-      case 'Toy Package':
-        iamge = `url(${toyPackage})`;
-        break;
-      case 'Light All Package':
-        iamge = `url(${lightPackage})`;
-        break;
-      default:
-        iamge = `url(${자유구독})`;
-        break;
-    }
-    return iamge
-  }};
-  content: "";
-  position: absolute;
-  top: 0%;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  opacity: 0.35;
-}
-object-fit: cover;
-`
 
 const PaymentList = () => {
   const location = useLocation()
   const infos = location.state.infos
-  const pickedProducts = location.state.pickedProducts
+  const [pickedProducts, setPickedProducts] = useState(location.state.pickedProducts)
   const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([])
   const usersSno = useSelector((state)=>state.user.user.user.usersSno)
@@ -145,7 +88,7 @@ const PaymentList = () => {
       copySubscriptionHistorys.push(temp)
     })
     setSubscriptionHistorys(copySubscriptionHistorys)
-  }, [])
+  }, [pickedProducts])
 
   const finalData = {
     paymentFlag : false, //  false=첫결재
@@ -222,26 +165,6 @@ const PaymentList = () => {
   let year = today.getFullYear(); // 년도
   let month = today.getMonth() + 1;  // 월
   let date = today.getDate();  // 날짜
-  
-  function Productinfos(props) {
-    const products = props.products
-    return <div
-      style={{
-        display: 'flex',
-        textAlign: 'center',
-        flexDirection: 'column'
-      }}>
-      {products.map((product, idx)=>{
-        return <div style={{display: 'flex'}}>
-          {props.i === 0 ? <p style={{width: '30%'}}>사료</p> :
-          (props.i === 1 ? <p style={{width: '30%'}}>간식</p> :
-          <p style={{width: '30%'}}>장난감</p>)}
-          <p style={{width: '40%'}}>{product.name}</p>
-          <p style={{width: '30%'}}>{product.materials}</p>
-        </div>
-      })}
-    </div>
-  }
 
   return (
     <div
@@ -267,61 +190,7 @@ const PaymentList = () => {
         </div>
         <hr style={{ backgroundColor: '#CCAA90' }} />
         {infos.map((info, idx)=>{
-          return <div>
-            <PackageBox>
-              <div style={{width: '80%'}}>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <h2>{info[0]} - {info[6]}</h2>
-                  <p>월 {info[3]}원</p>
-                </div>
-                <p>{info[1]}</p>
-              </div>
-            </PackageBox>
-            <div  // 결제 목록
-              style={{
-                backgroundColor: '#FFFDFB',
-                height: '100%',
-                borderRadius: '0 0 5px 5px',
-                boxShadow: '0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)',
-                padding: '10px 0 20px 0',
-                position: 'relative',
-              }}>
-              <div style={{margin: '0 20px 0 20px',paddingTop: '20px'}}>
-                <div  // 표 제목
-                  style={{
-                    display: 'flex',
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    fontSize: '18px'
-                  }}>
-                  <p
-                    style={{
-                      width: '30%',
-                      margin: 'auto'
-                    }}>분류</p>
-                  <p
-                    style={{
-                      width: '40%',
-                      margin: 'auto'
-                    }}>제품명</p>
-                  <p
-                    style={{
-                      width: '30%',
-                      margin: 'auto'
-                    }}>주 원료 / 소재</p>
-                </div>
-                <hr style={{ backgroundColor: '#F3CEB2', height: '0.1px' }} />
-                {pickedProducts[idx].map((products, idx)=>{
-                  return <Productinfos products={products} i={idx} />
-                })}
-              </div>
-            </div>
-          </ div>
+          return <PackageBox info={info} pickedProducts={pickedProducts} index={idx} setPickedProducts={setPickedProducts}/>
         })}
         <div  // 결제 금액
           style={{

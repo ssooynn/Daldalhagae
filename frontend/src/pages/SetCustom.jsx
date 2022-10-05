@@ -221,7 +221,7 @@ const SetCustom = () => {
               </div>
             </div>
           </div>
-          <PurchaseList components2={[feedNum, snackNum, toyNum]} pets={pets} setFeedNum={setFeedNum} setSnackNum={setSnackNum} setToyNum={setFeedNum} />
+          <PurchaseList components2={[feedNum, snackNum, toyNum]} pets={pets} setFeedNum={setFeedNum} setSnackNum={setSnackNum} setToyNum={setToyNum} />
         </div>
       </div>
       <div  // 구독 서비스 설명
