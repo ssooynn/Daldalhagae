@@ -538,10 +538,10 @@ export default function MypagePetUpdate(props) {
               <StyledButton
                 key={idx}
                 onClick={() => {
-                  !selectedEffect.includes(idx) ? setSelectedEffect((selectedEffect) => [...selectedEffect, idx]) : setSelectedEffect(selectedEffect.filter((Button) => Button !== idx));
+                  !selectedEffect.includes(idx+1) ? setSelectedEffect((selectedEffect) => [...selectedEffect, idx+1]) : setSelectedEffect(selectedEffect.filter((Button) => Button !== idx+1));
                 }}
-                tagGray={!selectedEffect.includes(idx) ? true : false}
-                tagSelected={selectedEffect.includes(idx) ? true : false}
+                tagGray={!selectedEffect.includes(idx+1) ? true : false}
+                tagSelected={selectedEffect.includes(idx+1) ? true : false}
                 style={{
                   margin: "6px 3px ",
                   flex: "1 1 15%",
