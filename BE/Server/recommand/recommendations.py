@@ -28,7 +28,6 @@ def get_recommendations(pet_no:str,alergy:list):
     return recommendations
 def get_tdidf(item_no:str):
     print("method call")
-
     if item_no.startswith('f'):
         item = 'feed'
     elif item_no.startswith('s'):
@@ -39,6 +38,8 @@ def get_tdidf(item_no:str):
         recommendations = pickle.load(f)
     return recommendations[item_no]
 def alergy_filter(recs:list,alergy:list):
+    # print("진입")
+    # print(alergy)
     new_recs=recs.copy()
     # alergy =[1,3,4,5]
     for rec in recs:
@@ -46,7 +47,7 @@ def alergy_filter(recs:list,alergy:list):
             if item['item_sno']==rec:
                 for x in alergy:
                     if x in item['materials']:
-                        print("알러지필터링:"+rec+"에 "+str(x)+" 가 포함됨")
+                        # print("알러지필터링:"+rec+"에 "+str(x)+" 가 포함됨")
                         new_recs.remove(rec)
                         break
     return new_recs
