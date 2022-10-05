@@ -16,18 +16,16 @@ const ClickPet = styled.div`
     background-color : rgba(0, 0, 0, 0.2);
   }
 `
-const info = []
+
+const infos = []
+
 const PurchaseList = (props) => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false)
-  const showModal = () => {
-    setModalOpen(true)
-  }
+  const showModal = () => { setModalOpen(true) }
   const [bagOpen, setBagOpen] = useState(false)
-  const showBag = () => {
-    setBagOpen(true)
-  }
-  const pets = props.info[5]
+  const showBag = () => { setBagOpen(true) }
+  const pets = props.pets
   const showPets = []
   const [showPurchase, setShowPurchase] = useState([])
   const [checkPurchase, setCheckPurchase] = useState([])
@@ -41,6 +39,21 @@ const PurchaseList = (props) => {
     setShowPurchase(copyShowPurchase)
     setCheckPurchase(copyCheckPurchase)
   }
+
+  const [info, setInfo] = useState([])
+  useEffect(()=>{
+    if (props.name) {
+      setInfo([props.name, props.intro, props.components1, props.price, props.components2, pets])
+    } else {
+      setInfo([
+        '나만의 구독 서비스',
+        `사료: ${props.feedNum}, 간식: ${props.snackNum}, 장난감: ${props.toyNum}`,
+        ['', '', '',],
+        props.feedNum * 12900 + props.snackNum * 2900 + props.toyNum * 2900,
+        [props.feedNum, props.snackNum, props.toyNum],
+        pets])
+    }
+  }, [])
   function addPet(params, idx, e) {  // 구독 목록 추가
     e.preventDefault()
     if (checkPurchase.includes(params.name)) {
@@ -53,26 +66,22 @@ const PurchaseList = (props) => {
           justifyContent: 'end',
           alignItems: 'center'
         }}>
-        <p style={{ margin: '0 10px 0 0' }}>{props.info[0]} - {params.name}</p>
+        <p style={{ margin: '0 10px 0 0' }}>{info[0]} - {params.name}</p>
         <img onClick={(e) => deletePet(idx, e)} src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
       </div>])
       setCheckPurchase([...checkPurchase, params.name])
-      const temp = props.info.slice()
+      const temp = info.slice()
       temp.push(params.name)
-      info.push(temp)
-      // info[3] += info[4][0].length * 12900 + info[4][1].length * 2900 + info[4][2].length * 2900
+      infos.push(temp)
     }
   }
-  let totalPrice = Number(props.info[3]) * showPurchase.length
-  
+
   useEffect(()=>{
-    // infos.map((info, idx)=>{
-    //   if (info[0] === '나만의 구독 서비스') {
-    //     setTotalPrice(totalPrice + pickedProducts[idx][0].length * 12900 + pickedProducts[idx][1].length * 2900 + pickedProducts[idx][2].length * 2900)
-    //   }
-    // })
-    console.log(info)
-  }, [showPurchase])
+    console.log(infos)
+  }, [infos])
+
+  // let totalPrice = Number(props.info[3]) * showPurchase.length
+  let totalPrice = 0
 
   for (let i = 0; i < pets.length; i++) {
     showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], showPurchase.length, e) }}>
@@ -157,7 +166,7 @@ const PurchaseList = (props) => {
         addItemInBag(e)
       }}>장바구니
     </div>
-    {bagOpen && <ShoppingBag setBagOpen={setBagOpen} info={info} />}
+    {bagOpen && <ShoppingBag setBagOpen={setBagOpen} info={infos} />}
     <div  // 구독하기
       style={{
         width: '100%',
@@ -175,7 +184,7 @@ const PurchaseList = (props) => {
       }}
     >구독하기
     </div>
-    {modalOpen && <Modal setModalOpen={setModalOpen} info={info} />}
+    {modalOpen && <Modal setModalOpen={setModalOpen} info={infos} />}
   </div>
 }
 
