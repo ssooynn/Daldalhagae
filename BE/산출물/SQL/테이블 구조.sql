@@ -506,6 +506,7 @@ REFERENCES `SUBSCRIBTION` (
 ) ON DELETE CASCADE ON UPDATE CASCADE;
 
 alter table SUBSCRIBTION auto_increment=100;
+alter table PURCHASE auto_increment=100;
 alter table `ITEM_REVIEW` modify `PURCHASE_NO` INT UNSIGNED;
 
 

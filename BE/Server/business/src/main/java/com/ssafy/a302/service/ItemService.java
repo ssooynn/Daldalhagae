@@ -1,7 +1,11 @@
 package com.ssafy.a302.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class ItemService {
+import com.ssafy.a302.response.FastFeed;
+import com.ssafy.a302.response.FastSnack;
+
+public interface ItemService {
+	List<FastFeed> getFeed();
+	List<FastSnack> getSnack();
 }
