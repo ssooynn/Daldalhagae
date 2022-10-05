@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0241cfb4-dc86-42b2-97b8-3d607b3df36d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/controller/ItemContoroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/controller/ItemContoroller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/controller/RecommendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/controller/RecommendController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/repositoryImpl/SubscriptionsHistoryRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../business/src/main/java/com/ssafy/a302/repositoryImpl/SubscriptionsHistoryRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithm/popular.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/popular.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DBInfo.json" beforeDir="false" afterPath="$PROJECT_DIR$/DBInfo.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recommendations.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommendations.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +110,7 @@
       <workItem from="1664787241413" duration="1117000" />
       <workItem from="1664788384029" duration="1562000" />
       <workItem from="1664908372809" duration="3705000" />
-      <workItem from="1664937621524" duration="4888000" />
+      <workItem from="1664937621524" duration="27524000" />
     </task>
     <servers />
   </component>
@@ -126,13 +129,14 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/recommend$recommand.coverage" NAME="recommand Coverage Results" MODIFIED="1664910075908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/recommend$recommand.coverage" NAME="recommand Coverage Results" MODIFIED="1664972300749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/recommand$TDIDF.coverage" NAME="TDIDF Coverage Results" MODIFIED="1664713755946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/recommand$SVD.coverage" NAME="SVD Coverage Results" MODIFIED="1664722466375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/recommend$TFIDF.coverage" NAME="TFIDF Coverage Results" MODIFIED="1664868689753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
-    <SUITE FILE_PATH="coverage/recommend$popular.coverage" NAME="popular Coverage Results" MODIFIED="1664942689195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
-    <SUITE FILE_PATH="coverage/recommend$test_algo.coverage" NAME="test_algo Coverage Results" MODIFIED="1664735755066" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/recommend$popular.coverage" NAME="popular Coverage Results" MODIFIED="1664972292038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
+    <SUITE FILE_PATH="coverage/recommend$test_algo.coverage" NAME="test_algo Coverage Results" MODIFIED="1664971385920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithm" />
     <SUITE FILE_PATH="coverage/recommand$recommand.coverage" NAME="recommand Coverage Results" MODIFIED="1664737975904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/recommend$main.coverage" NAME="main Coverage Results" MODIFIED="1664727877252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/recommend$recommendations.coverage" NAME="recommendations Coverage Results" MODIFIED="1664967386016" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

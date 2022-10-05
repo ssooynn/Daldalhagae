@@ -1,6 +1,6 @@
 from typing import List
-
-from fastapi import Depends, FastAPI, HTTPException, Request, Response,BackgroundTasks
+from urllib.parse import urlencode
+from fastapi import Depends, FastAPI, HTTPException, Request, Response,BackgroundTasks,Query
 from sqlalchemy.orm import Session
 import crud, models, schemas
 import recommendations
@@ -23,7 +23,16 @@ async def db_session_middleware(request: Request, call_next):
     finally:
         request.state.db.close()
     return response
+@app.middleware("http")
+async def flatten_query_string_lists(request: Request, call_next):
 
+    flattened = []
+    for key, value in request.query_params.multi_items():
+        flattened.extend((key, entry) for entry in value.split(','))
+
+    request.scope["query_string"] = urlencode(flattened, doseq=True).encode("utf-8")
+
+    return await call_next(request)
 
 # Dependency
 def get_db(request: Request):
@@ -93,8 +102,8 @@ async def train_data(background_tasks: BackgroundTasks,db: Session = Depends(get
 
 # 추천리스트
 @app.get("/recommend-api/item/{pet_no}")
-async def recommendation(pet_no: str):
-    rec = recommendations.get_recommendations(pet_no)
+async def recommendation(pet_no: str, alergy: List[int] = Query(None)):
+    rec = recommendations.get_recommendations(pet_no,alergy)
     return rec
 @app.get("/recommend-api/item/tfidf/{item_no}")
 async def item_ifidf(item_no: str):

@@ -64,7 +64,7 @@ public class PaymentServiceImpl implements PaymentService {
 				log.info("------------------ 구독 종류 가져오기");
 				Subscribtion subscribtion;
 				int subscriptionNo = psreq.getSubscription().getSubscriptionNo();
-				if (subscriptionNo < 7) {
+				if (0<subscriptionNo && subscriptionNo < 7) {
 					log.info("---------------- 구독 종류 가져오기");
 					subscribtion = subRep.findById(subscriptionNo).get();
 				} else {
