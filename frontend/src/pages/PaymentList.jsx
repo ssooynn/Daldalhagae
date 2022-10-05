@@ -98,29 +98,6 @@ const PaymentList = () => {
   
   useEffect(()=>{
     infos.map((info, idx)=>{
-      // switch (info[0]) {
-      //   case 'Basic Package':
-      //     setSubcriptionNo(1)
-      //     break
-      //   case 'Play Package':
-      //     setSubcriptionNo(2)
-      //     break
-      //   case 'All In One Package':
-      //     setSubcriptionNo(3)
-      //     break
-      //   case 'DalDal Package':
-      //     setSubcriptionNo(4)
-      //     break
-      //   case 'Toy Package':
-      //     setSubcriptionNo(5)
-      //     break
-      //   case 'Light Package':
-      //     setSubcriptionNo(6)
-      //     break
-      //   default:
-      //     setSubcriptionNo(7)
-      //     break
-      // }
       if (info[0] === 'Basic Package') {
         subscriptionNo = 1
       } else if (info[0] === 'Play Package') {
@@ -136,6 +113,20 @@ const PaymentList = () => {
       } else {
         subscriptionNo = 7
       }
+      let feeds = []
+      let snacks = []
+      let toys = []
+      pickedProducts[idx].map((types, jdx)=>{
+        types.map((product, kdx)=>{
+          if (jdx === 0) {
+            feeds.push(product.sno)
+          } else if (jdx === 1) {
+            snacks.push(product.sno)
+          } else {
+            toys.push(product.sno)
+          }
+        })
+      })
       const temp = {
         subscriptionHistoryNo: subscriptionHistoryNo,
         petSno: info[7],
@@ -145,9 +136,9 @@ const PaymentList = () => {
           description: info[1],
           price: totalPrice
         },
-        feeds: pickedProducts[idx][0].sno,
-        snacks: pickedProducts[idx][1].sno,
-        toys: pickedProducts[idx][2].sno,
+        feeds: feeds,
+        snacks: snacks,
+        toys: toys,
       }
       setSubscriptionHistorys([...subscriptionHistorys, temp])
     })
@@ -159,12 +150,7 @@ const PaymentList = () => {
     subscriptionHistorys : subscriptionHistorys
   }
 
-  useEffect(()=>{
-    console.log('aaa', finalData)
-  }, [finalData])
-
   function Purchase(e, infos) {
-    console.log(infos)
     e.preventDefault()
     let packageName = ''
     if (infos.length > 1) {
@@ -187,7 +173,7 @@ const PaymentList = () => {
       m_redirect_url: REDIRECT_URL,
     };
     IMP.request_pay(data, callback);
-
+    console.log(finalData)
     axios({
       method: 'post',
       url: `https://j7a302.p.ssafy.io/api-gateway/business-api/payment`,
