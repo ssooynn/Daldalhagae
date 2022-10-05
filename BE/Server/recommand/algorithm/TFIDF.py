@@ -101,7 +101,7 @@ def train(type:str):
         sim_scores = [(i, c, idx2sno[i]) for i, c in
                       enumerate(cosine_matrix[idx]) if i != idx]
         list = [s for i,r,s in sorted(sim_scores, key=lambda x: x[1], reverse=True)] #정렬
-        result[sno]= list[:10]
+        result[sno]= list[:20]
     # pickle 저장.
     with open(ROOT_DIR + '/result/TFIDF_' + type + '.pkl', 'wb') as f:
         pickle.dump(result, f, protocol=pickle.HIGHEST_PROTOCOL)
