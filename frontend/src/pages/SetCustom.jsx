@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import imgA from '../assets/img/나만의구독서비스.png'
 import imgB from '../assets/img/자유구독2.png'
@@ -41,20 +42,14 @@ const SetCustom = () => {
       setToyNum(toyNum - 1)
     }
   }
-  const name = '나만의 구독 서비스'
-  const intro = `사료: ${feedNum}, 간식: ${snackNum}, 장난감: ${toyNum}`
-  const components1 = ['', '', '',]
-  const components2 = [feedNum, snackNum, toyNum]
-  const price = '0'
   const [pets, setPets] = useState([])
   const [feeds, setFeeds] = useState([])
   const [snacks, setSnacks] = useState([])
   const [toys, setToys] = useState([])
+  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
+  // Authorization: `Bearer` + `a.a.a`
 
   useEffect(() => {
-    const usersSno = 'uXJFRDEC7DuyYasedNxU1'
-    // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
-    // Authorization: `Bearer` + `a.a.a`
     axios({
       method: 'get',
       url: `https://j7a302.p.ssafy.io/api-gateway/business-api/subscription/detail/${usersSno}`,
@@ -72,7 +67,6 @@ const SetCustom = () => {
         console.log(err)
       })
   }, [])
-  const info = [name, intro, components1, price, components2, pets]
 
   return (
     <div
@@ -227,7 +221,7 @@ const SetCustom = () => {
               </div>
             </div>
           </div>
-          <PurchaseList info={info} />
+          <PurchaseList components2={[feedNum, snackNum, toyNum]} pets={pets} />
         </div>
       </div>
       <div  // 구독 서비스 설명

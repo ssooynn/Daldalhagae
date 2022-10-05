@@ -86,7 +86,7 @@ function FillPickedProducts(infos, pickedProducts, setPickedProducts) {
 
 const RecommendList = () => {
   const location = useLocation()
-  const infos = location.state.info  // name, intro, components1, price, components2, pets, pet
+  const infos = location.state.info  // name, intro, components1, price, components2, pets, pet, petNo
   console.log('recomlist', infos)
   const Navigate = useNavigate();
   const showToggle = []

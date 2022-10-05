@@ -55,27 +55,43 @@ const SubscribeDetail = () => {
   const [feeds, setFeeds] = useState([])
   const [snacks, setSnacks] = useState([])
   const [toys, setToys] = useState([])
-  // const usersSno = 'uXJFRDEC7DuyYasedNxU1'
-  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
-
+  const usersSno = useSelector((state)=>state.user.user.user?.usersSno)
+  // Authorization: `Bearer` + `a.a.a`
   useEffect(() => {
-    // Authorization: `Bearer` + `a.a.a`
-    axios({
-      method: 'get',
-      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/subscription/detail/${usersSno}`,
-      headers: {
-        'Authorization': `Bearer a.a.a`
-      }
-    })
-      .then((res) => {
-        setPets(res.data.pets)
-        setFeeds(res.data.feeds)
-        setSnacks(res.data.snacks)
-        setToys(res.data.toys)
+    if (usersSno) {
+      axios({
+        method: 'get',
+        url: `https://j7a302.p.ssafy.io/api-gateway/business-api/subscription/detail/${usersSno}`,
+        headers: {
+          'Authorization': `Bearer a.a.a`
+        }
       })
-      .catch((err) => {
-        console.log(err)
+        .then((res) => {
+          setPets(res.data.pets)
+          setFeeds(res.data.feeds)
+          setSnacks(res.data.snacks)
+          setToys(res.data.toys)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      axios({
+        method: 'get',
+        url: `https://j7a302.p.ssafy.io/api-gateway/business-api/subscription/detail/0`,
+        headers: {
+          'Authorization': `Bearer a.a.a`
+        }
       })
+        .then((res) => {
+          setFeeds(res.data.feeds)
+          setSnacks(res.data.snacks)
+          setToys(res.data.toys)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }, [])
   let image = undefined
   if (name === 'Basic Package') {
@@ -113,7 +129,9 @@ const SubscribeDetail = () => {
           <h2 style={{ margin: 'auto' }}>{name}</h2>
           <p style={{ margin: '0.5rem auto', fontSize: '12px' }}>{intro}</p>
           <h4 style={{ margin: 'auto' }}>월 {price}원</h4>
-          <p style={{ margin: '1.5rem 0 0.5rem 0' }}>누구를 위한 사료인가요?</p>
+          {usersSno ? 
+          <p style={{ margin: '1.5rem 0 1rem 0' }}>누구를 위한 사료인가요?</p> :
+          <p style={{ margin: '1.5rem 0 1rem 0' }}>구독을 위해 로그인부터 진행해주세요.</p>}
           <PurchaseList pets={pets} name={name} intro={intro} components1={components1} components2={components2} price={price} />
         </div>
       </div>
