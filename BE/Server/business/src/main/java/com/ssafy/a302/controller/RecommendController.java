@@ -1,8 +1,16 @@
 package com.ssafy.a302.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.ssafy.a302.domain.*;
+import com.ssafy.a302.repository.FeedRepository;
+import com.ssafy.a302.repository.SnackRepository;
+import com.ssafy.a302.response.FeedTemp;
+import com.ssafy.a302.response.SnackTemp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +39,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class RecommendController {
 	private final RecommendService reService;
-	
 
 	@ApiOperation(value = "상품 추천")
 	@PostMapping("/item")
@@ -40,5 +47,6 @@ public class RecommendController {
 		return recommendRes;
 //		return null;
 	}
+
 
 }
