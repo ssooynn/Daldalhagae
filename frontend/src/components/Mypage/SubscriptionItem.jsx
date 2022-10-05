@@ -153,7 +153,7 @@ return(
             onPointerOut={() => setIsHover(false)}>
 
           <div>
-            <div style={titleStyle}>{subscription?.subscriptionName} <span style={subTitleStyle}>[ {onGoing} ]</span></div>
+            <div style={titleStyle}>{subscription?.subscriptionName} <span style={subTitleStyle}>[ {onGoing} | {subscription?.petName} ]</span></div>
           </div>
           <FlexBox justify='space-between' align='end' padding='0px'>
             <FlexBox direction='column' align='start' padding='0px'>
