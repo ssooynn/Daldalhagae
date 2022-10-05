@@ -27,6 +27,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import Dots from '../components/Dots';
 import { useNavigate } from 'react-router-dom';
+import { ReviewApi, UserCountApi } from '../api/main';
 
 const Outer = styled.div`
     height: 100vh;
@@ -39,7 +40,7 @@ const Outer = styled.div`
 
 export default function Main() {
   const Navigate = useNavigate();
-
+  const [reviewList, setReviewList] = useState([]);
   // 애니메이션 기능
   const fadeInRef = useSpringRef();
   const fadeInRef2 = useSpringRef();
@@ -76,7 +77,7 @@ export default function Main() {
     config: { duration: 300 },
   })
 
-  const [number, setNumber] = useState(12089);
+  const [number, setNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const numberCount = useSpring({
     number: open ? number : 0,
@@ -145,6 +146,23 @@ export default function Main() {
     };
 
   }, [page]);
+
+  useEffect(() => {
+    UserCountApi((res) => {
+      console.log(res);
+      setNumber(Number(res.data));
+    }, (err) => {
+      console.log(err);
+    })
+
+    ReviewApi((res) => {
+      console.log(res);
+      setReviewList(res.data);
+      console.log(res.data);
+    }, (err) => {
+      console.log(err);
+    })
+  }, [])
 
   //가운데 하단에 버튼 동작
   function ScrollDown() {
@@ -265,7 +283,7 @@ export default function Main() {
         <MainContent>
           <FlexBox direction="column" justify="space-evenly" align="center" width="70%">
             <StyledText weight="500" size="28px">당신을 위한 구독 서비스</StyledText>
-            <StyledButton XSmallIvory style={{ alignSelf: "flex-end" }}>더보기</StyledButton>
+            <StyledButton XSmallIvory style={{ alignSelf: "flex-end" }} onClick={(e) => Navigate("/subscribeList")}>더보기</StyledButton>
             <MainSubscribeCard />
           </FlexBox>
         </MainContent>
@@ -279,7 +297,7 @@ export default function Main() {
               <animated.div><StyledText weight="600" size="36px">{numberCount.number.to(x => x.toFixed(0))}</StyledText></animated.div>
               <StyledText weight="500" size="24px">명이 이용했어요</StyledText>
             </FlexBox>
-            <MainReviewCard />
+            <MainReviewCard reviewList={reviewList} />
           </FlexBox>
         </MainContent>
       </div>

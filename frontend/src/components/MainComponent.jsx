@@ -157,54 +157,27 @@ export function StyledReviewImg({ src, alt, ...props }) {
 }
 
 // 메인 후기 card list
-export function MainReviewCard() {
+export function MainReviewCard({ reviewList }) {
+    const rateList = ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"]
+    console.log((reviewList));
     return (
         <FlexBox direction="row" justify="space-between" align="center" width="100%" height="100%">
-            {/* 카드 하나 */}
-            <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
-                <StyledReviewImg src={AllInOnePackage} alt="사료 사진"></StyledReviewImg>
-                <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
-                    <FlexBox direction="row" justify="start" align="end">
-                        <StyledText size="18px" weight="500" margin="10px 10px 2px 0px">Yeon</StyledText>
-                        <StyledText size="14px" weight="500" margin="10px 10px 2px 2px">[ 나만의 package ]</StyledText>
+            {reviewList.length == 3 ? reviewList.map((review, idx) => (
+                <FlexBox key={idx} direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
+                    <StyledReviewImg src={review.image} alt="사료 사진"></StyledReviewImg>
+                    <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
+                        <FlexBox direction="row" justify="start" align="end">
+                            <StyledText size="18px" weight="500" margin="5px 10px 2px 0px">{review.userName}</StyledText>
+                            <StyledText size="14px" weight="500" margin="5px 10px 2px 2px">[{review.subName}]</StyledText>
+                            <StyledText size="12px" weight="300" margin="2px 10px">{review.date[0]}년 {review.date[1]}월 {review.date[2]}일</StyledText>
+                        </FlexBox>
+                        <StyledText size="14px" weight="300" margin="2px 10px">{rateList[review.rate - 1]}</StyledText>
+                        <div style={{ marginTop: "20px", alignSelf: "flex-start" }}>
+                            <StyledText size="15px" weight="400" margin="2px 10px">{review.content}</StyledText>
+                        </div>
                     </FlexBox>
-                    <StyledText size="14px" weight="300" margin="2px 10px">⭐⭐⭐⭐⭐</StyledText>
-                    <div style={{ marginTop: "20px", alignSelf: "flex-start" }}>
-                        <StyledText size="15px" weight="400" margin="2px 10px">아주 좋은걸요dddddddddddddd</StyledText>
-                        <StyledText size="15px" weight="400" margin="2px 10px">강추합니다dddddddddd</StyledText>
-                    </div>
                 </FlexBox>
-            </FlexBox>
-            {/* 카드 하나 */}
-            <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
-                <StyledReviewImg src={AllInOnePackage} alt="사료 사진"></StyledReviewImg>
-                <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
-                    <FlexBox direction="row" justify="start" align="end">
-                        <StyledText size="18px" weight="500" margin="10px 10px 2px 0px">Yeon</StyledText>
-                        <StyledText size="14px" weight="500" margin="10px 10px 2px 2px">[ 나만의 package ]</StyledText>
-                    </FlexBox>
-                    <StyledText size="14px" weight="300" margin="2px 10px">⭐⭐⭐⭐⭐</StyledText>
-                    <div style={{ marginTop: "20px", alignSelf: "flex-start" }}>
-                        <StyledText size="15px" weight="400" margin="2px 10px">아주 좋은걸요dddddddddddddd</StyledText>
-                        <StyledText size="15px" weight="400" margin="2px 10px">강추합니다dddddddddd</StyledText>
-                    </div>
 
-                </FlexBox>
-            </FlexBox>
-            {/* 카드 하나 */}
-            <FlexBox direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
-                <StyledReviewImg src={AllInOnePackage} alt="사료 사진"></StyledReviewImg>
-                <FlexBox direction="column" justify="center" align="flex-start" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
-                    <FlexBox direction="row" justify="start" align="end">
-                        <StyledText size="18px" weight="500" margin="10px 10px 2px 0px">Yeon</StyledText>
-                        <StyledText size="14px" weight="500" margin="10px 10px 2px 2px">[ 나만의 package ]</StyledText>
-                    </FlexBox>
-                    <StyledText size="14px" weight="300" margin="2px 10px">⭐⭐⭐⭐⭐</StyledText>
-                    <div style={{ marginTop: "20px", alignSelf: "flex-start" }}>
-                        <StyledText size="15px" weight="400" margin="2px 10px">아주 좋은걸요dddddddddddddd</StyledText>
-                        <StyledText size="15px" weight="400" margin="2px 10px">강추합니다dddddddddd</StyledText>
-                    </div>
-                </FlexBox>
-            </FlexBox>
+            )) : <div>아직 리뷰가 없어요ㅠ</div>}
         </FlexBox>)
 }

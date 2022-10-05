@@ -23,11 +23,6 @@ export default function LastOptions(props) {
     console.log(props);
     const options = [
         {
-            text: "지금 바로 구독 시작하기",
-            handler: props.actions.handleStart,
-            id: 1,
-        },
-        {
             text: "처음으로 돌아가기",
             handler: props.actionProvider.handleBack,
             id: 2,
