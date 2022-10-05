@@ -297,6 +297,7 @@ const Toggle = (props) => {
         kind={'사료'}
         packageNo={props.packageNo}
         />
+        {reviewOpen && reviewCategory==="사료" && <MoreReview setReviewOpen={setReviewOpen} info={feeds[index]} kind={'사료'} />}
         <CarouselFeed  // 간식
           products1={snacks}
           checkProducts={checkSnacks}
@@ -453,7 +454,7 @@ const Toggle = (props) => {
       </div>
       default: // 자유 구독
       return <div style={{ margin: '0 50px 0 50px' }}>
-        {feeds.length > 0 ?
+        {props.numbers[0] > 0 ?
         <div>
           <CarouselFeed  // 사료
             products1={feeds}
@@ -472,7 +473,7 @@ const Toggle = (props) => {
         </div> :
         <div></div>}
       
-      {snacks.length > 0 ?
+      {props.numbers[1] > 0 ?
         <div>
           <CarouselFeed  // 간식
             products1={snacks}
@@ -491,7 +492,7 @@ const Toggle = (props) => {
         </div> :
         <div></div>}
       
-      {toys.length > 0 ?
+      {props.numbers[2] > 0 ?
         <div>
           <CarouselFeed  // 장난감
             products1={toys}

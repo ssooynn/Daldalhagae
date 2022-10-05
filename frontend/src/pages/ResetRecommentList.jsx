@@ -2,70 +2,62 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Toggle from '../components/Toggle'
 import { StyledButton } from '../components/CommonComponent';
+import CarouselPickedProducts from '../components/CarouselPickedProducts';
 import Footer from '../components/Footer';
 
-const ResetRecommentList = (s) => {
+const ResetRecommentList = () => {
   const location = useLocation()
-  const infos = location.state.info  // name, intro, components1, price, components2, pets, pet
-  const showToggle = []
-  useEffect(()=>{
-    infos.map((info, idx)=>{
-      info.push([])
-      showToggle.push(<Toggle info={infos[idx]} />)
-    }, [])
-  })
-  console.log(infos)
-  for (let i = 0; i < infos.length; i++) {
-    showToggle.push(<Toggle info={infos[i]} />)
-  }
+  const info = location.state  // name, intro, components1, price, components2, pets, pet, petSno
+  const components2 = [info.feeds.length, info.snacks.length, info.toys.length]
+  const  data = [
+      info.subscriptionName,
+      `사료: ${info.feeds.length}, 간식: ${info.snacks.length}, 장난감: ${info.toys.length}`,
+      ['', '', ''],
+      info.price,
+      components2,
+      info.petName, // 전체 펫
+      info.petName,  // 현재 펫 이름
+      info.petSno 
+    ]
+  console.log(info)
+  // for (let i = 0; i < infos.length; i++) {
+  //   showToggle.push(<Toggle info={infos[i]} />)
+  // }
   const Navigate = useNavigate();
-  function GoPaymentList() {
-    let flag = false
-    infos.map((info, idx)=>{
-      if (info[7].length === 0) {
-        flag = true
-      }
-    })
-    if (flag) {
-      if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
-        Navigate("/paymentList", {state: infos})
-      } else {}
-      console.log(true)
-    } else {
-      Navigate("/paymentList", {state: infos})
-    }
+  function GoMypage() {
+    // let countProducts = 0
+    // pickedProducts.map((subcription, idx)=>{subcription.map((type, jdx)=>{countProducts += type.length})})
+    // if (totalCount !== countProducts) {
+    //   if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
+    //     FillPickedProducts(infos, pickedProducts, setPickedProducts)
+    //     Navigate("/mypage", {state: {
+    //       pickedProducts: pickedProducts,
+    //       infos: infos
+    //     }})
+    //   } else {alert('신중하게 생각하고 누르십쇼;;')}
+    // } else {
+    //   Navigate("/mypage", {state: {
+    //     pickedProducts: pickedProducts,
+    //     infos: infos
+    //   }})
+    // }
   }
   function PickedProducts(props) {
-    const info = props.info
-    return <div style={{display:'flex'}}>
-      {info[7].map((product, jdx)=>{
-        return <div style={{
-          display:'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          margin: 'auto 5px',
-          backgroundColor: 'white',
-          borderRadius: '10px',
-          padding: '10px',
-          height: '170px',
-          width: '170px',
-          boxShadow: '1px 1px 1px 1px #dab8b8'
-          }}>
-          <img src={product.image} width='150px' alt="" />
-          <p>{product.name}</p>
-        </div>
-      })}
+    const types = props.types
+    return <div>
+      <CarouselPickedProducts types={types} />
     </div>
   }
   function Packages() {
+    console.log('asdfdaf', info)
     return <div>
-    {infos.map((info, idx)=>{
-        return <div>
-          <h4>{info[0]} - {info[6]} ({info[1]})</h4>
-          {info.length > 7 ? 
-          <PickedProducts info={info} /> :
-          <div></div>}
-        </div>})}
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <h3>{info.subscriptionName} - {info.petName}</h3>
+        <p>(사료: {info.feeds.length}, 간식: {info.snacks.length}, 장난감: {info.toys.length})</p>
+      </div>
+      {info.length > 7 ? 
+      <PickedProducts info={info} /> :
+      <div></div>}
     </div>
   }
   return (
@@ -99,7 +91,7 @@ const ResetRecommentList = (s) => {
             }}>선택이 부족한 상품은 추천에 따라 자동 선택됩니다.</p>
         </div>
         <hr style={{backgroundColor: '#CCAA90'}}/>
-        {showToggle}
+        <Toggle info={data} flag={true} subscriptionHistoryNo={info.subscriptionHistoryNo} />
         <div  // 선택한 목록
           style={{
             backgroundColor: '#F6F1EC',
@@ -115,7 +107,7 @@ const ResetRecommentList = (s) => {
         </div>
       </div>
       <p>선택이 부족한 상품은 추천에 따라 자동 선택됩니다.</p>
-    <StyledButton onClick={GoPaymentList} SmallWhite style={{width: '250px', margin: '50px 0 200px 0'}}>선택 완료</StyledButton>
+    <StyledButton onClick={GoMypage} SmallWhite style={{width: '250px', margin: '50px 0 200px 0'}}>선택 완료</StyledButton>
     <Footer />
     </div>
   )

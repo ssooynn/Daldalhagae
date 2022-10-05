@@ -101,16 +101,12 @@ const RecommendList = () => {
   for (let i = 0; i < infos.length; i++) {
     showToggle.push(<Toggle info={infos[i]} index={i} products={pickedProducts} setPickedProducts={setPickedProducts} packageNo={i} />)
   }
-  const [totalCount, setTotalCount] = useState(0)
-  useEffect(()=>{
-    infos.map((info, idx)=>{
-      setTotalCount(totalCount + info[4].reduce((a, b) => a+b, 0))
-    })
-  }, [])
-  
+  let totalCount = 0
+  infos.map((info, idx)=>{totalCount += info[4].reduce((a, b) => a+b, 0)})
   function GoPaymentList() {
     let countProducts = 0
     pickedProducts.map((subcription, idx)=>{subcription.map((type, jdx)=>{countProducts += type.length})})
+    console.log(totalCount, countProducts)
     if (totalCount !== countProducts) {
       if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
         FillPickedProducts(infos, pickedProducts, setPickedProducts)

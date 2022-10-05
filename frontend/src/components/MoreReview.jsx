@@ -18,10 +18,11 @@ function Reviews(props) {
   const [showReviews, setShowReviews] = useState([])
   const [itemSno, setItemSno] = useState(props.itemSno)
   const [page, setPage] = useState(0)
-  const [size, setSize] = useState(2)
+  const [size, setSize] = useState(5)
   const [sort, setSort] = useState('date')
   const [showPaginator, setShowPaginator] = useState([])
   const [loading, setLoading] = useState(true)
+  let totalPages = 10
   function MovePage(e, i) {
     e.preventDefault()
     setPage(i)
@@ -38,7 +39,11 @@ function Reviews(props) {
       }
     })
     .then((res)=>{
-      for (let i = 0; i < 10; i++) {
+      console.log(res.data.totalPages)
+      if (res.data.totalPages < totalPages) {
+        totalPages = res.data.totalPages
+      }
+      for (let i = 0; i < totalPages; i++) {
         showPaginator.push(<p onClick={(e)=>MovePage(e, i)} style={{margin: 'auto 3px', cursor: 'pointer'}}>{i+1}</p>)
       }
       const copyShowPaginator = [...showPaginator]
@@ -104,6 +109,7 @@ function Reviews(props) {
 }
 
 function MoreReview(props) {
+  console.log(props)
   const info = props.info
   function closeReview() { // 모달 끄기
     props.setReviewOpen(false)
@@ -142,8 +148,8 @@ function MoreReview(props) {
                 width: '300px',
                 fontSize: '10px'
               }}>
-              <p>주원료</p>
-              <p>{info.materials}</p>
+              <p style={{fontSize: '14px'}}>주원료</p>
+              <p style={{fontSize: '14px'}}>{info.materials}</p>
             </div>
             <div
               style={{
@@ -152,8 +158,8 @@ function MoreReview(props) {
                 width: '300px',
                 fontSize: '10px'
               }}>
-              <p>급여 대상</p>
-              <p>{info.targets}</p>
+              <p style={{fontSize: '14px'}}>급여 대상</p>
+              <p style={{fontSize: '14px'}}>{info.targets}</p>
             </div>
             <div
               style={{
@@ -162,8 +168,8 @@ function MoreReview(props) {
                 width: '300px',
                 fontSize: '10px'
               }}>
-              <p>입자크기</p>
-              <p>{info.particle}</p>
+              <p style={{fontSize: '14px'}}>입자크기</p>
+              <p style={{fontSize: '14px'}}>{info.particle}</p>
             </div>
             <div
               style={{
@@ -172,8 +178,8 @@ function MoreReview(props) {
                 width: '300px',
                 fontSize: '10px'
               }}>
-              <p>기능</p>
-              <p>{info.effects}</p>
+              <p style={{fontSize: '14px'}}>기능</p>
+              <p style={{fontSize: '14px'}}>{info.effects}</p>
             </div>
           </div>
         </div>)
@@ -183,8 +189,8 @@ function MoreReview(props) {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-        <div>
-          <img src={info.image} width='200px' height='150px' alt="img" />
+        <div style={{width: '300px'}}>
+          <img src={info.image} alt="img" />
           <p>{info.name}</p>
         </div>
         <div>
@@ -195,8 +201,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p>주원료</p>
-            <p>{info.materials}</p>
+            <p style={{fontSize: '14px'}}>주원료</p>
+            <p style={{fontSize: '14px'}}>{info.materials}</p>
           </div>
           <div
             style={{
@@ -205,8 +211,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p>급여 대상</p>
-            <p>{info.targets}</p>
+            <p style={{fontSize: '14px'}}>급여 대상</p>
+            <p style={{fontSize: '14px'}}>{info.targets}</p>
           </div>
           <div
             style={{
@@ -215,8 +221,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p>기능</p>
-            <p>{info.effects}</p>
+            <p style={{fontSize: '14px'}}>기능</p>
+            <p style={{fontSize: '14px'}}>{info.effects}</p>
           </div>
         </div>
       </div>)
@@ -238,8 +244,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p>소재</p>
-            <p>{info.materials}</p>
+            <p style={{fontSize: '14px'}}>소재</p>
+            <p style={{fontSize: '14px'}}>{info.materials}</p>
           </div>
           <div
             style={{
@@ -248,8 +254,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p>기능</p>
-            <p>{info.effects}</p>
+            <p style={{fontSize: '14px'}}>기능</p>
+            <p style={{fontSize: '14px'}}>{info.effects}</p>
           </div>
         </div>
       </div>)
@@ -268,14 +274,15 @@ function MoreReview(props) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        cursor: 'default'
+        cursor: 'default',
+        zIndex: '999'
       }}>
       <div
         className='scrollBar'
         onClick={(e)=>e.stopPropagation()}
         style={{
           backgroundColor: 'white',
-          width: '80%',
+          width: '60%',
           padding: '2rem 0 1rem 0',
           zIndex: '99',
           position: 'absolute',
@@ -287,7 +294,7 @@ function MoreReview(props) {
         }}>
         <div
           style={{
-            margin: '0 6rem 0 6rem'
+            margin: '0 4rem'
           }}>
           <p
             onClick={closeReview}
