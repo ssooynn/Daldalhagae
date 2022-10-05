@@ -23,9 +23,16 @@ insert into SUBSCRIBTION_HISTORY(PET_SNO, USERS_SNO, START_DATE, END_DATE, AUTO_
 ('pfIXrHnfzcKy7zGF1Ha9T', 'udZ0a32z4Ur2LvGlmEXsN', '2022-09-20', '2022-10-19', 2),
 ('pfIXrHnfzcKy7zGF1Ha9T', 'udZ0a32z4Ur2LvGlmEXsN', '2022-09-20', '2022-10-19', 0);
 
+select * from PET;
 
+
+	
+	
+	
 insert into SUBSCRIBTION_HISTORY(PET_SNO, USERS_SNO, START_DATE, END_DATE, AUTO_PAYMENT_FLAG) values
 ('p00PNeXOyk6PVRIRPH6pO', 'ujfFzytsMIYr4hguEqZnv', '2022-07-20', '2022-08-19', 1);
+select * from SUBSCRIBTION_HISTORY;
+update SUBSCRIBTION_HISTORY SET PET_SNO='p09cIsG6s1xTzzNIo3sbf', USERS_SNO='umyQjUlA9srjAGXHd28nr' where SUBSCRIBTION_HISTORY_NO=6;
 
 
 insert into PRODUCT_TYPE(PRODUCT_TYPE_NO,NAME) values
@@ -60,11 +67,15 @@ insert into SUBSCRIBTION_PRODUCT_TYPE(PRODUCT_TYPE_NO, SUBSCRIBTION_NO) values
 (2,6),
 (3,6);
 
+
+
 insert into SUBSCRIBTION_HISTORY_SUBSCRIBTION(SUBSCRIBTION_HISTORY_NO, SUBSCRIBTION_NO) values
-(1,1);
+(6,6);
 
 insert into PURCHASE(SUBSCRIBTION_HISTORY_NO, ITEM_SNO) values
-(1,'f05C8ZXZjHZrZaeUB8eYN');
+(6,'f0i4tJenuSL6PgjIhxSae'),
+(6,'s07dPUgvRaaiV5eGyOFna'),
+(6,'T02qC8B69HE3Fw6M4BN30');
 
 
 insert into SERVICE_REVIEW(USERS_SNO, SUBSCRIBTION_HISTORY_NO, RATE, REG_DATE) values
@@ -96,9 +107,18 @@ select i.ITEM_REVIEW_NO as itemReviewNo, i.USERS_SNO as usersSno, i.PET_SNO as p
 join USERS u on u.USERS_SNO = i.USERS_SNO 
 join PET p on p.PET_SNO = i.PET_SNO;
 
+-- 1	p00PNeXOyk6PVRIRPH6pO	ujfFzytsMIYr4hguEqZnv
+-- 2	p02dWgOIy92NQxZDuavJz	uOapjwPpAa9QMTQMXyMX6
+-- 3	p02LJ80IMABsozkHRRniO	uJXOM0rX1PE4tKIwplezc
+-- 4	p07PP5FXy22YdV1Vv1a0B	udV93558Sxfx3QvUgVZr0
+-- 5	p082nfq3eFqucmsOWuYz1	u6zaymNwLGflwlp9WPl7S
+-- 6	p09cIsG6s1xTzzNIo3sbf	umyQjUlA9srjAGXHd28nr
 
-select s.* from ITEM_REVIEW s;
+insert into SERVICE_REVIEW(USERS_SNO, SUBSCRIBTION_HISTORY_NO, REG_DATE , RATE, CONTENT, IMAGE) value('umyQjUlA9srjAGXHd28nr', 6,"2022-08-18", 5,"알러지가 심해서 아무거나 못먹였는데 알아서 걸러주니 마음이 편안하네요","초코_20221004050615.jpg");
+update SERVICE_REVIEW set IMAGE='초코_20221005050618.jpg';
 
+select * from FEED_MATERIAL;
+select * from SERVICE_REVIEW;
 select * from PARTICLE;
 select * from PURCHASE;
 select * from USERS;
@@ -118,3 +138,4 @@ select * from PET_EFFECT;
 select * from SUBSCRIBTION;
 select * from PRODUCT_TYPE;
 select * from ITEM_REVIEW;
+select * from TARGET;
