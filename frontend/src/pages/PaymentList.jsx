@@ -1,4 +1,5 @@
 import React,{ useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { StyledButton } from '../components/CommonComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -66,12 +67,10 @@ const PaymentList = () => {
   const location = useLocation()
   const infos = location.state.infos
   const pickedProducts = location.state.pickedProducts
-  // console.log('info', infos)
   const Navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([])
+  const usersSno = useSelector((state)=>state.user.user.user.usersSno)
   useEffect(() => {
-    const usersSno = 'udZ0a32z4Ur2LvGlmEXsN'
-    // const usersSno = useSelector((state)=>state.user.user.user.usersSno)
     // Authorization: `Bearer` + `a.a.a`
     axios({
       method: 'get',
@@ -87,61 +86,82 @@ const PaymentList = () => {
         console.log(err)
       })
   }, [])
-  // console.log('user', userInfo)
+  
   const [totalPrice, setTotalPrice] = useState(infos.map((info)=>{return Number(info[3])}).reduce((a, b)=>a+b, 0))
   
   const REDIRECT_URL = "http://localhost:3000/paymentCheck";
 
-  const subscriptionHistorys = []
-  const [subscriptionNo, setSubcriptionNo] = useState(0)
+  const [subscriptionHistorys, setSubscriptionHistorys] = useState([])
+  // const [subscriptionNo, setSubcriptionNo] = useState(0)
+  let subscriptionNo = 0
   const subscriptionHistoryNo = 0
-  const petSno = 'pfIXrHnfzcKy7zGF1Ha9T'
+  
   useEffect(()=>{
     infos.map((info, idx)=>{
-      switch (info[0]) {
-        case 'Basic Package':
-          setSubcriptionNo(1)
-          break
-        case 'Play Package':
-          setSubcriptionNo(2)
-          break
-        case 'All In One Package':
-          setSubcriptionNo(3)
-          break
-        case 'DalDal Package':
-          setSubcriptionNo(4)
-          break
-        case 'Toy Package':
-          setSubcriptionNo(5)
-          break
-        case 'Light Package':
-          setSubcriptionNo(6)
-          break
-        default:
-          setSubcriptionNo(7)
-          break
+      // switch (info[0]) {
+      //   case 'Basic Package':
+      //     setSubcriptionNo(1)
+      //     break
+      //   case 'Play Package':
+      //     setSubcriptionNo(2)
+      //     break
+      //   case 'All In One Package':
+      //     setSubcriptionNo(3)
+      //     break
+      //   case 'DalDal Package':
+      //     setSubcriptionNo(4)
+      //     break
+      //   case 'Toy Package':
+      //     setSubcriptionNo(5)
+      //     break
+      //   case 'Light Package':
+      //     setSubcriptionNo(6)
+      //     break
+      //   default:
+      //     setSubcriptionNo(7)
+      //     break
+      // }
+      if (info[0] === 'Basic Package') {
+        subscriptionNo = 1
+      } else if (info[0] === 'Play Package') {
+        subscriptionNo = 2
+      } else if (info[0] === 'All In One Package') {
+        subscriptionNo = 3
+      } else if (info[0] === 'DalDal Package') {
+        subscriptionNo = 4
+      } else if (info[0] === 'Toy Package') {
+        subscriptionNo = 5
+      } else if (info[0] === 'Light Package') {
+        subscriptionNo = 6
+      } else {
+        subscriptionNo = 7
       }
-      subscriptionHistorys.push({
+      const temp = {
         subscriptionHistoryNo: subscriptionHistoryNo,
-        perSno: petSno,
+        petSno: info[7],
         subscription: {
           subscriptionNo: subscriptionNo,
           name: info[0],
           description: info[1],
           price: totalPrice
         },
-        feeds: pickedProducts[idx][0],
-        snacks: pickedProducts[idx][1],
-        toys: pickedProducts[idx][2],
-      })
+        feeds: pickedProducts[idx][0].sno,
+        snacks: pickedProducts[idx][1].sno,
+        toys: pickedProducts[idx][2].sno,
+      }
+      setSubscriptionHistorys([...subscriptionHistorys, temp])
     })
   }, [])
 
   const finalData = {
-    paymentFlag : "false", //  false=첫결재
-    usersSno : "udZ0a32z4Ur2LvGlmEXsN",
+    paymentFlag : false, //  false=첫결재
+    usersSno : usersSno,
     subscriptionHistorys : subscriptionHistorys
   }
+
+  useEffect(()=>{
+    console.log('aaa', finalData)
+  }, [finalData])
 
   function Purchase(e, infos) {
     console.log(infos)
