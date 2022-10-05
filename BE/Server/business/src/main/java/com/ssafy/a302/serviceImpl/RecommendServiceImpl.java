@@ -21,6 +21,7 @@ import com.ssafy.a302.repository.ItemReviewRepository;
 import com.ssafy.a302.repository.PaymentRepository;
 import com.ssafy.a302.repository.SnackRepository;
 import com.ssafy.a302.repository.ToyRepository;
+import com.ssafy.a302.request.RecoReq;
 import com.ssafy.a302.response.RecommendRes;
 import com.ssafy.a302.service.RecommendService;
 
@@ -40,8 +41,8 @@ public class RecommendServiceImpl implements RecommendService{
 	private final PaymentRepository paymentRep;
 	
 	@Override
-	public RecommendRes recommend(String petSno) {
-		ResponseEntity<Map> responseEntity = requestFast(petSno);
+	public RecommendRes recommend(RecoReq recoReq) {
+		ResponseEntity<Map> responseEntity = requestFast(recoReq.getPetSno());
 		List<String> feeds = (List<String>) responseEntity.getBody().get("feeds");
 		List<String> snacks = (List<String>) responseEntity.getBody().get("snacks");
 		List<String> toys = (List<String>) responseEntity.getBody().get("toys");
