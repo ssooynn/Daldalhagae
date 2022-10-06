@@ -151,11 +151,6 @@ const PackageBox = (props) => {
 		props.setPickedProducts(copyPickedProduct)
 	}, [feeds, snacks, toys])
 
-	// useEffect(()=>{
-	// 	console.log('f', feeds)
-	// 	console.log('결제목록 자동추천', pickedProducts)
-	// }, [feeds])
-
   function Productinfos(props) {
     const products = props.products
     return <div
