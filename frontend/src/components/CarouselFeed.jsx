@@ -9,9 +9,9 @@ function Reviews(props) {
   switch (props.kind) {
     case '사료':
       return <div> {/* 리뷰 */}
-        <p>{props.reviewNum}명이 이 {props.kind}를 받았어요</p>
+        <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
         <div>
-          <p style={{ margin: 'auto' }}>최근 리뷰</p>
+          <p style={{ margin: 'auto', fontSize: '14px', fontWeight: 'bold' }}>최근 리뷰</p>
         </div>
         <div>
         {reviews.map((review, idx)=>{
@@ -34,8 +34,8 @@ function Reviews(props) {
               break;
           }
           return <div>
-            <div style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ color: 'orange' }}>{star}</p>
+            <div style={{ margin: 'auto', display: 'flex', fontSize: '12px', justifyContent: 'space-between' }}>
+              <p style={{ color: 'orange', fontSize: '12px' }}>{star}</p>
               <p>{review.usersName}</p>
             </div>
             <p className='content'>{review.content}</p>
@@ -45,9 +45,9 @@ function Reviews(props) {
     </div>
     case '간식':
       return <div> {/* 리뷰 */}
-      <p>{props.reviewNum}명이 이 {props.kind}을 받았어요</p>
+      <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
       <div>
-        <p style={{ margin: 'auto' }}>최근 리뷰</p>
+          <p style={{ margin: 'auto', fontSize: '14px', fontWeight: 'bold' }}>최근 리뷰</p>
       </div>
       <div>
           {reviews.map((review, idx)=>{
@@ -70,8 +70,8 @@ function Reviews(props) {
                 break;
             }
             return <div>
-              <div style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
-                <p style={{ color: 'orange' }}>{star}</p>
+              <div style={{ margin: 'auto', display: 'flex', fontSize: '12px', justifyContent: 'space-between' }}>
+                <p style={{ color: 'orange', fontSize: '12px' }}>{star}</p>
                 <p>{review.usersName}</p>
               </div>
               <p className='content'>{review.content}</p>
@@ -81,9 +81,9 @@ function Reviews(props) {
     </div>
     default:
       return <div> {/* 리뷰 */}
-      <p>{props.reviewNum}명이 이 {props.kind}을 받았어요</p>
+      <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
       <div>
-        <p style={{ margin: 'auto' }}>최근 리뷰</p>
+          <p style={{ margin: 'auto', fontSize: '14px', fontWeight: 'bold' }}>최근 리뷰</p>
       </div>
       <div>
         {reviews.map((review, idx)=>{
@@ -106,8 +106,8 @@ function Reviews(props) {
               break;
           }
           return <div>
-            <div style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ color: 'orange' }}>{star}</p>
+            <div style={{ margin: 'auto', display: 'flex', fontSize: '12px', justifyContent: 'space-between' }}>
+              <p style={{ color: 'orange', fontSize: '12px' }}>{star}</p>
               <p>{review.usersName}</p>
             </div>
             <p className='content'>{review.content}</p>
@@ -181,7 +181,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
               {props.kind==='사료' && products1.map((product, i)=>{
                 return <div className={checkProducts[i] ? 'clickCard' : 'card'}>
                   <div onClick={(e) => { clickFeedCard(e, i, props.numbers, props.kind) }}>
-                    <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
+                    <div style={{ textAlign: 'center', height: '475px' }}> {/* 상품설명 */}
                       <div>
                         <img src={products1[i].image} width='180px' alt="" />
                         <p class='product_name'>{products1[i].name}</p>
@@ -193,7 +193,16 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                           fontSize: '12px'
                         }}>
                         <p>주 원료</p>
-                        <p>{products1[i].materials}</p>
+                        <p style={{width: '150px'}}>{products1[i].materials.join(', ')}</p>
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          fontSize: '12px'
+                        }}>
+                        <p>등급</p>
+                        <p style={{width: '150px'}}>{products1[i].grade}</p>
                       </div>
                       <div
                         style={{
@@ -202,7 +211,16 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                           fontSize: '12px'
                         }}>
                         <p>급여 대상</p>
-                        <p>{products1[i].targets}</p>
+                        <p style={{width: '150px'}}>{products1[i].targets.join(', ')}</p>
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          fontSize: '12px'
+                        }}>
+                        <p>입자 크기</p>
+                        <p style={{width: '150px'}}>{products1[i].particle}</p>
                       </div>
                       <div
                         style={{
@@ -211,9 +229,10 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                           fontSize: '12px'
                         }}>
                         <p>기능</p>
-                        <p>{products1[i].effects}</p>
+                        <p style={{width: '150px'}}>#{products1[i].effects.join(' #')}</p>
                       </div>
                     </div>
+                    <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} />
                     <Reviews reviews={product.itemReviewResList} kind={props.kind} reviewNum={product.reviewNum} />
                   </div>
                   <p onClick={(e) => {props.showMoreReview(e, props.kind, i)}} className='moreReview'>리뷰 더보기</p>
@@ -221,7 +240,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
               {props.kind==='간식' && products1.map((product, i)=>{
                 return <div className={checkProducts[i] ? 'clickCard' : 'card'}>
                   <div onClick={(e) => { clickFeedCard(e, i, props.numbers, props.kind) }}>
-                    <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
+                    <div style={{ textAlign: 'center', height: '410px' }}> {/* 상품설명 */}
                       <div>
                         <img src={products1[i].image} width='180px' alt="" />
                         <p class='product_name'>{products1[i].name}</p>
@@ -233,7 +252,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                           fontSize: '12px'
                         }}>
                         <p>주 원료</p>
-                        <p>{products1[i].materials}</p>
+                        <p style={{width: '150px'}}>{products1[i].materials.join(', ')}</p>
                       </div>
                       <div
                         style={{
@@ -242,7 +261,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                           fontSize: '12px'
                         }}>
                         <p>급여 대상</p>
-                        <p>{products1[i].targets}</p>
+                        <p style={{width: '150px'}}>{products1[i].targets.join(', ')}</p>
                       </div>
                       <div
                         style={{
@@ -251,9 +270,10 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                           fontSize: '12px'
                         }}>
                         <p>기능</p>
-                        <p>{products1[i].effects}</p>
+                        <p style={{width: '150px'}}>#{products1[i].effects.join(' #')}</p>
                       </div>
                     </div>
+                    <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} />
                     <Reviews reviews={product.itemReviewResList} kind={props.kind} reviewNum={product.reviewNum} />
                   </div>
                   <p onClick={(e) => {props.showMoreReview(e, props.kind, i)}} className='moreReview'>리뷰 더보기</p>
@@ -261,7 +281,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
               {props.kind==='장난감' && products1.map((product, i)=>{
                 return <div className={checkProducts[i] ? 'clickCard' : 'card'}>
                   <div onClick={(e) => { clickFeedCard(e, i, props.numbers, props.kind) }}>
-                    <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
+                    <div style={{ textAlign: 'center', height: '315px' }}> {/* 상품설명 */}
                       <div>
                         <img src={products1[i].image} width='180px' alt="" />
                         <p class='product_name'>{products1[i].name}</p>
@@ -285,6 +305,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                         <p>{products1[i].effects}</p>
                       </div>
                     </div>
+                    <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} />
                     <Reviews reviews={product.itemReviewResList} kind={props.kind} reviewNum={product.reviewNum} />
                   </div>
                   <p onClick={(e) => {props.showMoreReview(e, props.kind, i)}} className='moreReview'>리뷰 더보기</p>

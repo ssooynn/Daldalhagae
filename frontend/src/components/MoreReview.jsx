@@ -146,40 +146,55 @@ function MoreReview(props) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '300px',
-                fontSize: '10px'
+                fontSize: '10px',
+                alignItems: 'center'
               }}>
-              <p style={{fontSize: '14px'}}>주원료</p>
-              <p style={{fontSize: '14px'}}>{info.materials}</p>
+              <h4 style={{fontSize: '14px'}}>주 원료</h4>
+              <p style={{width: '150px'}}>{info.materials.join(', ')}</p>
             </div>
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '300px',
-                fontSize: '10px'
+                fontSize: '10px',
+                alignItems: 'center'
               }}>
-              <p style={{fontSize: '14px'}}>급여 대상</p>
-              <p style={{fontSize: '14px'}}>{info.targets}</p>
+              <h4 style={{fontSize: '14px'}}>등급</h4>
+              <p style={{width: '150px'}}>{info.grade}</p>
             </div>
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '300px',
-                fontSize: '10px'
+                fontSize: '10px',
+                alignItems: 'center'
               }}>
-              <p style={{fontSize: '14px'}}>입자크기</p>
-              <p style={{fontSize: '14px'}}>{info.particle}</p>
+              <h4 style={{fontSize: '14px'}}>급여 대상</h4>
+              <p style={{width: '150px'}}>{info.targets.join(', ')}</p>
             </div>
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 width: '300px',
-                fontSize: '10px'
+                fontSize: '10px',
+                alignItems: 'center'
               }}>
-              <p style={{fontSize: '14px'}}>기능</p>
-              <p style={{fontSize: '14px'}}>{info.effects}</p>
+              <h4 style={{fontSize: '14px'}}>입자크기</h4>
+              <p style={{width: '150px'}}>{info.particle}</p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '300px',
+                fontSize: '10px',
+                alignItems: 'center'
+              }}>
+              <h4 style={{fontSize: '14px'}}>기능</h4>
+              <p style={{width: '150px'}}>#{info.effects.join(' #')}</p>
             </div>
           </div>
         </div>)
@@ -201,8 +216,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p style={{fontSize: '14px'}}>주원료</p>
-            <p style={{fontSize: '14px'}}>{info.materials}</p>
+            <h4  style={{fontSize: '14px'}}>주원료</h4>
+            <p style={{fontSize: '14px'}}>{info.materials.join(', ')}</p>
           </div>
           <div
             style={{
@@ -211,8 +226,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p style={{fontSize: '14px'}}>급여 대상</p>
-            <p style={{fontSize: '14px'}}>{info.targets}</p>
+            <h4  style={{fontSize: '14px'}}>급여 대상</h4>
+            <p style={{fontSize: '14px'}}>{info.targets.join(', ')}</p>
           </div>
           <div
             style={{
@@ -221,8 +236,8 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p style={{fontSize: '14px'}}>기능</p>
-            <p style={{fontSize: '14px'}}>{info.effects}</p>
+            <h4  style={{fontSize: '14px'}}>기능</h4>
+            <p style={{fontSize: '14px'}}>#{info.effects.join(' #')}</p>
           </div>
         </div>
       </div>)
@@ -244,7 +259,7 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p style={{fontSize: '14px'}}>소재</p>
+            <h4 style={{fontSize: '14px'}}>소재</h4>
             <p style={{fontSize: '14px'}}>{info.materials}</p>
           </div>
           <div
@@ -254,7 +269,7 @@ function MoreReview(props) {
               width: '300px',
               fontSize: '10px'
             }}>
-            <p style={{fontSize: '14px'}}>기능</p>
+            <h4 style={{fontSize: '14px'}}>기능</h4>
             <p style={{fontSize: '14px'}}>{info.effects}</p>
           </div>
         </div>
