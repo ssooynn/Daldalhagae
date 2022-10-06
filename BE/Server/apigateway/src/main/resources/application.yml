@@ -1,0 +1,57 @@
+spring:
+  profiles:
+    active : env
+  application:
+    name : GATEWAY
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]' :
+            allowedOriginPatterns : "*"
+            allow-credentials: true   #추가
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+      - id : businessId
+        uri : lb://${BUSINESS_NAME}
+        predicates:
+          - Path=/api-gateway/business-api/pet/**, 
+            /api-gateway/business-api/review,
+            /api-gateway/business-api/review/unrated/**,
+            /api-gateway/business-api/user/mypage/**,
+            /api-gateway/business-api/user/info/**,
+            /api-gateway/business-api/user/withdrow/**,
+            /api-gateway/business-api/subscription/**,
+            /api-gateway/business-api/payment/**,
+        filters:
+          - AuthorizationHeaderFilter 
+      - id : businessId
+        uri : lb://${BUSINESS_NAME}
+        predicates:
+          - Path=/api-gateway/business-api/**
+      - id : authId
+        uri : lb://${AUTH_NAME}
+        predicates:
+          - Path=/api-gateway/auth-api/**
+    
+server:
+  servlet:
+    context-path: /api-gateway
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+      
+eureka:
+  client:
+    service-url:
+      defaultZone : http://${SERVER_IP}:${EUREKA_PORT}/eureka
+
+
+  
+
+
+
