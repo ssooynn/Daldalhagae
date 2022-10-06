@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,19 +27,22 @@ import lombok.NoArgsConstructor;
 @Table(name = "EFFECT")
 public class Effect {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EFFECT_NO")
 	private int effectNo;
 	
 	@Column(name = "NAME")
 	private String name;
 	
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "effect", fetch = FetchType.LAZY)
 	private List<FeedEffect> feedEffects = new ArrayList<>();
 
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "effect", fetch = FetchType.LAZY)
 	private List<PetEffect> petEffects = new ArrayList<>();
 
+	@BatchSize(size=30)
 	@OneToMany(mappedBy = "effect", fetch = FetchType.LAZY)
 	private List<SnackEffect> snackEffects = new ArrayList<>();
 }

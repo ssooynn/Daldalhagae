@@ -12,10 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,13 +27,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "GRADE")
 public class Grade {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="GRADE_NO")
 	private int gradeNo;
 	@Column(name="NAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "grade",fetch = FetchType.LAZY)
+	@BatchSize(size=30)
+	@OneToMany(mappedBy = "grade")
 	List<Feed> feeds = new ArrayList<>();
 	
 }

@@ -13,5 +13,7 @@ public class FilePath {
 	private String productImageLoadPath;
 	private String petImageUploadPath;
 	private String productImageUploadPath;
+	private String reviewImageUploadPath ;
+	private String reviewImageLoadPath;
 	
 }

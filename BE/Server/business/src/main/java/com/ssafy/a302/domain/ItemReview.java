@@ -7,13 +7,16 @@ import com.ssafy.a302.response.ItemReviewRes;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "ITEM_REVIEW")
 public class ItemReview {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ITEM_REVIEW_NO")
 	private int itemReviewNo;
 	@Column(name = "ITEM_SNO")
@@ -24,8 +27,10 @@ public class ItemReview {
 	private String content;
 	@Column(name = "IMAGE")
 	private String image;
+	@Column(name = "CREATED_AT")
+	private LocalDate date;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "USERS_SNO")
 	private Users users;
 	
@@ -33,9 +38,10 @@ public class ItemReview {
 	@JoinColumn(name = "PURCHASE_NO")
 	private Purchase purchase;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "PET_SNO")
 	private Pet pet;
+
 
 
 	@Builder
@@ -62,6 +68,7 @@ public class ItemReview {
 		itemReviewRes.setUsersName(this.users.getName());
 		itemReviewRes.setPetSno(this.pet.getPetSno());
 		itemReviewRes.setPetName(this.pet.getName());
+		itemReviewRes.setDate(this.date);
 		return itemReviewRes;
 	}
 }

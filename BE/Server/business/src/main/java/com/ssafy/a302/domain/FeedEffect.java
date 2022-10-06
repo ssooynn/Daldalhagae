@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "FEED_EFFECT")
 public class FeedEffect {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FEED_EFFECT_NO")
 	private int feedEffectNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="FEED_SNO")
 	private Feed feed;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="EFFECT_NO")
 	private Effect effect;
 }

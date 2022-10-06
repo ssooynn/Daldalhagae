@@ -1,23 +1,27 @@
 package com.ssafy.a302.service;
 
-import com.netflix.discovery.converters.Auto;
+import com.ssafy.a302.common.FilePath;
+import com.ssafy.a302.common.FileUpload;
 import com.ssafy.a302.domain.*;
-import com.ssafy.a302.dto.ItemReviewDto;
 import com.ssafy.a302.repository.*;
 import com.ssafy.a302.request.ItemReviewReq;
 import com.ssafy.a302.request.ServiceReviewReq;
-import com.ssafy.a302.response.ItemReviewRes;
-import com.ssafy.a302.response.MyReviewRes;
+import com.ssafy.a302.response.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.beans.Transient;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewService {
     @Autowired
     ItemReviewRepository itemReviewRepository;
@@ -38,21 +42,30 @@ public class ReviewService {
     @Autowired
     SubscribtionHistoryRepository subscribtionHistoryRepository;
 
+    private final FileUpload fileUpload;
+    private final FilePath filePath;
+
     /*상품 리뷰 조회: 리뷰pk */
     public ItemReview findByItemReviewNo(int itemReviewNo) {
         return itemReviewRepository.findByItemReviewNo(itemReviewNo);
     }
+    
     /*상품리뷰목록 조회: 상품번호*/
-    public  List<ItemReviewRes> findByItemSno(String itemSno){
-        List<ItemReview> itemReviews = itemReviewRepository.findByItemSno(itemSno);
+//    @Cacheable(value="itemReview", key="#itemSno", cacheManager = "cacheManager")
+    public  ItemReviewPageRes findByItemSno(String itemSno, PageRequest pageRequest){
+        Page<ItemReview> pages = itemReviewRepository.findPageByItemSno(itemSno,pageRequest);
         List<ItemReviewRes> itemReviewResList = new ArrayList<>();
-        for(ItemReview itemreview :itemReviews){
+        ItemReviewPageRes res= new ItemReviewPageRes(pages);
+
+        for(ItemReview itemreview :pages.getContent()){
             ItemReviewRes itemReviewRes = itemreview.toItemReviewRes();
             Item item = getItem(itemreview.getItemSno());
             itemReviewRes.setItemName(item.getName());
             itemReviewResList.add(itemReviewRes);
         }
-        return itemReviewResList;
+        res.setReviewList(itemReviewResList);
+
+        return res;
     }
 
     /*상품리뷰목록 조회: 유저번호*/
@@ -74,20 +87,26 @@ public class ReviewService {
         List<MyReviewRes> myReviewList = new ArrayList<>();
         List<SubscribtionHistory> subscribtionHistoryList=subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
         for(SubscribtionHistory subscribtionHistory: subscribtionHistoryList){
+            if(subscribtionHistory.getServiceReview()==null) continue;
+            System.out.println();
+            ServiceReview sr = subscribtionHistory.getServiceReview();
             MyReviewRes myReviewRes = new MyReviewRes();
             myReviewRes.setSubscriptionNo(subscribtionHistory.getSubscribtionHistoryNo());
             myReviewRes.setSubscriptionName(subscribtionHistory.getSubscribtionHistorySubscribtion().getSubscribtion().getName());
             myReviewRes.setSubscriptionStartDate(subscribtionHistory.getStartDate());
-            myReviewRes.setSubscriptionStartDate(subscribtionHistory.getEndDate());
-            myReviewRes.setServiceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo());
-            myReviewRes.setServiceReviewRate(subscribtionHistory.getServiceReview().getRate());
-            myReviewRes.setServiceReviewContent(subscribtionHistory.getServiceReview().getContent());
-            myReviewRes.setServiceReviewImg(subscribtionHistory.getServiceReview().getImage());
-            myReviewRes.setServiceReviewRegDate(new Date());//todo:필드추가필요.
+            myReviewRes.setSubscriptionEndDate(subscribtionHistory.getEndDate());
+            myReviewRes.setServiceReviewNo(sr.getServiceReviewNo());
+            myReviewRes.setServiceReviewRate(sr.getRate());
+            myReviewRes.setServiceReviewContent(sr.getContent());
+            myReviewRes.setServiceReviewRegDate(sr.getRegDate());
+            if(sr.getImage()!=null && !"".equals(sr)){
+                myReviewRes.setServiceReviewImg(filePath.getReviewImageLoadPath()+"/"+sr.getImage());
+            }
             //아이템리뷰dto
-            List<ItemReviewRes> itemReviewResList= new ArrayList<>();
-            for(Purchase purchase:subscribtionHistory.getPurchases()){
-                ItemReview itemReview =purchase.getItemReview();
+            List<ItemReviewRes> itemReviewResList = new ArrayList<>();
+            for (Purchase purchase : subscribtionHistory.getPurchases()) {
+                ItemReview itemReview = purchase.getItemReview();
+                if(itemReview==null) continue;
                 ItemReviewRes itemReviewRes = itemReview.toItemReviewRes();
                 //엔티티 내에 getItem 구현.
                 itemReviewRes.setItemName(getItem(itemReview.getItemSno()).getName());
@@ -99,26 +118,13 @@ public class ReviewService {
         return myReviewList;
     }
 
+
     //
-    public Integer saveReview(ServiceReviewReq serviceReviewReq) {
+    @Transactional
+    public boolean saveReview(ServiceReviewReq serviceReviewReq ,MultipartFile file) throws IOException {
         //getOne vs findById
-
-//        Purchase purchase = purchaseRepository.findById(itemReviewReq.getPurchaseNo()).orElse(null);;
-//        Users users = usersRepository.findById(itemReviewReq.getUserSno()).get();
-//        Pet pet = petRepository.findById(itemReviewReq.getPetSno()).get();
-
         SubscribtionHistory subscribtionHistory= subscribtionHistoryRepository.findById(serviceReviewReq.getSubscriptionNo()).get();
-        //serviceReview 저장
-        ServiceReview serviceReview = ServiceReview.builder()
-                .serviceReviewNo(subscribtionHistory.getServiceReview().getServiceReviewNo())
-                .users(subscribtionHistory.getUsers())
-                .rate(serviceReviewReq.getServiceReviewRate())
-                .image(serviceReviewReq.getServiceReviewImage())
-                .content(serviceReviewReq.getServiceReviewContent())
-                .subscribtionHistory(subscribtionHistory)
-                .build();
-        serviceReviewRepository.save(serviceReview);
-
+        List<ItemReview> itemReviewList=new ArrayList<>();
         //itemReview 저장
         for(ItemReviewReq itemReviewReq:serviceReviewReq.getItemReviewReqList()){
             ItemReview itemReview = ItemReview.builder()
@@ -128,24 +134,72 @@ public class ReviewService {
                     .purchase(purchaseRepository.findById(itemReviewReq.getPurchaseNo()).get())
                     .users(subscribtionHistory.getUsers())
                     .pet(subscribtionHistory.getPet())
-                    .image(".")//s3 저장후 링크url
+                    .image(".")//아이템리뷰 사진 사용하지 않음.
                     .build();
             itemReviewRepository.save(itemReview);
         }
-        return null;
+        //리뷰이미지저장.
+        fileUpload.reviewImageUpload(file,serviceReviewReq);
+
+        //serviceReview 저장
+        ServiceReview serviceReview = ServiceReview.builder()
+                .users(subscribtionHistory.getUsers())
+                .rate(serviceReviewReq.getServiceReviewRate())
+                .content(serviceReviewReq.getServiceReviewContent())
+                .subscribtionHistory(subscribtionHistory)
+                .image(serviceReviewReq.getServiceReviewImage())
+                .build();
+        serviceReviewRepository.save(serviceReview);
+
+
+
+        return true;
+    }
+    public List<UnratedSubscriptionRes> getUnratedSubscription(String usersSno){
+        List<SubscribtionHistory> subscribtionHistories = subscribtionHistoryRepository.findByUsers_UsersSno(usersSno);
+        List<UnratedSubscriptionRes> unratedSubscriptionResList= new ArrayList<>();
+        for(SubscribtionHistory subscribtionHistory:subscribtionHistories){
+            if(subscribtionHistory.getServiceReview()==null){
+                //topurchase
+                List<PurchaseRes> purchaseResList = new ArrayList<>();
+                for(Purchase purchase: subscribtionHistory.getPurchases()){
+                    PurchaseRes purchaseRes = purchase.toPurchaseRes();
+                    purchaseRes.setItemName(getItem(purchase.getItemSno()).getName());
+                    purchaseRes.setItemImg(getItem(purchase.getItemSno()).getImage());
+                    purchaseResList.add(purchaseRes);
+                }
+                UnratedSubscriptionRes unratedSubscriptionRes = subscribtionHistory.toUnratedSubscriptionRes(purchaseResList);
+                unratedSubscriptionResList.add(unratedSubscriptionRes);
+            }
+        }
+        return unratedSubscriptionResList;
     }
     public Item getItem(String itemSno){
         if(itemSno.startsWith("f")){
             return feedRepository.findById(itemSno).get();
         }else if (itemSno.startsWith("s")){
             return snackRepository.findById(itemSno).get();
-        }else if (itemSno.startsWith("T")){
+        }else if (itemSno.startsWith("T")||itemSno.startsWith("t")){
             return toyRepository.findById(itemSno).get();
         }
         return null;
     }
 
+    public List<ServiceReviewRes> getServiceReviewByReviews(){
+        List<ServiceReview> list = serviceReviewRepository.getServiceReviewByRate();
+        List<ServiceReviewRes> res = new ArrayList<>();
 
 
+        for (int i = 0; i < 3; i++) {
+            int random = (int) (Math.random()*list.size());
+            System.out.println(list.get(random).getRate());
+            res.add(new ServiceReviewRes(list.get(random), filePath.getReviewImageLoadPath()));
+        }
+        return res;
+    }
 
+    public Slice<ServiceReviewRes> getServiceReviewAll(Pageable pageable){
+        Slice<ServiceReviewRes> reviews = serviceReviewRepository.findAll(pageable).map(m -> new ServiceReviewRes(m, filePath.getReviewImageLoadPath()));
+        return reviews;
+    }
 }
