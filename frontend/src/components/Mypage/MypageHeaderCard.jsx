@@ -82,11 +82,13 @@ const MypageHeaderCard = (props) => {
     width:'100%',
     aspectRatio: '1 / 1',
     borderRadius:'7px',
-    objectFit: 'cover'
+    objectFit: 'cover',
+    maxWidth:'115px'
   }
 
   const plusProfile = {
     width:'100%',
+    maxWidth:'115px',
     height:'83%',
     borderRadius:'7px',
     margin:'0',
