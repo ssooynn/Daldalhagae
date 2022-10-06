@@ -2,7 +2,10 @@ import pickle
 import pandas as pd
 from algorithm import SVD
 from algorithm import TFIDF
+from apscheduler.schedulers.background import BackgroundScheduler
 
+sched = BackgroundScheduler(timezone='Asia/Seoul')
+sched.start()
 
 def save_new_reviews(db_review):
     data = [
@@ -29,6 +32,8 @@ def save_new_reviews(db_review):
     return
 
 
+@sched.scheduled_job('cron', hour='10', minute='43' ,id='am')
+@sched.scheduled_job('cron', hour='10', minute='42' ,id='pm')
 def train_all():
     algos=['SVD','KNN']
     # algos='SVD'
