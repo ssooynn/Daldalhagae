@@ -532,7 +532,7 @@ const Toggle = (props) => {
             alignItems: 'center',
           }}>
           <h2>{props.info[0]} - {props.info[6]}</h2>
-          <p>월 {props.info[3]}원</p>
+          <p>월 {props.info[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
         </div>
         <p>{props.info[1]}</p>
       </div>

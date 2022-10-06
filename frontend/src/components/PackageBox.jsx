@@ -186,7 +186,7 @@ const PackageBox = (props) => {
 						alignItems: 'center',
 					}}>
 					<h2>{info[0]} - {info[6]}</h2>
-					<p>월 {info[3]}원</p>
+					<p>월 {info[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
 				</div>
 				<p>{info[1]}</p>
 			</div>

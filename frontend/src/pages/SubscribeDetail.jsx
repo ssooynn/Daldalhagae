@@ -128,7 +128,7 @@ const SubscribeDetail = () => {
         <div>
           <h2 style={{ margin: 'auto' }}>{name}</h2>
           <p style={{ margin: '0.5rem auto', fontSize: '12px' }}>{intro}</p>
-          <h4 style={{ margin: 'auto' }}>월 {price}원</h4>
+          <h4 style={{ margin: 'auto' }}>월 {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</h4>
           {usersSno ? 
           <p style={{ margin: '1.5rem 0 1rem 0' }}>누구를 위한 사료인가요?</p> :
           <p style={{ margin: '1.5rem 0 1rem 0' }}>구독을 위해 로그인부터 진행해주세요.</p>}
