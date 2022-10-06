@@ -157,7 +157,7 @@ return(
           </div>
           <FlexBox justify='space-between' align='end' padding='0px'>
             <FlexBox direction='column' align='start' padding='0px'>
-              <div style={detailStyle}>구독 ID: {subscription?.subscriptionNo||subscription?.subscriptionNum}</div>
+              <div style={detailStyle}>구독 ID: {subscription?.subscriptionHistoryNo||'-'}</div>
               <div style={detailStyle}>구독 기간 {subscription?.subscriptionStartDate.toString().replaceAll('-','.')} ~ {subscription?.subscriptionEndDate.toString().replaceAll('-','.')}</div>
             </FlexBox>
             {reviewConnect? 
