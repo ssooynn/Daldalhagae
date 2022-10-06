@@ -47,6 +47,4 @@ public class RecommendController {
 		return recommendRes;
 //		return null;
 	}
-
-
 }
