@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from 'react-redux'
+
 import styled from "styled-components";
 import { StyledButton, StyledInput, StyledProfile, StyledText } from "../../components/CommonComponent";
 import { FlexBox } from "../../components/MainComponent";
@@ -20,6 +22,8 @@ import { useEffect } from "react";
 
 import Swal from "sweetalert2"
 import { petInfo, petAdd, petEdit } from "../../api/mypagePet";
+import { mypageMain } from '../../api/mypageUser'
+
 
 
 const SignupBox = styled.div`
@@ -58,11 +62,12 @@ border-radius: 5px;
 `;
 
 export default function MypagePetUpdate(props) {
-  const {setRerender, rerender} = props
+  const {setRerender, rerender, pets} = props
   const navigate = useNavigate();
   const location = useLocation()
+  const usersSno = useSelector((state)=>state.user.user.user?.usersSno)
 
-  const [name, setName] = useState("");
+
   const [effectsOpen, setEffectsOpen] = useState(false);
   const [locale, ] = React.useState("ko");
   const [date, setDate] = useState(new Date());
@@ -109,7 +114,7 @@ export default function MypagePetUpdate(props) {
   const [selectedEffect, setSelectedEffect] = useState([]);
   const [bcs, setBcs] = useState(0);
   const [pet, setPet] = useState({
-    usersSno : '',
+    usersSno : usersSno,
     targetNo : 1,
     name : '',
     birth : '', 
@@ -119,22 +124,26 @@ export default function MypagePetUpdate(props) {
     image : '',
     imageFlag:0,
   })
-  
 
   useEffect(()=>{
-    const usersSno = 'uXJFRDEC7DuyYasedNxU1'
     const path = location.pathname
+    console.log(path)
     if (path === '/mypage/petAdd'){
-      setPet({
-        usersSno : usersSno,
-        targetNo : 1,
-        name : '',
-        birth : '', 
-        fat : 0,
-        materials : [], 
-        effects : [],
-        image : '',
-        imageFlag:0,
+      console.log(pets, 'p')
+      mypageMain(usersSno).then((res)=>{
+        if (res.data.pets?.length >= 3){
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "반려견은 3마리까지만 등록가능합니다 ",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass:{
+              title:'midFont'
+            }
+          });
+          navigate("/mypage");
+        }
       })
       setProfile('')
       setSelectedEffect([])
@@ -156,20 +165,29 @@ export default function MypagePetUpdate(props) {
       } else {
         petInfo(petId)
         .then((res)=>{
-          console.log(res.data)
+          let month = res.data.pets.birth[1]
+          if (month<10){
+            month = '0' + month
+          }
+
+          let day = res.data.pets.birth[2]
+          if (day<10){
+            day = '0' + day
+
+          }
           const temp = {
             petSno: petId,
             usersSno : usersSno,
             targetNo : 1,
             name : res.data.pets.name,
-            birth : res.data.pets.birth.join('-'), 
+            birth : [res.data.pets.birth[0], month, day].join('-'), 
             fat : res.data.pets.fat,
             materials : Object.keys(res.data.pets.materials).map((el)=>{return(parseInt(el))}), 
             effects : Object.keys(res.data.pets.effects).map((el)=>{return(parseInt(el))}),
             image : '',
             imageFlag:0,
           }
-          setDate(new Date(res.data.pets.birth.join('-')))
+          setDate(new Date([res.data.pets.birth[0], month, day].join('-')))
           setPet(temp)
           setSelectedEffect(temp.effects)
           setSeletedTag(temp.materials)
@@ -182,8 +200,6 @@ export default function MypagePetUpdate(props) {
       }
     }
   },[location.pathname])
-
-  useEffect(()=>{console.log(selectedEffect,selectedTag)},[selectedEffect, selectedTag])
   
   useEffect(()=>{
     setPet({
@@ -194,6 +210,7 @@ export default function MypagePetUpdate(props) {
     })
   },
   [selectedEffect, selectedTag, bcs])
+
 
 
   const WantUpdateProfile = (e) => {
@@ -239,15 +256,58 @@ export default function MypagePetUpdate(props) {
     const path = location.pathname
 
     if (path === '/mypage/petAdd'){
-      petAdd(formData)
+      petAdd(formData).then((res)=>{
+        console.log(res)
+        setRerender(rerender+1)
+        Swal.fire({
+          width:'25%',
+          position: "center",
+          title: "🐕  펫 정보가 등록되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+          customClass:{
+            icon:'smallIcon',
+            title:'midFont'
+          }}).then(()=>{navigate('/mypage')})
+      }).catch((err)=>{
+        console.log(err)
+        Swal.fire({
+        width:'25%',
+        position: "center",
+        title: "❌ 모든 정보를 옳바르게 입력해주세요",
+        showConfirmButton: false,
+        timer: 1000,
+        customClass:{
+          icon:'smallIcon',
+          title:'midFont'
+        }})})
     } else{
       petEdit(formData)
       .then((res)=>{
         console.log(res)
         setRerender(rerender+1)
-        navigate('/mypage/petDetail', {state:{petId:location.state.val}})
+        Swal.fire({
+          width:'25%',
+          position: "center",
+          title: "🐕  펫 정보가 수정되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+          customClass:{
+            icon:'smallIcon',
+            title:'midFont'
+          }}).then(()=>{navigate('/mypage/petDetail', {state:{petId:location.state.val}})})
       }).catch((err)=>{
         console.log(err)
+        Swal.fire({
+          width:'25%',
+          position: "center",
+          title: "❌ 모든 정보를 옳바르게 입력해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+          customClass:{
+            icon:'smallIcon',
+            title:'midFont'
+          }})
       })
     }
 
@@ -478,10 +538,10 @@ export default function MypagePetUpdate(props) {
               <StyledButton
                 key={idx}
                 onClick={() => {
-                  !selectedEffect.includes(idx) ? setSelectedEffect((selectedEffect) => [...selectedEffect, idx]) : setSelectedEffect(selectedEffect.filter((Button) => Button !== idx));
+                  !selectedEffect.includes(idx+1) ? setSelectedEffect((selectedEffect) => [...selectedEffect, idx+1]) : setSelectedEffect(selectedEffect.filter((Button) => Button !== idx+1));
                 }}
-                tagGray={!selectedEffect.includes(idx) ? true : false}
-                tagSelected={selectedEffect.includes(idx) ? true : false}
+                tagGray={!selectedEffect.includes(idx+1) ? true : false}
+                tagSelected={selectedEffect.includes(idx+1) ? true : false}
                 style={{
                   margin: "6px 3px ",
                   flex: "1 1 15%",

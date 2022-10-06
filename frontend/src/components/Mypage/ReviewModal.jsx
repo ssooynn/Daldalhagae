@@ -1,12 +1,19 @@
 import React from 'react'
 import { FlexBox } from './MypageCommon'
-import { ImStarFull } from "react-icons/im";
+import {  ImStarFull } from "react-icons/im";
 import {RatingBox} from './MypageCommon'
 import './MypageStyle.css'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmarkSquare } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+
+
+import { reviewWrite } from '../../api/mypageReview';
+
+import Swal from 'sweetalert2'
+
 
 import Emo1 from '../../assets/img/ReviewEmo1.png'
 import Emo1Full from '../../assets/img/ReviewEmo1Full.png'
@@ -21,8 +28,8 @@ import Emo5Full from '../../assets/img/ReviewEmo5Full.png'
 
 
 const ReviewModal = (props) => {
+  const navigate = useNavigate()
   const {setPopup,subscription} = props
-  console.log(subscription)
   const [review, setReview] = useState({
     subscriptionNo:'',
     serviceReviewRate:'',
@@ -33,7 +40,9 @@ const ReviewModal = (props) => {
   const [clicked, setClicked] = useState([false, false, false, false, false])
   const [isHover, setIsHover] = useState(false)
   const [selectedVal, setSelectedVal] = useState({})
-  const [filename,setFilename] =useState({name:''})
+  const [filename,setFilename] =useState('파일을 업로드해주세요')
+  const [newFilename, setNewFilename] = useState('')
+  const [profile, setProfile] = useState('')
 
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
@@ -60,11 +69,10 @@ const ReviewModal = (props) => {
       serviceReviewContent:'',
       itemReviewReqList:itemReview
     })
+    setSelectedVal({})
+    setClicked([false, false, false, false, false])
 
   },[])
-
-  // 파일 제출 위한 formData
-  const formData = new FormData();
 
   const onServiceContentInput = (e) =>{
     const value = e.target.value
@@ -86,32 +94,51 @@ const ReviewModal = (props) => {
   }
 
   const uploadPhoto = (e) => {
-    // e.preventDefault()
-    setFilename({name:e.target.files[0].name})
+    e.preventDefault()
+    setProfile(e.target.files[0])
+    setFilename(e.target.files[0]?.name)
   }
-
-  // useEffect(()=>{
-  //   document.querySelector('#fileTitle').innerHTML = filename.name
-  //   console.log(filename)
-  // },[filename])
 
   const onSubmit = () => {
-    formData.append('ServiceReviewReq', JSON.stringify(review))
-    formData.append('file',document.querySelector('#input-file').files[0])
-    // console.log(file)
-    // post
-    // FormData의 key 확인
-      for (let key of formData.keys()) {
-        console.log(key);
-      }
-
-      // FormData의 value 확인
-      for (let value of formData.values()) {
-        console.log(value);
-      }
-  }
-
-
+    Swal.fire({
+      padding:'15px',
+      text: "수정 내용을 저장하시겠습니까?",
+      width:'30%',
+      showCancelButton: true,
+      confirmButtonColor: '#AC998A',
+      cancelButtonColor: '#BEC3C6',
+      confirmButtonText: '저장하기',
+      cancelButtonText: '취소하기',
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        console.log(review)
+        const formData = new FormData()
+        const reviewBlob = new Blob([JSON.stringify(review)], {
+          type: "application/json",
+        });
+        formData.append("serviceReviewReq", reviewBlob);
+        formData.append("file",profile)
+        
+        reviewWrite(formData)
+        .then((res)=>{
+          console.log(res)
+          Swal.fire({
+            width:'25%',
+            position: "center",
+            title: "🤎  저장되었습니다 :)",
+            showConfirmButton: false,
+            timer: 1000,
+            customClass:{
+              icon:'smallIcon',
+              title:'midFont'
+            }
+          })
+          setPopup(false)
+          navigate('/mypage/reviews')
+        })
+        .catch((err)=>{console.log(err)})
+      }})}
 
 
   const back = {
@@ -186,6 +213,17 @@ const ReviewModal = (props) => {
     borderBottom:'0.1px solid #929292'
   }
 
+  const submitButton = {
+    width:'100%',
+    height:'40px',
+    backgroundColor:'#AC998A',
+    color:'white',
+    border:'none',
+    marginBottom:'30px',
+    borderRadius:'5px',
+    cursor:'pointer'
+  }
+
   // 구독 진행중 여부 판단
   const endDate = new Date(subscription.subscriptionEndDate)
   const today = new Date()
@@ -196,6 +234,7 @@ const ReviewModal = (props) => {
   } else{
   onGoing = '구독 종료'
   }
+  // console.log(subscription)
 
   return (
     <div style={back} onClick={()=>{setPopup(false)}}>
@@ -224,12 +263,19 @@ const ReviewModal = (props) => {
             </RatingBox>
 
             <textarea name="" id="" cols="30" rows="10" value={review.serviceReviewContent} onChange={onServiceContentInput} placeholder='상세한 후기를 들려주세요 :)'></textarea>
-            <div>
-              <label className="input-file-button" for="input-file" onChange={uploadPhoto}>
+            <div className='file'>
+              <div className='filebox bs3-primary ' >
+                <label>업로드
+                  <input type="file" id="newFile" className="upload-hidden" onInput={uploadPhoto}/> 
+                </label> 
+                <input className="upload-name" id='upload-name' value={filename} disabled/>
+              </div>
+
+              {/* <label className="input-file-button" for="input-file" onChange={uploadPhoto}>
                 업로드
               </label>
               <input type="file" id="input-file" style={{display:"none"}} onChange={uploadPhoto}/> 
-              {/* <span id="fileTitle">{filename}</span> */}
+              <div id="file-name"></div> */}
             </div>
           </div>
           <div style={serviceRev}>
@@ -243,24 +289,24 @@ const ReviewModal = (props) => {
                   <div key={purchase.purchaseNo} style={{margin:'20px 0px'}}>
                     <div style={gridDiv}>
                       <div style={{gridColumn:'span 1'}}>
-                        <img style={{aspectRatio:'1/1', width:'100%'}} src="https://sitem.ssgcdn.com/96/84/27/item/1000037278496_i1_1200.jpg" alt="상품 사진" />
+                        <img style={{aspectRatio:'1/1', width:'100%'}} src={purchase.itemImg} alt="상품 사진" />
                       </div>
                       <FlexBox direction='column' align='start' style={{gridColumn:'span 4'}}>
                         <div style={{fontSize:'14px', marginBottom:'5px'}}>{purchase.itemName}</div>
                         <div style={{...gridDiv, marginTop:'5px'}}>
-                        {[0,1,2,3,4].map((el)=>{
+                        {['a','b','c','d','e'].map((el, index)=>{
                           const expression = ['아주 불만족', '불만족', '보통', '만족', '아주 만족']
                           const basicImg = [Emo1, Emo2, Emo3, Emo4, Emo5]
                           const colorImg = [Emo1Full, Emo2Full, Emo3Full, Emo4Full, Emo5Full]
                           
                           return(
-                            <FlexBox direction='column' width='100%' key={purchase.purchaseNo+el+1}
+                            <FlexBox direction='column' width='100%' key={purchase.purchaseNo+el}
                               style={hoverPointer} 
                               onPointerOver={()=> setIsHover(purchase.purchaseNo+el)}
                               onPointerOut={() => setIsHover(false)}
-                              onClick={()=>{onItemEval(idx,purchase.purchaseNo, el+1)}}>
-                              <div><img style={{aspectRatio:'1/1', width:'26px'}} src={isHover===purchase.purchaseNo+el || selectedVal[purchase.purchaseNo] === el+1 ? colorImg[el] : basicImg[el]} alt="이모티콘" /></div>
-                              <div style={{fontSize:'12px', fontWeight:'300', whiteSpace:'nowrap'}}>{expression[el]}</div>
+                              onClick={()=>{onItemEval(idx,purchase.purchaseNo, index+1)}}>
+                              <div><img style={{aspectRatio:'1/1', width:'26px'}} src={isHover===purchase.purchaseNo+el || selectedVal[purchase.purchaseNo] === index+1 ? colorImg[index] : basicImg[index]} alt="이모티콘" /></div>
+                              <div style={{fontSize:'12px', fontWeight:'300', whiteSpace:'nowrap'}}>{expression[index]}</div>
                             </FlexBox>
                           )
                         })}
@@ -274,7 +320,7 @@ const ReviewModal = (props) => {
             </div>
           </div>
         </div>
-        <button onClick={onSubmit}>리뷰 작성하기</button>
+        <button style={submitButton} onClick={onSubmit}>리뷰 작성하기</button>
       </div>
       
         

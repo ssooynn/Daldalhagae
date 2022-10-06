@@ -118,7 +118,7 @@ const ButtonStyle = styled(animated.button)`
     font-weight: 500;
     white-space: nowrap;
     margin: ${(props)=> props.margin || '0px'};
-    transition-duration:300ms;
+    transition-duration:100ms;
     &:hover{
         background-color: ${(props)=> props.hoverColor || '#776B62'};
         color:white;

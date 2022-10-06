@@ -62,10 +62,10 @@ export default function SignupRegisterPet(props) {
   const [date, setDate] = useState(new Date());
   const [showCalender, setShowCalender] = useState(false);
 
-// eslint-disable-next-line
+  // eslint-disable-next-line
   const [alergyList, setAlergyList] = useState(["오리", "연어", "양", "쌀", "곡물", "고구마", "칠면조", "기타", "과일/야채", "소", "닭", "생선/해조류", "사슴", "밀", "돼지", "참치", "치즈/유제품", "북어"]);
   const [profile, setProfile] = useState("");
-  const [image,setImage] = useState("");
+  const [image, setImage] = useState("");
   // eslint-disable-next-line
   const [effectsList, setEffectsList] = useState([
     "피모관리",
@@ -102,12 +102,12 @@ export default function SignupRegisterPet(props) {
   ]);
   const [selectedTag, setSeletedTag] = useState([]);
   const [selectedEffect, setSelectedEffect] = useState([]);
-  
+
   const [bcs, setBcs] = useState(0);
-  
+
   // 모두 동의 완료시 다음 단계로 이동
   function PreviousStep() { }
-  
+
   function RegisterPet() {
     //     {image:"",
     // name:"",
@@ -132,7 +132,7 @@ export default function SignupRegisterPet(props) {
     for (let index = 0; index < selectedEffect.length; index++) {
       selectedEffect[index]++;
     }
-    
+
     var id = 0;
     console.log(props.pets);
     if (props.pets === undefined) {
@@ -149,8 +149,8 @@ export default function SignupRegisterPet(props) {
       materials: selectedTag,
       effects: selectedEffect,
       fat: bcs,
-      profile:profile,
-      file:image,
+      profile: profile,
+      file: image,
     });
     props.setPets([
       ...props.pets,
@@ -163,8 +163,8 @@ export default function SignupRegisterPet(props) {
         materials: selectedTag,
         effects: selectedEffect,
         fat: bcs,
-        profile:profile,
-        file:image,
+        profile: profile,
+        file: image,
       },
     ]);
     Navigate("/signup/signupPet");
@@ -182,7 +182,7 @@ export default function SignupRegisterPet(props) {
     setImage(file);
   };
 
-    const birthday = (item) => {
+  const birthday = (item) => {
     setDate(item);
     setShowCalender(!showCalender);
     const year = item.getFullYear(item);
@@ -242,36 +242,39 @@ export default function SignupRegisterPet(props) {
               <StyledInput
                 value={birth}
               />
-              <div style={{position: "absolute",
-              paddingTop: "50px",
-              paddingRight:"15px"}}>
-                
+              <div style={{
+                position: "absolute",
+                paddingTop: "50px",
+                paddingRight: "15px"
+              }}>
+
                 <img src={calendarButton} alt="날짜 선택" onClick={() => {
-                    setShowCalender(!showCalender);
-                    setDate(date);
-                  }}
+
+                  setShowCalender(!showCalender);
+                  setDate(date);
+                }}
                   width="25px"
 
-                  />
+                />
               </div>
-             
+
             </FlexBox>
           </FlexBox>
         </FlexBox>
-{showCalender && ( // 클릭 등으로 토글상태 값이 true 이 되면 달력이 보여진다
-        <LoginModalStyled>
-          <div style={{ display: "flex", flexFlow: "column nowrap", position:"absolute" }}>
-            <Calendar
-              onChange={(item) => {
-                birthday(item);
-              }}
-              locale={locales[locale]}
-              date={date}
-              style={{ width: "300px" }}
-color="#ccaa90"
+        {showCalender && ( // 클릭 등으로 토글상태 값이 true 이 되면 달력이 보여진다
+          <LoginModalStyled>
+            <div style={{ display: "flex", flexFlow: "column nowrap", position: "absolute" }}>
+              <Calendar
+                onChange={(item) => {
+                  birthday(item);
+                }}
+                locale={locales[locale]}
+                date={date}
+                style={{ width: "300px" }}
+                color="#ccaa90"
               />
-          </div>
-        </LoginModalStyled>
+            </div>
+          </LoginModalStyled>
         )}
         {/* 알러지 태그 리스트 부분 */}
         <StyledText size="16px" weight="500" style={{ alignSelf: "flex-start" }}>

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { StyledText } from './CommonComponent';
 import KaKaoLoginBtn from "../assets/img/kakao_login_large_wide.png"
+import KaKaoSignupBtn from "../assets/img/kakao_signup_large_wide.png"
+
 import { useNavigate } from 'react-router-dom';
 import { FlexBox } from './MainComponent';
 
@@ -29,7 +31,6 @@ export default function Login(props) {
     props.setIsModalOpen(false);
   }
   const CLIENT_ID = process.env.REACT_APP_KAKAO_API_KEY;
-  //const REDIRECT_URI = "https://j7a302.p.ssafy.io/api-gateway/auth-api/user/code/kakao";
 
   const REDIRECT_URI = "http://localhost:3000/kakaoSignin";
   // const REDIRECT_URI = "https://j7a302.p.ssafy.io/kakaoSignin";
@@ -82,7 +83,7 @@ export default function Login(props) {
           <FlexBox direction="column" justify="space-around" height="220px">
 
             <img src={KaKaoLoginBtn} alt="카카오로 로그인" width="100%" onClick={Kakao} />
-            <img src={KaKaoLoginBtn} alt="카카오로 로그인" width="100%" onClick={Kakao} />
+            <img src={KaKaoSignupBtn} alt="카카오로 시작하기" width="100%" onClick={Kakao} />
 
             <StyledText onClick={(e) => { closeModal(); Navigate("/subscribeList") }} size="14px" style={{ cursor: 'pointer' }}>비회원으로 둘러보기</StyledText>
           </FlexBox>

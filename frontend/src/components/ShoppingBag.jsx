@@ -16,6 +16,7 @@ import { useState } from 'react'
 import DeleteButton from '../assets/img/delete.svg';
 import { deleteItem } from '../stores/modules/bag'
 import Modal from '../components/RecommendConfirmModal'
+import { useNavigate } from 'react-router-dom'
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -102,17 +103,28 @@ const SubBox = styled.div`
 
 const ShoppingBag = (props) => {
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const bag = useSelector((state) => state.bag);
   const [totalPrice, setTotalPrice] = useState(0);
   const [modalOpen, setModalOpen] = useState(false)
+  const user = useSelector(state => state.user.user.user);
   const showModal = () => {
-    setModalOpen(true)
+    if (!user || !user.token) {
+      alert("로그인을 먼저 해주세요.");
+      props.setBagOpen(false);
+    }
+    console.log(Boolean(bag.length));
+    if (bag.length) {
+      setModalOpen(true)
+    } else {
+      alert("담은 상품이 없습니다.")
+    }
   }
 
   useEffect(() => {
     let total = 0;
     for (let i = 0; i < bag.length; i++) {
-      total += Number(bag[i].price);
+      total += Number(bag[i][3]);
     }
     setTotalPrice(total);
   }, [bag])
@@ -139,13 +151,13 @@ const ShoppingBag = (props) => {
         <StyledText size="18px" weight="500" margin="10px 10px 10px 0px">장바구니</StyledText>
         <hr style={{ backgroundColor: '#CCAA90', height: '1px' }} />
         <ShoppingListBox>
-          {bag ? bag.map((item, idx) => (
-            <SubBox key={idx} packageName={item.packageName} >
+          {bag.length ? bag.map((item, idx) => (
+            <SubBox key={idx} packageName={item[0]} >
               <FlexBox direction="column" justify="center" align="flex-start" margin="0px" width="auto">
-                <StyledText weight="500" size="16px" margin="0px 0px 10px 0px" style={{ position: "relative" }}>{item.packageName} - {item.petName}</StyledText>
-                <StyledText weight="400" size="12px" margin="5px 0px 0px 0px" style={{ position: "relative" }}>( {item.desc} )</StyledText>
+                <StyledText weight="500" size="16px" margin="0px 0px 10px 0px" style={{ position: "relative" }}>{item[0]} - {item[6]}</StyledText>
+                <StyledText weight="400" size="12px" margin="5px 0px 0px 0px" style={{ position: "relative" }}>( {item[1]} )</StyledText>
               </FlexBox>
-              <StyledText weight="500" size="16px" margin="0px 0px 0px 0px" style={{ position: "relative" }}>월 {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</StyledText>
+              <StyledText weight="500" size="16px" margin="0px 0px 0px 0px" style={{ position: "relative" }}>월 {item[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</StyledText>
               <img src={DeleteButton} alt="장바구니에서 삭제" width="26px" height="28px" style={{ position: "absolute", bottom: "10px", right: "10px" }} onClick={() => DeleteItemInBag(item)} />
             </SubBox>
           )) : <StyledText weight="500" size="16px" margin="30px">담은 구독이 없습니다.</StyledText>}
@@ -154,7 +166,7 @@ const ShoppingBag = (props) => {
             <StyledText weight="500" size="16px" margin="20px 50px" style={{ position: "relative" }}>월 {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</StyledText>
           </FlexBox>
           <StyledButton onClick={showModal} bgcolor="#CCAA90" width="250px" height="50px" margin="10px 0px"><StyledText weight="500" size="16px">결제하기</StyledText></StyledButton>
-          {modalOpen && <Modal setModalOpen={setModalOpen} info={props.info} />}
+          {modalOpen && <Modal setModalOpen={setModalOpen} info={bag} />}
         </ShoppingListBox>
       </BagStyled>
     </ModalBackground >

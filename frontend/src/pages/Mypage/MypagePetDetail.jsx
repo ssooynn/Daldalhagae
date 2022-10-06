@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import DefaultProfile1 from '../../assets/img/DefaultProfile1.png'
 import DefaultProfile2 from '../../assets/img/DefaultProfile2.png'
@@ -11,17 +11,36 @@ import { PetAge } from '../../util/PetAge';
 
 import { petInfo } from '../../api/mypagePet';
 
+import Swal from 'sweetalert2'
+
+
 const MypagePetDetail = (props) => {
   const {setCurrentFocus} = props
   const location = useLocation()
-  const petId = location.state.petId
+  const navigate = useNavigate()
+  const petId = location.state?.petId
   console.log(petId)
   const [pet, setPet] = useState({})
   const [materials, setMaterials] = useState([])
   const [effects, setEffects] = useState([])
   const [age, setAge] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(()=>{
+    if(!petId){
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "잘못된 접근입니다.",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title:'midFont'
+        }
+      }).then(()=>{
+        navigate("/mypage");
+      })
+    }
     petInfo(petId)
     .then((res)=>{
       console.log(res.data)
@@ -38,7 +57,7 @@ const MypagePetDetail = (props) => {
         const petAge = PetAge(todayStr, res.data.pets.birth?.join('-'))
         setAge(petAge)  
       }
-
+      setIsLoading(false)
     })
     .catch((err)=>{
       console.log(err)
@@ -117,10 +136,11 @@ const MypagePetDetail = (props) => {
           </FlexBox>
         </div>
       </div>
-      { (materials||effects) && <div>
+      { (materials?.length||effects?.length) ?
+        <div>
         <div style={subTitleStyle}>상세정보</div>
         <div style={{padding:'0px 10px'}}>
-          {materials &&
+          {materials?.length ?
           <>
             <div style={litTitle}>알러지</div> 
             <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>사료 및 간식 추천 시 해당 원료가 들어간 품목은 제외하고 추천됩니다.</div>
@@ -128,13 +148,15 @@ const MypagePetDetail = (props) => {
               {materials.map((alergy,idx)=>{
                 const colorList=['#EDDCCF','#F4E8E8','#E7E1DC','#D6C9C0','#E4D1C2']
                 return(
-                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%5]}>{alergy}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={'#F4E8E8'}>{alergy}</PetTag>
                 )
               })}
             </div>
           </>
+          :
+          <></>
           }
-          {effects &&
+          {effects?.length ?
           <>
             <div style={litTitle}>특별관리</div> 
             <div style={{...detailText, fontWeight:'300', marginBottom:'10px'}}>추천 시 특별관리 기능이 있는 상품이 우선 추천됩니다.</div>
@@ -142,15 +164,19 @@ const MypagePetDetail = (props) => {
               {effects.map((effect,idx)=>{
                 const colorList = ['#EAD0D0', '#D3AFAF', '#EDDCCF', '#F4E8E8', '#F4E8E8']
                 return(
-                  <PetTag padding='6px 0px' key={idx} bgColor={colorList[(idx)%5]}>{effect}</PetTag>
+                  <PetTag padding='6px 0px' key={idx} bgColor={'#EDDCCF'}>{effect}</PetTag>
                 )
               })}
             </div>
           </>
+          :
+          <></>
           }
-
         </div>
-      </div>}
+      </div>
+      :
+      <></>  
+    }
       
     </div>
   )
