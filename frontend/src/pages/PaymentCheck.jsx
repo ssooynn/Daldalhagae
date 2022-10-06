@@ -66,7 +66,7 @@ const PaymentCheck = () => {
   const infos = location.state.infos  // name, intro, components1, price, components2, pets, pet
   const pickedProducts = location.state.pickedProducts
   console.log('결제확인', infos)
-
+  
   const Navigate = useNavigate();
   function GoMainPage() {
     Navigate("/")
