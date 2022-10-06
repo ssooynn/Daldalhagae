@@ -24,9 +24,7 @@ export default handleActions(
   {
     [ADD_ITEM]: (state, { payload: item }) => [...state, item],
     [DELETE_ITEM]: (state, { payload: item }) =>
-      state.filter(
-        (t) => t.petName !== item.petName || t.packageName !== item.packageName
-      ),
+      state.filter((t) => t[0] !== item[0] || t[6] !== item[6]),
   },
   initialState
 );

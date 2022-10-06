@@ -31,8 +31,8 @@ const PurchaseList = (props) => {
   const [checkPurchase, setCheckPurchase] = useState([])
   const [checkPets, setCheckPets] = useState([])
   const bag = useSelector((state) => state.bag);
-  useEffect(()=>{
-    pets.map((i)=>{
+  useEffect(() => {
+    pets.map((i) => {
       checkPets.push(false)
     })
   }, [])
@@ -40,7 +40,7 @@ const PurchaseList = (props) => {
     console.log(idx)
     e.preventDefault()
     let j = 0
-    checkPurchase.map((name, jdx)=>{
+    checkPurchase.map((name, jdx) => {
       if (name === pets[idx].name) {
         j = jdx
       }
@@ -54,7 +54,7 @@ const PurchaseList = (props) => {
   }
 
   const [info, setInfo] = useState([])
-  useEffect(()=>{
+  useEffect(() => {
     if (props?.name) {
       setInfo([props.name, props.intro, props.components1, props.price, props.components2, pets])
     } else {
@@ -87,9 +87,9 @@ const PurchaseList = (props) => {
             alignItems: 'center',
             marginBottom: '10px'
           }}>
-          {props.name ? 
-          <p style={{ margin: '0 10px 0 0' }}>{info[0]} - {params.name}</p> :
-          <p style={{ margin: '0 10px 0 0' }}>나만의 구독 서비스 - {params.name}</p> }
+          {props.name ?
+            <p style={{ margin: '0 10px 0 0' }}>{info[0]} - {params.name}</p> :
+            <p style={{ margin: '0 10px 0 0' }}>나만의 구독 서비스 - {params.name}</p>}
           {/* <img onClick={(e) => deletePet(idx, e)} src={DeleteButton} width='25px' height='25px' style={{ cursor: 'pointer' }} alt="" /> */}
         </div>])
         setCheckPurchase([...checkPurchase, params.name])
@@ -108,7 +108,7 @@ const PurchaseList = (props) => {
 
   for (let i = 0; i < pets.length; i++) {
     showPets.push(<div className={checkPets[i] ? 'clickCard1' : 'card1'} onClick={(e) => { addPet(pets[i], i, e) }}>
-    {/* showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], i, e) }}> */}
+      {/* showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], i, e) }}> */}
       <img
         src={pets[i].image}
         style={{
@@ -125,7 +125,7 @@ const PurchaseList = (props) => {
     showBag();
     for (let i = 0; i < checkPurchase.length; i++) {
       const bags = [infos[i][0], infos[i][1], infos[i][2], infos[i][3], infos[i][4], infos[i][5], infos[i][6], infos[i][7]]
-      
+      console.log(bags);
       //redux에 해당 상품이 이미 있는지 없는지 확인
       let isExist = false;
       for (let i = 0; i < bag.length; i++) {
