@@ -148,7 +148,7 @@ export function MainSubscribeCard() {
 const ReviewImg = styled.img`
     border-radius: 10px;
     width: 80%;
-    height: 55%;
+    height: 53%;
     object-fit: cover;
     margin:20px 10%;
 `
@@ -162,10 +162,10 @@ export function MainReviewCard({ reviewList }) {
     console.log((reviewList));
     return (
         <FlexBox direction="row" justify="space-between" align="center" width="100%" height="100%">
-            {reviewList.length == 3 ? reviewList.map((review, idx) => (
-                <FlexBox key={idx} direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
+            {reviewList.length === 3 ? reviewList.map((review, idx) => (
+                <FlexBox key={idx} direction="column" justify="center" align="center" width="35%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
                     <StyledReviewImg src={review.image} alt="사료 사진"></StyledReviewImg>
-                    <FlexBox direction="column" justify="center" align="flex-start" width="80%" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
+                    <FlexBox direction="column" justify="flex-start" align="flex-start" width="80%" height="28% " style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
                         <FlexBox direction="row" justify="start" align="end" margin="3px 10px">
                             <StyledText size="18px" weight="500" margin="5px 10px 2px 0px">{review.userName}</StyledText>
                             <StyledText size="14px" weight="500" margin="5px 10px 2px 2px">[{review.subName}]</StyledText>
