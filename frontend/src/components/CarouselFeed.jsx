@@ -9,7 +9,7 @@ function Reviews(props) {
   switch (props.kind) {
     case '사료':
       return <div> {/* 리뷰 */}
-        <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
+        <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold', color: '#9b643a' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
         <div>
           <p style={{ margin: 'auto', fontSize: '14px', fontWeight: 'bold' }}>최근 리뷰</p>
         </div>
@@ -45,7 +45,7 @@ function Reviews(props) {
     </div>
     case '간식':
       return <div> {/* 리뷰 */}
-      <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
+      <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold', color: '#9b643a' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
       <div>
           <p style={{ margin: 'auto', fontSize: '14px', fontWeight: 'bold' }}>최근 리뷰</p>
       </div>
@@ -81,7 +81,7 @@ function Reviews(props) {
     </div>
     default:
       return <div> {/* 리뷰 */}
-      <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
+      <p style={{ fontSize: '14px' }}><span style={{ fontSize: '18px', fontWeight: 'bold', color: '#9b643a' }}>{props.reviewNum}</span> 명이 이 {props.kind}를 받았어요</p>
       <div>
           <p style={{ margin: 'auto', fontSize: '14px', fontWeight: 'bold' }}>최근 리뷰</p>
       </div>
@@ -232,7 +232,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                         <p style={{width: '150px'}}>#{products1[i].effects.join(' #')}</p>
                       </div>
                     </div>
-                    <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} />
+                    {/* <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} /> */}
                     <Reviews reviews={product.itemReviewResList} kind={props.kind} reviewNum={product.reviewNum} />
                   </div>
                   <p onClick={(e) => {props.showMoreReview(e, props.kind, i)}} className='moreReview'>리뷰 더보기</p>
@@ -273,7 +273,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                         <p style={{width: '150px'}}>#{products1[i].effects.join(' #')}</p>
                       </div>
                     </div>
-                    <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} />
+                    {/* <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} /> */}
                     <Reviews reviews={product.itemReviewResList} kind={props.kind} reviewNum={product.reviewNum} />
                   </div>
                   <p onClick={(e) => {props.showMoreReview(e, props.kind, i)}} className='moreReview'>리뷰 더보기</p>
@@ -305,7 +305,7 @@ const CarouselFeed = (props) => {  // products, checkProducts, setCheckProducts,
                         <p>{products1[i].effects}</p>
                       </div>
                     </div>
-                    <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} />
+                    {/* <hr style={{height: '0.1px', backgroundColor: '#ffb249'}} /> */}
                     <Reviews reviews={product.itemReviewResList} kind={props.kind} reviewNum={product.reviewNum} />
                   </div>
                   <p onClick={(e) => {props.showMoreReview(e, props.kind, i)}} className='moreReview'>리뷰 더보기</p>
