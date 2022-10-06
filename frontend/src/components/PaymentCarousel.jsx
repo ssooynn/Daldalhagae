@@ -35,7 +35,7 @@ const PaymentCarousel = (props) => {
       type.map((product, jdx)=>{
         if (idx === 0) {
           copyCardcase.push(<div className='card'>
-          <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
+          <div style={{ textAlign: 'center', height: '475px' }}> {/* 상품설명 */}
             <div>
               <img src={product.image} width='180px' alt="" />
               <p class='product_name'>{product.name}</p>
@@ -47,7 +47,16 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>주 원료</p>
-              <p>{product.materials}</p>
+              <p style={{width: '150px'}}>{product.materials.join(', ')}</p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                fontSize: '12px'
+              }}>
+              <p>등급</p>
+              <p style={{width: '150px'}}>{product.grade}</p>
             </div>
             <div
               style={{
@@ -56,7 +65,7 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>급여 대상</p>
-              <p>{product.targets}</p>
+              <p style={{width: '150px'}}>{product.targets.join(', ')}</p>
             </div>
             <div
               style={{
@@ -65,7 +74,7 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>입자 크기</p>
-              <p>{product.particle}</p>
+              <p style={{width: '150px'}}>{product.particle}</p>
             </div>
             <div
               style={{
@@ -74,14 +83,14 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>기능</p>
-              <p>{product.effects}</p>
+              <p style={{width: '150px'}}>#{product.effects.join(' #')}</p>
             </div>
           </div>
-          <p onClick={(e) => {props.showMoreReview(e, "사료", idx)}} className='moreReview'>리뷰 더보기</p>
+          {/* <p onClick={(e) => {props.showMoreReview(e, "사료", idx)}} className='moreReview'>리뷰 더보기</p> */}
         </div>)
         } else if (idx === 1) {
           copyCardcase.push(<div className='card'>
-          <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
+          <div style={{ textAlign: 'center', height: '410px' }}> {/* 상품설명 */}
             <div>
               <img src={product.image} width='180px' alt="" />
               <p class='product_name'>{product.name}</p>
@@ -93,7 +102,7 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>주 원료</p>
-              <p>{product.materials}</p>
+              <p style={{width: '150px'}}>{product.materials.join(', ')}</p>
             </div>
             <div
               style={{
@@ -102,7 +111,7 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>급여 대상</p>
-              <p>{product.targets}</p>
+              <p style={{width: '150px'}}>{product.targets.join(', ')}</p>
             </div>
             <div
               style={{
@@ -111,14 +120,14 @@ const PaymentCarousel = (props) => {
                 fontSize: '12px'
               }}>
               <p>기능</p>
-              <p>{product.effects}</p>
+              <p style={{width: '150px'}}>#{product.effects.join(' #')}</p>
             </div>
           </div>
-          <p onClick={(e) => {props.showMoreReview(e, "간식", idx)}} className='moreReview'>리뷰 더보기</p>
+          {/* <p onClick={(e) => {props.showMoreReview(e, "간식", idx)}} className='moreReview'>리뷰 더보기</p> */}
         </div>)
         } else {
           copyCardcase.push(<div className='card'>
-          <div style={{ textAlign: 'center' }}> {/* 상품설명 */}
+          <div style={{ textAlign: 'center', height: '315px' }}> {/* 상품설명 */}
             <div>
               <img src={product.image} width='180px' alt="" />
               <p class='product_name'>{product.name}</p>
@@ -142,7 +151,7 @@ const PaymentCarousel = (props) => {
               <p>{product.effects}</p>
             </div>
           </div>
-          <p onClick={(e) => {props.showMoreReview(e, "장난감", idx)}} className='moreReview'>리뷰 더보기</p>
+          {/* <p onClick={(e) => {props.showMoreReview(e, "장난감", idx)}} className='moreReview'>리뷰 더보기</p> */}
         </div>)
         }
       })
@@ -150,7 +159,7 @@ const PaymentCarousel = (props) => {
     setCardcase(copyCardcase)
   }, [])
   
-  return (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFDFB'}}>
+  return (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFDFB', padding: '3rem 1rem'}}>
     {(types[0].length + types[1].length + types[2].length)>3 ? 
       <FontAwesomeIcon icon={faChevronLeft} style={{color:'#776B62', fontSize:'26px', margin:'0px 8px', cursor:'pointer'}}
       onClick={()=>{setIndex(Math.max(0, index-1))}}/> :
