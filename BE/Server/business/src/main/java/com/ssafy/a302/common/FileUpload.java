@@ -102,8 +102,7 @@ public class FileUpload {
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-		if(image ==null) {
-			review.setServiceReviewImage(".");
+		if(image ==null||image.equals("")) {
 			return true;
 		}
 		String getImageName = image.getOriginalFilename();
