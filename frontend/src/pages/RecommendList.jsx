@@ -28,7 +28,6 @@ const RecommendList = () => {
       if (window.confirm("선택이 부족한 항목은 자동으로 추천해 드립니다. 계속하시겠습니까?")) {
         Navigate("/paymentList", {state: {
           pickedProducts: pickedProducts,
-          setPickedProducts: setPickedProducts,
           infos: infos
         }})
       } else {alert('신중하게 생각하고 누르십쇼;;')}
