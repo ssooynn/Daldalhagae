@@ -197,7 +197,7 @@ const PaymentList = () => {
             display: 'flex',
             flexDirection: 'row-reverse'
           }}>
-          <h3>월 {totalPrice}원</h3>
+          <h3>월 {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</h3>
           <h3 style={{ width: '30%' }}>결제 금액 합계</h3>
         </div>
         <div // 구독 정보

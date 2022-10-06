@@ -290,7 +290,7 @@ function MoreReview(props) {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           textAlign: 'center',
-          height: '35rem'
+          height: '40rem'
         }}>
         <div
           style={{

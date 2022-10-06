@@ -10,7 +10,6 @@ const RecommendList = () => {
   const infos = location.state.info  // name, intro, components1, price, components2, pets, pet, petNo
   console.log('recomlist', infos)
   const Navigate = useNavigate();
-  const showToggle = []
   const [pickedProducts, setPickedProducts] = useState([])
   useEffect(()=>{
     const copyPickedProducts = [...pickedProducts]
@@ -19,9 +18,6 @@ const RecommendList = () => {
     })
     setPickedProducts(copyPickedProducts)
   }, [])
-  for (let i = 0; i < infos.length; i++) {
-    showToggle.push(<Toggle info={infos[i]} index={i} products={pickedProducts} setPickedProducts={setPickedProducts} packageNo={i} />)
-  }
   let totalCount = 0
   infos.map((info, idx)=>{totalCount += info[4].reduce((a, b) => a+b, 0)})
 
@@ -104,7 +100,9 @@ const RecommendList = () => {
             }}>선택이 부족한 상품은 추천에 따라 자동 선택됩니다.</p>
         </div>
         <hr style={{backgroundColor: '#CCAA90'}}/>
-        {showToggle}
+        {infos ?
+        infos.map((info, idx)=>(<Toggle key={idx} info={info} index={idx} products={pickedProducts} setPickedProducts={setPickedProducts} packageNo={idx} />))
+        : <div></div>}
         <div  // 선택한 목록
           style={{
             backgroundColor: '#F6F1EC',
