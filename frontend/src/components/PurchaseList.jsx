@@ -6,6 +6,7 @@ import Modal from '../components/RecommendConfirmModal'
 import ShoppingBag from '../components/ShoppingBag'
 import DeleteButton from '../assets/img/delete.svg';
 import { addItem } from '../stores/modules/bag'
+import './PurchaseList.css'
 
 const ClickPet = styled.div`
   cursor: pointer;
@@ -28,21 +29,32 @@ const PurchaseList = (props) => {
   const showPets = []
   const [showPurchase, setShowPurchase] = useState([])
   const [checkPurchase, setCheckPurchase] = useState([])
+  const [checkPets, setCheckPets] = useState([])
   const bag = useSelector((state) => state.bag);
-  
+  useEffect(() => {
+    pets.map((i) => {
+      checkPets.push(false)
+    })
+  }, [])
   function deletePet(idx, e) {  // 구독 목록 삭제
     console.log(idx)
     e.preventDefault()
+    let j = 0
+    checkPurchase.map((name, jdx) => {
+      if (name === pets[idx].name) {
+        j = jdx
+      }
+    })
     const copyShowPurchase = [...showPurchase]
     const copyCheckPurchase = [...checkPurchase]
-    copyShowPurchase.splice(idx, 1)
-    copyCheckPurchase.splice(idx, 1)
+    copyShowPurchase.splice(j, 1)
+    copyCheckPurchase.splice(j, 1)
     setShowPurchase(copyShowPurchase)
     setCheckPurchase(copyCheckPurchase)
   }
 
   const [info, setInfo] = useState([])
-  useEffect(()=>{
+  useEffect(() => {
     if (props?.name) {
       setInfo([props.name, props.intro, props.components1, props.price, props.components2, pets])
     } else {
@@ -59,32 +71,44 @@ const PurchaseList = (props) => {
   function addPet(params, idx, e) {  // 구독 목록 추가
     e.preventDefault()
     if (checkPurchase.includes(params.name)) {
-      console.log('checkPurchase', checkPurchase)
-      alert("이미 구독 상태인 강아지입니다.")
+      deletePet(idx, e)
+      checkPets[idx] = false
+      setCheckPets(checkPets)
     } else {
-      setShowPurchase([...showPurchase, <div
-        style={{
-          display: 'flex',
-          justifyContent: 'end',
-          alignItems: 'center'
-        }}>
-        {props.name ? 
-        <p style={{ margin: '0 10px 0 0' }}>{info[0]} - {params.name}</p> :
-        <p style={{ margin: '0 10px 0 0' }}>나만의 구독 서비스 - {params.name}</p> }
-        <img onClick={(e) => deletePet(idx, e)} src={DeleteButton} width='20px' height='20px' style={{ cursor: 'pointer' }} alt="" />
-      </div>])
-      setCheckPurchase([...checkPurchase, params.name])
-      const temp = info.slice()
-      temp.push(params.name)
-      temp.push(params.petSno)
-      setInfos([...infos, temp])
+      if (props.components2.reduce((a, b) => a + b, 0) === 0) {
+        alert('상품 개수를 먼저 선택해 주세요.')
+      } else {
+        checkPets[idx] = true
+        setCheckPets(checkPets)
+        setShowPurchase([...showPurchase, <div
+          style={{
+            display: 'flex',
+            justifyContent: 'end',
+            alignItems: 'center',
+            marginBottom: '10px'
+          }}>
+          {props.name ?
+            <p style={{ margin: '0 10px 0 0' }}>{info[0]} - {params.name}</p> :
+            <p style={{ margin: '0 10px 0 0' }}>나만의 구독 서비스 - {params.name}</p>}
+          {/* <img onClick={(e) => deletePet(idx, e)} src={DeleteButton} width='25px' height='25px' style={{ cursor: 'pointer' }} alt="" /> */}
+        </div>])
+        setCheckPurchase([...checkPurchase, params.name])
+        const temp = info.slice()
+        temp.push(params.name)
+        temp.push(params.petSno)
+        setInfos([...infos, temp])
+        props.setFeedNum(0)
+        props.setSnackNum(0)
+        props.setToyNum(0)
+      }
     }
   }
 
   let totalPrice = Number(info[3]) * showPurchase.length
 
   for (let i = 0; i < pets.length; i++) {
-    showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], showPurchase.length, e) }}>
+    showPets.push(<div className={checkPets[i] ? 'clickCard1' : 'card1'} onClick={(e) => { addPet(pets[i], i, e) }}>
+      {/* showPets.push(<ClickPet onClick={(e) => { addPet(pets[i], i, e) }}> */}
       <img
         src={pets[i].image}
         style={{
@@ -93,7 +117,7 @@ const PurchaseList = (props) => {
           borderRadius: '5px',
         }} alt='pet' />
       <p style={{ margin: 'auto' }}>{pets[i].name}</p>
-    </ClickPet>)
+    </div>)
   }
   function addItemInBag(e, infos) {
     console.log(infos)
@@ -101,7 +125,7 @@ const PurchaseList = (props) => {
     showBag();
     for (let i = 0; i < checkPurchase.length; i++) {
       const bags = [infos[i][0], infos[i][1], infos[i][2], infos[i][3], infos[i][4], infos[i][5], infos[i][6], infos[i][7]]
-      
+      console.log(bags);
       //redux에 해당 상품이 이미 있는지 없는지 확인
       let isExist = false;
       for (let i = 0; i < bag.length; i++) {
@@ -160,13 +184,12 @@ const PurchaseList = (props) => {
         backgroundColor: '#F6F1EC',
         padding: '0.1px 20px 10px 20px',
         borderRadius: '5px',
-        width: '280px'
       }}>
       <h3>구독목록</h3>
       {showPurchase}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h4>총 {showPurchase.length}개</h4>
-        <h4>{totalPrice} 원</h4>
+        <h4>{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</h4>
       </div>
     </div>
     <div  // 장바구니

@@ -53,7 +53,7 @@ export default function SignupPet(props) {
         petdata[i] = {
           targetNo: 1,
           name: pets[i].name,
-          birth: "2022-01-01",
+          birth: pets[i].birth,
           fat: pets[i].fat,
           materials: pets[i].materials,
           effects: pets[i].effects,

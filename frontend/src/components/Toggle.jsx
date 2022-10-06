@@ -70,7 +70,7 @@ cursor: pointer;
 `
 
 const Toggle = (props) => {
-  console.log('toggle', props)
+  // console.log('toggle', props)
   const [toggleOpen, setToggleOpen] = useState(false)
   const showToggle = () => {setToggleOpen(true)}
   const closeToggle = () => {setToggleOpen(false)}
@@ -297,6 +297,7 @@ const Toggle = (props) => {
         kind={'사료'}
         packageNo={props.packageNo}
         />
+        {reviewOpen && reviewCategory==="사료" && <MoreReview setReviewOpen={setReviewOpen} info={feeds[index]} kind={'사료'} />}
         <CarouselFeed  // 간식
           products1={snacks}
           checkProducts={checkSnacks}
@@ -453,7 +454,7 @@ const Toggle = (props) => {
       </div>
       default: // 자유 구독
       return <div style={{ margin: '0 50px 0 50px' }}>
-        {feeds.length > 0 ?
+        {props.numbers[0] > 0 ?
         <div>
           <CarouselFeed  // 사료
             products1={feeds}
@@ -472,7 +473,7 @@ const Toggle = (props) => {
         </div> :
         <div></div>}
       
-      {snacks.length > 0 ?
+      {props.numbers[1] > 0 ?
         <div>
           <CarouselFeed  // 간식
             products1={snacks}
@@ -491,7 +492,7 @@ const Toggle = (props) => {
         </div> :
         <div></div>}
       
-      {toys.length > 0 ?
+      {props.numbers[2] > 0 ?
         <div>
           <CarouselFeed  // 장난감
             products1={toys}
@@ -531,7 +532,7 @@ const Toggle = (props) => {
             alignItems: 'center',
           }}>
           <h2>{props.info[0]} - {props.info[6]}</h2>
-          <p>월 {props.info[3]}원</p>
+          <p>월 {props.info[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</p>
         </div>
         <p>{props.info[1]}</p>
       </div>
