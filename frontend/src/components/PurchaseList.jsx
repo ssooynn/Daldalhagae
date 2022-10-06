@@ -189,7 +189,7 @@ const PurchaseList = (props) => {
       {showPurchase}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h4>총 {showPurchase.length}개</h4>
-        <h4>{totalPrice} 원</h4>
+        <h4>{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</h4>
       </div>
     </div>
     <div  // 장바구니
