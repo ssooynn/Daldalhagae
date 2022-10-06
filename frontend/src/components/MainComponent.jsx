@@ -166,12 +166,14 @@ export function MainReviewCard({ reviewList }) {
                 <FlexBox key={idx} direction="column" justify="center" align="center" width="30%" height="100%" style={{ backgroundColor: "#ffffff", boxShadow: "1px 4px 4px 0px rgba(0,0,0,0.25)", borderRadius: "5px" }}>
                     <StyledReviewImg src={review.image} alt="사료 사진"></StyledReviewImg>
                     <FlexBox direction="column" justify="center" align="flex-start" width="80%" style={{ alignSelf: "flex-start", margin: "10px 10%" }}>
-                        <FlexBox direction="row" justify="start" align="end">
+                        <FlexBox direction="row" justify="start" align="end" margin="3px 10px">
                             <StyledText size="18px" weight="500" margin="5px 10px 2px 0px">{review.userName}</StyledText>
                             <StyledText size="14px" weight="500" margin="5px 10px 2px 2px">[{review.subName}]</StyledText>
+                        </FlexBox>
+                        <FlexBox direction="row" justify="space-between" align="end" margin="3px 0px 5px 0px">
+                            <StyledText size="14px" weight="300" margin="2px 10px">{rateList[review.rate - 1]}</StyledText>
                             <StyledText size="12px" weight="300" margin="2px 10px">{review.date[0]}년 {review.date[1]}월 {review.date[2]}일</StyledText>
                         </FlexBox>
-                        <StyledText size="14px" weight="300" margin="2px 10px">{rateList[review.rate - 1]}</StyledText>
                         <div style={{ marginTop: "20px", marginBottom: "20px", alignSelf: "flex-start" }} width="70%">
                             <StyledText size="15px" weight="400" margin="2px 10px" style={{ overflowWrap: "break-word" }}>{review.content}</StyledText>
                         </div>
