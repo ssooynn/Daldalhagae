@@ -96,6 +96,12 @@
   overflow-x: hidden;
   padding:5%;
 }
+
+.scrollBar2{
+  height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 /* 아래의 모든 코드는 영역::코드로 사용 */
 
 .scrollBar::-webkit-scrollbar {
@@ -112,6 +118,19 @@
 .scrollBar::-webkit-scrollbar-track {
     background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
 }
+
+.scrollBar2::-webkit-scrollbar {
+  width: 3px;  /* 스크롤바의 너비 */
+}
+
+.scrollBar2::-webkit-scrollbar-thumb {
+  height: 20%; /* 스크롤바의 길이 */
+  background: #AC998A; /* 스크롤바의 색상 */
+  
+  border-radius: 10px;
+}
+
+
 
 input[id=styledInput]{
 	width:98%;
@@ -173,4 +192,81 @@ textarea:focus{
 
 .midFont{
   font-size: 18px !important;
+}
+
+.dots-bars-4 {
+  width: 40px;
+  height: 20px;
+  --c:radial-gradient(farthest-side,currentColor 93%, ##000);
+  background:
+    var(--c) 0    0,
+    var(--c) 50%  0,
+    var(--c) 100% 0;
+  background-size:8px 8px;
+  background-repeat: no-repeat;
+  position: relative;
+  animation: db4-0 1s linear infinite alternate;
+}
+.dots-bars-4:before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  background:currentColor;
+  left:0;
+  top:0;
+  animation: 
+    db4-1 1s  linear infinite alternate,
+    db4-2 0.5s cubic-bezier(0,200,.8,200) infinite;
+}
+
+@keyframes db4-0 {
+  0%      {background-position: 0  100%,50% 0   ,100% 0}
+  8%,42%  {background-position: 0  0   ,50% 0   ,100% 0}
+  50%     {background-position: 0  0   ,50% 100%,100% 0}
+  58%,92% {background-position: 0  0   ,50% 0   ,100% 0}
+  100%    {background-position: 0  0   ,50% 0   ,100% 100%}
+}
+
+@keyframes db4-1 {
+  100% {left:calc(100% - 8px)}
+}
+
+@keyframes db4-2 {
+  100% {top:-0.1px}
+}
+
+.dots-bars-3 {
+  width: 40px;
+  height: 26px;
+  --c: linear-gradient(#AC998A 0 0);
+  background:
+    var(--c) 0    100%,
+    var(--c) 50%  100%,
+    var(--c) 100% 100%;
+  background-size:8px calc(100% - 4px);
+  background-repeat: no-repeat;
+  position: relative;
+}
+.dots-bars-3:before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background:currentColor;
+  left:0;
+  top:0;
+  animation: 
+    db3-1 1.5s  linear infinite alternate,
+    db3-2 0.75s cubic-bezier(0,200,.8,200) infinite;
+}
+
+
+@keyframes db3-1 {
+  100% {left:calc(100% - 8px)}
+}
+
+@keyframes db3-2 {
+  100% {top:-0.1px}
 }

@@ -22,7 +22,7 @@ const MypageHeaderCard = (props) => {
     display:'flex',
     flexDirection:'column',
     justifyContent:'space-between',
-    boxShadow: '0px 2px 2.5px rgba(0, 0, 0, 0.15)',
+    
   }
 
   // 000님 반갑습니다 css
