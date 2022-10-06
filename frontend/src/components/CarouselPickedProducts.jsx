@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import './CarouselFeed.css'
 
 const CarouselPickedProducts = (props) => {
   const [index, setIndex] = useState(0)
@@ -44,7 +45,7 @@ const CarouselPickedProducts = (props) => {
                 boxShadow: '1px 1px 1px 1px #dab8b8',
                 }}>
                 <img src={product.image} width='150px' height='150px' alt="" />
-                <p style={{margin: '5px auto'}}>{product.name}</p>
+                <p className='product_name'>{product.name}</p>
               </div>
             })
           })}
@@ -61,12 +62,12 @@ const CarouselPickedProducts = (props) => {
               backgroundColor: 'white',
               borderRadius: '10px',
               padding: '10px',
-              height: '250px',
+              height: 'auto',
               width: '170px',
               boxShadow: '1px 1px 1px 1px #dab8b8',
               }}>
               <img src={product.image} width='150px' height='150px' alt="" />
-              <p style={{margin: '5px auto'}}>{product.name}</p>
+              <p className='product_name' style={{margin: '5px auto'}}>{product.name}</p>
             </div>
           })
         })}

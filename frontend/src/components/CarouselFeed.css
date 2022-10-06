@@ -6,6 +6,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 12px;
   }
 
   .product_name {
@@ -16,4 +17,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 45px;
+    display: flex;
+    /* align-items: center; */
   }
