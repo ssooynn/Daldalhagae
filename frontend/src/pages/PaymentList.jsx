@@ -41,7 +41,7 @@ const PaymentList = () => {
   const subscriptionHistoryNo = 0
   
   useEffect(()=>{
-    const copySubscriptionHistorys = [...subscriptionHistorys]
+    const tempHistorys = []
     infos.map((info, idx)=>{
       if (info[0] === 'Basic Package') {
         subscriptionNo = 1
@@ -85,9 +85,9 @@ const PaymentList = () => {
         snacks: snacks,
         toys: toys,
       }
-      copySubscriptionHistorys.push(temp)
+      tempHistorys.push(temp)
     })
-    setSubscriptionHistorys(copySubscriptionHistorys)
+    setSubscriptionHistorys(tempHistorys)
   }, [pickedProducts])
 
   const finalData = {
@@ -119,26 +119,6 @@ const PaymentList = () => {
       m_redirect_url: REDIRECT_URL,
     };
     IMP.request_pay(data, callback);
-
-    console.log(finalData)
-    axios({
-      method: 'post',
-      url: `https://j7a302.p.ssafy.io/api-gateway/business-api/payment`,
-      headers: {
-        'Authorization': `Bearer a.a.a`
-      },
-      data: finalData
-    })
-      .then((res)=>{
-        console.log(res.data)
-        Navigate("/paymentCheck", {state: {
-          infos: infos,
-          pickedProducts: pickedProducts
-        }})
-      })
-      .catch((err)=>{
-        console.log(err.response)
-      })
   }
 
   function callback(response) {
@@ -156,6 +136,24 @@ const PaymentList = () => {
       //결제 성공
       alert("결제 성공");
       // Navigate("/paymentCheck", {state: infos})
+      axios({
+        method: 'post',
+        url: `https://j7a302.p.ssafy.io/api-gateway/business-api/payment`,
+        headers: {
+          'Authorization': `Bearer a.a.a`
+        },
+        data: finalData
+      })
+        .then((res)=>{
+          console.log(res.data)
+          Navigate("/paymentCheck", {state: {
+            infos: infos,
+            pickedProducts: pickedProducts
+          }})
+        })
+        .catch((err)=>{
+          console.log(err.response)
+        })
     } else {
       alert(`결제 실패 : ${error_msg}`);
     }
