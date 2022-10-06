@@ -48,7 +48,7 @@ export default function ReviewList() {
         </div>
         <div style={{fontSize:'16px', fontWeight:'300', marginBottom:'30px'}}>달달하개를 이용해주신 고객님들의 리얼 후기를 확인하세요 :)</div>
         {isLoading? 
-        <div style={{height:'90vh', width:'100%', position:'relative'}}>
+        <div style={{height:'80vh', width:'100%', position:'relative'}}>
           <div className="dots-bars-3" style={{position:'absolute', top:'50%', left:'50%', transform: 'translate(-50%, -50%)'}}></div>
         </div> 
         :

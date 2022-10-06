@@ -103,8 +103,14 @@ const PurchaseList = (props) => {
       }
     }
   }
-
-  let totalPrice = Number(info[3]) * showPurchase.length
+  let totalPrice = 0
+  if (props?.name) {
+    totalPrice = Number(info[3]) * showPurchase.length
+  } else {
+    infos.map((info, idx)=>{
+      totalPrice += Number(info[3])
+    })
+  }
 
   for (let i = 0; i < pets.length; i++) {
     showPets.push(<div className={checkPets[i] ? 'clickCard1' : 'card1'} onClick={(e) => { addPet(pets[i], i, e) }}>
