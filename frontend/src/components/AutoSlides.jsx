@@ -7,7 +7,7 @@ const AutoSlides = (props) => {
   for (let i = 0; i < info.length * 2; i++) {
     showProducts.push(<div className='element'>
         <img src={info[i%10].image} width='140px' height='130px' alt='product'/>
-        <p style={{color: 'black', marginTop: '10px'}}>{info[i%10].name.split(' ')[0]}</p>
+        <p className='name'>{info[i%10].name}</p>
       </div>)
   }
   

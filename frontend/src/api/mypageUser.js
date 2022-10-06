@@ -7,7 +7,7 @@ export const mypageMain = (userSno) => {
 }
 
 // 회원정보 조회
-export const userInfo = (userSno) => {
+export const userInfoGet = (userSno) => {
   const url =`business-api/user/info/${userSno}`
   return apiAuth.get(url)
 }

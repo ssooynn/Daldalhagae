@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+
 import { Route, Routes } from 'react-router-dom'
 import MypageSideBar from '../../components/Mypage/MypageSideBar'
 import MypageSubscriptions from './MypageSubscriptions'
@@ -12,11 +15,20 @@ import MypageRoutingTitle from '../../components/Mypage/MypageRoutingTitle'
 import MypageSubscriptionDetail from './MypageSubscriptionDetail'
 
 import MypageHeaderCard from '../../components/Mypage/MypageHeaderCard'
+import Footer from '../../components/Footer';
 
+import Swal from 'sweetalert2'
 import { mypageMain } from '../../api/mypageUser'
 
 const Mypage = () => {
-  const userSno = 'uXJFRDEC7DuyYasedNxU1'
+  const navigate = useNavigate()
+  const user = useSelector((state)=>state.user.user.user)
+  console.log(user)
+  const [usersToken, setUsersToken] = useState(user?.token || '')
+  const [usersSno, setUsersSno] = useState(user?.usersSno || '')
+  
+
+
   const [userInfo, setUserInfo] = useState({name:'',
   subscriptionCnt:0, 
   unReviewCnt: 0, 
@@ -25,9 +37,29 @@ const Mypage = () => {
   const [currentFocus, setCurrentFocus] = useState({})
   const [rerender, setRerender] = useState(0)
 
+  useEffect(()=>{
+    setUsersToken(user?.token || '')
+    setUsersSno(user?.usersSno || '')
+  },[user])
+  useEffect(()=>{
+    if (!usersToken) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "잘못된 접근입니다. \n 로그인을 진행해주세요.",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title:'midFont'
+        }
+      }).then(()=>{
+        navigate("/");
+      })
+    }
+  },[])
 // userfetching api: 마이페이지 메인
   useEffect(()=>{
-    mypageMain(userSno).then((res)=>{
+    mypageMain(usersSno).then((res)=>{
       setUserInfo(res.data)
       console.log(res.data,'main')  
     }
@@ -52,6 +84,7 @@ const Mypage = () => {
 
   const contentContainer = {
     width:'70%',
+    minWidth:'960px', maxWidth:'1080px',
     margin:'0 auto',
     paddingTop:'2em',
     display:'flex',
@@ -71,7 +104,7 @@ const Mypage = () => {
     <div>
       <div style={{height:'70px'}}></div>
       <div style={headerContainer}>
-        <MypageHeaderCard user={userInfo} rerender={rerender}/>
+        <MypageHeaderCard user={userInfo} rerender={rerender} />
       </div>
       <div style={contentContainer}>
         <MypageSideBar></MypageSideBar>
@@ -82,73 +115,74 @@ const Mypage = () => {
               exact="true"
               path=""
               element={
-                <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
+                <MypageSubscriptions setCurrentFocus={setCurrentFocus} usersSno={usersSno}/>
               }
             />
             <Route
               path="subscriptionsNow"
               element={
-                <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
+                <MypageSubscriptions setCurrentFocus={setCurrentFocus} usersSno={usersSno}/>
               }
             />
             <Route
               path="subscriptions"
               element={
-                <MypageSubscriptions setCurrentFocus={setCurrentFocus}/>
+                <MypageSubscriptions setCurrentFocus={setCurrentFocus} usersSno={usersSno}/>
               }            
             />
             <Route
               path="subscriptionDetail"
               element={
-                <MypageSubscriptionDetail/>
+                <MypageSubscriptionDetail usersSno={usersSno}/>
               }            
             />
             <Route
               path="unwrittenReviews"
               element={
-                <MypageUnwrittenReviews/>
+                <MypageUnwrittenReviews usersSno={usersSno}/>
               }               
             />
             <Route
               path="reviews"
               element={
-                <MypageReviews />
+                <MypageReviews usersSno={usersSno}/>
               }   
             />
             <Route
               path="user"
               element={
-                <MypageUser/>
+                <MypageUser usersSno={usersSno}/>
               }               
             />
             <Route
               path="userUpdate"
               element={
-                <MypageUserUpdate rerender={rerender} setRerender={setRerender}/>
+                <MypageUserUpdate rerender={rerender} setRerender={setRerender} usersSno={usersSno}/>
               }               
             />
             <Route
               path="petDetail"
               element={
-                <MypagePetDetail rerender={rerender} setCurrentFocus={setCurrentFocus}/>
+                <MypagePetDetail rerender={rerender} setCurrentFocus={setCurrentFocus} usersSno={usersSno}/>
               }               
             />
             <Route
               path="petAdd"
               element={
-                <MypagePetUpdate rerender={rerender} setRerender={setRerender}/>
+                <MypagePetUpdate rerender={rerender} setRerender={setRerender} pets={userInfo.pets}/>
               }               
             />
             <Route
               path="petUpdate"
               element={
-                <MypagePetUpdate rerender={rerender} setRerender={setRerender}/>
+                <MypagePetUpdate rerender={rerender} setRerender={setRerender} pets={userInfo.pets}/>
               }               
             />
           </Routes>  
         </div>       
         </div>
-        <div style={{height:'400px'}}></div>
+        <div style={{height:'200px'}}></div>
+        <Footer></Footer>
       </div>
 
   )
