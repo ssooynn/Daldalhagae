@@ -13,4 +13,6 @@ public interface UsersRepository extends JpaRepository<Users, String>,UsersRepos
 	boolean existsByUsersSno(String usersSno);
 	Users findByUsersSno(String usersSno);
 	Users findAndPetsByUsersSno(String usersSno);
+
+	Long countUsersBy();
 }

@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "FEED_TARGET")
 public class FeedTarget {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FEED_TARGET_NO")
 	private int feedTargetNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="FEED_SNO")
 	private Feed feed;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="TARGET_NO")
 	private Target target;
 }

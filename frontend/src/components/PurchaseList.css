@@ -1,0 +1,17 @@
+.card1 {
+    cursor: pointer;
+    margin: 0 0 1rem 5px;
+    padding: 10px;
+    border-radius: 5px;
+
+  }
+.card1:hover {
+    background-color : #ccb59036;
+}
+.clickCard1 {
+    cursor: pointer;
+    margin: 0 0 1rem 5px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color : #ccb59036;
+}

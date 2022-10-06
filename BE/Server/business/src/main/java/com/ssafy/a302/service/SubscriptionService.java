@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.a302.domain.SubscribtionHistory;
+import com.ssafy.a302.request.SubscriptionReq;
 
 public interface SubscriptionService {
-	Map<String, Object> getSubInfo();
-	List<Map<String, Object>> getSubInfoAll();
-	void updateSubInfoAsCanceled(SubscribtionHistory subscribtionHistory);
+	List<Map<String, Object>> getSubInfo(String userId, int n);
+	void updateSubInfoAsCanceled(int historyId);
+	void addSubInfo(SubscriptionReq subscriptionReq);
 }

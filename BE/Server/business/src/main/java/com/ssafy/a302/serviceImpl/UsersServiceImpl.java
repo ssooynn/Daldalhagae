@@ -1,5 +1,6 @@
 package com.ssafy.a302.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import com.ssafy.a302.domain.Material;
 import com.ssafy.a302.domain.Pet;
 import com.ssafy.a302.domain.PetEffect;
 import com.ssafy.a302.domain.PetMaterial;
+import com.ssafy.a302.domain.SubscribtionHistory;
 import com.ssafy.a302.domain.Target;
 import com.ssafy.a302.domain.Users;
 import com.ssafy.a302.domain.UsersLog;
@@ -29,6 +31,7 @@ import com.ssafy.a302.repository.MaterialRepository;
 import com.ssafy.a302.repository.PetEffectRepository;
 import com.ssafy.a302.repository.PetMaterialRepository;
 import com.ssafy.a302.repository.PetRepository;
+import com.ssafy.a302.repository.SubscribtionHistoryRepository;
 import com.ssafy.a302.repository.TargetRepository;
 import com.ssafy.a302.repository.UsersLogRepository;
 import com.ssafy.a302.repository.UsersRepository;
@@ -54,6 +57,8 @@ public class UsersServiceImpl implements UsersService {
 	private final PetMaterialRepository petMaterialRep;
 	private final PetEffectRepository petEffectRep;
 	private final FilePath filePath;
+	private final SubscribtionHistoryRepository subHistoryRep;
+	
 	@Override
 	public boolean existsByKakaoId(String kakaoId) {
 		return usersRep.existsByKakaoId(kakaoId);
@@ -103,6 +108,7 @@ public class UsersServiceImpl implements UsersService {
 				logger.info("----이미지 넣기 ----");
 				fileUpload.petsImageUpload(images, signUpPetReq);
 			}
+			signUpPetReq.birthToTargetNo();
 			Pet pet = signUpPetReq.transforPet(users, target);
 			petRepository.saveAndFlush(pet);
 			logger.info("---펫 저장 끝---");
@@ -150,23 +156,40 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/* 회원 탈퇴 */
+	@Transactional
 	@Override
 	public void usersWithdrow(String usersSno) {
 		Users users = usersRep.findByUsersSno(usersSno);
+		users.withdrow();
+		usersRep.saveAndFlush(users);
 		UsersLog usersLog = usersLogRep.findByUsers(users);
 		usersLog.updateuUserDeletedAt(new Date());
 		usersLogRep.save(usersLog);
-		
 	}
 
 	/* 마이페이지 */
 	@Override
 	public MyPageRes myPageInfo(String usersSno) {
 		Users users = usersRep.findAndPetsByUsersSno(usersSno);
-		MyPageRes myPageRes = new MyPageRes(users, filePath.getPetImageLoadPath());
+		int subCnt = subHistoryRep.countByEndDateAfterAndUsers_UsersSno(LocalDate.now(), usersSno);
+		logger.info("subCnt = {}",subCnt);
+		List<SubscribtionHistory> subscribtionHistories = subHistoryRep.findByUsers_UsersSno(usersSno);
+		int unReviewCnt =0;
+		for(SubscribtionHistory subscribtionHistory:subscribtionHistories){
+            if(subscribtionHistory.getServiceReview()==null){
+            	unReviewCnt++;
+            }
+        }
+		
+		MyPageRes myPageRes = new MyPageRes(users, filePath.getPetImageLoadPath(),subCnt,unReviewCnt);
 		return myPageRes;
 	}
-	
-	
+
+	@Override
+	public int countUser() {
+		Long count = usersRep.countUsersBy();
+		return count.intValue();
+	}
+
 
 }

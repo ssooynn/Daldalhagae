@@ -12,15 +12,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@ToString
 @Table(name = "FEED")
 public class Feed extends Item{
 	@Id
@@ -32,21 +36,24 @@ public class Feed extends Item{
 //	@Column(name ="IMAGE")
 //	private String image;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "GRADE_NO")
 	private Grade grade;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "PARTICLE_NO")
 	private Particle particle;
 	
-	@OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
+	@BatchSize(size=30)
+	@OneToMany(mappedBy = "feed" , fetch = FetchType.LAZY)
 	private List<FeedEffect> feedEffects = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
+	@BatchSize(size=30)
+	@OneToMany(mappedBy = "feed" , fetch = FetchType.LAZY)
 	private List<FeedMaterial> feedMaterials = new ArrayList<>();
 
-	@OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
+	@BatchSize(size=30)
+	@OneToMany(mappedBy = "feed" , fetch = FetchType.LAZY)
 	private List<FeedTarget> feedTargets = new ArrayList<>();
 
 }

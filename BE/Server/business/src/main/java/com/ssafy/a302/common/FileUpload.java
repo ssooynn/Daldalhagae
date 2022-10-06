@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.ssafy.a302.domain.ServiceReview;
+import com.ssafy.a302.request.ServiceReviewReq;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +23,6 @@ public class FileUpload {
 	public boolean petsImageUpload(List<MultipartFile> images, SignUpPetReq pet)
 			throws IllegalStateException, IOException {
 		File folder = new File(filePath.getPetImageUploadPath());
-		System.out.println(filePath);
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
@@ -47,7 +48,8 @@ public class FileUpload {
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-
+		if(pet.getImage()==null || "".equals(pet.getImage()))
+				return true;
 		if (image.getOriginalFilename().equals(pet.getImage())) {
 			String getImageName = image.getOriginalFilename();
 			String uniqueName = getUniqueFileName(getImageName);
@@ -55,10 +57,9 @@ public class FileUpload {
 			pet.setImage(uniqueName);
 			return true;
 		}
-
 		return false;
-
 	}
+
 	
 	/* 펫 이미지 수정 */
 	public boolean petImageUpdate(String preImage, MultipartFile image, SignUpPetReq pet)
@@ -69,9 +70,7 @@ public class FileUpload {
 		if(image ==null)
 			return true;
 		petImageUpload(image, pet);
-
 		return false;
-
 	}
 
 	public String getUniqueFileName(String fileName) {
@@ -95,5 +94,23 @@ public class FileUpload {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String str = sdf.format(d);
 		return str;
+	}
+	/*리뷰 이미지 저장*/
+	public boolean reviewImageUpload(MultipartFile image, ServiceReviewReq review) throws IllegalStateException, IOException {
+		File folder = new File(filePath.getReviewImageUploadPath());
+
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		if(image ==null||image.equals("")) {
+			return true;
+		}
+		String getImageName = image.getOriginalFilename();
+		String uniqueName = getUniqueFileName(getImageName);
+		System.out.println("---------------step3------------");
+		System.out.println(filePath.getReviewImageUploadPath());
+		image.transferTo(new File(filePath.getReviewImageUploadPath() + "/" + uniqueName));
+		review.setServiceReviewImage(uniqueName);
+		return true;
 	}
 }

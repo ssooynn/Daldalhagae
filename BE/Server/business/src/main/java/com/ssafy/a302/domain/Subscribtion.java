@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.ssafy.a302.request.SubscriptionReq;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SUBSCRIBTION")
 public class Subscribtion {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SUBSCRIBTION_NO")
 	private int subscribtionNo;
 	@Column(name = "NAME")
@@ -30,10 +31,22 @@ public class Subscribtion {
 	@Column(name = "IMAGE")
 	private String image;
 	
-	@OneToOne(mappedBy = "subscribtion", fetch = FetchType.LAZY)
-	private SubscribtionHistorySubscribtion subscribtionHistorySubscribtion;
+	@OneToMany(mappedBy = "subscribtion", fetch = FetchType.LAZY )
+	private List<SubscribtionHistorySubscribtion> subscribtionHistorySubscribtions = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "subscribtion", fetch = FetchType.LAZY)
 	private List<SubscribtionProductType> subscribtionProductTypes = new ArrayList<>();
-	
+
+    public Subscribtion(SubscriptionReq subscriptionReq) {
+		this.name = subscriptionReq.getName();
+		this.describtion = subscriptionReq.getDesc();
+		this.price = subscriptionReq.getPrice();
+    }
+	public Subscribtion(String name, String describtion, int price) {
+		super();
+		this.name = name;
+		this.describtion = describtion;
+		this.price = price;
+	}
+    
 }

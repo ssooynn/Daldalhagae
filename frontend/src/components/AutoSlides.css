@@ -1,0 +1,44 @@
+.slide {
+  margin: 5rem auto;
+  background-color: #F6F1EC;
+  text-align: start;
+  padding: 1px 3rem 2rem 3rem;
+  border-radius: 10px;
+  width: 80%;
+}
+
+.elements {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  height: auto;
+}
+
+.element {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 10px;
+  height: auto;
+  margin: 0 10px 0 10px;
+  text-align: center;
+  animation: moveSlideshow 60s linear infinite;
+  /* -webkit-animation: moveSlideshow 6s linear infinite;
+  -moz-animation: moveSlideshow 6s linear infinite;
+  -o-animation: moveSlideshow 6s linear infinite; */
+}
+
+@keyframes moveSlideshow {
+  100% {
+    transform: translateX(-1127%);
+  }
+}
+
+.name {
+  color: black;
+  margin-top: 10px;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

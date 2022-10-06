@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.a302.common.FilePath;
 import com.ssafy.a302.common.FileUpload;
 import com.ssafy.a302.common.RandomKey;
 import com.ssafy.a302.domain.Effect;
@@ -54,6 +55,7 @@ public class PetServiceImpl implements PetService {
 	private final PetMaterialRepository petMaterialRep;
 	private final PetEffectRepository petEffectRep;
 	private final RandomKey randomKey;
+	private final FilePath filePath;
 
 	@Override
 	@Transactional
@@ -72,7 +74,7 @@ public class PetServiceImpl implements PetService {
 			for (PetEffect petEffect : pet.getPetEffects()) {
 				effect.put(petEffect.getEffect().getEffectNo(), petEffect.getEffect().getName());
 			}
-			list.add(new PetRes(pet, material, effect));
+			list.add(new PetRes(pet, material, effect,  filePath.getPetImageLoadPath()));
 		}
 
 		petsInfo.put("pets", list);
@@ -95,7 +97,7 @@ public class PetServiceImpl implements PetService {
 			effect.put(petEffect.getEffect().getEffectNo(), petEffect.getEffect().getName());
 		}
 
-		petInfo.put("pets", new PetRes(pet, material, effect));
+		petInfo.put("pets", new PetRes(pet, material, effect, filePath.getPetImageLoadPath()));
 		return petInfo;
 	}
 
@@ -106,11 +108,16 @@ public class PetServiceImpl implements PetService {
 		logger.info("---유저 찾기---");
 		Users users = usersRep.findByUsersSno(usersSno);
 		logger.info("---타겟 찾기---");
+		signUpPetReq.birthToTargetNo();
 		Target target = targetRep.findByTargetNo(signUpPetReq.getTargetNo());
 		Pet prePet = petRepository.findByPetSno(signUpPetReq.getPetSno());
 
 		logger.info("---기존 이미지 삭제 및 수정---");
-		fileUpload.petImageUpdate(prePet.getImage(), image, signUpPetReq);
+		if(signUpPetReq.getImageFlag()!=0) {
+			fileUpload.petImageUpdate(prePet.getImage(), image, signUpPetReq);
+		}else {
+			signUpPetReq.setImage(prePet.getImage());
+		}
 		logger.info("---Pet entity 만들기---");
 		Pet pet = signUpPetReq.transforPet(users, target);
 
@@ -161,7 +168,7 @@ public class PetServiceImpl implements PetService {
 		signUpPetReq.setPetSno(petSno);
 		if (!(image == null))
 			fileUpload.petImageUpload(image, signUpPetReq);
-
+		signUpPetReq.birthToTargetNo();
 		Target target = targetRep.findByTargetNo(signUpPetReq.getTargetNo());
 		Pet pet = signUpPetReq.transforPet(users, target);
 		petRepository.saveAndFlush(pet);

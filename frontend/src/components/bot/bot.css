@@ -1,0 +1,101 @@
+.react-chatbot-kit-chat-container {
+  width: 350px;
+  height: 510px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.react-chatbot-kit-chat-inner-container {
+  height: 500px;
+}
+
+.react-chatbot-kit-chat-header {
+  background-color: #ccaa90;
+  height: 40px;
+  font-weight: 500;
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
+  color: white;
+  padding-left: 20px;
+  border-radius: 3px 3px 0px 0px;
+  font-size: 14px;
+}
+
+.react-chatbot-kit-chat-input-container {
+}
+
+.react-chatbot-kit-chat-message-container {
+  white-space: pre-wrap;
+  overflow-x: auto;
+  height: 375px;
+}
+
+.react-chatbot-kit-chat-input {
+  height: 40px;
+}
+
+.react-chatbot-kit-chat-input-form {
+}
+
+.react-chatbot-kit-chat-input::placeholder {
+}
+
+.react-chatbot-kit-chat-btn-send {
+  background-color: #ccaa90;
+}
+
+.react-chatbot-kit-chat-btn-send-icon {
+}
+
+.react-chatbot-kit-chat-bot-message-container {
+}
+
+.react-chatbot-kit-chat-bot-avatar-container {
+}
+
+.react-chatbot-kit-chat-bot-avatar-icon {
+}
+
+.react-chatbot-kit-chat-bot-avatar-letter {
+}
+
+.react-chatbot-kit-chat-bot-message {
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
+  font-weight: 500;
+  width: 210px;
+  color: #1f1d1d;
+  max-width: 210px;
+  overflow-wrap: break-word;
+}
+.react-chatbot-kit-user-chat-message {
+  width: 210px;
+  overflow-wrap: break-word;
+}
+.react-chatbot-kit-chat-bot-message-arrow {
+}
+
+.react-chatbot-kit-chat-bot-loading-icon-container {
+}
+
+.chatbot-loader-container {
+}
+
+#chatbot-loader #chatbot-loader-dot1 {
+}
+
+#chatbot-loader #chatbot-loader-dot2 {
+}
+
+#chatbot-loader #chatbot-loader-dot3 {
+}
+
+.react-chatbot-kit-error {
+}
+
+.react-chatbot-kit-error-container {
+}
+
+.react-chatbot-kit-error-header {
+}
+
+.react-chatbot-kit-error-docs {
+}

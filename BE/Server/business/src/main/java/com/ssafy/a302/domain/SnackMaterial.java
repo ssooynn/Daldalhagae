@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "SNACK_MATERIAL")
 public class SnackMaterial {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SNACK_MATERIAL_NO")
 	private int SnackMaterialNo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="SNACK_SNO")
 	private Snack snack;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="MATERIAL_NO")
 	private Material material;
 }

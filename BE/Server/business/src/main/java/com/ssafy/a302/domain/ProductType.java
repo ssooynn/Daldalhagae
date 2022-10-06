@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class ProductType {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PRODUCT_TYPE_NO")
 	private int productTypeNo;
 	@Column(name = "NAME")
@@ -33,6 +33,12 @@ public class ProductType {
 	
 	@OneToMany(mappedBy = "productType", fetch = FetchType.LAZY)
 	private List<SubscribtionProductType> subscribtionProductTypes = new ArrayList<>();
-	
-	
+
+
+    public ProductType(int typeNum) {
+		this.productTypeNo = typeNum;
+		if(typeNum == 0) this.name = "feed";
+		else if (typeNum == 1) this.name = "snack";
+		else this.name = "toy";
+	}
 }

@@ -18,13 +18,24 @@ spring:
       - id : businessId
         uri : lb://${BUSINESS_NAME}
         predicates:
-          - Path=/api-gateway/business-api/**
+          - Path=/api-gateway/business-api/pet/**, 
+            /api-gateway/business-api/review,
+            /api-gateway/business-api/review/unrated/**,
+            /api-gateway/business-api/user/mypage/**,
+            /api-gateway/business-api/user/info/**,
+            /api-gateway/business-api/user/withdrow/**,
+            /api-gateway/business-api/subscription/**,
+            /api-gateway/business-api/payment/**,
         filters:
-          - AuthorizationHeaderFilter
+          - AuthorizationHeaderFilter 
+      - id : businessId
+        uri : lb://${BUSINESS_NAME}
+        predicates:
+          - Path=/api-gateway/business-api/**
       - id : authId
         uri : lb://${AUTH_NAME}
         predicates:
-        - Path=/api-gateway/auth-api/**
+          - Path=/api-gateway/auth-api/**
     
 server:
   servlet:
