@@ -17,6 +17,7 @@ import BasicPackage from '../../assets/img/BasicPackage.png'
 import DalDalPackage from '../../assets/img/DalDalPackage.png'
 import LightAllInOnePackage from '../../assets/img/LightAllInOnePackage.png'
 import ToyPackage from '../../assets/img/ToyPackage.png'
+import MyPackage from  '../../assets/img/나만의구독서비스.png'
 
 const SubscriptionItem = (props) => {
   const navigate = useNavigate()
@@ -147,7 +148,7 @@ const gridDiv = {
 return(
   <>
     <ImgDiv width={width} height={height} onClick={onClick} radius={isDetail||toggle ?'10px 10px 0px 0px':'10px'} margin={isDetail ?'25px 0px 0px 0px': (toggle ? '12px 0px 0px 0px':'')}>
-        <img style={imgStyle} src={bgList[bgImg]||bgList.BasicPackage} alt="" />
+        <img style={imgStyle} src={bgList[bgImg]||MyPackage} alt="" />
         <div style={textStyle({isHover})}     
             onPointerOver={()=> setIsHover(!isDetail&&true)}
             onPointerOut={() => setIsHover(false)}>
